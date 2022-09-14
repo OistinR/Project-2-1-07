@@ -2,9 +2,13 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.coordsystem.Hexagon;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Omega extends ApplicationAdapter {
 
@@ -14,10 +18,15 @@ public class Omega extends ApplicationAdapter {
 	private final int TMPCIRCLESIZE = 20;
 
 	private ShapeRenderer sr;
+	private SpriteBatch mainBatch;
+	private ArrayList<Hexagon> field;
 
 	@Override
 	public void create () {
 		sr = new ShapeRenderer();
+		mainBatch = new SpriteBatch();
+		field = new ArrayList<>();
+		createHexagonField(5);
 	}
 
 	@Override
@@ -28,13 +37,22 @@ public class Omega extends ApplicationAdapter {
 		//Set color of the rendering of the shapes
 		sr.setColor(Color.SALMON);
 
+		mainBatch.begin();
+		renderHexField();
+//		Hexagon h = new Hexagon(0,0,50,mainBatch);
+//		Hexagon t = new Hexagon(1,0,50,mainBatch);
+//		h.update(Hexagon.state.BLANK);
+//		t.update(Hexagon.state.BLANK);
+		mainBatch.end();
+
 		//Create and render Hexagon field
-		createHexagonField(10);
+		//createHexagonField(10);
 	}
 	
 	@Override
 	public void dispose () {
 		sr.dispose();
+		mainBatch.dispose();
 	}
 
 	public void createHexagonField(int fieldsize) {
@@ -43,10 +61,24 @@ public class Omega extends ApplicationAdapter {
 			for(int r=fieldsize; r>=-fieldsize; r--) {
 				s=-q-r;
 				if(s<=fieldsize && s>=-fieldsize) {
-					Hexagon hex = new Hexagon(q, r, TMPCIRCLESIZE);
-					renderCircle(SCREENWIDTH/2 + hex.getX(), SCREENHEIGHT/2 + hex.getY());
+					field.add(new Hexagon(q,r,50,mainBatch));
 				}
 			}
+		}
+	}
+	Random r;
+	public void renderHexField(){
+		for (Hexagon h:field) {
+			r = new Random();
+			int t = r.nextInt(3);
+			switch (t){
+				case 0:h.setMyState(Hexagon.state.BLANK);break;
+				case 1:h.setMyState(Hexagon.state.RED);break;
+				case 2:h.setMyState(Hexagon.state.BLUE);break;
+			}
+
+			h.update();
+
 		}
 	}
 
