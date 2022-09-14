@@ -1,9 +1,11 @@
 package com.mygdx.game.coordsystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Hexagon {
     private int size;
@@ -34,23 +36,39 @@ public class Hexagon {
         this.bat= bat;
 
         hexSprite = new Sprite(blankTileTexture,50,50);
-        hexSprite.setPosition(1280f/2f + getX(), 720f/2f + getY());//hard coded screen size for now.
+        hexSprite.setPosition(1280f/2f + getX(), 720f/2f - getY());//hard coded screen size for now. - or +???
     }
 
+
+    /** sets texture of sprite based on state of tile.
+     * sets position of sprite.
+     * draws the sprite based on sprite batch.
+     * **/
     public void update(){
-        System.out.println(getMyState());
-        if (myState==state.RED){
-            hexSprite.setTexture(redTileTexture);
-        }
-        else if (myState==state.BLUE){
-            hexSprite.setTexture(blueTileTexture);
-        }
-        else{
-            hexSprite.setTexture(blankTileTexture);
+
+        switch (myState) {
+            case BLUE:
+                hexSprite.setTexture(blueTileTexture);
+                break;
+            case RED:
+                hexSprite.setTexture(redTileTexture);
+                break;
+            case BLANK:
+                hexSprite.setTexture(blankTileTexture);
+                break;
         }
 
-        hexSprite.setPosition(1280f/2f + getX(), 720f/2f + getY());//hard coded screen size for now.
+        hexSprite.setPosition(1280f/2f + getX(), 720f/2f - getY());//hard coded screen size for now.
         hexSprite.draw(bat);
+    }
+
+    /** Checks if mouse is clicking this tile.
+     * returns true if mouse is clicking this tile.
+     * false otherwise.
+     * **/
+    public boolean mouseDown(){
+        return (Gdx.input.isTouched()&&Gdx.input.getX()>1280f/2f + getX()&&Gdx.input.getX()<1280f/2f + getX()+50
+                &&Gdx.input.getY()<(720/2f+getY())&&Gdx.input.getY()>(720/2f+getY())-35); //more hard coded sizes. :(
     }
 
     public void setMyState(state myState) {

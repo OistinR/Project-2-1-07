@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -37,16 +38,12 @@ public class Omega extends ApplicationAdapter {
 		//Set color of the rendering of the shapes
 		sr.setColor(Color.SALMON);
 
+		//start sprite batch
 		mainBatch.begin();
-		renderHexField();
-//		Hexagon h = new Hexagon(0,0,50,mainBatch);
-//		Hexagon t = new Hexagon(1,0,50,mainBatch);
-//		h.update(Hexagon.state.BLANK);
-//		t.update(Hexagon.state.BLANK);
+		//update hex field check below for info.
+		updateHexField();
 		mainBatch.end();
 
-		//Create and render Hexagon field
-		//createHexagonField(10);
 	}
 	
 	@Override
@@ -66,20 +63,18 @@ public class Omega extends ApplicationAdapter {
 			}
 		}
 	}
-	Random r;
-	public void renderHexField(){
-		for (Hexagon h:field) {
-			r = new Random();
-			int t = r.nextInt(3);
-			switch (t){
-				case 0:h.setMyState(Hexagon.state.BLANK);break;
-				case 1:h.setMyState(Hexagon.state.RED);break;
-				case 2:h.setMyState(Hexagon.state.BLUE);break;
+	/** Loops through the field arraylist and updates each tile.
+	 * checks if the mouse is pressing the current tile "h" - if so
+	 * sets the current tiles state to "RED".
+	 * **/
+	public void updateHexField(){
+		for (Hexagon h:field) {//for each tile in the field array
+			if(h.mouseDown()){//check if mouse is clicking current tile
+				h.setMyState(Hexagon.state.RED);
 			}
-
-			h.update();
-
+			h.update();//this redraws the tile updating its position and texture.
 		}
+
 	}
 
 	public void renderCircle(int x, int y) {
