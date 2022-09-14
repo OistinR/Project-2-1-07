@@ -12,3 +12,5 @@ public class DesktopLauncher {
 		new Lwjgl3Application(new Omega(), config);
 	}
 }
+
+//7 guys 1 dream
