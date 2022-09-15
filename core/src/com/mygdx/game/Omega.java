@@ -13,10 +13,8 @@ import java.util.Random;
 
 public class Omega extends ApplicationAdapter {
 
-	public final int SCREENWIDTH = 1280;
-	public final int SCREENHEIGHT = 720;
-
-	private final int TMPCIRCLESIZE = 20;
+	public static int SCREENWIDTH;
+	public static int SCREENHEIGHT;
 
 	private ShapeRenderer sr;
 	private SpriteBatch mainBatch;
@@ -28,6 +26,8 @@ public class Omega extends ApplicationAdapter {
 		mainBatch = new SpriteBatch();
 		field = new ArrayList<>();
 		createHexagonField(5);
+		SCREENWIDTH = Gdx.graphics.getWidth();
+		SCREENHEIGHT = Gdx.graphics.getHeight();
 	}
 
 	@Override
@@ -40,10 +40,10 @@ public class Omega extends ApplicationAdapter {
 
 		//start sprite batch
 		mainBatch.begin();
+
 		//update hex field check below for info.
 		updateHexField();
 		mainBatch.end();
-
 	}
 	
 	@Override
@@ -74,12 +74,6 @@ public class Omega extends ApplicationAdapter {
 			}
 			h.update();//this redraws the tile updating its position and texture.
 		}
-
 	}
 
-	public void renderCircle(int x, int y) {
-		sr.begin(ShapeRenderer.ShapeType.Filled);
-		sr.circle(x, y, TMPCIRCLESIZE-12);
-		sr.end();
-	}
 }

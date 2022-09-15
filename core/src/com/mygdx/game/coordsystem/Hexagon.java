@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.Omega;
 
 public class Hexagon {
     private int size;
@@ -13,6 +14,9 @@ public class Hexagon {
     private int q;
     private int r;
     private int s;
+
+    private int SCREENWIDTH;
+	private int SCREENHEIGHT;
 
     public enum state{
         BLANK,
@@ -34,9 +38,11 @@ public class Hexagon {
         this.s = -q-r;
         this.size = size;
         this.bat= bat;
+		this.SCREENWIDTH = Gdx.graphics.getWidth();
+		this.SCREENHEIGHT = Gdx.graphics.getHeight();
 
         hexSprite = new Sprite(blankTileTexture,50,50);
-        hexSprite.setPosition(1280f/2f + getX(), 720f/2f - getY());//hard coded screen size for now. - or +???
+        hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
     }
 
 
@@ -45,7 +51,6 @@ public class Hexagon {
      * draws the sprite based on sprite batch.
      * **/
     public void update(){
-
         switch (myState) {
             case BLUE:
                 hexSprite.setTexture(blueTileTexture);
@@ -58,7 +63,7 @@ public class Hexagon {
                 break;
         }
 
-        hexSprite.setPosition(1280f/2f + getX(), 720f/2f - getY());//hard coded screen size for now.
+        hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
         hexSprite.draw(bat);
     }
 
@@ -67,8 +72,8 @@ public class Hexagon {
      * false otherwise.
      * **/
     public boolean mouseDown(){
-        return (Gdx.input.isTouched()&&Gdx.input.getX()>1280f/2f + getX()&&Gdx.input.getX()<1280f/2f + getX()+50
-                &&Gdx.input.getY()<(720/2f+getY())&&Gdx.input.getY()>(720/2f+getY())-35); //more hard coded sizes. :(
+        return (Gdx.input.isTouched()&&Gdx.input.getX()>SCREENWIDTH/2f + getX()&&Gdx.input.getX()<SCREENWIDTH/2f + getX()+50
+                &&Gdx.input.getY()<(SCREENHEIGHT/2f+getY())&&Gdx.input.getY()>(SCREENHEIGHT/2f+getY())-35); 
     }
 
     public void setMyState(state myState) {
