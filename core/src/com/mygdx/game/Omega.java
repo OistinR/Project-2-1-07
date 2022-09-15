@@ -15,6 +15,7 @@ public class Omega extends ApplicationAdapter {
 
 	public static int SCREENWIDTH;
 	public static int SCREENHEIGHT;
+	public static boolean firstColor = true;
 
 	private ShapeRenderer sr;
 	private SpriteBatch mainBatch;
@@ -28,6 +29,7 @@ public class Omega extends ApplicationAdapter {
 		createHexagonField(5);
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
+
 	}
 
 	@Override
@@ -36,7 +38,8 @@ public class Omega extends ApplicationAdapter {
 		ScreenUtils.clear(1, 1, 1, 1);
 
 		//Set color of the rendering of the shapes
-		sr.setColor(Color.SALMON);
+		//sr.setColor(Color.SALMON);
+
 
 		//start sprite batch
 		mainBatch.begin();
@@ -69,10 +72,21 @@ public class Omega extends ApplicationAdapter {
 	 * **/
 	public void updateHexField(){
 		for (Hexagon h:field) {//for each tile in the field array
+
 			if(h.mouseDown()){//check if mouse is clicking current tile
-				h.setMyState(Hexagon.state.RED);
+				updateColor(h);
+				//h.setMyState(Hexagon.state.RED);
 			}
 			h.update();//this redraws the tile updating its position and texture.
+		}
+	}
+	public void updateColor(Hexagon h){
+		if(firstColor){
+			h.setMyState(Hexagon.state.RED);
+			firstColor = false;
+		}else if(!firstColor){
+			h.setMyState(Hexagon.state.BLUE);
+			firstColor = true;
 		}
 	}
 
