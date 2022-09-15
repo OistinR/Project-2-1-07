@@ -74,7 +74,11 @@ public class Omega extends ApplicationAdapter {
 		for (Hexagon h:field) {//for each tile in the field array
 
 			if(h.mouseDown()){//check if mouse is clicking current tile
-				updateColor(h);
+				if(h.getMyState()== Hexagon.state.BLANK)
+					updateColor(h);
+				else{
+					System.out.println("you cannot colour that hexagon");
+				}
 				//h.setMyState(Hexagon.state.RED);
 			}
 			h.update();//this redraws the tile updating its position and texture.
