@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -24,9 +25,17 @@ public class Omega extends ApplicationAdapter {
 	private ArrayList<Hexagon> field;
 	private ScoringEngine SEngine;
     private BitmapFont font;
+	private int numberOfHex;
+	private boolean stopGame;
+	private Texture texture1;
+	private int hexPlaced;
+	private boolean arrowPlayerOne;
+	private int round;
 
 	@Override
 	public void create () {
+		numberOfHex = 0;
+		round = 1;
 		sr = new ShapeRenderer();
 		mainBatch = new SpriteBatch();
 		field = new ArrayList<>();
@@ -36,6 +45,12 @@ public class Omega extends ApplicationAdapter {
 		SEngine = new ScoringEngine();
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
+		stopGame = false;
+		texture1 = new Texture(Gdx.files.internal("right-arrow.png"));
+		hexPlaced = 0;
+		arrowPlayerOne = true;
+
+
 	}
 
 	@Override
@@ -49,10 +64,18 @@ public class Omega extends ApplicationAdapter {
 		//update hex field check below for info.
 		updateHexField();
 		updateScore();
+		whoIsPlaying();
+		if(arrowPlayerOne){
+			mainBatch.draw(texture1, 135, 590, 50, 50); //the arrow to show who's playing
+		} else{
+			mainBatch.draw(texture1, 950, 590, 50, 50); //the arrow to show who's playing
+		}
+
 
 		//Draw text on screen
         font.draw(mainBatch, "Score Blue: " + SEngine.getBlueScore(), 200, 620);
 		font.draw(mainBatch, "Score Red: " + SEngine.getRedScore(), 1000, 620);
+		font.draw(mainBatch, "the round " + round , 625, 620);
 
 		mainBatch.end();
 	}
@@ -71,9 +94,11 @@ public class Omega extends ApplicationAdapter {
 				s=-q-r;
 				if(s<=fieldsize && s>=-fieldsize) {
 					field.add(new Hexagon(q,r,50,mainBatch));
+					numberOfHex += 1;
 				}
 			}
 		}
+		System.out.println(numberOfHex);
 	}
 	/** Loops through the field arraylist and updates each tile.
 	 * checks if the mouse is pressing the current tile "h" - if so
@@ -82,10 +107,12 @@ public class Omega extends ApplicationAdapter {
 	public void updateHexField(){
 		for (Hexagon h:field) {//for each tile in the field array
 
-			if(h.mouseDown()){//check if mouse is clicking current tile
-				if(h.getMyState()== Hexagon.state.BLANK)
+			if(h.mouseDown() && !stopGame){//check if mouse is clicking current tile
+				if(h.getMyState()== Hexagon.state.BLANK){
 					updateColor(h);
-				else{
+					numberOfHex--;
+					hexPlaced++;
+				} else{
 					System.out.println("you cannot colour that hexagon");
 				}
 				//h.setMyState(Hexagon.state.RED);
@@ -105,6 +132,24 @@ public class Omega extends ApplicationAdapter {
 
 	public void updateScore() {
 		SEngine.calculate(field);
+	}
+	public void gameFinish(){
+		font.draw(mainBatch, " Game has ended ", 600, 720);
+		stopGame=true;
+	}
+	public void whoIsPlaying(){
+		if(hexPlaced>=2){
+			arrowPlayerOne=false;
+			if(hexPlaced==4){
+				arrowPlayerOne=true;
+				hexPlaced=0;
+				round++;
+				if(numberOfHex<4){
+					gameFinish();
+					System.out.println("zaudihbzaduba");
+				}
+			}
+		}
 	}
 
 }
