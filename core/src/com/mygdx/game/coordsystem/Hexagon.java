@@ -18,6 +18,8 @@ public class Hexagon {
     private int SCREENWIDTH;
 	private int SCREENHEIGHT;
 
+    private boolean checked;
+
     public enum state{
         BLANK,
         RED,
@@ -40,6 +42,7 @@ public class Hexagon {
         this.bat= bat;
 		this.SCREENWIDTH = Gdx.graphics.getWidth();
 		this.SCREENHEIGHT = Gdx.graphics.getHeight();
+        this.checked = false;
 
         hexSprite = new Sprite(blankTileTexture,50,50);
         hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
@@ -82,6 +85,22 @@ public class Hexagon {
 
     public state getMyState() {
         return myState;
+    }
+
+    public boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean flag) {
+        checked=flag;
+    }
+
+    public int getQ() {
+        return q;
+    }
+
+    public int getR() {
+        return r;
     }
 
     public int getX() {

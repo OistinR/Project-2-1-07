@@ -3,10 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.scoringsystem.ScoringEngine;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,6 +22,8 @@ public class Omega extends ApplicationAdapter {
 	private ShapeRenderer sr;
 	private SpriteBatch mainBatch;
 	private ArrayList<Hexagon> field;
+	private ScoringEngine SEngine;
+    private BitmapFont font;
 
 	@Override
 	public void create () {
@@ -29,7 +33,9 @@ public class Omega extends ApplicationAdapter {
 		createHexagonField(5);
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
-
+		SEngine = new ScoringEngine();
+		font = new BitmapFont();
+		font.setColor(Color.BLACK);
 	}
 
 	@Override
@@ -37,15 +43,17 @@ public class Omega extends ApplicationAdapter {
 		//Reset screen after every render tick
 		ScreenUtils.clear(1, 1, 1, 1);
 
-		//Set color of the rendering of the shapes
-		//sr.setColor(Color.SALMON);
-
-
 		//start sprite batch
 		mainBatch.begin();
 
 		//update hex field check below for info.
 		updateHexField();
+		updateScore();
+
+		//Draw text on screen
+        font.draw(mainBatch, "Score Blue: " + SEngine.getBlueScore(), 200, 620);
+		font.draw(mainBatch, "Score Red: " + SEngine.getRedScore(), 1000, 620);
+
 		mainBatch.end();
 	}
 	
@@ -53,6 +61,7 @@ public class Omega extends ApplicationAdapter {
 	public void dispose () {
 		sr.dispose();
 		mainBatch.dispose();
+		font.dispose();
 	}
 
 	public void createHexagonField(int fieldsize) {
@@ -78,7 +87,6 @@ public class Omega extends ApplicationAdapter {
 					updateColor(h);
 				else{
 					System.out.println("you cannot colour that hexagon");
-					System.out.println("test if the new branch works");
 				}
 				//h.setMyState(Hexagon.state.RED);
 			}
@@ -93,6 +101,10 @@ public class Omega extends ApplicationAdapter {
 			h.setMyState(Hexagon.state.BLUE);
 			firstColor = true;
 		}
+	}
+
+	public void updateScore() {
+		SEngine.calculate(field);
 	}
 
 }
