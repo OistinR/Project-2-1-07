@@ -78,6 +78,7 @@ public class Omega extends ApplicationAdapter {
 					updateColor(h);
 				else{
 					System.out.println("you cannot colour that hexagon");
+					System.out.println("test if the new branch works");
 				}
 				//h.setMyState(Hexagon.state.RED);
 			}
