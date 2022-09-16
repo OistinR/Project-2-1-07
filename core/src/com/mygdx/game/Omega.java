@@ -77,6 +77,12 @@ public class Omega extends ApplicationAdapter {
 		font.draw(mainBatch, "Score Red: " + SEngine.getRedScore(), 1000, 620);
 		font.draw(mainBatch, "the round " + round , 625, 620);
 
+		if(firstColor){
+			font.draw(mainBatch, "the next colour is red " , 600, 100);
+		}else{
+			font.draw(mainBatch, "the next colour is blue "  , 600, 100);
+		}
+
 		mainBatch.end();
 	}
 	
@@ -133,10 +139,7 @@ public class Omega extends ApplicationAdapter {
 	public void updateScore() {
 		SEngine.calculate(field);
 	}
-	public void gameFinish(){
-		font.draw(mainBatch, " Game has ended ", 600, 720);
-		stopGame=true;
-	}
+
 	public void whoIsPlaying(){
 		if(hexPlaced>=2){
 			arrowPlayerOne=false;
@@ -146,10 +149,14 @@ public class Omega extends ApplicationAdapter {
 				round++;
 				if(numberOfHex<4){
 					gameFinish();
-					System.out.println("zaudihbzaduba");
+					System.out.println(numberOfHex);
 				}
 			}
 		}
+	}
+	public void gameFinish(){
+		font.draw(mainBatch, " Game has ended ", 600, 800);
+		stopGame=true;
 	}
 
 }
