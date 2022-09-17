@@ -18,8 +18,8 @@ public class Omega extends ApplicationAdapter {
 
 	public static int SCREENWIDTH;
 	public static int SCREENHEIGHT;
-	public static boolean firstColor = true;
-
+	
+	private boolean firstColor = true;
 	private ShapeRenderer sr;
 	private SpriteBatch mainBatch;
 	private ArrayList<Hexagon> field;
@@ -46,7 +46,7 @@ public class Omega extends ApplicationAdapter {
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 		stopGame = false;
-		texture1 = new Texture(Gdx.files.internal("right-arrow.png"));
+		texture1 = new Texture(Gdx.files.internal("rightarrow.png"));
 		hexPlaced = 0;
 		arrowPlayerOne = true;
 
@@ -75,7 +75,7 @@ public class Omega extends ApplicationAdapter {
 		//Draw text on screen
         font.draw(mainBatch, "Score Blue: " + SEngine.getBlueScore(), 200, 620);
 		font.draw(mainBatch, "Score Red: " + SEngine.getRedScore(), 1000, 620);
-		font.draw(mainBatch, "the round " + round , 625, 620);
+		font.draw(mainBatch, "Round " + round , 640, 620);
 
 		if(firstColor){
 			font.draw(mainBatch, "the next colour is red " , 600, 100);
