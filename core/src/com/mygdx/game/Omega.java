@@ -118,7 +118,7 @@ public class Omega extends ApplicationAdapter {
 					updateColor(h);
 					numberOfHex--;
 					hexPlaced++;
-				} else{
+				} else{ //when user tried to colour an hex that's already coloured the else statement is activated
 					System.out.println("you cannot colour that hexagon");
 				}
 				//h.setMyState(Hexagon.state.RED);
@@ -126,6 +126,7 @@ public class Omega extends ApplicationAdapter {
 			h.update();//this redraws the tile updating its position and texture.
 		}
 	}
+	//change colours after hex placed
 	public void updateColor(Hexagon h){
 		if(firstColor){
 			h.setMyState(Hexagon.state.RED);
@@ -140,6 +141,7 @@ public class Omega extends ApplicationAdapter {
 		SEngine.calculate(field);
 	}
 
+	//the method puts a method next to each colour to show who is playing
 	public void whoIsPlaying(){
 		if(hexPlaced>=2){
 			arrowPlayerOne=false;
@@ -147,6 +149,7 @@ public class Omega extends ApplicationAdapter {
 				arrowPlayerOne=true;
 				hexPlaced=0;
 				round++;
+				//need to have at least 4 hex to play, otherwise the game ends
 				if(numberOfHex<4){
 					gameFinish();
 					System.out.println(numberOfHex);
@@ -154,6 +157,7 @@ public class Omega extends ApplicationAdapter {
 			}
 		}
 	}
+	//method for the end game, maybe add a gif with blue win, or red wins, depending on the colour
 	public void gameFinish(){
 		font.draw(mainBatch, " Game has ended ", 600, 800);
 		stopGame=true;
