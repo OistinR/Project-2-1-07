@@ -18,10 +18,13 @@ public class Hexagon {
     private int SCREENWIDTH;
 	private int SCREENHEIGHT;
 
+    private boolean checked;
+
     public enum state{
         BLANK,
         RED,
-        BLUE
+        BLUE,
+        HOVER
     }
 
     private state myState = state.BLANK;
@@ -30,6 +33,7 @@ public class Hexagon {
     private Texture blankTileTexture = new Texture(Gdx.files.internal("Hex.png"));
     private Texture redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
     private Texture blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
+    private Texture highlightTexture = new Texture(Gdx.files.internal("Highlight.png"));
     private Sprite hexSprite;
 
     public Hexagon (int q, int r, int size, SpriteBatch bat) {
@@ -40,6 +44,7 @@ public class Hexagon {
         this.bat= bat;
 		this.SCREENWIDTH = Gdx.graphics.getWidth();
 		this.SCREENHEIGHT = Gdx.graphics.getHeight();
+        this.checked = false;
 
         hexSprite = new Sprite(blankTileTexture,50,50);
         hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
@@ -61,19 +66,30 @@ public class Hexagon {
             case BLANK:
                 hexSprite.setTexture(blankTileTexture);
                 break;
+            case HOVER:
+                hexSprite.setTexture(highlightTexture);
+                break;
         }
 
         hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
         hexSprite.draw(bat);
     }
 
+
     /** Checks if mouse is clicking this tile.
      * returns true if mouse is clicking this tile.
      * false otherwise.
      * **/
     public boolean mouseDown(){
-        return (Gdx.input.isTouched()&&Gdx.input.getX()>SCREENWIDTH/2f + getX()&&Gdx.input.getX()<SCREENWIDTH/2f + getX()+50
-                &&Gdx.input.getY()<(SCREENHEIGHT/2f+getY())&&Gdx.input.getY()>(SCREENHEIGHT/2f+getY())-35); 
+        return (Gdx.input.justTouched()&&Gdx.input.getX()>SCREENWIDTH/2f + getX()&&Gdx.input.getX()<SCREENWIDTH/2f + getX()+50&&Gdx.input.getY()<(SCREENHEIGHT/2f+getY())&&Gdx.input.getY()>(SCREENHEIGHT/2f+getY())-35); 
+    }
+
+    /** Checks if mouse is hovering this tile.
+     * returns true if mouse is hovering this tile.
+     * false otherwise.
+     * **/
+    public boolean mouseHover(){
+        return (Gdx.input.getX()>SCREENWIDTH/2f + getX()&&Gdx.input.getX()<SCREENWIDTH/2f + getX()+50&&Gdx.input.getY()<(SCREENHEIGHT/2f+getY())&&Gdx.input.getY()>(SCREENHEIGHT/2f+getY())-35); 
     }
 
     public void setMyState(state myState) {
@@ -82,6 +98,22 @@ public class Hexagon {
 
     public state getMyState() {
         return myState;
+    }
+
+    public boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean flag) {
+        checked=flag;
+    }
+
+    public int getQ() {
+        return q;
+    }
+
+    public int getR() {
+        return r;
     }
 
     public int getX() {
