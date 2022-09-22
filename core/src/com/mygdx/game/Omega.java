@@ -37,6 +37,12 @@ public class Omega extends ApplicationAdapter {
 
 	private Hexagon lastHex;
 
+	private ConfirmButtonSprite confirmButton;
+	private UndoButton undoButton;
+	private boolean roundStop;
+
+	public Hexagon undoHexagon;
+
 	@Override
 	public void create () {
 		numberOfHex = 0;
@@ -57,6 +63,9 @@ public class Omega extends ApplicationAdapter {
 		arrowPlayerOne = true;
 		redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
+		confirmButton = new ConfirmButtonSprite(100,100, mainBatch);
+		undoButton = new UndoButton(1000, 100, mainBatch);
+		roundStop = false;
 
 	}
 
@@ -69,10 +78,17 @@ public class Omega extends ApplicationAdapter {
 		//start sprite batch
 		mainBatch.begin();
 
+
 		//update hex field check below for info.
 		updateHexField();
 		updateScore();
+
 		whoIsPlaying();
+
+		confirmButton.update();
+
+		undoButton.update();
+
 		if(arrowPlayerOne){
 			mainBatch.draw(texture2.getKeyFrame(elapsed), 135, 582, 60, 60); //the arrow GIF to show who's playing
 		} else{
@@ -136,14 +152,34 @@ public class Omega extends ApplicationAdapter {
 			}
 
 			if(h.mouseDown() && !stopGame){//check if mouse is clicking current tile
-				if(h.getMyState()== Hexagon.state.HOVER){
+				if(h.getMyState()== Hexagon.state.HOVER && !roundStop){
 					updateColor(h);
+					undoHexagon = h;
 					numberOfHex--;
 					hexPlaced++;
-				} else{
+					System.out.println(hexPlaced);
+					}
+				else{
 					System.out.println("you cannot colour that hexagon");
 				}
 			}
+
+			if(undoButton.mouseDown() && (hexPlaced == 2 || hexPlaced == 4)){
+				if(undoHexagon.equals(h)){
+					h.setMyState(Hexagon.state.BLANK);
+					numberOfHex++;
+					hexPlaced--;
+				}
+
+			}
+
+			if(hexPlaced == 2 && confirmButton.mouseDown()){
+				System.out.println("pressed");
+				roundStop = false;
+				System.out.println(roundStop);
+			}
+
+
 
 			h.update();//this redraws the tile updating its position and texture.
 		}
@@ -162,11 +198,33 @@ public class Omega extends ApplicationAdapter {
 		SEngine.calculate(field);
 	}
 
+	public boolean isRoundStop(){
+		if (hexPlaced == 2){
+			return true;
+		}
+		if(confirmButton.mouseDown()){
+			return false;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public void stopRound(){
+		roundStop = true;
+	}
 	public void whoIsPlaying(){
 		if(hexPlaced>=2){
+			if(hexPlaced == 2){
+				stopGame = true;
+			}
+			if(confirmButton.mouseDown()){
+				stopGame = false;
+			}
 			arrowPlayerOne=false;
 			if(hexPlaced==4){
 				arrowPlayerOne=true;
+
 				hexPlaced=0;
 				round++;
 				if(numberOfHex<4){
