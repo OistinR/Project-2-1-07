@@ -7,8 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.buttons.ConfirmButton;
+import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
+import com.mygdx.game.buttons.ConfirmButton;
+import com.mygdx.game.buttons.UndoButton;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -37,7 +42,7 @@ public class Omega extends ApplicationAdapter {
 
 	private Hexagon lastHex;
 
-	private ConfirmButtonSprite confirmButton;
+	private ConfirmButton confirmButton;
 	private UndoButton undoButton;
 	private boolean roundStop;
 
@@ -63,7 +68,7 @@ public class Omega extends ApplicationAdapter {
 		arrowPlayerOne = true;
 		redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
-		confirmButton = new ConfirmButtonSprite(100,100, mainBatch);
+		confirmButton = new ConfirmButton(100,100, mainBatch);
 		undoButton = new UndoButton(1000, 100, mainBatch);
 		roundStop = false;
 
