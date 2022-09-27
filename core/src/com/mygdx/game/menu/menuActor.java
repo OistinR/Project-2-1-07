@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 //COPIED FROM THE INTERNET. W.r.t https://libgdx.com/wiki/graphics/2d/scene2d/scene2d
 //NEEDS REFACTORING
+//PLEASE IGNORE THIS CODE
 public class menuActor extends Actor {
 
     private ShapeRenderer renderer;
