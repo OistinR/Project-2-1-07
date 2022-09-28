@@ -4,19 +4,16 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.buttons.ConfirmButton;
-import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
-import com.mygdx.game.buttons.ConfirmButton;
-import com.mygdx.game.buttons.UndoButton;
-
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Omega extends ApplicationAdapter {
 
@@ -42,11 +39,17 @@ public class Omega extends ApplicationAdapter {
 
 	private Hexagon lastHex;
 
-	private ConfirmButton confirmButton;
+	private ConfirmButtonSprite confirmButton;
 	private UndoButton undoButton;
-	private boolean roundStop;
 
 	public Hexagon undoHexagon;
+
+	public Hexagon undoHexagon2;
+	public Hexagon tempUndoHex;
+	public int turnTracker = 0;
+
+
+
 
 	@Override
 	public void create () {
@@ -68,9 +71,8 @@ public class Omega extends ApplicationAdapter {
 		arrowPlayerOne = true;
 		redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
-		confirmButton = new ConfirmButton(100,100, mainBatch);
+		confirmButton = new ConfirmButtonSprite(100,100, mainBatch);
 		undoButton = new UndoButton(1000, 100, mainBatch);
-		roundStop = false;
 
 	}
 
@@ -115,7 +117,7 @@ public class Omega extends ApplicationAdapter {
 
 		mainBatch.end();
 	}
-	
+
 	@Override
 	public void dispose () {
 		sr.dispose();
@@ -157,32 +159,37 @@ public class Omega extends ApplicationAdapter {
 			}
 
 			if(h.mouseDown() && !stopGame){//check if mouse is clicking current tile
-				if(h.getMyState()== Hexagon.state.HOVER && !roundStop){
+				if(h.getMyState()== Hexagon.state.HOVER){
 					updateColor(h);
-					undoHexagon = h;
+					if(undoHexagon == null){
+						undoHexagon = h;
+						System.out.println("hex 1 filled");
+					}
+					else{
+						undoHexagon2 = h;
+						System.out.println("hex 2 filled");
+					}
 					numberOfHex--;
 					hexPlaced++;
-					System.out.println(hexPlaced);
+					turnTracker++;
+					System.out.println(turnTracker);
 					}
 				else{
 					System.out.println("you cannot colour that hexagon");
 				}
 			}
 
-			if(undoButton.mouseDown() && (hexPlaced == 2 || hexPlaced == 4)){
-				if(undoHexagon.equals(h)){
-					h.setMyState(Hexagon.state.BLANK);
-					numberOfHex++;
-					hexPlaced--;
-				}
-
+			if(undoButton.mouseDown() && turnTracker == 2){ // undo IFF p1 or p2 turn is over
+				undo();
+				undoHexagon = null;
+				undoHexagon2 = null;
+			}
+			if(undoButton.mouseDown() && turnTracker == 5){
+				undo();
+				undoHexagon = null;
+				undoHexagon2 = null;
 			}
 
-			if(hexPlaced == 2 && confirmButton.mouseDown()){
-				System.out.println("pressed");
-				roundStop = false;
-				System.out.println(roundStop);
-			}
 
 
 
@@ -203,34 +210,57 @@ public class Omega extends ApplicationAdapter {
 		SEngine.calculate(field);
 	}
 
-	public boolean isRoundStop(){
-		if (hexPlaced == 2){
-			return true;
-		}
-		if(confirmButton.mouseDown()){
-			return false;
-		}
-		else{
-			return false;
+
+	public void undo(){
+		for (Hexagon h:field){
+			if(undoHexagon.equals(h)){
+				h.setMyState(Hexagon.state.BLANK);
+
+			}
+			if(undoHexagon2.equals(h)){
+				h.setMyState(Hexagon.state.BLANK);
+			}
+			if(turnTracker == 2){              // set the tracker to the right value depending on who is playing
+				numberOfHex = numberOfHex + 2; // not great code but works around the if-statements
+				turnTracker = 0;
+			}
+			if(turnTracker == 5){
+				numberOfHex = numberOfHex + 2;
+				turnTracker = 3;
+			}
+
+			stopGame = false;
+
 		}
 	}
 
-	public void stopRound(){
-		roundStop = true;
-	}
+
+
 	public void whoIsPlaying(){
-		if(hexPlaced>=2){
-			if(hexPlaced == 2){
+		if(hexPlaced>=2){        // turn tracker: 0 = p1 first stone, 1 = p1 second stone, 3 & 4 = same for p2
+			if(turnTracker > 2){ //               2 = end of p1 turn, 5 = end of p2 turn
+				arrowPlayerOne = false;         //6 = end of the round
+			}
+			if(turnTracker == 2){
+				stopGame = true;
+			}
+			if(turnTracker == 5){
 				stopGame = true;
 			}
 			if(confirmButton.mouseDown()){
 				stopGame = false;
+				turnTracker++;
+				undoHexagon = null;
+				undoHexagon2 = null; // reset the undo temp variables after confirm
+
 			}
-			arrowPlayerOne=false;
-			if(hexPlaced==4){
+			if(turnTracker==6){
+
 				arrowPlayerOne=true;
 
 				hexPlaced=0;
+				turnTracker = 0; // reset the tracker
+				System.out.println(turnTracker);
 				round++;
 				if(numberOfHex<4){
 					gameFinish();
