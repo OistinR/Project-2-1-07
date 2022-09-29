@@ -81,7 +81,19 @@ public class Hexagon {
      * false otherwise.
      * **/
     public boolean mouseDown(){
-        return (Gdx.input.justTouched()&&Gdx.input.getX()>SCREENWIDTH/2f + getX()&&Gdx.input.getX()<SCREENWIDTH/2f + getX()+50&&Gdx.input.getY()<(SCREENHEIGHT/2f+getY())&&Gdx.input.getY()>(SCREENHEIGHT/2f+getY())-35); 
+        //return (Gdx.input.justTouched()&&Gdx.input.getX()>SCREENWIDTH/2f + getX()&&Gdx.input.getX()<SCREENWIDTH/2f + getX()+50&&Gdx.input.getY()<(SCREENHEIGHT/2f+getY())&&Gdx.input.getY()>(SCREENHEIGHT/2f+getY())-35); 
+
+        if(Gdx.input.justTouched()) {
+            int colx = (getX()+SCREENWIDTH/2)+25;
+            int coly = (getY()+SCREENHEIGHT/2)-25;
+            int mousex = Gdx.input.getX();
+            int mousey = Gdx.input.getY();
+
+            double d = Math.sqrt(Math.pow(mousex-colx, 2)+Math.pow(mousey-coly, 2));
+            if(d<22) {
+                return true;
+            }
+        } return false;
     }
 
     /** Checks if mouse is hovering this tile.
@@ -89,8 +101,16 @@ public class Hexagon {
      * false otherwise.
      * **/
     public boolean mouseHover(){
-        return (Gdx.input.getX()>SCREENWIDTH/2f + getX()&&Gdx.input.getX()<SCREENWIDTH/2f + getX()+50&&Gdx.input.getY()<(SCREENHEIGHT/2f+getY())&&Gdx.input.getY()>(SCREENHEIGHT/2f+getY())-35); 
-    }
+        int colx = (getX()+SCREENWIDTH/2)+25;
+        int coly = (getY()+SCREENHEIGHT/2)-25;
+        int mousex = Gdx.input.getX();
+        int mousey = Gdx.input.getY();
+
+        double d = Math.sqrt(Math.pow(mousex-colx, 2)+Math.pow(mousey-coly, 2));
+        if(d<22) {
+            return true;
+        } else return false;
+    } 
 
     public void setMyState(state myState) {
         this.myState = myState;
