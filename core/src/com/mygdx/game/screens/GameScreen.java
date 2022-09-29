@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.GifDecoder;
+import com.mygdx.game.Omega;
+import com.mygdx.game.buttons.ConfirmButton;
+import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -19,10 +23,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 
-public class MainGameScreen implements Screen {
+public class GameScreen implements Screen {
 
     public static int SCREENWIDTH;
-    private menuScreen menu;
+    private MenuScreen menu;
     public static int SCREENHEIGHT;
     private boolean firstColor = true;
 
@@ -53,7 +57,7 @@ public class MainGameScreen implements Screen {
 	public Hexagon tempUndoHex;
 	public int turnTracker = 0;
 
-    public MainGameScreen(Omega game){
+    public GameScreen(Omega game){
         this.game = game;
     }
 

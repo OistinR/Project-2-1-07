@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,8 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Omega;
+import com.mygdx.game.screens.GameScreen;
 
-public class menuScreen implements Screen {
+public class MenuScreen implements Screen {
 
     private Omega game;
     private boolean click = false;
@@ -29,7 +30,7 @@ public class menuScreen implements Screen {
     private Skin menuSkin;
     private TextButton PVP;
 
-    public menuScreen(Omega game) {
+    public MenuScreen(Omega game) {
         super();
         this.game = game;
         stage = new Stage(new FillViewport(1280, 720));
@@ -58,7 +59,7 @@ public class menuScreen implements Screen {
 
         if (click == true) {
             this.dispose();
-            game.setScreen(new MainGameScreen(game));
+            game.setScreen(new GameScreen(game));
         }
 
         stage.act(delta);

@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.buttons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +14,7 @@ public class UndoButton {
     private Texture buttonTexture = new Texture("undo.png");
     private Sprite undoSprite = new Sprite(buttonTexture);
 
-    UndoButton(int Xcoordinate, int Ycoordinate, SpriteBatch spriteBatch){
+    public UndoButton(int Xcoordinate, int Ycoordinate, SpriteBatch spriteBatch){
         this.Xcoordinate = Xcoordinate;
         this.Ycoordinate = Ycoordinate;
         this.spriteBatch = spriteBatch;

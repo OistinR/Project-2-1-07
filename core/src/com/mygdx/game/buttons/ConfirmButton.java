@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.buttons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +14,7 @@ public class ConfirmButton {
     private Texture buttonTexture = new Texture("CONFIRM_SPRITE.png");
     private Sprite confirmSprite = new Sprite(buttonTexture);
 
-    ConfirmButton(int Xcoordinate, int Ycoordinate, SpriteBatch spriteBatch){
+    public ConfirmButton(int Xcoordinate, int Ycoordinate, SpriteBatch spriteBatch){
         this.Xcoordinate = Xcoordinate;
         this.Ycoordinate = Ycoordinate;
         this.spriteBatch = spriteBatch;

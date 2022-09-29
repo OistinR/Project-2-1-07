@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
+import com.mygdx.game.screens.MenuScreen;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class Omega extends Game {
 		mainBatch = new SpriteBatch();
 		font = new BitmapFont();
 		sr = new ShapeRenderer();
-		this.setScreen(new menuScreen(this));
+		this.setScreen(new MenuScreen(this));
 	}
 
 	@Override
