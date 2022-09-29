@@ -91,6 +91,7 @@ public class Omega extends ApplicationAdapter {
 		updateScore();
 
 		whoIsPlaying();
+		System.out.println(turnTracker);
 
 		confirmButton.update();
 
@@ -247,7 +248,7 @@ public class Omega extends ApplicationAdapter {
 			if(turnTracker == 5){
 				stopGame = true;
 			}
-			if(confirmButton.mouseDown()){
+			if(confirmButton.mouseDown() && (turnTracker == 2 || turnTracker == 5) ){ //added the condition that you can only press it when the 2 hexs are placed
 				stopGame = false;
 				turnTracker++;
 				undoHexagon = null;
