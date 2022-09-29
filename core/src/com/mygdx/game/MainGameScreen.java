@@ -12,6 +12,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 
@@ -40,6 +44,15 @@ public class MainGameScreen implements Screen {
     private Omega game;
     private Hexagon lastHex;
 
+    private ConfirmButton confirmButton;
+	private UndoButton undoButton;
+
+	public Hexagon undoHexagon;
+
+	public Hexagon undoHexagon2;
+	public Hexagon tempUndoHex;
+	public int turnTracker = 0;
+
     public MainGameScreen(Omega game){
         this.game = game;
     }
@@ -64,6 +77,8 @@ public class MainGameScreen implements Screen {
 		arrowPlayerOne = true;
 		redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
+        confirmButton = new ConfirmButton(100,100, game.mainBatch);
+		undoButton = new UndoButton(1000, 100, game.mainBatch);
     }
 
     @Override
@@ -79,6 +94,8 @@ public class MainGameScreen implements Screen {
 		updateHexField();
 		updateScore();
 		whoIsPlaying();
+        confirmButton.update();
+		undoButton.update();
 		if (arrowPlayerOne) {
 			game.mainBatch.draw(texture2.getKeyFrame(elapsed), 135, 582, 60, 60); // the arrow GIF to show who's playing
 		} else {
@@ -164,16 +181,60 @@ public class MainGameScreen implements Screen {
             if (h.mouseDown() && !stopGame) {// check if mouse is clicking current tile
                 if (h.getMyState() == Hexagon.state.HOVER) {
                     updateColor(h);
+                    if(undoHexagon == null){
+						undoHexagon = h;
+						System.out.println("hex 1 filled");
+					}
+					else{
+						undoHexagon2 = h;
+						System.out.println("hex 2 filled");
+					}
                     numberOfHex--;
                     hexPlaced++;
-                } else {
+					turnTracker++;
+					System.out.println(turnTracker);
+					}
+				else{
                     System.out.println("you cannot colour that hexagon");
                 }
             }
 
+			if(undoButton.mouseDown() && turnTracker == 2){ // undo IFF p1 or p2 turn is over
+				undo();
+				undoHexagon = null;
+				undoHexagon2 = null;
+			}
+			if(undoButton.mouseDown() && turnTracker == 5){
+				undo();
+				undoHexagon = null;
+				undoHexagon2 = null;
+			}
             h.update();// this redraws the tile updating its position and texture.
         }
     }
+
+    public void undo(){
+		for (Hexagon h:field){
+			if(undoHexagon.equals(h)){
+				h.setMyState(Hexagon.state.BLANK);
+
+			}
+			if(undoHexagon2.equals(h)){
+				h.setMyState(Hexagon.state.BLANK);
+			}
+			if(turnTracker == 2){              // set the tracker to the right value depending on who is playing
+				numberOfHex = numberOfHex + 2; // not great code but works around the if-statements
+				turnTracker = 0;
+			}
+			if(turnTracker == 5){
+				numberOfHex = numberOfHex + 2;
+				turnTracker = 3;
+			}
+
+			stopGame = false;
+
+		}
+	}
 
     public void updateColor(Hexagon h) {
         if (firstColor) {
@@ -190,10 +251,26 @@ public class MainGameScreen implements Screen {
     }
 
     public void whoIsPlaying() {
-        if (hexPlaced >= 2) {
-            arrowPlayerOne = false;
-            if (hexPlaced == 4) {
+        if(hexPlaced>=2){        // turn tracker: 0 = p1 first stone, 1 = p1 second stone, 3 & 4 = same for p2
+			if(turnTracker > 2){ //               2 = end of p1 turn, 5 = end of p2 turn
+				arrowPlayerOne = false;         //6 = end of the round
+			}
+			if(turnTracker == 2){
+				stopGame = true;
+			}
+			if(turnTracker == 5){
+				stopGame = true;
+			}
+			if(confirmButton.mouseDown() && (turnTracker == 2 || turnTracker == 5) ){ //added the condition that you can only press it when the 2 hexs are placed
+				stopGame = false;
+				turnTracker++;
+				undoHexagon = null;
+				undoHexagon2 = null; // reset the undo temp variables after confirm
+
+			}
+			if(turnTracker==6){
                 arrowPlayerOne = true;
+                turnTracker = 0; // reset the tracker
                 hexPlaced = 0;
                 round++;
                 if (numberOfHex < 4) {
