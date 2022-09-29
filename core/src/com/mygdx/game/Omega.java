@@ -13,15 +13,17 @@ import com.mygdx.game.scoringsystem.ScoringEngine;
 import java.util.ArrayList;
 
 public class Omega extends Game {
-	public ShapeRenderer sr;
 
+	public ShapeRenderer sr;
 	public SpriteBatch mainBatch;
+	public BitmapFont font;
+
 	@Override
 	public void create() {
 		mainBatch = new SpriteBatch();
+		font = new BitmapFont();
 		sr = new ShapeRenderer();
 		this.setScreen(new menuScreen(this));
-//leTexture = new Texture(Gdx.files.internal("HexBlue.png"));
 	}
 
 	@Override
@@ -33,6 +35,5 @@ public class Omega extends Game {
 	public void dispose() {
 
 	}
-
 
 }
