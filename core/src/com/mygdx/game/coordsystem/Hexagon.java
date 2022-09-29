@@ -90,7 +90,7 @@ public class Hexagon {
             int mousey = Gdx.input.getY();
 
             double d = Math.sqrt(Math.pow(mousex-colx, 2)+Math.pow(mousey-coly, 2));
-            if(d<24) {
+            if(d<22) {
                 return true;
             }
         } return false;
@@ -107,7 +107,7 @@ public class Hexagon {
         int mousey = Gdx.input.getY();
 
         double d = Math.sqrt(Math.pow(mousex-colx, 2)+Math.pow(mousey-coly, 2));
-        if(d<24) {
+        if(d<22) {
             return true;
         } else return false;
     } 
