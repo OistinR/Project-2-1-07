@@ -55,7 +55,14 @@ public class GameScreen implements Screen {
 		numberOfHex = 0;
 		round = 1;
 		field = new ArrayList<>();
-		createHexagonFieldSnowFlake();
+
+        switch (MenuScreen.mapChoice){
+            case (0):createHexagonFieldDefault();break;
+            case (1):createHexagonFieldSnowFlake();break;
+            case (2):createHexagonFieldSimple();break;
+            case (3):createHexagonFieldBug();break;
+        }
+
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
 		SEngine = new ScoringEngine();
@@ -148,13 +155,50 @@ public class GameScreen implements Screen {
         System.out.println(numberOfHex);
     }
 
+    public void createHexagonFieldBug() {
+
+        int s;
+        int fieldsize = 5;
+            for (int r = fieldsize; r >= -fieldsize; r--) {
+                if(r>3||r<-3) {
+                    field.add(new Hexagon(0, r, 50, game.mainBatch));
+                    field.add(new Hexagon(r, 0, 50, game.mainBatch));
+                    numberOfHex += 1;
+                }
+            }
+
+        //legs
+
+        field.add(new Hexagon(-4, 4, 50, game.mainBatch));
+        field.add(new Hexagon(-5, 5, 50, game.mainBatch));
+
+        field.add(new Hexagon(4, -4, 50, game.mainBatch));
+        field.add(new Hexagon(5, -5, 50, game.mainBatch));
+
+        field.add(new Hexagon(-5, -1, 50, game.mainBatch));
+        field.add(new Hexagon(-1, -5, 50, game.mainBatch));
+
+        field.add(new Hexagon(6, 0, 50, game.mainBatch));
+        field.add(new Hexagon(0, 6, 50, game.mainBatch));
+
+        for (int q = -fieldsize; q <= fieldsize; q++) {
+            for (int r = fieldsize; r >= -fieldsize; r--) {
+                s = -q - r;
+                if (s <= fieldsize && s >= -fieldsize&&r<4&&r>-4&&q<4&&q>-4) {
+                    field.add(new Hexagon(q, r, 50, game.mainBatch));
+                    numberOfHex += 1;
+                }
+            }
+        }
+    }
+
     public void createHexagonFieldSimple() {
         int s;
         int fieldsize = 5;
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = 2; r >= -2; r--) {
                 s = -q - r;
-                if (s <= 3 && s >= -3) {
+                if (s <= fieldsize && s >= -fieldsize) {
                     field.add(new Hexagon(q, r, 50, game.mainBatch));
                     numberOfHex += 1;
                 }
