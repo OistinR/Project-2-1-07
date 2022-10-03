@@ -117,6 +117,8 @@ public class GameScreen implements Screen {
 
         font.draw(game.mainBatch, "Undo move", 1013, 90);
         font.draw(game.mainBatch, "Confirm move", 105, 90);
+        font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
+
         if (firstColor) {
 			game.mainBatch.draw(redTileTexture, 700, 70);
 			font.draw(game.mainBatch, "The next colour is : ", 550, 100);
