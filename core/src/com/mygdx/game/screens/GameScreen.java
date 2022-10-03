@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GifDecoder;
@@ -35,26 +32,18 @@ public class GameScreen implements Screen {
     public BitmapFont font;
     private int numberOfHex;
     private boolean stopGame;
-    private Texture texture1; // Normal arrow
-    private Animation<TextureRegion> texture2; // Moving Gif Arrow
-    // The library to animate Gif doesn't exist in LIBGDX, I had to take a class
-    // created by someone and include it inside the code : GifDecoder.
-    float elapsed; // Moving Gif Arrow
     private int hexPlaced;
     private boolean arrowPlayerOne;
     private int round;
     private Texture blueTileTexture;
     private Texture redTileTexture;
     private Omega game;
-    private Hexagon lastHex;
 
     private ConfirmButton confirmButton;
 	private UndoButton undoButton;
 
 	public Hexagon undoHexagon;
-
 	public Hexagon undoHexagon2;
-	public Hexagon tempUndoHex;
 	public int turnTracker = 0;
 
     public GameScreen(Omega game){
@@ -63,34 +52,29 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
 		numberOfHex = 0;
 		round = 1;
-
 		field = new ArrayList<>();
-		createHexagonField(5);
+		createHexagonFieldSnowFlake();
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
 		SEngine = new ScoringEngine();
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 		stopGame = false;
-		texture1 = new Texture(Gdx.files.internal("rightarrow.png")); // Arrow still
-		texture2 = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("Arrow.gif").read()); // Moving			// Arrow
-		hexPlaced = 0;
+        hexPlaced = 0;
 		arrowPlayerOne = true;
 		redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
-        confirmButton = new ConfirmButton(100,100, game.mainBatch);
-		undoButton = new UndoButton(1000, 100, game.mainBatch);
+        confirmButton = new ConfirmButton(100,60, game.mainBatch);
+		undoButton = new UndoButton(1000, 60, game.mainBatch);
     }
 
     @Override
     public void render(float delta) {
 
-		elapsed += Gdx.graphics.getDeltaTime(); // For Gif Arrow
 		// Reset screen after every render tick
-		ScreenUtils.clear(1, 1, 1, 1);
+		ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
 		// start sprite batch
 		game.mainBatch.begin();
 
@@ -100,25 +84,26 @@ public class GameScreen implements Screen {
 		whoIsPlaying();
         confirmButton.update();
 		undoButton.update();
-        
-		if (arrowPlayerOne) {
-			game.mainBatch.draw(texture2.getKeyFrame(elapsed), 135, 582, 60, 60); // the arrow GIF to show who's playing
-		} else {
-			game.mainBatch.draw(texture2.getKeyFrame(elapsed), 950, 582, 60, 60); // the arrow GIF to show who's playing
-		}
 
 		// Draw text on screen
-		font.draw(game.mainBatch, "Score Blue: " + SEngine.getBlueScore(), 200, 620);
-		font.draw(game.mainBatch, "Score Red: " + SEngine.getRedScore(), 1000, 620);
-		font.draw(game.mainBatch, "Round " + round, 640, 620);
+		font.draw(game.mainBatch, "Score Of Player Two (Blue): " + SEngine.getBlueScore(), 1000, 700);
+		font.draw(game.mainBatch, "Score Of Player One (Pink): " + SEngine.getRedScore(), 100, 700);
+		font.draw(game.mainBatch, "Round " + round, 640, 690);
 
-		if (firstColor) {
+        if(arrowPlayerOne)
+            font.draw(game.mainBatch, "Player One's Turn", 610, 670);
+        else
+            font.draw(game.mainBatch, "Player Two's Turn", 610, 670);
+
+        font.draw(game.mainBatch, "Undo move", 1013, 90);
+        font.draw(game.mainBatch, "Confirm move", 105, 90);
+        if (firstColor) {
 			game.mainBatch.draw(redTileTexture, 700, 70);
 			font.draw(game.mainBatch, "The next colour is : ", 550, 100);
 		} else {
-			game.mainBatch.draw(blueTileTexture, 700, 70);
-			font.draw(game.mainBatch, "The next colour is : ", 550, 100);
-		}
+            game.mainBatch.draw(blueTileTexture, 700, 70);
+            font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+        }
 
 		game.mainBatch.end();
     }
@@ -148,8 +133,9 @@ public class GameScreen implements Screen {
 
     }
 
-    public void createHexagonField(int fieldsize) {
+    public void createHexagonFieldDefault() {
         int s;
+        int fieldsize = 5;
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
@@ -160,6 +146,34 @@ public class GameScreen implements Screen {
             }
         }
         System.out.println(numberOfHex);
+    }
+
+    public void createHexagonFieldSimple() {
+        int s;
+        int fieldsize = 5;
+        for (int q = -fieldsize; q <= fieldsize; q++) {
+            for (int r = 2; r >= -2; r--) {
+                s = -q - r;
+                if (s <= 3 && s >= -3) {
+                    field.add(new Hexagon(q, r, 50, game.mainBatch));
+                    numberOfHex += 1;
+                }
+            }
+        }
+    }
+
+    public void createHexagonFieldSnowFlake() {
+        int s;
+        int fieldsize = 7;
+        for (int q = -fieldsize-3; q <= fieldsize+3; q++) {
+            for (int r = fieldsize-1; r >= -fieldsize+1; r--) {
+                s = -q - r;
+                if (s <= fieldsize+3 && s >= -fieldsize-3 && s!=3&& s!=-3&&r!=3&& r!=-3&&q!=3&& q!=-3) {
+                    field.add(new Hexagon(q, r, 50, game.mainBatch));
+                    numberOfHex += 1;
+                }
+            }
+        }
     }
 
     /**
@@ -222,7 +236,6 @@ public class GameScreen implements Screen {
 		for (Hexagon h:field){
 			if(undoHexagon.equals(h)){
 				h.setMyState(Hexagon.state.BLANK);
-
 			}
 			if(undoHexagon2.equals(h)){
 				h.setMyState(Hexagon.state.BLANK);

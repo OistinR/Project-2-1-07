@@ -47,6 +47,7 @@ public class Hexagon {
         this.checked = false;
 
         hexSprite = new Sprite(blankTileTexture,50,50);
+        hexSprite.setSize(50,50);
         hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
     }
 

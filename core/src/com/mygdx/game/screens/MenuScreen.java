@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Omega;
@@ -48,7 +49,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
+        ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         PVP.addListener(new ClickListener() {
@@ -57,7 +58,7 @@ public class MenuScreen implements Screen {
             }
         });
 
-        if (click == true) {
+        if (click) {
             this.dispose();
             game.setScreen(new LoadingScreen(game));
         }
@@ -71,9 +72,9 @@ public class MenuScreen implements Screen {
         game.font.setColor(Color.BLACK);
         game.font.getData().setScale(3, 3);
 
-        game.font.draw(game.mainBatch, "OMEGA", 560, 475);
+        game.font.draw(game.mainBatch, "OMEGA : Java edition", 430, 450);
 
-        game.mainBatch.draw(omegaSymbol, 525, 475);
+        game.mainBatch.draw(omegaSymbol, 525, 475,225f,225f);
 
         game.mainBatch.end();
         game.sr.end();

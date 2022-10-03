@@ -27,8 +27,6 @@ public class ConfirmButton {
     }
 
     public boolean mouseDown(){
-            return (Gdx.input.justTouched()&&Gdx.input.getX()>Xcoordinate&&Gdx.input.getX()< Xcoordinate+100);//&&Gdx.input.getY()<(Ycoordinate)&&Gdx.input.getY()>(Ycoordinate)-50);
+            return (Gdx.input.justTouched()&&Gdx.input.getX()>Xcoordinate&&Gdx.input.getX()< Xcoordinate+100&&Math.abs(SCREENHEIGHT-Gdx.input.getY())>(Ycoordinate)&&Math.abs(SCREENHEIGHT-Gdx.input.getY())<(Ycoordinate)+50);
     }
-
-
 }
