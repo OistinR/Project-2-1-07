@@ -15,12 +15,13 @@ public class LoadingScreen implements Screen {
     private Omega game;
     private Stage stage;
     private int close;
-
-    public LoadingScreen(Omega game) {
+    private boolean ai;
+    public LoadingScreen(Omega game, boolean ai) {
         super();
         this.game = game;
         stage = new Stage(new FillViewport(1280, 720));
         close = 0;
+        this.ai = ai;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class LoadingScreen implements Screen {
 
         if(close==6) {
             this.dispose();
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game,ai));
         } else {
             close++;
         }

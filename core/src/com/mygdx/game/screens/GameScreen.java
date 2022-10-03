@@ -1,6 +1,7 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreen implements Screen {
 
@@ -45,9 +47,12 @@ public class GameScreen implements Screen {
 	public Hexagon undoHexagon;
 	public Hexagon undoHexagon2;
 	public int turnTracker = 0;
+    private boolean ai;
 
-    public GameScreen(Omega game){
+    public GameScreen(Omega game,boolean ai){
         this.game = game;
+        this.ai = ai;
+        System.out.println(ai);
     }
 
     @Override
@@ -80,6 +85,11 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            this.dispose();
+            game.setScreen(new MenuScreen(game));
+        }
+
 		// Reset screen after every render tick
 		ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
 		// start sprite batch
@@ -88,7 +98,10 @@ public class GameScreen implements Screen {
 		// update hex field check below for info.
 		updateHexField();
 		updateScore();
-		whoIsPlaying();
+        if(ai)
+		    whoIsPlayingAI();
+        else
+            whoIsPlaying();
         confirmButton.update();
 		undoButton.update();
 
@@ -246,16 +259,13 @@ public class GameScreen implements Screen {
                     updateColor(h);
                     if(undoHexagon == null){
 						undoHexagon = h;
-						System.out.println("hex 1 filled");
 					}
 					else{
 						undoHexagon2 = h;
-						System.out.println("hex 2 filled");
 					}
                     numberOfHex--;
                     hexPlaced++;
 					turnTracker++;
-					System.out.println(turnTracker);
 					}
 				else{
                     System.out.println("you cannot colour that hexagon");
@@ -340,6 +350,59 @@ public class GameScreen implements Screen {
                     System.out.println(numberOfHex);
                 }
             }
+        }
+    }
+
+    public void whoIsPlayingAI() {
+        if(hexPlaced>=2){        // turn tracker: 0 = p1 first stone, 1 = p1 second stone, 3 & 4 = same for p2
+            if(turnTracker > 2){ //               2 = end of p1 turn, 5 = end of p2 turn
+                arrowPlayerOne = false;         //6 = end of the round
+            }
+            if(turnTracker == 2){
+                stopGame = true;
+            }
+            if(confirmButton.mouseDown() && (turnTracker == 2 || turnTracker == 5) ){ //added the condition that you can only press it when the 2 hexs are placed
+                stopGame = false;
+                turnTracker++;
+                undoHexagon = null;
+                undoHexagon2 = null; // reset the undo temp variables after confirm
+
+            }
+            if(turnTracker==3){
+                botmove();
+            }
+            if(turnTracker==4){
+                botmove();
+                turnTracker++;
+            }
+            if(turnTracker==6){
+                arrowPlayerOne = true;
+                turnTracker = 0; // reset the tracker
+                hexPlaced = 0;
+                round++;
+                if (numberOfHex < 4) {
+                    gameFinish();
+                    System.out.println(numberOfHex);
+                }
+            }
+        }
+    }
+
+    private void botmove(){
+        Random r = new Random();
+        int t = r.nextInt(field.size());
+        if (field.get(t).getMyState()==Hexagon.state.BLANK)
+        {
+            updateColor(field.get(t));
+            numberOfHex--;
+            hexPlaced++;
+            turnTracker++;
+            stopGame = false;
+            undoHexagon = null;
+            undoHexagon2 = null;
+        }
+        else{
+            botmove();
         }
     }
 

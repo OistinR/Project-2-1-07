@@ -27,11 +27,13 @@ public class MenuScreen implements Screen {
 
     private Omega game;
     private boolean click = false;
+    private boolean clickAI = false;
     private Stage stage;
     private SpriteBatch mainBatch;
     private Texture omegaSymbol;
     private Skin menuSkin;
     private TextButton PVP;
+    private TextButton PVAI;
     private TextButton mapDefault;
     private TextButton mapSnowflake;
     private TextButton mapSimple;
@@ -48,8 +50,13 @@ public class MenuScreen implements Screen {
         omegaSymbol = new Texture(Gdx.files.internal("omegaSymbol.png"));
         PVP = new TextButton("Play: 2 Player", menuSkin);
         PVP.setColor(Color.BLACK);
-        PVP.setPosition(545, 270);
+        PVP.setPosition(445, 270);
         PVP.setSize(200, 100);
+
+        PVAI = new TextButton("Play: AI", menuSkin);
+        PVAI.setColor(Color.BLACK);
+        PVAI.setPosition(645, 270);
+        PVAI.setSize(200, 100);
 
         listOfMapButtons = new ArrayList<>();
 
@@ -80,6 +87,7 @@ public class MenuScreen implements Screen {
         listOfMapButtons.add(mapSnowflake);
 
         stage.addActor(PVP);
+        stage.addActor(PVAI);
         stage.addActor(mapDefault);
         stage.addActor(mapBug);
         stage.addActor(mapSimple);
@@ -99,8 +107,20 @@ public class MenuScreen implements Screen {
 
         if (click) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game));
+            game.setScreen(new LoadingScreen(game,false));
         }
+
+        PVAI.addListener(new ClickListener() {
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+                clickAI = true;
+            }
+        });
+
+        if (clickAI) {
+            this.dispose();
+            game.setScreen(new LoadingScreen(game,true));
+        }
+
 
         mapSnowflake.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
@@ -147,7 +167,6 @@ public class MenuScreen implements Screen {
 
         game.mainBatch.end();
         game.sr.end();
-
     }
 
     public void resetButtons(){
