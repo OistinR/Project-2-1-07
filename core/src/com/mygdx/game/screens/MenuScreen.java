@@ -59,7 +59,7 @@ public class MenuScreen implements Screen {
 
         if (click == true) {
             this.dispose();
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new LoadingScreen(game));
         }
 
         stage.act(delta);

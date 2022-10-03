@@ -100,6 +100,7 @@ public class GameScreen implements Screen {
 		whoIsPlaying();
         confirmButton.update();
 		undoButton.update();
+        
 		if (arrowPlayerOne) {
 			game.mainBatch.draw(texture2.getKeyFrame(elapsed), 135, 582, 60, 60); // the arrow GIF to show who's playing
 		} else {
