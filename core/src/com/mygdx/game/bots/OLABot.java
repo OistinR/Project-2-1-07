@@ -27,12 +27,6 @@ public class OLABot extends Bot{
         ScoringEngine se = new ScoringEngine();
         ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
 
-        se.calculate(clone);
-
-        //save the old original best score before we simulate
-        int bestscoreOld=se.getBlueScore();
-
-        int bestscore=se.getBlueScore();
         int bestpos=-1;
 
         try {
@@ -40,6 +34,11 @@ public class OLABot extends Bot{
                 clone.add(h.clone());
             }
         } catch (Exception e) {}
+
+        se.calculate(clone);
+        //save the old original best score before we simulate
+        int bestscoreOld=se.getBlueScore();
+        int bestscore=se.getBlueScore();
 
         for(Hexagon h:clone) {
             if(h.getMyState()==Hexagon.state.BLANK) {
@@ -56,11 +55,15 @@ public class OLABot extends Bot{
         }
         // if the difference between the original score and the "best score we found" is == 2
         // we randomly select a tile instead to encourage groups. works poorly in small maps.
-        if(bestscore-bestscoreOld==2){
+        System.out.println("old score" + bestscoreOld);
+        System.out.println("new score" + bestscore);
+
+        if(bestscore-bestscoreOld<2){
             boolean turn2 = true;
             while(turn2) {
                 rnum = r.nextInt(field.size());
                 if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
+                    System.out.println("random pos by OLA BOT");
                     field.get(rnum).setMyState(Hexagon.state.BLUE);
                     turn2=false;
                 }
