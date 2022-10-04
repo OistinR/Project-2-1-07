@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.Omega;
 
-public class Hexagon {
+public class Hexagon implements Cloneable {
     private int size;
 
     private int q;
@@ -143,5 +143,11 @@ public class Hexagon {
 
     public int getY() {
         return -r*size/2 + q*size/4 + s*size/4;
+    }
+
+    @Override
+    public Hexagon clone() throws CloneNotSupportedException {
+        Hexagon newHex = (Hexagon) super.clone();
+        return newHex;
     }
 }

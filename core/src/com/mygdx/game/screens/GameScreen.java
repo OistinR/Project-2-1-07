@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GifDecoder;
 import com.mygdx.game.Omega;
 import com.mygdx.game.bots.Bot;
+import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
@@ -51,7 +52,7 @@ public class GameScreen implements Screen {
 	public int turnTracker = 0;
     private boolean ai;
 
-    private Bot randombot;
+    private Bot bot;
 
     public GameScreen(Omega game,boolean ai){
         this.game = game;
@@ -86,7 +87,7 @@ public class GameScreen implements Screen {
 		undoButton = new UndoButton(1000, 60, game.mainBatch);
 
         //Choose any bot here that extends Bot abstract class
-        randombot = new RandomBot();
+        bot = new OLABot();
     }
 
     @Override
@@ -394,8 +395,8 @@ public class GameScreen implements Screen {
     }
 
     private void botmove(){
-        randombot.execMove(field);
-        System.out.println("Bot move took a runtime of: " + randombot.getRuntime() + " micro seconds");
+        bot.execMove(field);
+        System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
         numberOfHex=numberOfHex-2;
         hexPlaced=hexPlaced+2;
         turnTracker=turnTracker+3;
