@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GifDecoder;
 import com.mygdx.game.Omega;
+import com.mygdx.game.bots.Bot;
+import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.coordsystem.Hexagon;
@@ -49,6 +51,8 @@ public class GameScreen implements Screen {
 	public int turnTracker = 0;
     private boolean ai;
 
+    private Bot randombot;
+
     public GameScreen(Omega game,boolean ai){
         this.game = game;
         this.ai = ai;
@@ -80,6 +84,9 @@ public class GameScreen implements Screen {
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
         confirmButton = new ConfirmButton(100,60, game.mainBatch);
 		undoButton = new UndoButton(1000, 60, game.mainBatch);
+
+        //Choose any bot here that extends Bot abstract class
+        randombot = new RandomBot();
     }
 
     @Override
@@ -373,10 +380,6 @@ public class GameScreen implements Screen {
             if(turnTracker==3){
                 botmove();
             }
-            if(turnTracker==4){
-                botmove();
-                turnTracker++;
-            }
             if(turnTracker==6){
                 arrowPlayerOne = true;
                 turnTracker = 0; // reset the tracker
@@ -391,21 +394,14 @@ public class GameScreen implements Screen {
     }
 
     private void botmove(){
-        Random r = new Random();
-        int t = r.nextInt(field.size());
-        if (field.get(t).getMyState()==Hexagon.state.BLANK)
-        {
-            updateColor(field.get(t));
-            numberOfHex--;
-            hexPlaced++;
-            turnTracker++;
-            stopGame = false;
-            undoHexagon = null;
-            undoHexagon2 = null;
-        }
-        else{
-            botmove();
-        }
+        randombot.execMove(field);
+        System.out.println("Bot move took a runtime of: " + randombot.getRuntime() + " micro seconds");
+        numberOfHex=numberOfHex-2;
+        hexPlaced=hexPlaced+2;
+        turnTracker=turnTracker+3;
+        stopGame = false;
+        undoHexagon = null;
+        undoHexagon2 = null;
     }
 
     public void gameFinish() {
