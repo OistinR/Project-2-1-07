@@ -1,5 +1,6 @@
 package com.mygdx.game.bots;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -27,6 +28,10 @@ public class OLABot extends Bot{
         ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
 
         se.calculate(clone);
+
+        //save the old original best score before we simulate
+        int bestscoreOld=se.getBlueScore();
+
         int bestscore=se.getBlueScore();
         int bestpos=-1;
 
@@ -46,11 +51,24 @@ public class OLABot extends Bot{
                     bestscore=se.getBlueScore();
                     bestpos = clone.indexOf(h);
                 }
-                clone.get(clone.indexOf(h)).setMyState(Hexagon.state.BLANK);
+                h.setMyState(Hexagon.state.BLANK);
             }
         }
-
-        if(bestpos!=-1) {
+        // if the difference between the original score and the "best score we found" is == 2
+        // we randomly select a tile instead to encourage groups. works poorly in small maps.
+        if(bestscore-bestscoreOld==2){
+            boolean turn2 = true;
+            while(turn2) {
+                rnum = r.nextInt(field.size());
+                if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
+                    field.get(rnum).setMyState(Hexagon.state.BLUE);
+                    turn2=false;
+                }
+            }
+        }
+        //otherwise we take the best tile found by simulations
+        // Project 1 girls is weird
+        else if(bestpos!=-1) {
             field.get(bestpos).setMyState(Hexagon.state.BLUE);
         } else {
             System.out.println("No best pos was found an no blue hexagon was placed.");
