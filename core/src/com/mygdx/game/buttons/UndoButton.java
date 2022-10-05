@@ -13,8 +13,14 @@ public class UndoButton {
     private SpriteBatch spriteBatch;
     private Texture buttonTexture = new Texture("undo.png");
     private Sprite undoSprite = new Sprite(buttonTexture);
+    private boolean activated;
 
-    public UndoButton(float Xcoordinate, float Ycoordinate, SpriteBatch spriteBatch){
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public UndoButton(float Xcoordinate, float Ycoordinate, SpriteBatch spriteBatch, boolean activated){
+        this.activated = activated;
         this.Xcoordinate = Xcoordinate;
         this.Ycoordinate = Ycoordinate;
         this.spriteBatch = spriteBatch;
@@ -28,6 +34,6 @@ public class UndoButton {
     }
 
     public boolean mouseDown(){
-        return (Gdx.input.justTouched()&&Gdx.input.getX()>Xcoordinate&&Gdx.input.getX()< Xcoordinate+100&&Math.abs(SCREENHEIGHT-Gdx.input.getY())>(Ycoordinate)&&Math.abs(SCREENHEIGHT-Gdx.input.getY())<(Ycoordinate)+50);
+        return (activated && Gdx.input.justTouched()&&Gdx.input.getX()>Xcoordinate&&Gdx.input.getX()< Xcoordinate+100&&Math.abs(SCREENHEIGHT-Gdx.input.getY())>(Ycoordinate)&&Math.abs(SCREENHEIGHT-Gdx.input.getY())<(Ycoordinate)+50);
     }
 }
