@@ -15,6 +15,7 @@ import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
+import com.mygdx.game.buttons.PieButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -49,10 +50,14 @@ public class GameScreen implements Screen {
 
 	public Hexagon undoHexagon;
 	public Hexagon undoHexagon2;
+    public Hexagon undoHexagonPie;
+    public Hexagon undoHexagonPie2;
 	public int turnTracker = 0;
     private boolean ai;
 
     private Bot bot;
+
+    private PieButton pieButton;
 
     public GameScreen(Omega game,boolean ai){
         this.game = game;
@@ -84,7 +89,8 @@ public class GameScreen implements Screen {
 		redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
         confirmButton = new ConfirmButton(100,60, game.mainBatch);
-		undoButton = new UndoButton(1000, 60, game.mainBatch);
+		undoButton = new UndoButton(1000, 60, game.mainBatch, false);
+        pieButton = new PieButton(1000, 120, game.mainBatch);
 
         //Choose any bot here that extends Bot abstract class
         bot = new OLABot();
@@ -111,7 +117,15 @@ public class GameScreen implements Screen {
         else
             whoIsPlaying();
         confirmButton.update();
-		undoButton.update();
+        if(!(round==1)){
+            undoButton.update();
+            undoButton.setActivated(true);
+            font.draw(game.mainBatch, "Undo move", 1013, 90);
+        }
+        if (round == 1 && turnTracker == 3) {
+            pieButton.update();
+            font.draw(game.mainBatch, "Confirm move", 1005, 152);
+        }
 
 		// Draw text on screen
 		font.draw(game.mainBatch, "Score Of Player Two (Blue): " + SEngine.getBlueScore(), 1000, 700);
@@ -123,7 +137,6 @@ public class GameScreen implements Screen {
         else
             font.draw(game.mainBatch, "Player Two's Turn", 610, 670);
 
-        font.draw(game.mainBatch, "Undo move", 1013, 90);
         font.draw(game.mainBatch, "Confirm move", 105, 90);
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
 
@@ -292,30 +305,43 @@ public class GameScreen implements Screen {
 				undoHexagon = null;
 				undoHexagon2 = null;
 			}
+            if(pieButton.mouseDown() && round == 1 && turnTracker == 3){
+                for (Hexagon a:field){
+                    if(undoHexagonPie.equals(a)){
+                        a.setMyState(Hexagon.state.BLUE);
+                    }
+                    if(undoHexagonPie2.equals(a)){
+                        a.setMyState(Hexagon.state.RED);
+                    }
+                }
+                turnTracker=5;
+
+
+            }
             h.update();// this redraws the tile updating its position and texture.
         }
     }
 
     public void undo(){
-		for (Hexagon h:field){
-			if(undoHexagon.equals(h)){
-				h.setMyState(Hexagon.state.BLANK);
-			}
-			if(undoHexagon2.equals(h)){
-				h.setMyState(Hexagon.state.BLANK);
-			}
-			if(turnTracker == 2){              // set the tracker to the right value depending on who is playing
-				numberOfHex = numberOfHex + 2; // not great code but works around the if-statements
-				turnTracker = 0;
-			}
-			if(turnTracker == 5){
-				numberOfHex = numberOfHex + 2;
-				turnTracker = 3;
-			}
 
-			stopGame = false;
+        for (Hexagon h:field){
+            if(undoHexagon.equals(h)){
+                h.setMyState(Hexagon.state.BLANK);
+            }
+            if(undoHexagon2.equals(h)){
+                h.setMyState(Hexagon.state.BLANK);
+            }
+            if(turnTracker == 2){              // set the tracker to the right value depending on who is playing
+                numberOfHex = numberOfHex + 2; // not great code but works around the if-statements
+                turnTracker = 0;
+            }
+            if(turnTracker == 5){
+                numberOfHex = numberOfHex + 2;
+                turnTracker = 3;
+            }
 
-		}
+            stopGame = false;
+        }
 	}
 
     public void updateColor(Hexagon h) {
@@ -346,8 +372,16 @@ public class GameScreen implements Screen {
 			if(confirmButton.mouseDown() && (turnTracker == 2 || turnTracker == 5) ){ //added the condition that you can only press it when the 2 hexs are placed
 				stopGame = false;
 				turnTracker++;
-				undoHexagon = null;
-				undoHexagon2 = null; // reset the undo temp variables after confirm
+                if(turnTracker==3 && round == 1){
+                    undoHexagonPie = undoHexagon;
+                    undoHexagonPie2 = undoHexagon2;
+                    undoHexagon = null;
+                    undoHexagon2 = null; // reset the undo temp variables after confirm
+                }
+                else{
+                    undoHexagon = null;
+                    undoHexagon2 = null; // reset the undo temp variables after confirm
+                }
 
 			}
 			if(turnTracker==6){
