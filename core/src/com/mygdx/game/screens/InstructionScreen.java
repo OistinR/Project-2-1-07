@@ -64,11 +64,12 @@ public class InstructionScreen implements Screen {
 
         game.font.draw(game.mainBatch, "After placing your 2 stones, you can choose to either confirm your move and pass the turn to", 52, 240);
         game.font.draw(game.mainBatch, "the next player, or you can choose to undo your moves by clicking on the 'Undo' button, which", 50, 210);
-        game.font.draw(game.mainBatch, "will reset your moves and allow you to start your turn over. Each player total score is always", 68, 180);
-        game.font.draw(game.mainBatch, "shown in the top corners of the screen, next to player number.", 249, 150);
+        game.font.draw(game.mainBatch, "will reset your moves and allow you to start your turn over. Only after the first turn, player 2", 68, 180);
+        game.font.draw(game.mainBatch, "can choose to use the Pie button to swap the color positions. Each player's total score is always", 40, 150);
+        game.font.draw(game.mainBatch, "shown in the top corners of the screen, next to player number.", 230, 120);
 
-        game.font.draw(game.mainBatch, "The game ends when it is impossible for both players to complete a full turn, meaning there", 56, 110);
-        game.font.draw(game.mainBatch, "are not enough free spaces on the board left. The player who has the highest score then wins!", 49, 80);
+        game.font.draw(game.mainBatch, "The game ends when it is impossible for both players to complete a full turn, meaning there", 56, 80);
+        game.font.draw(game.mainBatch, "are not enough free spaces on the board left. The player who has the highest score then wins!", 49, 50);
 
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
 
