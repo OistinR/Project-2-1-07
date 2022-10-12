@@ -11,22 +11,53 @@ public class OLABot extends Bot{
     //OLA = One Look Ahead
 
     public void calculate(ArrayList<Hexagon> field) {
-        //TURN 1 (random)
-        Random r = new Random();
-        int rnum;
-        boolean turn1=true;
-        while(turn1) {
-            rnum = r.nextInt(field.size());
-            if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
-                field.get(rnum).setMyState(Hexagon.state.RED);
-                turn1=false;
+         //TURN 1 (random)
+         Random r = new Random();
+         int rnum;
+         boolean turn1=true;
+
+        ScoringEngine se = new ScoringEngine();
+
+        ArrayList<Hexagon> clone1 = new ArrayList<Hexagon>();
+        try {
+            for(Hexagon h : field) {
+                clone1.add(h.clone());
+            }
+        } catch (Exception e) {}
+
+        se.calculate(clone1);
+        int worstpos=-1;
+        int worstscore=se.getRedScore();
+
+        for(Hexagon h:clone1) {
+            if(h.getMyState()==Hexagon.state.BLANK) {
+                h.setMyState(Hexagon.state.RED);
+                se.calculate(clone1);
+                if(se.getBlueScore()<=worstscore) {
+                    worstscore=se.getBlueScore();
+                    worstpos=clone1.indexOf(h);
+                }
+                h.setMyState(Hexagon.state.BLANK);
             }
         }
 
-        //TURN 2 (maximize own score One Look Ahead)
-        ScoringEngine se = new ScoringEngine();
-        ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
+        if(worstpos!=-1) {
+            field.get(worstpos).setMyState(Hexagon.state.RED);
+        } else {
+            System.out.println("No worst location has been found by OLA");
+            while(turn1) {
+                rnum = r.nextInt(field.size());
+                if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
+                    field.get(rnum).setMyState(Hexagon.state.RED);
+                    turn1=false;
+                }
+            }
+        }
 
+
+
+        //TURN 2 (maximize own score One Look Ahead)
+        ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
         int bestpos=-1;
 
         try {
@@ -37,7 +68,7 @@ public class OLABot extends Bot{
 
         se.calculate(clone);
         //save the old original best score before we simulate
-        int bestscoreOld=se.getBlueScore();
+        int bestscoreOld = se.getBlueScore();
         int bestscore=se.getBlueScore();
 
         for(Hexagon h:clone) {
