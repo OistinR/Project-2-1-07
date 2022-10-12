@@ -28,6 +28,7 @@ public class MenuScreen implements Screen {
     private Omega game;
     private boolean click = false;
     private boolean clickAI = false;
+    private boolean clickInstruction = false;
     private Stage stage;
     private SpriteBatch mainBatch;
     private Texture omegaSymbol;
@@ -38,6 +39,7 @@ public class MenuScreen implements Screen {
     private TextButton mapSnowflake;
     private TextButton mapSimple;
     private TextButton mapBug;
+    private TextButton instructionButton;
     public static int mapChoice =0 ;
     private ArrayList<TextButton> listOfMapButtons;
 
@@ -86,12 +88,18 @@ public class MenuScreen implements Screen {
         listOfMapButtons.add(mapSimple);
         listOfMapButtons.add(mapSnowflake);
 
+        instructionButton = new TextButton("Game Instructions", menuSkin);
+        instructionButton.setColor(Color.RED);
+        instructionButton.setPosition(45,25);
+        instructionButton.setSize(150,50);
+
         stage.addActor(PVP);
         stage.addActor(PVAI);
         stage.addActor(mapDefault);
         stage.addActor(mapBug);
         stage.addActor(mapSimple);
         stage.addActor(mapSnowflake);
+        stage.addActor(instructionButton);
     }
 
     @Override
@@ -150,6 +158,18 @@ public class MenuScreen implements Screen {
                 mapBug.setColor(new Color(0.5f,0.5f,0.5f,1f));
             }
         });
+
+        instructionButton.addListener(new ClickListener() {
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+                clickInstruction = true;
+            }
+        });
+
+        if (clickInstruction){
+            //System.out.println("BUtton clicked");
+            this.dispose();
+            game.setScreen(new InstructionScreen(game));
+        }
 
         stage.act(delta);
         stage.draw();
