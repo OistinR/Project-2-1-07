@@ -59,6 +59,8 @@ public class GameScreen implements Screen {
 
     private PieButton pieButton;
 
+    private boolean finalstopgame;
+
     public GameScreen(Omega game,boolean ai){
         this.game = game;
         this.ai = ai;
@@ -91,6 +93,8 @@ public class GameScreen implements Screen {
         confirmButton = new ConfirmButton(100,60, game.mainBatch);
 		undoButton = new UndoButton(1000, 60, game.mainBatch, false);
         pieButton = new PieButton(1000, 120, game.mainBatch);
+
+        finalstopgame = false;
 
         //Choose any bot here that extends Bot abstract class
         bot = new OLABot();
@@ -147,6 +151,8 @@ public class GameScreen implements Screen {
             game.mainBatch.draw(blueTileTexture, 700, 70);
             font.draw(game.mainBatch, "The next colour is : ", 550, 100);
         }
+
+        if(finalstopgame) { showWinner(); }
 
 		game.mainBatch.end();
     }
@@ -392,6 +398,7 @@ public class GameScreen implements Screen {
                 if (numberOfHex < 4) {
                     gameFinish();
                     System.out.println(numberOfHex);
+                    finalstopgame=true;
                 }
             }
         }
@@ -423,6 +430,7 @@ public class GameScreen implements Screen {
                 if (numberOfHex < 4) {
                     gameFinish();
                     System.out.println(numberOfHex);
+                    finalstopgame=true;
                 }
             }
         }
@@ -440,8 +448,20 @@ public class GameScreen implements Screen {
     }
 
     public void gameFinish() {
-        font.draw(game.mainBatch, " Game has ended ", 600, 800);
         stopGame = true;
     }
 
+    public void showWinner(){
+        font.getData().setScale(4,4);
+        if (SEngine.getBlueScore() > SEngine.getRedScore()){
+            font.draw(game.mainBatch, "Blue won!", SCREENWIDTH/2 - 100, SCREENHEIGHT/2 + 50);
+        }
+        else if (SEngine.getRedScore() > SEngine.getBlueScore()){
+            font.draw(game.mainBatch, "Pink won!", SCREENWIDTH/2 - 100, SCREENHEIGHT/2 + 50);
+        }
+        else {
+            font.draw(game.mainBatch, "It's a draw!", SCREENWIDTH/2 - 100, SCREENHEIGHT/2 + 50);
+        }
+        font.getData().setScale(1,1);
+    }
 }
