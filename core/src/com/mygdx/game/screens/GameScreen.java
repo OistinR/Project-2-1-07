@@ -126,9 +126,10 @@ public class GameScreen implements Screen {
             undoButton.setActivated(true);
             font.draw(game.mainBatch, "Undo move", 1013, 90);
         }
+        //shows the pie button only in this specific case
         if (round == 1 && turnTracker == 3) {
             pieButton.update();
-            font.draw(game.mainBatch, "Confirm move", 1005, 152);
+            font.draw(game.mainBatch, "Switch colours", 1005, 152);
         }
 
 		// Draw text on screen
@@ -301,17 +302,17 @@ public class GameScreen implements Screen {
                 }
             }
 
-			if(undoButton.mouseDown() && turnTracker == 2){ // undo IFF p1 or p2 turn is over
+			if(undoButton.mouseDown() && turnTracker == 2){ // undo IFF p1 turn is over
 				undo();
 				undoHexagon = null;
 				undoHexagon2 = null;
 			}
-			if(undoButton.mouseDown() && turnTracker == 5){
+			if(undoButton.mouseDown() && turnTracker == 5){  // undo IFF p2 turn is over
 				undo();
 				undoHexagon = null;
 				undoHexagon2 = null;
 			}
-            if(pieButton.mouseDown() && round == 1 && turnTracker == 3){
+            if(pieButton.mouseDown() && round == 1 && turnTracker == 3){ //Execute the pie button but only possible in a specific case
                 for (Hexagon a:field){
                     if(undoHexagonPie.equals(a)){
                         a.setMyState(Hexagon.state.BLUE);
@@ -375,7 +376,8 @@ public class GameScreen implements Screen {
 			if(turnTracker == 5){
 				stopGame = true;
 			}
-			if(confirmButton.mouseDown() && (turnTracker == 2 || turnTracker == 5) ){ //added the condition that you can only press it when the 2 hexs are placed
+
+			if(confirmButton.mouseDown() && (turnTracker == 2 || turnTracker == 5) ){ //The statement is saving the colours of the first player, so that if the second player wants to switch colours they can be found in the variables
 				stopGame = false;
 				turnTracker++;
                 if(turnTracker==3 && round == 1){
@@ -390,12 +392,12 @@ public class GameScreen implements Screen {
                 }
 
 			}
-			if(turnTracker==6){
+			if(turnTracker==6){ //Track the end of the round
                 arrowPlayerOne = true;
                 turnTracker = 0; // reset the tracker
                 hexPlaced = 0;
                 round++;
-                if (numberOfHex < 4) {
+                if (numberOfHex < 4) { //Check if it's possible to continue the game or to finish it
                     gameFinish();
                     System.out.println(numberOfHex);
                     finalstopgame=true;
