@@ -124,7 +124,7 @@ public class GameScreen implements Screen {
         }
         if (round == 1 && turnTracker == 3) {
             pieButton.update();
-            font.draw(game.mainBatch, "Confirm move", 1005, 152);
+            font.draw(game.mainBatch, "Switch?", 1025, 152);
         }
 
 		// Draw text on screen
