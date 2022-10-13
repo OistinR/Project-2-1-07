@@ -1,17 +1,14 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.coordsystem.Hexagon;
-import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.MenuScreen;
 
-import java.util.ArrayList;
+/**
+ * The Omega class is extending the Game class to create the design of our game
+ */
 
 public class Omega extends Game {
 

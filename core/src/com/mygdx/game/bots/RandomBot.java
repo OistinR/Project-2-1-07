@@ -5,8 +5,15 @@ import java.util.Random;
 
 import com.mygdx.game.coordsystem.Hexagon;
 
+/**
+ *  RandomBot randomly chooses an available place and places a tile there.
+ */
 public class RandomBot extends Bot {
-    
+
+    /**
+     * @param field the hexagon field
+     * randomly chooses an available place and places a tile there.
+     */
     public void calculate(ArrayList<Hexagon> field) {
         Random r = new Random();
         int rnum;

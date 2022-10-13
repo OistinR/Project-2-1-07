@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.Omega;
 
+/**
+ * This is the general Hexagon-shaped tile object.
+ * This object contains both the location of each tile, its state and the visual sprite of the tile.
+ * We used Axial coordinates for this project.
+ * @see <a href="https://www.redblobgames.com/grids/hexagons/">The hexagon coordinate system we used</a>
+ */
 public class Hexagon implements Cloneable {
     private int size;
 
@@ -20,6 +26,13 @@ public class Hexagon implements Cloneable {
 
     private boolean checked;
 
+    /**
+     * Enumerator for the various possible tile states
+     * @BLANK unowned - the gray blank tile state
+     * @RED the tiles belonging to player 1 - the pinkish tile color
+     * @BLUE the tiles belonging to player 2 - the blueish tile color
+     * @HOVER unowned - tile lighter gray color.
+     */
     public enum state{
         BLANK,
         RED,
@@ -36,6 +49,12 @@ public class Hexagon implements Cloneable {
     private Texture highlightTexture = new Texture(Gdx.files.internal("Highlight.png"));
     private Sprite hexSprite;
 
+    /**
+     * @param q the q coordinate of the tile
+     * @param r the r coordinate of the tile
+     * @param size the width and height of tile
+     * @param bat the sprite batch this sprite will be rendered in
+     */
     public Hexagon (int q, int r, int size, SpriteBatch bat) {
         this.q = q;
         this.r = r;
@@ -125,6 +144,9 @@ public class Hexagon implements Cloneable {
         return checked;
     }
 
+    /**
+     * @param flag whether this tile has been checked by the scoring engine.
+     */
     public void setChecked(boolean flag) {
         checked=flag;
     }
@@ -137,14 +159,25 @@ public class Hexagon implements Cloneable {
         return r;
     }
 
+    /**
+     * @return gives integer pixel x location of the hexagon
+     */
     public int getX() {
         return q*size/2 - s*size/2;
     }
 
+    /**
+     * @return gives integer pixel y location of the hexagon
+     */
     public int getY() {
         return -r*size/2 + q*size/4 + s*size/4;
     }
 
+
+    /**
+     * @return clones the hexagon via java clone.
+     * @throws CloneNotSupportedException
+     */
     @Override
     public Hexagon clone() throws CloneNotSupportedException {
         Hexagon newHex = (Hexagon) super.clone();

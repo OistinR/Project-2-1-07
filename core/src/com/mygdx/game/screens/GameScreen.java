@@ -5,26 +5,22 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.GifDecoder;
 import com.mygdx.game.Omega;
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.OLABot;
-import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.buttons.PieButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import java.util.ArrayList;
-import java.util.Random;
+
+/**
+ * The GameScreen class creates and renders all the different elements on the screen will playing the game
+ * GameLogic is also active in this file
+ */
 
 public class GameScreen implements Screen {
 

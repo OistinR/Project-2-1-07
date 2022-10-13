@@ -7,9 +7,17 @@ import java.util.Random;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 
+/** One-look ahead bot 
+ *  looks one move ahead and makes decisions based on the bots best move vs the players first move.
+ *  it also contains some random behaviour to encourage groups to be formed.
+ */
 public class OLABot extends Bot{
     //OLA = One Look Ahead
 
+    /**
+     * @param field The field of hexagons
+     * Chooses best move for bot in current turn (placing their hexagon) and best move against enemy player.
+     */
     public void calculate(ArrayList<Hexagon> field) {
          //TURN 1 (random)
          Random r = new Random();

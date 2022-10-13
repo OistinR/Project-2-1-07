@@ -28,7 +28,6 @@ public class ScoringEngine {
         floodcount = 0;
         redList = new ArrayList<>();
         blueList = new ArrayList<>();
-
     }
 
     /**
