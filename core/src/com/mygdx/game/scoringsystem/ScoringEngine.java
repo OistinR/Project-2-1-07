@@ -6,6 +6,10 @@ import java.util.Arrays;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.coordsystem.Hexagon.state;
 
+/**
+ * This file is checking the scores of both player and based on the different state of the map, increasing or decreasing
+ * the score of the players
+ */
 public class ScoringEngine {
 
     private int redScore;
@@ -15,16 +19,21 @@ public class ScoringEngine {
     private ArrayList<Integer> redList;
     private ArrayList<Integer> blueList;
 
-
+    /**
+     *the method sets to 0 all the different variables that we will use to keep track of the scoring
+     */
     public ScoringEngine() {
         redScore = 0;
         blueScore = 0;
         floodcount = 0;
         redList = new ArrayList<>();
         blueList = new ArrayList<>();
-
     }
 
+    /**
+     *
+     * @param field take the current field with the state of the hexagons and calculates the score of each playing based on that
+     */
     public void calculate(ArrayList<Hexagon> field) {
         redScore=0;
         blueScore=0;
@@ -67,6 +76,12 @@ public class ScoringEngine {
         resetChecked(field);
     }
 
+    /**
+     *
+     * @param h the current hexagon
+     * @param field the field with all the hexagons of the map
+     * @param hexstate the enum of the hexagon BLANK RED BLUE
+     */
     public void floodfill(Hexagon h, ArrayList<Hexagon> field, state hexstate) {
         if(h.getMyState()!=hexstate) {return;}
 
@@ -104,16 +119,28 @@ public class ScoringEngine {
         }
     }
 
+    /**
+     *
+     * @param field the field with all the hexagon of the map
+     */
     public void resetChecked(ArrayList<Hexagon> field) {
         for(Hexagon h:field) {
             h.setChecked(false);
         }
     }
 
+    /**
+     *
+     * @return return the score of the red player
+     */
     public int getRedScore() {
         return redScore;
     }
 
+    /**
+     *
+     * @return return the score of the blue player
+     */
     public int getBlueScore() {
         return blueScore;
     }

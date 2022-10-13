@@ -23,11 +23,16 @@ import com.mygdx.game.screens.GameScreen;
 
 import java.util.ArrayList;
 
+/**
+ *MenuScreen is the first screen the user will see when starting the game,in this file he can choose between multiples
+ * maps and options before starting the game
+ */
 public class MenuScreen implements Screen {
 
     private Omega game;
     private boolean click = false;
     private boolean clickAI = false;
+    private boolean clickInstruction = false;
     private Stage stage;
     private SpriteBatch mainBatch;
     private Texture omegaSymbol;
@@ -38,9 +43,13 @@ public class MenuScreen implements Screen {
     private TextButton mapSnowflake;
     private TextButton mapSimple;
     private TextButton mapBug;
+    private TextButton instructionButton;
     public static int mapChoice =0 ;
     private ArrayList<TextButton> listOfMapButtons;
 
+    /**
+     * @param game the class that connect all the classes between each other
+     */
     public MenuScreen(Omega game) {
         super();
         this.game = game;
@@ -86,15 +95,24 @@ public class MenuScreen implements Screen {
         listOfMapButtons.add(mapSimple);
         listOfMapButtons.add(mapSnowflake);
 
+        instructionButton = new TextButton("Game Instructions", menuSkin);
+        instructionButton.setColor(Color.RED);
+        instructionButton.setPosition(45,25);
+        instructionButton.setSize(150,50);
+
         stage.addActor(PVP);
         stage.addActor(PVAI);
         stage.addActor(mapDefault);
         stage.addActor(mapBug);
         stage.addActor(mapSimple);
         stage.addActor(mapSnowflake);
+        stage.addActor(instructionButton);
     }
 
     @Override
+    /**
+     *Render method render the screen every x times to put new information on the screen when action occur
+     */
     public void render(float delta) {
         ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -151,6 +169,18 @@ public class MenuScreen implements Screen {
             }
         });
 
+        instructionButton.addListener(new ClickListener() {
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+                clickInstruction = true;
+            }
+        });
+
+        if (clickInstruction){
+            //System.out.println("BUtton clicked");
+            this.dispose();
+            game.setScreen(new InstructionScreen(game));
+        }
+
         stage.act(delta);
         stage.draw();
 
@@ -169,6 +199,9 @@ public class MenuScreen implements Screen {
         game.sr.end();
     }
 
+    /**
+     * the method put all the different buttons in the same organized colour
+     */
     public void resetButtons(){
         for (TextButton tb:listOfMapButtons){
             tb.setColor(new Color(0f,0f,0f,1f));
