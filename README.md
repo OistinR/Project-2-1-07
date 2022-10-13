@@ -19,23 +19,31 @@ Go to the project directory and open the Project-2-1-07 folder in your preferred
 
 ## Run via zip file
 
-Unzip the zip file and open the project in an IDE that supports Gradle, the project should be pre-built.
-
+Extract the "Project-2-1-07-main" folder and open this open as a project in an IDE that supports Gradle.
+You may need to build the project. Run the following command while in the main project directory:
+```
+    gradle build 
+```
+We recommend intelliJ IDEA for this as it automatically detects gradle build scripts.
 
 ## Run the program
 
-Next, go to the following folder.
+After building the project, go to the following folder.
 ```bash
    Project-2-1-07\desktop\src\com\mygdx\game
 ```
 Finally, run the launcher class DesktopLauncher.java by running its main method.
 
-### Troubleshooting: Program not running?
-You may need to build the project. Run the following command while in the project directory:
-```
-    gradle build 
-```
-We recommend intelliJ IDEA for this.
+### Troubleshooting: Gradle not running? ("07-CodeFirstPhase" **SHOULD NOT BE THE ROOT**)
+
+Make sure you extracted "Project-2-1-07-main" and opened that as the root directory. 
+
+
+This is what your directory should look like:
+
+![](assets/img.png)
+
+
 
 ## Features
 The program's current features are:
