@@ -28,11 +28,16 @@ import java.util.Random;
 
 public class GameScreen implements Screen {
 
+    /**
+     * The information about the screen size
+     */
     public static int SCREENWIDTH;
     private MenuScreen menu;
     public static int SCREENHEIGHT;
     private boolean firstColor = true;
-
+    /**
+     *The different hexagon that can be placed and the game logic behind it
+     */
     private ArrayList<Hexagon> field;
     private ScoringEngine SEngine;
     public BitmapFont font;
@@ -59,6 +64,11 @@ public class GameScreen implements Screen {
 
     private PieButton pieButton;
 
+    /**
+     *
+     * @param game communicates with the main class to switch between classes
+     * @param ai to see if we are playing against an AI or not
+     */
     public GameScreen(Omega game,boolean ai){
         this.game = game;
         this.ai = ai;
@@ -66,6 +76,9 @@ public class GameScreen implements Screen {
     }
 
     @Override
+    /**
+     *the show method select based on the users input with map to display
+     */
     public void show() {
 		numberOfHex = 0;
 		round = 1;
@@ -77,6 +90,7 @@ public class GameScreen implements Screen {
             case (2):createHexagonFieldSimple();break;
             case (3):createHexagonFieldBug();break;
         }
+
 
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
@@ -97,6 +111,9 @@ public class GameScreen implements Screen {
     }
 
     @Override
+    /**
+     *Render method render the screen every x times to put new information on the screen when action occur
+     */
     public void render(float delta) {
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
@@ -152,16 +169,25 @@ public class GameScreen implements Screen {
     }
 
     @Override
+    /**
+     * resize the size of the screen
+     */
     public void resize(int width, int height) {
 
     }
 
     @Override
+    /**
+     * pause the screen
+     */
     public void pause() {
 
     }
 
     @Override
+    /**
+     * when the game is in pause we can resume back to the game
+     */
     public void resume() {
 
     }
@@ -176,6 +202,9 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     *Creating the objects hexagon to create the default map
+     */
     public void createHexagonFieldDefault() {
         int s;
         int fieldsize = 5;
@@ -191,6 +220,9 @@ public class GameScreen implements Screen {
         System.out.println(numberOfHex);
     }
 
+    /**
+     * When field bug occur the method will reform some parts of the map to make it fit
+     */
     public void createHexagonFieldBug() {
 
         int s;
@@ -203,7 +235,6 @@ public class GameScreen implements Screen {
                 }
             }
 
-        //legs
 
         field.add(new Hexagon(-4, 4, 50, game.mainBatch));
         field.add(new Hexagon(-5, 5, 50, game.mainBatch));
@@ -228,6 +259,9 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * Creating the objects hexagon to create the simple map
+     */
     public void createHexagonFieldSimple() {
         int s;
         int fieldsize = 5;
@@ -241,7 +275,9 @@ public class GameScreen implements Screen {
             }
         }
     }
-
+    /**
+     * Creating the objects hexagon to create the SnowFlake map
+     */
     public void createHexagonFieldSnowFlake() {
         int s;
         int fieldsize = 7;
@@ -322,6 +358,9 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     *All the logic behind the undo button
+     */
     public void undo(){
 
         for (Hexagon h:field){
@@ -344,6 +383,10 @@ public class GameScreen implements Screen {
         }
 	}
 
+    /**
+     *
+     * @param h the hexagon that was select will be coloured in a colour based on the players turn
+     */
     public void updateColor(Hexagon h) {
         if (firstColor) {
             h.setMyState(Hexagon.state.RED);
@@ -354,10 +397,16 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * update the score of each player
+     */
     public void updateScore() {
         SEngine.calculate(field);
     }
 
+    /**
+     *Method to keep track of who is playing
+     */
     public void whoIsPlaying() {
         if(hexPlaced>=2){        // turn tracker: 0 = p1 first stone, 1 = p1 second stone, 3 & 4 = same for p2
 			if(turnTracker > 2){ //               2 = end of p1 turn, 5 = end of p2 turn
@@ -397,6 +446,9 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     *Method to see who playing when facing a bot
+     */
     public void whoIsPlayingAI() {
         if(hexPlaced>=2){        // turn tracker: 0 = p1 first stone, 1 = p1 second stone, 3 & 4 = same for p2
             if(turnTracker > 2){ //               2 = end of p1 turn, 5 = end of p2 turn
@@ -428,6 +480,9 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * check the mouvement of the bot and the time the bot took to place the hexagon
+     */
     private void botmove(){
         bot.execMove(field);
         System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
@@ -438,7 +493,9 @@ public class GameScreen implements Screen {
         undoHexagon = null;
         undoHexagon2 = null;
     }
-
+    /**
+     * Method executed when the game is finished
+     */
     public void gameFinish() {
         font.draw(game.mainBatch, " Game has ended ", 600, 800);
         stopGame = true;

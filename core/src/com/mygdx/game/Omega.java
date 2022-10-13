@@ -15,11 +15,23 @@ import java.util.ArrayList;
 
 public class Omega extends Game {
 
+	/**
+	 * Represent the render of the board
+	 */
 	public ShapeRenderer sr;
+	/**
+	 * Represent the render of the board
+	 */
 	public SpriteBatch mainBatch;
+	/**
+	 * Put the font of our board
+	 */
 	public BitmapFont font;
 
 	@Override
+	/**
+	 * Create method is called at the start of the game, to create the game sprite, font and shape
+	 */
 	public void create() {
 		mainBatch = new SpriteBatch();
 		font = new BitmapFont();
@@ -28,6 +40,9 @@ public class Omega extends Game {
 	}
 
 	@Override
+	/**
+	 * The render method is called every x time to render the screen
+	 */
 	public void render() {
 		super.render();
 	}

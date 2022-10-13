@@ -12,12 +12,19 @@ import com.mygdx.game.Omega;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+/**
+ *Class executed when the instruction button is pressed, explains the game
+ */
 public class InstructionScreen implements Screen {
 
     private Omega game;
     private Stage stage;
     public BitmapFont font;
 
+    /**
+     *
+     * @param game the class that connects all the parts of the game
+     */
     public InstructionScreen(Omega game) {
         super();
         this.game = game;
@@ -33,6 +40,9 @@ public class InstructionScreen implements Screen {
     }
 
     @Override
+    /**
+     *Render method render the screen every x times to put new information on the screen when action occur
+     */
     public void render(float delta) {
         ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -84,18 +94,27 @@ public class InstructionScreen implements Screen {
     }
 
     @Override
+    /**
+     * resize the screen
+     */
     public void resize(int width, int height) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
+    /**
+     * pause the screen
+     */
     public void pause() {
         // TODO Auto-generated method stub
         
     }
 
     @Override
+    /**
+     * resume the game if paused
+     */
     public void resume() {
         // TODO Auto-generated method stub
         

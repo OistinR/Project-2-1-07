@@ -10,12 +10,21 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.mygdx.game.Omega;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+/**
+ *This class is displayed when we are loading the game, we put a new screen on to show that the game is still running
+ */
 public class LoadingScreen implements Screen {
 
     private Omega game;
     private Stage stage;
     private int close;
     private boolean ai;
+
+    /**
+     *
+     * @param game the class that connects all the classes with each other
+     * @param ai the boolean value that shows if we are playing against an AI or not
+     */
     public LoadingScreen(Omega game, boolean ai) {
         super();
         this.game = game;
@@ -31,6 +40,9 @@ public class LoadingScreen implements Screen {
     }
 
     @Override
+    /**
+     *Render method render the screen every x times to put new information on the screen when action occur
+     */
     public void render(float delta) {
         ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -23,6 +23,10 @@ import com.mygdx.game.screens.GameScreen;
 
 import java.util.ArrayList;
 
+/**
+ *MenuScreen is the first screen the user will see when starting the game,in this file he can choose between multiples
+ * maps and options before starting the game
+ */
 public class MenuScreen implements Screen {
 
     private Omega game;
@@ -43,6 +47,9 @@ public class MenuScreen implements Screen {
     public static int mapChoice =0 ;
     private ArrayList<TextButton> listOfMapButtons;
 
+    /**
+     * @param game the class that connect all the classes between each other
+     */
     public MenuScreen(Omega game) {
         super();
         this.game = game;
@@ -103,6 +110,9 @@ public class MenuScreen implements Screen {
     }
 
     @Override
+    /**
+     *Render method render the screen every x times to put new information on the screen when action occur
+     */
     public void render(float delta) {
         ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -189,6 +199,9 @@ public class MenuScreen implements Screen {
         game.sr.end();
     }
 
+    /**
+     * the method put all the different buttons in the same organized colour
+     */
     public void resetButtons(){
         for (TextButton tb:listOfMapButtons){
             tb.setColor(new Color(0f,0f,0f,1f));
