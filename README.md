@@ -7,7 +7,7 @@ This project is a re-creation of the board game 'Omega'. The aim of this project
 ![](https://cdn.discordapp.com/attachments/1019614026038247436/1030129285811417188/unknown.png)
 
 
-## Run Locally
+## Run with Git
 
 Clone the project
 
@@ -17,11 +17,25 @@ Clone the project
 
 Go to the project directory and open the Project-2-1-07 folder in your preferred IDE.
 
+## Run via zip file
+
+Unzip the zip file and open the project in an IDE that supports Gradle, the project should be pre-built.
+
+
+## Run the program
+
 Next, go to the following folder.
 ```bash
    Project-2-1-07\desktop\src\com\mygdx\game
 ```
-Finally, run the launcher class DesktopLauncher.java by running its main method. 
+Finally, run the launcher class DesktopLauncher.java by running its main method.
+
+### Troubleshooting: Program not running?
+You may need to build the project. Run the following command while in the project directory:
+```
+    gradle build 
+```
+We recommend intelliJ IDEA for this.
 
 ## Features
 The program's current features are:
