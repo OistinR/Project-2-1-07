@@ -1,5 +1,5 @@
 
-# Omega: Java editon - Group 07
+# Omega: Java editon 
 
 This project is a re-creation of the board game 'Omega'. The aim of this project is to create different AI bots which will be able to play the game of 'Omega'. This project is part of a study on which AI is the most suitable for this board game. The game is also available to play with friends (single screen only). The creators of this project are listed at the end of this README. The client for this research is Maastricht University.
 
@@ -17,7 +17,7 @@ Clone the project
 
 Go to the project directory and open the Project-2-1-07 folder in your preferred IDE.
 
-## Run via zip file
+## Run via zip file (for peer review)
 
 Extract the "Project-2-1-07-main" folder and open this open as a project in an IDE that supports Gradle.
 You may need to build the project. Run the following command while in the main project directory:
@@ -34,10 +34,9 @@ After building the project, go to the following folder.
 ```
 Finally, run the launcher class DesktopLauncher.java by running its main method.
 
-### Troubleshooting: Gradle not running? ("07-CodeFirstPhase" **SHOULD NOT BE THE ROOT**)
+### Troubleshooting: Gradle not running?
 
 Make sure you extracted "Project-2-1-07-main" and opened that as the root directory. 
-
 
 This is what your directory should look like:
 
@@ -82,14 +81,4 @@ The current available bots are:
 
 ## In-game screen
 ![](https://cdn.discordapp.com/attachments/1019614026038247436/1030129184967766036/unknown.png)
-
-
-## Authors
-- [@Casper Bröcheler](https://github.com/casperbroch)
-- [@Oistín Rutledge](https://github.com/DataDem0n)
-- [@Laurent Bijman](https://github.com/Akita67)
-- [@Miel Geraats](https://github.com/MielGeraats)
-- [@Fred Schmitz](https://github.com/JuiceeBoxx)
-- [@Aurelien Giuglaris – Michael](https://github.com/auregiuglarism)
-- [@Vince Kotsis]()
 
