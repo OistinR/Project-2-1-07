@@ -13,7 +13,7 @@ public class ScoringEngine {
 
     private int redScore;
     private int blueScore;
-    public int floodcount;
+    private int floodcount;
 
     private ArrayList<Integer> redList;
     private ArrayList<Integer> blueList;
