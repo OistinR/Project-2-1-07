@@ -132,12 +132,12 @@ public class GameScreen implements Screen {
         updateState();
         // System.out.println(STATE);
 
-        if(gamefinished==false) {
+        if(!gamefinished) {
             confirmButton.update();
             font.draw(game.mainBatch, "Confirm move", 105, 90);
         }
 
-        if(!(round==1)&&gamefinished==false){
+        if(!(round==1)&& !gamefinished){
             undoButton.update();
             undoButton.setActivated(true);
             font.draw(game.mainBatch, "Undo move", 1013, 90);
@@ -159,10 +159,10 @@ public class GameScreen implements Screen {
 
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
 
-        if (firstColor && gamefinished==false) {
+        if (firstColor && !gamefinished) {
 			game.mainBatch.draw(redTileTexture, 700, 70);
 			font.draw(game.mainBatch, "The next colour is : ", 550, 100);
-		} else if(gamefinished==false) {
+		} else if(!gamefinished) {
             game.mainBatch.draw(blueTileTexture, 700, 70);
             font.draw(game.mainBatch, "The next colour is : ", 550, 100);
         }
@@ -349,7 +349,7 @@ public class GameScreen implements Screen {
      **/
     public void updateHexField() {
         for (Hexagon h : field) {// for each tile in the field array
-            if(gamefinished==false) {
+            if(!gamefinished) {
                 // check if any tiles have the hover sprite while not being hovered over
             if (!h.mouseHover() && h.getMyState() == Hexagon.state.HOVER) {
                 h.setMyState(Hexagon.state.BLANK);
@@ -427,7 +427,7 @@ public class GameScreen implements Screen {
         if (firstColor) {
             h.setMyState(Hexagon.state.RED);
             firstColor = false;
-        } else if (!firstColor) {
+        } else {
             h.setMyState(Hexagon.state.BLUE);
             firstColor = true;
         }
