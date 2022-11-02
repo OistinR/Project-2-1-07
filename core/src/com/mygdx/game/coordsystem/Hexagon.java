@@ -1,9 +1,12 @@
 package com.mygdx.game.coordsystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.Omega;
 
 /**
  * This is the general Hexagon-shaped tile object.
@@ -17,7 +20,8 @@ public class Hexagon implements Cloneable {
     private int q;
     private int r;
     private int s;
-
+    private int fitness1;
+    private int fitness2;
     private int SCREENWIDTH;
 	private int SCREENHEIGHT;
 
@@ -52,12 +56,14 @@ public class Hexagon implements Cloneable {
      * @param size the width and height of tile
      * @param bat the sprite batch this sprite will be rendered in
      */
-    public Hexagon (int q, int r, int size, SpriteBatch bat) {
+    public Hexagon (int q, int r, int size, SpriteBatch bat, int fitness1, int fitness2) {
         this.q = q;
         this.r = r;
         this.s = -q-r;
         this.size = size;
         this.bat= bat;
+        this.fitness1 = fitness1;
+        this.fitness2 = fitness2;
 		this.SCREENWIDTH = Gdx.graphics.getWidth();
 		this.SCREENHEIGHT = Gdx.graphics.getHeight();
         this.checked = false;
@@ -135,6 +141,18 @@ public class Hexagon implements Cloneable {
 
     public state getMyState() {
         return myState;
+    }
+    public void setMyFitness(int fitness, int FA) {
+        if(FA == 1)
+            this.fitness1 = fitness;
+        else
+            this.fitness2 = fitness;
+    }
+    public int getFitness1(){
+        return fitness1;
+    }
+    public int getFitness2(){
+        return fitness2;
     }
 
     public boolean getChecked() {
