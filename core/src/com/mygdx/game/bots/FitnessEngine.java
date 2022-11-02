@@ -10,11 +10,9 @@ import com.mygdx.game.scoringsystem.ScoringEngine;
 public class FitnessEngine {
 
     private ScoringEngine SEngine;
-    private int floodcount;
 
     public FitnessEngine(){
         SEngine = new ScoringEngine();
-        floodcount = 0;
     }
 
     public void update(ArrayList<Hexagon> field){

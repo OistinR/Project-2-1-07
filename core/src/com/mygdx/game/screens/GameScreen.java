@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Omega;
 import com.mygdx.game.bots.Bot;
+import com.mygdx.game.bots.FitnessEngine;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
@@ -48,6 +49,7 @@ public class GameScreen implements Screen {
      */
     private ArrayList<Hexagon> field;
     private ScoringEngine SEngine;
+    private FitnessEngine SFitness;
     public BitmapFont font;
     private boolean arrowPlayerOne;
     private Texture blueTileTexture;
@@ -98,6 +100,7 @@ public class GameScreen implements Screen {
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
 		SEngine = new ScoringEngine();
+        SFitness = new FitnessEngine();
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 		arrowPlayerOne = true;
@@ -129,6 +132,7 @@ public class GameScreen implements Screen {
 		// update hex field check below for info.
 		updateHexField();
 		updateScore();
+        updateFitness();
         updateState();
         // System.out.println(STATE);
 
@@ -268,7 +272,7 @@ public class GameScreen implements Screen {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
                 if (s <= fieldsize && s >= -fieldsize) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch));
+                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
                 }
             }
         }
@@ -283,29 +287,29 @@ public class GameScreen implements Screen {
         int fieldsize = 5;
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 if(r>3||r<-3) {
-                    field.add(new Hexagon(0, r, 50, game.mainBatch));
-                    field.add(new Hexagon(r, 0, 50, game.mainBatch));
+                    field.add(new Hexagon(0, r, 50, game.mainBatch,0,0));
+                    field.add(new Hexagon(r, 0, 50, game.mainBatch,0,0));
                 }
             }
 
 
-        field.add(new Hexagon(-4, 4, 50, game.mainBatch));
-        field.add(new Hexagon(-5, 5, 50, game.mainBatch));
+        field.add(new Hexagon(-4, 4, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(-5, 5, 50, game.mainBatch,0,0));
 
-        field.add(new Hexagon(4, -4, 50, game.mainBatch));
-        field.add(new Hexagon(5, -5, 50, game.mainBatch));
+        field.add(new Hexagon(4, -4, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(5, -5, 50, game.mainBatch,0,0));
 
-        field.add(new Hexagon(-5, -1, 50, game.mainBatch));
-        field.add(new Hexagon(-1, -5, 50, game.mainBatch));
+        field.add(new Hexagon(-5, -1, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(-1, -5, 50, game.mainBatch,0,0));
 
-        field.add(new Hexagon(6, 0, 50, game.mainBatch));
-        field.add(new Hexagon(0, 6, 50, game.mainBatch));
+        field.add(new Hexagon(6, 0, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(0, 6, 50, game.mainBatch,0,0));
 
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
                 if (s <= fieldsize && s >= -fieldsize&&r<4&&r>-4&&q<4&&q>-4) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch));
+                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
                 }
             }
         }
@@ -321,7 +325,7 @@ public class GameScreen implements Screen {
             for (int r = 2; r >= -2; r--) {
                 s = -q - r;
                 if (s <= fieldsize && s >= -fieldsize) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch));
+                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
                 }
             }
         }
@@ -336,7 +340,7 @@ public class GameScreen implements Screen {
             for (int r = fieldsize-1; r >= -fieldsize+1; r--) {
                 s = -q - r;
                 if (s <= fieldsize+3 && s >= -fieldsize-3 && s!=3&& s!=-3&&r!=3&& r!=-3&&q!=3&& q!=-3) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch));
+                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
                 }
             }
         }
@@ -438,6 +442,9 @@ public class GameScreen implements Screen {
      */
     public void updateScore() {
         SEngine.calculate(field);
+    }
+    public void updateFitness(){
+        SFitness.update(field);
     }
 
     /**
