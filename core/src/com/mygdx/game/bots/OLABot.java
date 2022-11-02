@@ -1,6 +1,5 @@
 package com.mygdx.game.bots;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 

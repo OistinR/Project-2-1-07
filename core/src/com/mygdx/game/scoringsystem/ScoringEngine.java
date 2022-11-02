@@ -1,7 +1,6 @@
 package com.mygdx.game.scoringsystem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.coordsystem.Hexagon.state;
