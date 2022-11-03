@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
 		// update hex field check below for info.
 		updateHexField();
 		updateScore();
-        updateFitness();
+
         updateState();
         // System.out.println(STATE);
 
@@ -206,6 +206,8 @@ public class GameScreen implements Screen {
             }
             undoHexagon = null;
             undoHexagon2 = null;
+
+            updateFitness();
         }
 
         if (STATE == state.P2P3 && confirmButton.mouseDown()) {

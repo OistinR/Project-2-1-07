@@ -14,6 +14,7 @@ public class ScoringEngine {
     private int redScore;
     private int blueScore;
     public int floodcount;
+    private boolean simulation;
 
     private ArrayList<Integer> redList;
     private ArrayList<Integer> blueList;
@@ -27,6 +28,7 @@ public class ScoringEngine {
         floodcount = 0;
         redList = new ArrayList<>();
         blueList = new ArrayList<>();
+        simulation = false;
     }
 
     /**
@@ -40,12 +42,12 @@ public class ScoringEngine {
             if(h.getMyState()==Hexagon.state.RED&&h.getChecked()==false) {
                 h.setChecked(true);
                 floodcount=1;
-                floodfill(h,field,Hexagon.state.RED);
+                floodfill(h,field,Hexagon.state.RED,simulation);
                 redList.add(floodcount);
             } else if (h.getMyState()== Hexagon.state.BLUE) {
                 h.setChecked(true);
                 floodcount=1;
-                floodfill(h,field,Hexagon.state.BLUE);
+                floodfill(h,field,Hexagon.state.BLUE,simulation);
                 blueList.add(floodcount);
             }
         }
@@ -81,39 +83,39 @@ public class ScoringEngine {
      * @param field the field with all the hexagons of the map
      * @param hexstate the enum of the hexagon BLANK RED BLUE
      */
-    public void floodfill(Hexagon h, ArrayList<Hexagon> field, state hexstate) {
+    public void floodfill(Hexagon h, ArrayList<Hexagon> field, state hexstate,boolean simulation) {
         if(h.getMyState()!=hexstate) {return;}
 
         for(Hexagon hex:field) {
             if(hex.getMyState()==hexstate&&hex.getChecked()==false&&hex.getQ()==h.getQ()+1&&hex.getR()==h.getR()) {
-                hex.setChecked(true);
+                if(!simulation){hex.setChecked(true);}
                 floodcount++;
-                floodfill(hex, field, hexstate);
+                floodfill(hex, field, hexstate,simulation);
             }
             if(hex.getMyState()==hexstate&&hex.getChecked()==false&&hex.getQ()==h.getQ()-1&&hex.getR()==h.getR()) {
-                hex.setChecked(true);
+                if(!simulation){hex.setChecked(true);}
                 floodcount++;
-                floodfill(hex, field, hexstate);
+                floodfill(hex, field, hexstate,simulation);
             }
             if(hex.getMyState()==hexstate&&hex.getChecked()==false&&hex.getQ()==h.getQ()&&hex.getR()==h.getR()+1) {
-                hex.setChecked(true);
+                if(!simulation){hex.setChecked(true);}
                 floodcount++;
-                floodfill(hex, field, hexstate);
+                floodfill(hex, field, hexstate,simulation);
             }
             if(hex.getMyState()==hexstate&&hex.getChecked()==false&&hex.getQ()==h.getQ()&&hex.getR()==h.getR()-1) {
-                hex.setChecked(true);
+                if(!simulation){hex.setChecked(true);}
                 floodcount++;
-                floodfill(hex, field, hexstate);
+                floodfill(hex, field, hexstate,simulation);
             }
             if(hex.getMyState()==hexstate&&hex.getChecked()==false&&hex.getQ()==h.getQ()-1&&hex.getR()==h.getR()+1) {
-                hex.setChecked(true);
+                if(!simulation){hex.setChecked(true);}
                 floodcount++;
-                floodfill(hex, field, hexstate);
+                floodfill(hex, field, hexstate,simulation);
             }
             if(hex.getMyState()==hexstate&&hex.getChecked()==false&&hex.getQ()==h.getQ()+1&&hex.getR()==h.getR()-1) {
-                hex.setChecked(true);
+                if(!simulation){hex.setChecked(true);}
                 floodcount++;
-                floodfill(hex, field, hexstate);
+                floodfill(hex, field, hexstate,simulation);
             } 
         }
     }
