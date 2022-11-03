@@ -56,12 +56,12 @@ public class MenuScreen implements Screen {
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         omegaSymbol = new Texture(Gdx.files.internal("omegaSymbol.png"));
-        PVP = new TextButton("Play: 2 Player", menuSkin);
+        PVP = new TextButton("Play: Player vs Player", menuSkin);
         PVP.setColor(Color.BLACK);
         PVP.setPosition(325, 270);
         PVP.setSize(200, 100);
 
-        PVAI = new TextButton("Play: AI", menuSkin);
+        PVAI = new TextButton("Play: Player vs Bot", menuSkin);
         PVAI.setColor(Color.BLACK);
         PVAI.setPosition(525, 270);
         PVAI.setSize(200, 100);
