@@ -10,11 +10,11 @@ import com.mygdx.game.scoringsystem.ScoringEngine;
 public class FitnessEngine {
 
     private ScoringEngine SEngine;
-    private boolean simulation;
+    private boolean DEBUG;
 
     public FitnessEngine(){
         SEngine = new ScoringEngine();
-        simulation = true;
+        DEBUG = true;
     }
 
     public void update(ArrayList<Hexagon> field){
@@ -26,25 +26,26 @@ public class FitnessEngine {
 
                 h.setChecked(true);
                 SEngine.floodcount=1;
-                SEngine.floodfill(h,field,Hexagon.state.RED,simulation);
+                SEngine.floodfill(h,field,Hexagon.state.RED);
                 //System.out.println("group size of red " + SEngine.floodcount);
                 updateHexFitness(SEngine.floodcount,h,1);
-                System.out.print("this is the fitness of placing our colour " + h.getFitness1());
+                if(DEBUG)System.out.print("this is the fitness of placing our colour " + h.getFitness1());
                 ///////////////////////////////////////////////////////////////////
                 h.setMyState(state.BLUE); //Simulate if the hex is RED
 
                 SEngine.floodcount=1;
-                SEngine.floodfill(h,field,Hexagon.state.BLUE,simulation);
+                SEngine.floodfill(h,field,Hexagon.state.BLUE);
                 //System.out.println("group size of blue " + SEngine.floodcount);
                 updateHexFitness(SEngine.floodcount,h,-1);
-                System.out.println(" this is the fitness of placing the others colour " + h.getFitness2());
-                System.out.println(h.getR() + " " + h.getQ());
+                if(DEBUG)System.out.println(" this is the fitness of placing the others colour " + h.getFitness2());
+                if(DEBUG)System.out.println(h.getR() + " " + h.getQ());
 
                 h.setMyState(state.BLANK); //Put the hex back to BLANK
+                SEngine.resetChecked(field);
             }
 
         }
-        SEngine.resetChecked(field);
+        if(DEBUG)System.out.println("////////////////////////////////////////");
     }
     public void updateHexFitness(int floodcount, Hexagon h, int FA){ //FA is Fitness Adapter
         switch (floodcount){

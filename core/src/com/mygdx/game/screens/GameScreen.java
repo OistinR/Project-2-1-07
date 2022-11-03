@@ -216,6 +216,7 @@ public class GameScreen implements Screen {
             undoHexagon = null;
             undoHexagon2 = null;
             round++;
+            updateFitness();
         }
 
     }
