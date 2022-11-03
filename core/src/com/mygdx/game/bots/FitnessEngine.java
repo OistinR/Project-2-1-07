@@ -42,6 +42,7 @@ public class FitnessEngine {
 
                 h.setMyState(state.BLANK); //Put the hex back to BLANK
                 SEngine.resetChecked(field);
+                if(DEBUG)System.out.println("placing our colour there " + (h.getFitness1()-h.getFitness2()));
             }
 
         }

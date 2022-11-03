@@ -146,6 +146,8 @@ public class Hexagon implements Cloneable {
         else
             this.fitness2 = fitness;
     }
+    //to see the best placement for our colour we need to do fitness1 + -fitness2
+    //Same for if we want to see what the best placement is for the opponent colour we need to do -fitness1 + fitness2
     public int getFitness1(){
         return fitness1;
     }
