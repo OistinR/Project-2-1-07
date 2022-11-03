@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.mygdx.game.Omega;
+
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
 /**
@@ -127,9 +129,10 @@ public class MenuScreen implements Screen {
             }
         });
 
-        if (clickPvP) {
+        // 2 player gamemodes
+        if (clickPvP) { // Player vs Player
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false));
+            game.setScreen(new LoadingScreen(game, false, false));
         }
 
         PVAI.addListener(new ClickListener() {
@@ -138,9 +141,9 @@ public class MenuScreen implements Screen {
             }
         });
 
-        if (clickBVB) {
+        if (clickBVB) { // Bot vs Bot
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true));
+            game.setScreen(new LoadingScreen(game, true, true));
         }
 
         BVB.addListener(new ClickListener() {
@@ -149,9 +152,9 @@ public class MenuScreen implements Screen {
             }
         });
 
-        if (clickPvB) {
+        if (clickPvB) { // Player vs Bot
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true));
+            game.setScreen(new LoadingScreen(game, true, false));
         }
 
         mapSnowflake.addListener(new ClickListener() {
