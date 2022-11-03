@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Omega;
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessEngine;
+import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
@@ -96,7 +97,6 @@ public class GameScreen implements Screen {
             case (3):createHexagonFieldBug();break;
         }
 
-
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
 		SEngine = new ScoringEngine();
@@ -111,7 +111,8 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         //Choose any bot here that extends Bot abstract class
-        bot = new OLABot();
+        //bot = new OLABot();
+        bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE);
     }
 
     @Override
@@ -203,20 +204,20 @@ public class GameScreen implements Screen {
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai) {
                 botmove();
+                STATE = state.P1P1;
+                arrowPlayerOne = true;
+                round++;
             }
             undoHexagon = null;
             undoHexagon2 = null;
-
-            updateFitness();
         }
 
         if (STATE == state.P2P3 && confirmButton.mouseDown()) {
             STATE = state.P1P1;
-            arrowPlayerOne = true; 
+            arrowPlayerOne = true;
             undoHexagon = null;
             undoHexagon2 = null;
             round++;
-            updateFitness();
         }
 
     }
@@ -355,6 +356,7 @@ public class GameScreen implements Screen {
      * sets the current tiles state to "RED".
      **/
     public void updateHexField() {
+        SFitness.update(field);
         for (Hexagon h : field) {// for each tile in the field array
             if(!gamefinished) {
                 // check if any tiles have the hover sprite while not being hovered over
@@ -366,7 +368,6 @@ public class GameScreen implements Screen {
             if (h.mouseHover() && STATE!=state.P1P3 && STATE!=state.P2P3) {
                 if (h.getMyState() == Hexagon.state.BLANK) {
                     h.setMyState(Hexagon.state.HOVER);
-
                 }
             }
 
@@ -401,7 +402,7 @@ public class GameScreen implements Screen {
                 }
             }
             }
-            h.update();
+            h.update(STATE);
         }
     }
 

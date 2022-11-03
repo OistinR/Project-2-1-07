@@ -17,40 +17,38 @@ public class FitnessEngine {
         this.player = player;
         this.opp = opp;
         SEngine = new ScoringEngine();
-        DEBUG = true;
+        DEBUG = false;
     }
 
     public void update(ArrayList<Hexagon> field){
-
-        for(Hexagon h:field){
-
-            if(h.getMyState()==state.BLANK && h.getChecked()==false){
+        for(Hexagon h:field) {
+            if (h.getMyState() == state.BLANK && !h.getChecked()) {// maybe change UwU
                 h.setMyState(player); //Simulate if the hex is RED
 
                 h.setChecked(true);
-                SEngine.floodcount=1;
-                SEngine.floodfill(h,field,player);
+                SEngine.floodcount = 1;
+                SEngine.floodfill(h, field, player);
                 //System.out.println("group size of red " + SEngine.floodcount);
-                updateHexFitness(SEngine.floodcount,h,1);
-                if(DEBUG)System.out.print("this is the fitness of placing our colour " + h.getFitness1());
+                updateHexFitness(SEngine.floodcount, h, 1);
+                if (DEBUG) System.out.print("this is the fitness of placing our colour " + h.getFitness1());
                 ///////////////////////////////////////////////////////////////////
                 h.setMyState(opp); //Simulate if the hex is RED
 
-                SEngine.floodcount=1;
-                SEngine.floodfill(h,field,opp);
+                SEngine.floodcount = 1;
+                SEngine.floodfill(h, field, opp);
                 //System.out.println("group size of blue " + SEngine.floodcount);
-                updateHexFitness(SEngine.floodcount,h,-1);
-                if(DEBUG)System.out.println(" this is the fitness of placing the others colour " + h.getFitness2());
-                if(DEBUG)System.out.println(h.getR() + " " + h.getQ());
+                updateHexFitness(SEngine.floodcount, h, -1);
+                if (DEBUG) System.out.println(" this is the fitness of placing the others colour " + h.getFitness2());
+                if (DEBUG) System.out.println(h.getR() + " " + h.getQ());
 
                 h.setMyState(state.BLANK); //Put the hex back to BLANK
                 SEngine.resetChecked(field);
-                if(DEBUG)System.out.println("placing our colour there " + (h.getFitness1()-h.getFitness2()));
+                if (DEBUG) System.out.println("placing our colour there " + (h.getFitness1() - h.getFitness2()));
             }
-
         }
         if(DEBUG)System.out.println("////////////////////////////////////////");
     }
+
     public void updateHexFitness(int floodcount, Hexagon h, int FA){ //FA is Fitness Adapter
         switch (floodcount){
             case 1:
