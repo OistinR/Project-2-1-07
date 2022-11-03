@@ -5,6 +5,8 @@ import com.mygdx.game.screens.GameScreen;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
 
 public class FitnessGroupBot extends Bot{
     private Hexagon.state myColor;
@@ -37,6 +39,7 @@ public class FitnessGroupBot extends Bot{
     }
 
     public int getBestHexagon(ArrayList<Hexagon> field, GameScreen.state stateGame){
+        ArrayList<Integer> bestList = new ArrayList<>();
         int t = 0;
         int count = 0;
         int maxFit = -50;
@@ -46,36 +49,69 @@ public class FitnessGroupBot extends Bot{
                 count++;
                 continue;
             }
+            int highest = 0;
+
 
             switch(stateGame){
+
                 case P1P1:
                     if(h.getFitness1()-h.getFitness2()>=maxFit){
                         maxFit = h.getFitness1()-h.getFitness2();
+                        if(field.get(highest).getFitness1()-field.get(highest).getFitness2()==maxFit){
+                            bestList.add(count);
+                        }
+                        else{
+                            bestList.clear();
+                            bestList.add(count);
+                        }
                         t = count;
                     }
                     break;
                 case P1P2:
                     if(h.getFitness2()-h.getFitness1()>=maxFit){
                         maxFit = h.getFitness2()-h.getFitness1();
+                        if(field.get(highest).getFitness2()-field.get(highest).getFitness1()==maxFit){
+                            bestList.add(count);
+                        }
+                        else{
+                            bestList.clear();
+                            bestList.add(count);
+                        }
                         t = count;
                     }
                     break;
                 case P2P1:
                     if((h.getFitness1()-h.getFitness2())*-1>=maxFit){
                         maxFit = (h.getFitness1()-h.getFitness2())*-1;
+                        if((field.get(highest).getFitness1()-field.get(highest).getFitness2())*-1==maxFit){
+                            bestList.add(count);
+                        }
+                        else{
+                            bestList.clear();
+                            bestList.add(count);
+                        }
                         t = count;
                     }
                     break;
                 case P2P2:
                     if((h.getFitness2()-h.getFitness1())*-1>=maxFit){
                         maxFit = (h.getFitness2()-h.getFitness1())*-1;
+                        if((field.get(highest).getFitness2()-field.get(highest).getFitness1())*-1==maxFit){
+                            bestList.add(count);
+                        }
+                        else{
+                            bestList.clear();
+                            bestList.add(count);
+                        }
                         t = count;
                     }
                     break;
             }
         count++;
         }
-        return t;
+
+        Random r = new Random();
+        return bestList.get(r.nextInt(bestList.size()));
     }
 }
 
