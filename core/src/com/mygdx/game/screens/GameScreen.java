@@ -470,8 +470,10 @@ public class GameScreen implements Screen {
      */
 
     public void whoIsPlayingAIvsAI() {
-        botmove();
-        System.out.println("Moved made by: " + bot);
+        if (stopGame == false) {
+            botmove();
+        }
+
         if (hexPlaced >= 2) { // turn tracker: 0 = p1 first stone, 1 = p1 second stone, 3 & 4 = same for p2
             if (turnTracker >= 2) { // 2 = end of p1 turn, 5 = end of p2 turn
                 arrowPlayerOne = false; // 6 = end of the round
@@ -487,7 +489,6 @@ public class GameScreen implements Screen {
             }
             if (turnTracker == 3) {
                 bot2move();
-                System.out.println("Moved made by: " + bot2);
             }
             if (turnTracker == 6) {
                 arrowPlayerOne = true;
