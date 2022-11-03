@@ -100,7 +100,7 @@ public class GameScreen implements Screen {
 		SCREENWIDTH = Gdx.graphics.getWidth();
 		SCREENHEIGHT = Gdx.graphics.getHeight();
 		SEngine = new ScoringEngine();
-        SFitness = new FitnessEngine();
+        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 		arrowPlayerOne = true;

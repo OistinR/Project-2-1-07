@@ -3,7 +3,6 @@ package com.mygdx.game.bots;
 import com.mygdx.game.coordsystem.Hexagon;
 
 import java.util.ArrayList;
-import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.coordsystem.Hexagon.state;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 
@@ -11,8 +10,12 @@ public class FitnessEngine {
 
     private ScoringEngine SEngine;
     private boolean DEBUG;
+    private Hexagon.state player;
+    private Hexagon.state opp;
 
-    public FitnessEngine(){
+    public FitnessEngine(state player, state opp){
+        this.player = player;
+        this.opp = opp;
         SEngine = new ScoringEngine();
         DEBUG = true;
     }
@@ -22,19 +25,19 @@ public class FitnessEngine {
         for(Hexagon h:field){
 
             if(h.getMyState()==state.BLANK && h.getChecked()==false){
-                h.setMyState(state.RED); //Simulate if the hex is RED
+                h.setMyState(player); //Simulate if the hex is RED
 
                 h.setChecked(true);
                 SEngine.floodcount=1;
-                SEngine.floodfill(h,field,Hexagon.state.RED);
+                SEngine.floodfill(h,field,player);
                 //System.out.println("group size of red " + SEngine.floodcount);
                 updateHexFitness(SEngine.floodcount,h,1);
                 if(DEBUG)System.out.print("this is the fitness of placing our colour " + h.getFitness1());
                 ///////////////////////////////////////////////////////////////////
-                h.setMyState(state.BLUE); //Simulate if the hex is RED
+                h.setMyState(opp); //Simulate if the hex is RED
 
                 SEngine.floodcount=1;
-                SEngine.floodfill(h,field,Hexagon.state.BLUE);
+                SEngine.floodfill(h,field,opp);
                 //System.out.println("group size of blue " + SEngine.floodcount);
                 updateHexFitness(SEngine.floodcount,h,-1);
                 if(DEBUG)System.out.println(" this is the fitness of placing the others colour " + h.getFitness2());
