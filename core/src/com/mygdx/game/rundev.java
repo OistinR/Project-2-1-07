@@ -72,27 +72,26 @@ public class rundev {
             gameFinish();
         }
 
-        if(numhex == 1 && STATE == state.P1P1) {
-            STATE = state.P1P2;
-        } else if (numhex == 2 && (STATE == state.P1P2||STATE == state.P1P1)) {
-            STATE = state.P1P3;
-        } else if (numhex == 3 && STATE == state.P2P1) {
-            STATE = state.P2P2;
-        } else if (numhex == 4 && (STATE == state.P2P2||STATE == state.P2P1)) {
-            STATE = state.P2P3;
-        }
+        // if(numhex == 1 && STATE == state.P1P1) {
+        //     STATE = state.P1P2;
+        // } else if (numhex == 2 && (STATE == state.P1P2||STATE == state.P1P1)) {
+        //     STATE = state.P1P3;
+        // } else if (numhex == 3 && STATE == state.P2P1) {
+        //     STATE = state.P2P2;
+        // } else if (numhex == 4 && (STATE == state.P2P2||STATE == state.P2P1)) {
+        //     STATE = state.P2P3;
+        // }
 
-        if (STATE == state.P1P3 /* && CONFIRM INPUT HERE */) {
-            STATE = state.P2P1;
-            //BOT MOVE HERE
-        }
+        // if (STATE == state.P1P3 /* && CONFIRM INPUT HERE */) {
+        //     STATE = state.P2P1;
+        //     //BOT MOVE HERE
+        // }
 
-        if (STATE == state.P2P3 /* && CONFIRM INPUT HERE */) {
-            STATE = state.P1P1;
-            //BOT MOVE HERE
-            round++;
-        }
-
+        // if (STATE == state.P2P3 /* && CONFIRM INPUT HERE */) {
+        //     STATE = state.P1P1;
+        //     //BOT MOVE HERE
+        //     round++;
+        // }
     }
 
     public int numHex() {
