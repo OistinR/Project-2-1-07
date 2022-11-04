@@ -59,6 +59,7 @@ public class GameScreen implements Screen {
 
     private ConfirmButton confirmButton;
 	private UndoButton undoButton;
+    private ConfirmButton backToMenu;
 
 	public Hexagon undoHexagon;
 	public Hexagon undoHexagon2;
@@ -108,6 +109,7 @@ public class GameScreen implements Screen {
 		blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
         confirmButton = new ConfirmButton(100,60, game.mainBatch);
 		undoButton = new UndoButton(1000, 60, game.mainBatch, false);
+        backToMenu = new ConfirmButton(1000, 600, game.mainBatch);
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         //Choose any bot here that extends Bot abstract class
@@ -124,6 +126,10 @@ public class GameScreen implements Screen {
             this.dispose();
             game.setScreen(new MenuScreen(game));
         }
+        if (backToMenu.mouseDown()) {
+            this.dispose();
+            game.setScreen(new MenuScreen(game));
+        }
 
 		// Reset screen after every render tick
 		ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
@@ -136,6 +142,8 @@ public class GameScreen implements Screen {
 
         updateState();
         // System.out.println(STATE);
+        backToMenu.update();
+        font.draw(game.mainBatch, "Back to menu", 1005, 630);
 
         if(!gamefinished) {
             confirmButton.update();
