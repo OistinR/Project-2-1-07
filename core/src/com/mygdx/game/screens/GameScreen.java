@@ -122,7 +122,7 @@ public class GameScreen implements Screen {
         // Choose any bot here that extends Bot abstract class and bot bots are used for
         // bot vs bot
         bot = new OLABot();
-        bot2 = new RandomBot();
+        bot2 = new OLABot();
     }
 
     @Override
