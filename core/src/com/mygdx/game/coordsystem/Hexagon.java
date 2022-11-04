@@ -42,10 +42,10 @@ public class Hexagon implements Cloneable {
     private state myState = state.BLANK;
     private SpriteBatch bat;
 
-    private Texture blankTileTexture = new Texture(Gdx.files.internal("Hex.png"));
-    private Texture redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
-    private Texture blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
-    private Texture highlightTexture = new Texture(Gdx.files.internal("Highlight.png"));
+    private Texture blankTileTexture;
+    private Texture redTileTexture;
+    private Texture blueTileTexture;
+    private Texture highlightTexture;
     private Sprite hexSprite;
 
     /**
@@ -55,6 +55,10 @@ public class Hexagon implements Cloneable {
      * @param bat the sprite batch this sprite will be rendered in
      */
     public Hexagon (int q, int r, int size, SpriteBatch bat, int fitness1, int fitness2) {
+        blankTileTexture = new Texture(Gdx.files.internal("Hex.png"));
+        redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
+        blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
+        highlightTexture = new Texture(Gdx.files.internal("Highlight.png"));
         this.q = q;
         this.r = r;
         this.s = -q-r;
@@ -69,6 +73,16 @@ public class Hexagon implements Cloneable {
         hexSprite = new Sprite(blankTileTexture,50,50);
         hexSprite.setSize(50,50);
         hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
+    }
+
+    public Hexagon (int q, int r, int size,int fitness1, int fitness2) {
+        this.q = q;
+        this.r = r;
+        this.s = -q-r;
+        this.size = size;
+        this.fitness1 = fitness1;
+        this.fitness2 = fitness2;
+        this.checked = false;
     }
 
 
