@@ -18,26 +18,19 @@ import com.mygdx.game.Omega;
 import java.util.ArrayList;
 
 /**
- *MenuScreen is the first screen the user will see when starting the game,in this file he can choose between multiples
+ * MenuScreen is the first screen the user will see when starting the game,in
+ * this file he can choose between multiples
  * maps and options before starting the game
  */
 public class MenuScreen implements Screen {
 
     private Omega game;
-    private boolean click = false;
-    private boolean clickAI = false;
-    private boolean clickInstruction = false;
+    private boolean click = false, clickAI = false, clickInstruction = false, clickBVB = false;
     private Stage stage;
     private Texture omegaSymbol;
     private Skin menuSkin;
-    private TextButton PVP;
-    private TextButton PVAI;
-    private TextButton mapDefault;
-    private TextButton mapSnowflake;
-    private TextButton mapSimple;
-    private TextButton mapBug;
-    private TextButton instructionButton;
-    public static int mapChoice =0 ;
+    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton;
+    public static int mapChoice = 0;
     private ArrayList<TextButton> listOfMapButtons;
 
     /**
@@ -50,14 +43,20 @@ public class MenuScreen implements Screen {
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         omegaSymbol = new Texture(Gdx.files.internal("omegaSymbol.png"));
+
         PVP = new TextButton("Play: 2 Player", menuSkin);
         PVP.setColor(Color.BLACK);
-        PVP.setPosition(445, 270);
+        PVP.setPosition(325, 270);
         PVP.setSize(200, 100);
+
+        BVB = new TextButton("Play: Bot vs Bot", menuSkin);
+        BVB.setColor(Color.BLACK);
+        BVB.setPosition(725, 270);
+        BVB.setSize(200, 100);
 
         PVAI = new TextButton("Play: AI", menuSkin);
         PVAI.setColor(Color.BLACK);
-        PVAI.setPosition(645, 270);
+        PVAI.setPosition(525, 270);
         PVAI.setSize(200, 100);
 
         listOfMapButtons = new ArrayList<>();
@@ -66,7 +65,7 @@ public class MenuScreen implements Screen {
         mapDefault.setColor(Color.BLACK);
         mapDefault.setPosition(445, 100);
         mapDefault.setSize(200, 100);
-        mapDefault.setColor(new Color(0.5f,0.5f,0.5f,1f));
+        mapDefault.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
 
         mapSnowflake = new TextButton("Snowflake", menuSkin);
         mapSnowflake.setColor(Color.BLACK);
@@ -90,9 +89,10 @@ public class MenuScreen implements Screen {
 
         instructionButton = new TextButton("Game Instructions", menuSkin);
         instructionButton.setColor(Color.RED);
-        instructionButton.setPosition(45,25);
-        instructionButton.setSize(150,50);
+        instructionButton.setPosition(45, 25);
+        instructionButton.setSize(150, 50);
 
+        stage.addActor(BVB);
         stage.addActor(PVP);
         stage.addActor(PVAI);
         stage.addActor(mapDefault);
@@ -104,10 +104,11 @@ public class MenuScreen implements Screen {
 
     @Override
     /**
-     *Render method render the screen every x times to put new information on the screen when action occur
+     * Render method render the screen every x times to put new information on the
+     * screen when action occur
      */
     public void render(float delta) {
-        ScreenUtils.clear(0.90f,1.00f,1.00f, 1);
+        ScreenUtils.clear(0.90f, 1.00f, 1.00f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         PVP.addListener(new ClickListener() {
@@ -118,7 +119,7 @@ public class MenuScreen implements Screen {
 
         if (click) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game,false));
+            game.setScreen(new LoadingScreen(game, false, false));
         }
 
         PVAI.addListener(new ClickListener() {
@@ -129,36 +130,46 @@ public class MenuScreen implements Screen {
 
         if (clickAI) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game,true));
+            game.setScreen(new LoadingScreen(game, true, false));
         }
 
+        BVB.addListener(new ClickListener() {
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+                clickBVB = true;
+            }
+        });
+
+        if (clickBVB) { // Bot vs Bot
+            this.dispose();
+            game.setScreen(new LoadingScreen(game, true, true));
+        }
 
         mapSnowflake.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
-                mapChoice =1;
+                mapChoice = 1;
                 resetButtons();
-                mapSnowflake.setColor(new Color(0.5f,0.5f,0.5f,1f));
+                mapSnowflake.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         });
         mapSimple.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
-                mapChoice =2;
+                mapChoice = 2;
                 resetButtons();
-                mapSimple.setColor(new Color(0.5f,0.5f,0.5f,1f));
+                mapSimple.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         });
         mapDefault.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
-                mapChoice =0;
+                mapChoice = 0;
                 resetButtons();
-                mapDefault.setColor(new Color(0.5f,0.5f,0.5f,1f));
+                mapDefault.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         });
         mapBug.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
-                mapChoice =3;
+                mapChoice = 3;
                 resetButtons();
-                mapBug.setColor(new Color(0.5f,0.5f,0.5f,1f));
+                mapBug.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
             }
         });
 
@@ -168,8 +179,8 @@ public class MenuScreen implements Screen {
             }
         });
 
-        if (clickInstruction){
-            //System.out.println("BUtton clicked");
+        if (clickInstruction) {
+            // System.out.println("BUtton clicked");
             this.dispose();
             game.setScreen(new InstructionScreen(game));
         }
@@ -186,7 +197,7 @@ public class MenuScreen implements Screen {
         game.font.getData().setScale(3);
         game.font.draw(game.mainBatch, "OMEGA : Java edition", 430, 450);
         game.font.draw(game.mainBatch, "Map Selection", 500, 250);
-        game.mainBatch.draw(omegaSymbol, 525, 475,225f,225f);
+        game.mainBatch.draw(omegaSymbol, 525, 475, 225f, 225f);
 
         game.mainBatch.end();
         game.sr.end();
@@ -195,9 +206,9 @@ public class MenuScreen implements Screen {
     /**
      * the method put all the different buttons in the same organized colour
      */
-    public void resetButtons(){
-        for (TextButton tb:listOfMapButtons){
-            tb.setColor(new Color(0f,0f,0f,1f));
+    public void resetButtons() {
+        for (TextButton tb : listOfMapButtons) {
+            tb.setColor(new Color(0f, 0f, 0f, 1f));
         }
     }
 
