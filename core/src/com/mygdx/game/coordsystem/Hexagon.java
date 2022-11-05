@@ -214,6 +214,8 @@ public class Hexagon implements Cloneable {
         return r;
     }
 
+    public int getS() { return -q -r; }
+
     /**
      * @return gives integer pixel x location of the hexagon
      */

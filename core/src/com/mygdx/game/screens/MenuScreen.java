@@ -130,7 +130,7 @@ public class MenuScreen implements Screen {
 
         if (clickAI) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true, false));
+            game.setScreen(new LoadingScreen(game, false, true));
         }
 
         BVB.addListener(new ClickListener() {
@@ -244,6 +244,10 @@ public class MenuScreen implements Screen {
     public void resume() {
         // TODO Auto-generated method stub
 
+    }
+
+    public void updateMapChoice(){
+        mapChoice = 0;
     }
 
 }

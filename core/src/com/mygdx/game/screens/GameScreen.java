@@ -10,6 +10,7 @@ import com.mygdx.game.Omega;
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessEngine;
 import com.mygdx.game.bots.FitnessGroupBot;
+import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.buttons.ConfirmButton;
@@ -128,8 +129,8 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE );
-        bot2 = new FitnessGroupBot(Hexagon.state.BLUE,Hexagon.state.RED);
+        bot = new MaxN_Paranoid_Bot(Hexagon.state.RED,Hexagon.state.BLUE );
+        bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED );
     }
 
     @Override
@@ -140,11 +141,15 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.dispose();
-            game.setScreen(new MenuScreen(game));
+            MenuScreen menuScreen = new MenuScreen(game);
+            menuScreen.updateMapChoice();
+            game.setScreen(menuScreen);
         }
         if (backToMenu.mouseDown()) {
             this.dispose();
-            game.setScreen(new MenuScreen(game));
+            MenuScreen menuScreen = new MenuScreen(game);
+            menuScreen.updateMapChoice();
+            game.setScreen(menuScreen);
         }
 
         // Reset screen after every render tick
@@ -252,11 +257,11 @@ public class GameScreen implements Screen {
         if (STATE == state.P1P3 && confirmButton.mouseDown()) {
             STATE = state.P2P1;
             arrowPlayerOne = false;
-            if (round == 1 && !ai) {
+            if (round == 1 && !ai2) {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
-            } else if (ai){
-                botmove();
+            } else if (ai2){
+                bot2move();
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
