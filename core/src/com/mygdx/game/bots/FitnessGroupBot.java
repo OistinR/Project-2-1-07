@@ -17,21 +17,35 @@ public class FitnessGroupBot extends Bot{
     public FitnessGroupBot(Hexagon.state myColor, Hexagon.state opponentColor){
         this.myColor = myColor;
         this.opponentColor = opponentColor;
-        FE = new FitnessEngine(myColor, opponentColor);
+        FE = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
     }
 
     @Override
-    public void calculate(ArrayList<Hexagon> field) {
+    public void calculate(ArrayList<Hexagon> field) { //does not support more than 2 players
         FE.update(field);
+        int one = 0;
+        if (myColor== Hexagon.state.BLUE){
+            one = getBestHexagon(field, GameScreen.state.P2P1);
+        }else {
+            one = getBestHexagon(field, GameScreen.state.P1P1);
+        }
 
-        int one = getBestHexagon(field, GameScreen.state.P2P1);//this needs to change its hard coded rn to player 2
+        //this needs to change its hard coded rn to player 2
         if(field.get(one).getMyState()== Hexagon.state.BLANK)
             field.get(one).setMyState(Hexagon.state.RED);
         else
             System.out.println("could not find a good hex at index: "+one);
 
         FE.update(field);
-        int two = getBestHexagon(field, GameScreen.state.P2P2);
+        int two = 0;
+
+        if (myColor== Hexagon.state.RED){
+            two = getBestHexagon(field, GameScreen.state.P2P2);
+        }else {
+            two = getBestHexagon(field, GameScreen.state.P1P2);
+        }
+
+
         if(field.get(two).getMyState()== Hexagon.state.BLANK)
             field.get(two).setMyState(Hexagon.state.BLUE);
         else
@@ -108,13 +122,13 @@ public class FitnessGroupBot extends Bot{
         count++;
         }
         //not sure if this is needed
-        if(bestList.size()>1){
-            Random r = new Random();
-            return bestList.get(r.nextInt(bestList.size()));
-        }
-        else{
+//        if(bestList.size()>1){
+//            Random r = new Random();
+//            return bestList.get(r.nextInt(bestList.size()));
+//        }
+//        else{
             return bestList.get(0);
-        }
+//        }
 
     }
 }
