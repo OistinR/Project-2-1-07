@@ -50,10 +50,8 @@ public class FitnessGroupBot extends Bot{
                 continue;
             }
             int highest = 0;
-
-
+            //right now this could be improved and needs to be in order to optimize.
             switch(stateGame){
-
                 case P1P1:
                     if(h.getFitness1()-h.getFitness2()>=maxFit){
                         maxFit = h.getFitness1()-h.getFitness2();
@@ -109,9 +107,15 @@ public class FitnessGroupBot extends Bot{
             }
         count++;
         }
+        //not sure if this is needed
+        if(bestList.size()>1){
+            Random r = new Random();
+            return bestList.get(r.nextInt(bestList.size()));
+        }
+        else{
+            return bestList.get(0);
+        }
 
-        Random r = new Random();
-        return bestList.get(r.nextInt(bestList.size()));
     }
 }
 

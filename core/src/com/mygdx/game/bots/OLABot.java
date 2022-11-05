@@ -61,8 +61,6 @@ public class OLABot extends Bot{
             }
         }
 
-
-
         //TURN 2 (maximize own score One Look Ahead)
         ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
         int bestpos=-1;
@@ -91,6 +89,7 @@ public class OLABot extends Bot{
                 h.setMyState(Hexagon.state.BLANK);
             }
         }
+
         // if the difference between the original score and the "best score we found" is == 2
         // we randomly select a tile instead to encourage groups. works poorly in small maps.
         System.out.println("old score" + bestscoreOld);

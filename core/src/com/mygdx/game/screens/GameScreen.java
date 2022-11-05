@@ -115,7 +115,7 @@ public class GameScreen implements Screen {
 
         SCREENWIDTH = Gdx.graphics.getWidth();
         SCREENHEIGHT = Gdx.graphics.getHeight();
-         SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
+        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
         SEngine = new ScoringEngine();
         font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -128,7 +128,7 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot = new RandomBot();
+        bot = new OLABot();
         bot2 = new FitnessGroupBot(Hexagon.state.BLUE,Hexagon.state.RED);
     }
 
@@ -161,33 +161,42 @@ public class GameScreen implements Screen {
 
 
         // TODO: make a boolean so that it doesnt draw the buttons when BVB
-    if (!gamefinished && (STATE == state.P1P3||STATE == state.P2P3)) {
-            confirmButton.update();
-            font.draw(game.mainBatch, "Confirm move", 105, 90);
-        }
+        if(!(ai&&ai2)) {
+            if (!gamefinished && (STATE == state.P1P3 || STATE == state.P2P3)) {
+                confirmButton.update();
+                font.draw(game.mainBatch, "Confirm move", 105, 90);
+            }
 
-        if (!(round == 1) && !gamefinished && (STATE == state.P1P3||STATE == state.P2P3)) {
-            undoButton.update();
-            undoButton.setActivated(true);
-            font.draw(game.mainBatch, "Undo move", 1013, 90);
-        }
-        if (round == 1 && STATE == state.P2P1) {
-            pieButton.update();
-            font.draw(game.mainBatch, "Switch?", 1025, 152);
-        }
+            if (!(round == 1) && !gamefinished && (STATE == state.P1P3 || STATE == state.P2P3)) {
+                undoButton.update();
+                undoButton.setActivated(true);
+                font.draw(game.mainBatch, "Undo move", 1013, 90);
+            }
+            if (round == 1 && STATE == state.P2P1) {
+                pieButton.update();
+                font.draw(game.mainBatch, "Switch?", 1025, 152);
+            }
 
-        if (undoButton.mouseDown() && (STATE == state.P1P3 || STATE == state.P2P3)) { // undo IFF p1 or p2 turn// is over
-            undo();
-            undoHexagon = null;
-            undoHexagon2 = null;
+            if (undoButton.mouseDown() && (STATE == state.P1P3 || STATE == state.P2P3)) { // undo IFF p1 or p2 turn// is over
+                undo();
+                undoHexagon = null;
+                undoHexagon2 = null;
+            }
+            font.draw(game.mainBatch, "Back to menu", 1005, 630);
+            if (firstColor && !gamefinished) {
+                game.mainBatch.draw(redTileTexture, 700, 70);
+                font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+            } else if (!gamefinished) {
+                game.mainBatch.draw(blueTileTexture, 700, 70);
+                font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+            }
+            backToMenu.update();
         }
-
-        backToMenu.update();
         // Draw text on screen
         font.draw(game.mainBatch, "Score Of Player Two (Blue): " + SEngine.getBlueScore(), 1000, 700);
         font.draw(game.mainBatch, "Score Of Player One (Pink): " + SEngine.getRedScore(), 100, 700);
         font.draw(game.mainBatch, "Round " + round, 640, 690);
-        font.draw(game.mainBatch, "Back to menu", 1005, 630);
+
         if (arrowPlayerOne)
             font.draw(game.mainBatch, "Player One's Turn", 610, 670);
         else
@@ -195,13 +204,7 @@ public class GameScreen implements Screen {
 
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
 
-        if (firstColor && !gamefinished) {
-            game.mainBatch.draw(redTileTexture, 700, 70);
-            font.draw(game.mainBatch, "The next colour is : ", 550, 100);
-        } else if (!gamefinished) {
-            game.mainBatch.draw(blueTileTexture, 700, 70);
-            font.draw(game.mainBatch, "The next colour is : ", 550, 100);
-        }
+
 
         game.mainBatch.end();
     }
