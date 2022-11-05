@@ -142,10 +142,10 @@ public class GameScreen implements Screen {
             this.dispose();
             game.setScreen(new MenuScreen(game));
         }
-//        if (backToMenu.mouseDown()) {
-//            this.dispose();
-//            game.setScreen(new MenuScreen(game));
-//        }
+        if (backToMenu.mouseDown()) {
+            this.dispose();
+            game.setScreen(new MenuScreen(game));
+        }
 
         // Reset screen after every render tick
         ScreenUtils.clear(0.90f, 1.00f, 1.00f, 1);
@@ -182,12 +182,12 @@ public class GameScreen implements Screen {
             undoHexagon2 = null;
         }
 
-        //backToMenu.update();
+        backToMenu.update();
         // Draw text on screen
         font.draw(game.mainBatch, "Score Of Player Two (Blue): " + SEngine.getBlueScore(), 1000, 700);
         font.draw(game.mainBatch, "Score Of Player One (Pink): " + SEngine.getRedScore(), 100, 700);
         font.draw(game.mainBatch, "Round " + round, 640, 690);
-        //font.draw(game.mainBatch, "Back to menu", 1005, 630);
+        font.draw(game.mainBatch, "Back to menu", 1005, 630);
         if (arrowPlayerOne)
             font.draw(game.mainBatch, "Player One's Turn", 610, 670);
         else
@@ -438,9 +438,7 @@ public class GameScreen implements Screen {
                         System.out.println("you cannot colour that hexagon");
                     }
                 }
-
-
-
+            }
                 if (pieButton.mouseDown() && round == 1 && STATE == state.P2P1) {
                     for (Hexagon a : field) {
                         if (undoHexagonPie.equals(a)) {
@@ -451,8 +449,7 @@ public class GameScreen implements Screen {
                         }
                     }
                 }
-            }
-            //error?
+
             }
             h.update(STATE);
 
