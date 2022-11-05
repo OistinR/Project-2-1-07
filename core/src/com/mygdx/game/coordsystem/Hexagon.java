@@ -1,9 +1,12 @@
 package com.mygdx.game.coordsystem;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.screens.GameScreen;
 
 /**
  * This is the general Hexagon-shaped tile object.
@@ -13,10 +16,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class Hexagon implements Cloneable {
     private int size;
-
+    private boolean DEBUG;
     private int q;
     private int r;
     private int s;
+    //placing your own
+    //placing your opponents
+    private int fitness1;
+    private int fitness2;
+
+    private BitmapFont fitnessText = new BitmapFont();
 
     private int SCREENWIDTH;
 	private int SCREENHEIGHT;
@@ -52,15 +61,20 @@ public class Hexagon implements Cloneable {
      * @param size the width and height of tile
      * @param bat the sprite batch this sprite will be rendered in
      */
-    public Hexagon (int q, int r, int size, SpriteBatch bat) {
+    public Hexagon (int q, int r, int size, SpriteBatch bat, int fitness1, int fitness2) {
         this.q = q;
         this.r = r;
         this.s = -q-r;
         this.size = size;
         this.bat= bat;
+        this.fitness1 = fitness1;
+        this.fitness2 = fitness2;
 		this.SCREENWIDTH = Gdx.graphics.getWidth();
 		this.SCREENHEIGHT = Gdx.graphics.getHeight();
         this.checked = false;
+
+        //this enables the fitness score being rendered over the hexagon
+        DEBUG = false;
 
         hexSprite = new Sprite(blankTileTexture,50,50);
         hexSprite.setSize(50,50);
@@ -72,7 +86,7 @@ public class Hexagon implements Cloneable {
      * sets position of sprite.
      * draws the sprite based on sprite batch.
      * **/
-    public void update(){
+    public void update(GameScreen.state stateGame){
         switch (myState) {
             case BLUE:
                 hexSprite.setTexture(blueTileTexture);
@@ -88,10 +102,39 @@ public class Hexagon implements Cloneable {
                 break;
         }
 
+        String fitness ="";
+
+        switch(stateGame){
+            case P1P1:
+                fitness = fitness1-fitness2+"";
+                break;
+            case P1P2:
+                fitness = fitness2-fitness1+"";
+                break;
+            case P2P1:
+                fitness = (fitness1-fitness2)*-1+"";
+                break;
+            case P2P2:
+                fitness = (fitness2-fitness1)*-1+"";
+                break;
+            default:
+                fitness= "";
+                break;
+        }
+        if(getMyState()!=Hexagon.state.BLANK&&getMyState()!= state.HOVER){
+            fitness="";
+        }
+
+        fitnessText.getData().setScale(0.8f);
         hexSprite.setPosition(SCREENWIDTH/2f + getX(), SCREENHEIGHT/2f - getY());
         hexSprite.draw(bat);
-    }
+        fitnessText.setColor(Color.BLACK);
+        //fitnessText.draw(bat,""+fitness1+"/"+fitness2,SCREENWIDTH/2f + getX()+15,SCREENHEIGHT/2f - getY()+30);
+        if(DEBUG){
+            fitnessText.draw(bat,fitness,SCREENWIDTH/2f + getX()+20,SCREENHEIGHT/2f - getY()+35);
+        }
 
+    }
 
     /** Checks if mouse is clicking this tile.
      * returns true if mouse is clicking this tile.
@@ -135,6 +178,21 @@ public class Hexagon implements Cloneable {
 
     public state getMyState() {
         return myState;
+    }
+
+    public void setMyFitness(int fitness, int FA) {
+        if(FA == 1)
+            this.fitness1 = fitness;
+        else
+            this.fitness2 = fitness;
+    }
+    //to see the best placement for our colour we need to do fitness1 + -fitness2
+    //Same for if we want to see what the best placement is for the opponent colour we need to do -fitness1 + fitness2
+    public int getFitness1(){
+        return fitness1;
+    }
+    public int getFitness2(){
+        return fitness2;
     }
 
     public boolean getChecked() {
