@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Omega;
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.OLABot;
+import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.buttons.PieButton;
@@ -79,8 +80,7 @@ public class GameScreen implements Screen {
         this.game = game;
         this.ai = ai;
         this.ai2 = ai2;
-        System.out.println(ai);
-        System.out.println(ai2);
+
     }
 
     @Override
@@ -121,7 +121,7 @@ public class GameScreen implements Screen {
 
         // Choose any bot here that extends Bot abstract class
         bot = new OLABot();
-        bot2 = new OLABot();
+        bot2 = new RandomBot();
     }
 
     @Override
@@ -192,8 +192,16 @@ public class GameScreen implements Screen {
         if (field.size() - (numhex + (4 * (round - 1))) < 4) {
             gameFinish();
         }
-        if (ai2 && ai && (gamefinished == false)) {
+        if (ai2 && ai && (!gamefinished)) {
+            botmove();
             bot2move();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            round++;
+            return;
         }
         // starting moves done by P1
         if (numhex == 1 && STATE == state.P1P1) {
@@ -223,12 +231,12 @@ public class GameScreen implements Screen {
             if (round == 1 && !ai) {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
-            } else if (ai)
+            } else if (ai){
                 botmove();
+            }
             undoHexagon = null;
             undoHexagon2 = null;
         }
-
         if (STATE == state.P2P3 && confirmButton.mouseDown()) {
             STATE = state.P1P1;
             arrowPlayerOne = true;
