@@ -161,12 +161,12 @@ public class GameScreen implements Screen {
 
 
         // TODO: make a boolean so that it doesnt draw the buttons when BVB
-        if (!gamefinished) {
+    if (!gamefinished && (STATE == state.P1P3||STATE == state.P2P3)) {
             confirmButton.update();
             font.draw(game.mainBatch, "Confirm move", 105, 90);
         }
 
-        if (!(round == 1) && !gamefinished) {
+        if (!(round == 1) && !gamefinished && (STATE == state.P1P3||STATE == state.P2P3)) {
             undoButton.update();
             undoButton.setActivated(true);
             font.draw(game.mainBatch, "Undo move", 1013, 90);
