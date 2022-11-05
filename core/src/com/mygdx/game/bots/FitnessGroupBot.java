@@ -14,44 +14,74 @@ public class FitnessGroupBot extends Bot{
 
     private FitnessEngine FE;
 
+    /**
+     *  This constructor sets the two variablesm and starts the fitness engine.
+     *
+     *  <h3>Why is FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE) hard-coded?</h3>
+     *  Right now the way it is set up the fitness engine always uses RED and BLUE in this order for both bots.
+     *  This is intentional, and I can explain why: The bots share the same fitness values for each tile,
+     *  so basically for player 1 placing a red tile to make a group of 3 is good but for player two it is bad.
+     *  This is represented in the formula Laurent came up with. If we use a different scoring engine all of a sudden
+     *  the formulas no longer work. I can explain better in person. -Oistín
+     *
+     * @param myColor the colour I want to maximise
+     * @param opponentColor the colour I was to us to minimise
+     */
     public FitnessGroupBot(Hexagon.state myColor, Hexagon.state opponentColor){
         this.myColor = myColor;
         this.opponentColor = opponentColor;
         FE = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
     }
 
-    @Override
+    /** This method calculates the best place for the first hexagon(red)
+     * then the best place for a blue hexagon. It uses the getBestHexagon() method.
+     * First it checks our colour, (player 1 is red and player 2 is blue), then it runs getBestHexagon() and
+     * updates the field.
+     *
+     * there are various checks involved and im not sure if they are all required. It needs a review.
+     *
+     * @param field the arraylist of hexagons in our field.
+     */
+ @Override
     public void calculate(ArrayList<Hexagon> field) { //does not support more than 2 players
         FE.update(field);
-        int one = 0;
+        int one = -1;
         if (myColor== Hexagon.state.BLUE){
             one = getBestHexagon(field, GameScreen.state.P2P1);
         }else {
             one = getBestHexagon(field, GameScreen.state.P1P1);
         }
 
-        //this needs to change its hard coded rn to player 2
-        if(field.get(one).getMyState()== Hexagon.state.BLANK)
-            field.get(one).setMyState(Hexagon.state.RED);
-        else
-            System.out.println("could not find a good hex at index: "+one);
+        field.get(one).setMyState(Hexagon.state.RED);
+
 
         FE.update(field);
-        int two = 0;
 
+        int two = -1;
         if (myColor== Hexagon.state.RED){
             two = getBestHexagon(field, GameScreen.state.P2P2);
         }else {
             two = getBestHexagon(field, GameScreen.state.P1P2);
         }
+        field.get(two).setMyState(Hexagon.state.BLUE);
 
-
-        if(field.get(two).getMyState()== Hexagon.state.BLANK)
-            field.get(two).setMyState(Hexagon.state.BLUE);
-        else
-            System.out.println("could not find a good hex at index: "+two);
     }
 
+    /**
+     * This method searches through the field and finds the best place(s) to put a hexagon.
+     * This of course depends on who is playing so, it accounts for: P1P1, P1P2, P2P1 and P2P2.(see ugly switch statement)
+     *
+     * For example if we are player 2, and we are placing our second tile, the way we value hexagons is different from
+     * player one placing their first tile. this Value comes from a combination of fitness1 and fitness2.
+     * <i>(Laurent's Equation)</i>
+     *
+     * Sometimes it finds multiple good solutions with equal weight, if that occurs it saves all the indices of the
+     * hexagons that it has found and picks a random one.
+     *
+     * @param field the game field.
+     * @param stateGame the current state the game is in this affects how we value hexagons.
+     * @return the index of the best hexagon we found.
+     */
     public int getBestHexagon(ArrayList<Hexagon> field, GameScreen.state stateGame){
         ArrayList<Integer> bestList = new ArrayList<>();
         int t = 0;
@@ -64,7 +94,7 @@ public class FitnessGroupBot extends Bot{
                 continue;
             }
             int highest = 0;
-            //right now this could be improved and needs to be in order to optimize.
+            //right now this could be improved and needs to be in order to optimize. (which I may do in the future)
             switch(stateGame){
                 case P1P1:
                     if(h.getFitness1()-h.getFitness2()>=maxFit){
@@ -121,14 +151,14 @@ public class FitnessGroupBot extends Bot{
             }
         count++;
         }
-        //not sure if this is needed
-//        if(bestList.size()>1){
-//            Random r = new Random();
-//            return bestList.get(r.nextInt(bestList.size()));
-//        }
-//        else{
+//        not sure if this is needed
+        if(bestList.size()>1){
+            Random r = new Random();
+            return bestList.get(r.nextInt(bestList.size()));
+        }
+        else{
             return bestList.get(0);
-//        }
+        }
 
     }
 }
