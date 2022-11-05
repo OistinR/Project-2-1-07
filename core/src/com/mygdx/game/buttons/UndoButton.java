@@ -32,7 +32,7 @@ public class UndoButton {
         this.Ycoordinate = Ycoordinate;
         this.spriteBatch = spriteBatch;
         undoSprite.setSize(100,50);
-        System.out.println(Ycoordinate);
+        //System.out.println(Ycoordinate);
 
     }
     /**

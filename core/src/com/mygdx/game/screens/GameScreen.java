@@ -142,16 +142,15 @@ public class GameScreen implements Screen {
             this.dispose();
             game.setScreen(new MenuScreen(game));
         }
-        if (backToMenu.mouseDown()) {
-            this.dispose();
-            game.setScreen(new MenuScreen(game));
-        }
+//        if (backToMenu.mouseDown()) {
+//            this.dispose();
+//            game.setScreen(new MenuScreen(game));
+//        }
 
         // Reset screen after every render tick
         ScreenUtils.clear(0.90f, 1.00f, 1.00f, 1);
         // start sprite batch
         game.mainBatch.begin();
-
 
         // update hex field check below for info.
         updateHexField();
@@ -159,8 +158,7 @@ public class GameScreen implements Screen {
         
         updateState();
         // System.out.println(STATE);
-        backToMenu.update();
-        font.draw(game.mainBatch, "Back to menu", 1005, 630);
+
 
         // TODO: make a boolean so that it doesnt draw the buttons when BVB
         if (!gamefinished) {
@@ -178,11 +176,18 @@ public class GameScreen implements Screen {
             font.draw(game.mainBatch, "Switch?", 1025, 152);
         }
 
+        if (undoButton.mouseDown() && (STATE == state.P1P3 || STATE == state.P2P3)) { // undo IFF p1 or p2 turn// is over
+            undo();
+            undoHexagon = null;
+            undoHexagon2 = null;
+        }
+
+        //backToMenu.update();
         // Draw text on screen
         font.draw(game.mainBatch, "Score Of Player Two (Blue): " + SEngine.getBlueScore(), 1000, 700);
         font.draw(game.mainBatch, "Score Of Player One (Pink): " + SEngine.getRedScore(), 100, 700);
         font.draw(game.mainBatch, "Round " + round, 640, 690);
-
+        //font.draw(game.mainBatch, "Back to menu", 1005, 630);
         if (arrowPlayerOne)
             font.draw(game.mainBatch, "Player One's Turn", 610, 670);
         else
@@ -263,6 +268,8 @@ public class GameScreen implements Screen {
             undoHexagon2 = null;
             round++;
         }
+
+
 
     }
 
@@ -432,12 +439,7 @@ public class GameScreen implements Screen {
                     }
                 }
 
-                if (undoButton.mouseDown() && (STATE == state.P1P3 || STATE == state.P2P3)) { // undo IFF p1 or p2 turn
-                                                                                              // is over
-                    undo();
-                    undoHexagon = null;
-                    undoHexagon2 = null;
-                }
+
 
                 if (pieButton.mouseDown() && round == 1 && STATE == state.P2P1) {
                     for (Hexagon a : field) {
