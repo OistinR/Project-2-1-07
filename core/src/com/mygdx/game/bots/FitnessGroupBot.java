@@ -24,7 +24,7 @@ public class FitnessGroupBot extends Bot{
     public void calculate(ArrayList<Hexagon> field) {
         FE.update(field);
 
-        int one = getBestHexagon(field, GameScreen.state.P2P1);
+        int one = getBestHexagon(field, GameScreen.state.P2P1);//this needs to change its hard coded rn to player 2
         if(field.get(one).getMyState()== Hexagon.state.BLANK)
             field.get(one).setMyState(Hexagon.state.RED);
         else

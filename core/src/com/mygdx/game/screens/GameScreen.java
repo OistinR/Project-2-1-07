@@ -128,8 +128,8 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot = new OLABot();
-        bot2 = new RandomBot();
+        bot = new RandomBot();
+        bot2 = new FitnessGroupBot(Hexagon.state.BLUE,Hexagon.state.RED);
     }
 
     @Override
@@ -341,7 +341,7 @@ public class GameScreen implements Screen {
                 }
 
             }
-        }
+
 
         field.add(new Hexagon(-4, 4, 50, game.mainBatch,0,0));
         field.add(new Hexagon(-5, 5, 50, game.mainBatch,0,0));
