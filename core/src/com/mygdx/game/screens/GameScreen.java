@@ -129,8 +129,8 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot = new MaxN_Paranoid_Bot(Hexagon.state.RED,Hexagon.state.BLUE );
-        bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED );
+        bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED);
+        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE);
     }
 
     @Override
@@ -140,12 +140,6 @@ public class GameScreen implements Screen {
      */
     public void render(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            this.dispose();
-            MenuScreen menuScreen = new MenuScreen(game);
-            menuScreen.updateMapChoice();
-            game.setScreen(menuScreen);
-        }
-        if (backToMenu.mouseDown()) {
             this.dispose();
             MenuScreen menuScreen = new MenuScreen(game);
             menuScreen.updateMapChoice();
@@ -164,9 +158,16 @@ public class GameScreen implements Screen {
         updateState();
         // System.out.println(STATE);
 
-
-        // TODO: make a boolean so that it doesnt draw the buttons when BVB
         if(!(ai&&ai2)) {
+
+            if (backToMenu.mouseDown()) {
+                this.dispose();
+                MenuScreen menuScreen = new MenuScreen(game);
+                menuScreen.updateMapChoice();
+                game.setScreen(menuScreen);
+            }
+
+            font.draw(game.mainBatch, "Back to menu", 1005, 630);
             if (!gamefinished && (STATE == state.P1P3 || STATE == state.P2P3)) {
                 confirmButton.update();
                 font.draw(game.mainBatch, "Confirm move", 105, 90);
@@ -187,7 +188,7 @@ public class GameScreen implements Screen {
                 undoHexagon = null;
                 undoHexagon2 = null;
             }
-            font.draw(game.mainBatch, "Back to menu", 1005, 630);
+
             if (firstColor && !gamefinished) {
                 game.mainBatch.draw(redTileTexture, 700, 70);
                 font.draw(game.mainBatch, "The next colour is : ", 550, 100);
@@ -196,7 +197,10 @@ public class GameScreen implements Screen {
                 font.draw(game.mainBatch, "The next colour is : ", 550, 100);
             }
             backToMenu.update();
+            font.draw(game.mainBatch, "Back to menu", 1005, 630);
+
         }
+
         // Draw text on screen
         font.draw(game.mainBatch, "Score Of Player Two (Blue): " + SEngine.getBlueScore(), 1000, 700);
         font.draw(game.mainBatch, "Score Of Player One (Pink): " + SEngine.getRedScore(), 100, 700);
