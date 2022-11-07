@@ -96,9 +96,9 @@ public class FitnessEngine2 {
             temp = getFitness(value);
             fitness += temp;
         }
-        if(player){h.setMyFitness(fitness,-1);}
+        if(player){h.setMyFitness((-1)*fitness,1);}
 
-        else{h.setMyFitness(fitness,1);}
+        else{h.setMyFitness(fitness,-1);}
     }
     public int getFitness(int value){ //FA is Fitness Adapter
         switch (value){
