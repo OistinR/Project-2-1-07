@@ -12,7 +12,7 @@ public class FitnessGroupBot extends Bot{
     private Hexagon.state myColor;
     private Hexagon.state opponentColor;
 
-    private FitnessEngine FE;
+    private FitnessEngine2 FE;
 
     /**
      *  This constructor sets the two variablesm and starts the fitness engine.
@@ -30,7 +30,7 @@ public class FitnessGroupBot extends Bot{
     public FitnessGroupBot(Hexagon.state myColor, Hexagon.state opponentColor){
         this.myColor = myColor;
         this.opponentColor = opponentColor;
-        FE = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
+        FE = new FitnessEngine2(Hexagon.state.RED, Hexagon.state.BLUE);
     }
 
     /** This method calculates the best place for the first hexagon(red)

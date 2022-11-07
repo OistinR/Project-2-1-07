@@ -143,4 +143,12 @@ public class ScoringEngine {
     public int getBlueScore() {
         return blueScore;
     }
+
+    public ArrayList<Integer> getBlueList() {
+        return blueList;
+    }
+
+    public ArrayList<Integer> getRedList() {
+        return redList;
+    }
 }
