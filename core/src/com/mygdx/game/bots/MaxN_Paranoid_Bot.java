@@ -46,7 +46,7 @@ public class MaxN_Paranoid_Bot extends Bot {
         if(myColor == Hexagon.state.RED){
             //Bot is player 1, so MaxN on RED and Paranoid on BLUE
             if (DEBUG) System.out.println("use maxN, Color RED");
-            int pos = MaxNRed(current_state_clone);
+            int pos = MaxN(current_state_clone, myColor);
             field.get(pos).setMyState(Hexagon.state.RED);
 
 
@@ -58,13 +58,13 @@ public class MaxN_Paranoid_Bot extends Bot {
             } catch (Exception e) {}
 
             if (DEBUG) System.out.println("use paranoid, Color BLUE");
-            int pos2 = ParanoidBlue(current2_state_clone);
+            int pos2 = Paranoid(current2_state_clone, myColor);
             field.get(pos2).setMyState(Hexagon.state.BLUE);
         }
         else{
             //Bot is Player 2, so Paranoid on RED and MaxN on BLUE
             if (DEBUG) System.out.println("use paranoid, Color RED");
-            int pos = ParanoidRed(current_state_clone);
+            int pos = Paranoid(current_state_clone, myColor);
             field.get(pos).setMyState(Hexagon.state.RED);
 
             ArrayList<Hexagon> current2_state_clone = new ArrayList<>();
@@ -75,7 +75,7 @@ public class MaxN_Paranoid_Bot extends Bot {
             } catch (Exception e) {}
 
             if (DEBUG) System.out.println("use maxn, Color BLUE");
-            int pos2 = MaxNBlue(current2_state_clone);
+            int pos2 = MaxN(current2_state_clone, myColor);
             field.get(pos2).setMyState(Hexagon.state.BLUE);
 
         }
@@ -83,11 +83,13 @@ public class MaxN_Paranoid_Bot extends Bot {
 
     /**
      * @param field Arraylist of Hexagons building our field
+     * @param color Color of the bot whose score needs to be maximized
      * returns the best hexagon maximizing our fitness score. The best move to play the tile of our own color.
      */
-    public static int MaxNRed(ArrayList<Hexagon> field){
 
-        if (DEBUG) System.out.println("MaxN Reached for RED");
+    public static int MaxN(ArrayList<Hexagon> field, Hexagon.state color){
+
+        if (DEBUG) System.out.println("MaxN Reached");
 
         ScoringEngine se = new ScoringEngine();
         Hexagon bestMove = field.get(0);
@@ -95,137 +97,216 @@ public class MaxN_Paranoid_Bot extends Bot {
         ArrayList<Integer> bestScores = new ArrayList<>(); //List of bestScores
 
 
-        // We initialize the bestMove for this turn as being the first blank tile encountered.
-        for(int start = 0; start<field.size(); start++){
-            if(field.get(start).getMyState() == Hexagon.state.BLANK) {
-                bestMove = field.get(start); // take the default first blank tile of the board we encounter
-                bestMove.setMyState(Hexagon.state.RED); // Change its color to red
-                bestScores.add((Integer) se.getRedScore()); // Save the score to simulate one turn.
-                bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
-                bestMOVES.add(bestMove);
-                break;
-            }
-        }
-
-        // loop through game and select move with best game score
-        for(int i = 0; i<field.size(); i++){
-            if(field.get(i).getMyState() == Hexagon.state.BLANK){
-
-                field.get(i).setMyState(Hexagon.state.RED);
-
-                if( (Integer) se.getRedScore() > bestScores.get(0)){
-                    for(Integer j = 0; j < bestScores.size(); j++){
-                            bestScores.remove(j);
-                    }
-                    bestScores.add( (Integer) se.getRedScore());
-                    
-                    for(int z = 0; z < bestMOVES.size(); z++){
-                        bestMOVES.remove(z);
-                    }
-                    bestMove = field.get(i);
+        if(color == Hexagon.state.BLUE) {
+            // We initialize the bestMove for this turn as being the first blank tile encountered.
+            for (int start = 0; start < field.size(); start++) {
+                if (field.get(start).getMyState() == Hexagon.state.BLANK) {
+                    bestMove = field.get(start); // take the default first blank tile of the board we encounter
+                    bestMove.setMyState(Hexagon.state.BLUE); // Change its color to red
+                    bestScores.add((Integer) se.getBlueScore()); // Save the score to simulate one turn.
+                    bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
                     bestMOVES.add(bestMove);
+                    break;
                 }
-                if( (Integer) se.getRedScore() == bestScores.get(0)){
-                    bestScores.add( (Integer) se.getRedScore());
-                    bestMOVES.add(field.get(i));
+            }
+
+            // loop through game and select move with best game score
+            for (int i = 0; i < field.size(); i++) {
+                if (field.get(i).getMyState() == Hexagon.state.BLANK) {
+
+                    field.get(i).setMyState(Hexagon.state.BLUE);
+
+                    if ((Integer) se.getBlueScore() > bestScores.get(0)) {
+                        for (Integer j = 0; j < bestScores.size(); j++) {
+                            bestScores.remove(j);
+                        }
+                        bestScores.add((Integer) se.getBlueScore());
+
+                        for (int z = 0; z < bestMOVES.size(); z++) {
+                            bestMOVES.remove(z);
+                        }
+                        bestMove = field.get(i);
+                        bestMOVES.add(bestMove);
+                    }
+                    if ((Integer) se.getBlueScore() == bestScores.get(0)) {
+                        bestScores.add((Integer) se.getBlueScore());
+                        bestMOVES.add(field.get(i));
+                    }
+                    field.get(i).setMyState(Hexagon.state.BLANK);
                 }
-                field.get(i).setMyState(Hexagon.state.BLANK);
             }
         }
-
-        if ( (bestMOVES.size() > 1) && (bestScores.size() > 1) ){
-            if (DEBUG) System.out.println("Multiple Optimal Moves");
-            int coordSum = 0;
-            int highestCoords = Integer.MIN_VALUE;
-            Hexagon bestHex = bestMOVES.get(0);
-
-            for(int select = 0; select < bestMOVES.size() ; select++) {
-                coordSum = (Math.abs(bestMOVES.get(select).getQ()) + Math.abs(bestMOVES.get(select).getR()) + Math.abs(bestMOVES.get(select).getS()));
-                if (coordSum > highestCoords) {
-                    highestCoords = coordSum;
-                    bestHex = bestMOVES.get(select);
-                    if (DEBUG) System.out.println("New Highest: " + highestCoords);
+        else if (color == Hexagon.state.RED){
+            // We initialize the bestMove for this turn as being the first blank tile encountered.
+            for(int start = 0; start<field.size(); start++){
+                if(field.get(start).getMyState() == Hexagon.state.BLANK) {
+                    bestMove = field.get(start); // take the default first blank tile of the board we encounter
+                    bestMove.setMyState(Hexagon.state.RED); // Change its color to red
+                    bestScores.add((Integer) se.getRedScore()); // Save the score to simulate one turn.
+                    bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
+                    bestMOVES.add(bestMove);
+                    break;
                 }
             }
-            for (int j = 0; j < field.size(); j++) {
-                if (field.get(j) == bestHex){
-                    return j;
+
+            // loop through game and select move with best game score
+            for(int i = 0; i<field.size(); i++){
+                if(field.get(i).getMyState() == Hexagon.state.BLANK){
+
+                    field.get(i).setMyState(Hexagon.state.RED);
+
+                    if( (Integer) se.getRedScore() > bestScores.get(0)){
+                        for(Integer j = 0; j < bestScores.size(); j++){
+                            bestScores.remove(j);
+                        }
+                        bestScores.add( (Integer) se.getRedScore());
+
+                        for(int z = 0; z < bestMOVES.size(); z++){
+                            bestMOVES.remove(z);
+                        }
+                        bestMove = field.get(i);
+                        bestMOVES.add(bestMove);
+                    }
+                    if( (Integer) se.getRedScore() == bestScores.get(0)){
+                        bestScores.add( (Integer) se.getRedScore());
+                        bestMOVES.add(field.get(i));
+                    }
+                    field.get(i).setMyState(Hexagon.state.BLANK);
                 }
             }
         }
         else{
-            System.out.println("Only 1 Optimal Move!");
-            // We just play the best move as there is only one available.
-            for (int j = 0; j < field.size(); j++) {
-                if (field.get(j) == bestMOVES.get(0)){
-                    return j;
-                }
-            }
+            System.out.println("Impossible ELSE statement");
         }
-        //unreachable
-        return 0;
+
+        return getBestHex(field, bestMOVES, bestScores, "MaxN");
     }
 
-    public static int MaxNBlue(ArrayList<Hexagon> field){
+    /**
+     * @param field Arraylist of Hexagons building our field
+     * @param color Color of the opponent whose score needs to be minimized
+     * returns the best hexagon maximizing our fitness score. The best move to play the tile of the opponent's color.
+     */ 
 
-        if (DEBUG) System.out.println("MaxN Reached For BLUE");
+    public static int Paranoid(ArrayList<Hexagon> field, Hexagon.state color){
 
+        if (DEBUG) System.out.println("Paranoid Reached for BLUE");
         ScoringEngine se = new ScoringEngine();
         Hexagon bestMove = field.get(0);
         ArrayList<Hexagon> bestMOVES = new ArrayList<>(); //List of bestMoves
         ArrayList<Integer> bestScores = new ArrayList<>(); //List of bestScores
 
+        if (color == Hexagon.state.BLUE) {
 
-        // We initialize the bestMove for this turn as being the first blank tile encountered.
-        for(int start = 0; start<field.size(); start++){
-            if(field.get(start).getMyState() == Hexagon.state.BLANK) {
-                bestMove = field.get(start); // take the default first blank tile of the board we encounter
-                bestMove.setMyState(Hexagon.state.BLUE); // Change its color to red
-                bestScores.add((Integer) se.getBlueScore()); // Save the score to simulate one turn.
-                bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
-                bestMOVES.add(bestMove);
-                break;
-            }
-        }
-
-        // loop through game and select move with best game score
-        for(int i = 0; i<field.size(); i++){
-            if(field.get(i).getMyState() == Hexagon.state.BLANK){
-
-                field.get(i).setMyState(Hexagon.state.BLUE);
-
-                if( (Integer) se.getBlueScore() > bestScores.get(0)){
-                    for(Integer j = 0; j < bestScores.size(); j++){
-                        bestScores.remove(j);
-                    }
-                    bestScores.add( (Integer) se.getBlueScore());
-
-                    for(int z = 0; z < bestMOVES.size(); z++){
-                        bestMOVES.remove(z);
-                    }
-                    bestMove = field.get(i);
+            // loop through game and select move with best fitness score, GOAL : Minimize score
+            for (int start = 0; start < field.size(); start++) {
+                if (field.get(start).getMyState() == Hexagon.state.BLANK) {
+                    bestMove = field.get(start);
+                    bestMove.setMyState(Hexagon.state.BLUE); // Change its color to red
+                    bestScores.add((Integer) se.getBlueScore()); // Save the score to simulate one turn.
+                    bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
                     bestMOVES.add(bestMove);
+                    break;
                 }
-                if( (Integer) se.getBlueScore() == bestScores.get(0)){
-                    bestScores.add( (Integer) se.getBlueScore());
-                    bestMOVES.add(field.get(i));
+            }
+
+            for (int i = 0; i < field.size(); i++) {
+                if (field.get(i).getMyState() == Hexagon.state.BLANK) {
+
+                    field.get(i).setMyState(Hexagon.state.BLUE);
+
+                    if ((Integer) se.getBlueScore() < bestScores.get(0)) {
+                        for (Integer j = 0; j < bestScores.size(); j++) {
+                            bestScores.remove(j);
+                        }
+                        bestScores.add((Integer) se.getBlueScore());
+
+                        for (int z = 0; z < bestMOVES.size(); z++) {
+                            bestMOVES.remove(z);
+                        }
+                        bestMove = field.get(i);
+                        bestMOVES.add(bestMove);
+                    }
+                    if ((Integer) se.getBlueScore() == bestScores.get(0)) {
+                        bestScores.add((Integer) se.getBlueScore());
+                        bestMOVES.add(field.get(i));
+                    }
+                    field.get(i).setMyState(Hexagon.state.BLANK);
                 }
-                field.get(i).setMyState(Hexagon.state.BLANK);
             }
         }
+        else if (color == Hexagon.state.RED){
+            // loop through game and select move with best fitness score, GOAL : Minimize score
+            for(int start = 0; start<field.size(); start++){
+                if(field.get(start).getMyState() == Hexagon.state.BLANK) {
+                    bestMove = field.get(start);
+                    bestMove.setMyState(Hexagon.state.RED); // Change its color to red
+                    bestScores.add((Integer) se.getRedScore()); // Save the score to simulate one turn.
+                    bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
+                    bestMOVES.add(bestMove);
+                    break;
+                }
+            }
 
+            for(int i = 0; i<field.size(); i++){
+                if(field.get(i).getMyState() == Hexagon.state.BLANK){
+
+                    field.get(i).setMyState(Hexagon.state.RED);
+
+                    if( (Integer) se.getRedScore() < bestScores.get(0)){
+                        for(Integer j = 0; j < bestScores.size(); j++){
+                            bestScores.remove(j);
+                        }
+                        bestScores.add( (Integer) se.getRedScore());
+
+                        for(int z = 0; z < bestMOVES.size(); z++){
+                            bestMOVES.remove(z);
+                        }
+                        bestMove = field.get(i);
+                        bestMOVES.add(bestMove);
+                    }
+                    if( (Integer) se.getRedScore() == bestScores.get(0)){
+                        bestScores.add( (Integer) se.getRedScore());
+                        bestMOVES.add(field.get(i));
+                    }
+                    field.get(i).setMyState(Hexagon.state.BLANK);
+                }
+            }
+        }
+        else{
+            System.out.println("Impossible ELSE statement");
+        }
+
+        return getBestHex(field, bestMOVES, bestScores, "Paranoid");
+    }
+
+    public static int getBestHex(ArrayList<Hexagon> field, ArrayList<Hexagon> bestMOVES, ArrayList<Integer> bestScores, String whichAlg){
         if ( (bestMOVES.size() > 1) && (bestScores.size() > 1) ){
             if (DEBUG) System.out.println("Multiple Optimal Moves");
             int coordSum = 0;
             int highestCoords = Integer.MIN_VALUE;
+            int lowestCoords = Integer.MAX_VALUE;
             Hexagon bestHex = bestMOVES.get(0);
+
 
             for(int select = 0; select < bestMOVES.size() ; select++) {
                 coordSum = (Math.abs(bestMOVES.get(select).getQ()) + Math.abs(bestMOVES.get(select).getR()) + Math.abs(bestMOVES.get(select).getS()));
-                if (coordSum > highestCoords){
-                    highestCoords = coordSum;
-                    bestHex = bestMOVES.get(select);
-                    if (DEBUG) System.out.println("New Highest: " + highestCoords);
+                if (whichAlg == "MaxN" ) {
+                    if (coordSum > highestCoords) {
+                        highestCoords = coordSum;
+                        bestHex = bestMOVES.get(select);
+                        if (DEBUG) System.out.println("New Highest: " + highestCoords);
+                    }
+                }
+                else if (whichAlg == "Paranoid"){
+                    if (coordSum < lowestCoords){
+                        lowestCoords = coordSum;
+                        bestHex = bestMOVES.get(select);
+                        if (DEBUG) System.out.println("New Lowest: " + lowestCoords);
+                    }
+                }
+                else{
+                    System.out.println("Wrong algorithm name entered");
                 }
             }
             for (int j = 0; j < field.size(); j++) {
@@ -244,165 +325,6 @@ public class MaxN_Paranoid_Bot extends Bot {
                 }
             }
         }
-        //unreachable
-        return 0;
-    }
-
-    /**
-     * @param field Arraylist of Hexagons building our field
-     * returns the best hexagon maximizing our fitness score. The best move to play the tile of the opponent's color.
-     */ 
-
-    public static int ParanoidBlue(ArrayList<Hexagon> field){
-
-        if (DEBUG) System.out.println("Paranoid Reached for BLUE");
-        ScoringEngine se = new ScoringEngine();
-        Hexagon bestMove = field.get(0);
-        ArrayList<Hexagon> bestMOVES = new ArrayList<>(); //List of bestMoves
-        ArrayList<Integer> bestScores = new ArrayList<>(); //List of bestScores
-
-        // loop through game and select move with best fitness score, GOAL : Minimize score
-        for(int start = 0; start<field.size(); start++){
-            if(field.get(start).getMyState() == Hexagon.state.BLANK) {
-                bestMove = field.get(start);
-                bestMove.setMyState(Hexagon.state.BLUE); // Change its color to red
-                bestScores.add((Integer) se.getBlueScore()); // Save the score to simulate one turn.
-                bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
-                bestMOVES.add(bestMove);
-                break;
-            }
-        }
-
-        for(int i = 0; i<field.size(); i++){
-            if(field.get(i).getMyState() == Hexagon.state.BLANK){
-
-                field.get(i).setMyState(Hexagon.state.BLUE);
-
-            if( (Integer) se.getBlueScore() < bestScores.get(0)){
-                for(Integer j = 0; j < bestScores.size(); j++){
-                        bestScores.remove(j);
-                }
-                bestScores.add( (Integer) se.getBlueScore());
-                
-                for(int z = 0; z < bestMOVES.size(); z++){
-                    bestMOVES.remove(z);
-                }
-                bestMove = field.get(i);
-                bestMOVES.add(bestMove);
-            }
-            if( (Integer) se.getBlueScore() == bestScores.get(0)){
-                bestScores.add( (Integer) se.getBlueScore());
-                bestMOVES.add(field.get(i));
-            }
-            field.get(i).setMyState(Hexagon.state.BLANK);
-            }
-        }
-
-        if ( (bestMOVES.size() > 1) && (bestScores.size() > 1) ){
-            if (DEBUG) System.out.println("Multiple Optimal Moves");
-            int coordSum = 0;
-            int lowestCoords = Integer.MAX_VALUE;
-            Hexagon bestHex = bestMOVES.get(0);
-
-            for(int select = 0; select < bestMOVES.size() ; select++) {
-                coordSum = (Math.abs(bestMOVES.get(select).getQ()) + Math.abs(bestMOVES.get(select).getR()) + Math.abs(bestMOVES.get(select).getS()));
-                if (coordSum < lowestCoords){
-                    lowestCoords = coordSum;
-                    bestHex = bestMOVES.get(select);
-                    if (DEBUG) System.out.println("New Lowest: " + lowestCoords);
-                }
-            }
-            for (int j = 0; j < field.size(); j++) {
-                if (field.get(j) == bestHex){
-                    return j;
-                }
-            }
-        }
-        else{
-            for (int j = 0; j < field.size(); j++) {
-                if (field.get(j) == bestMOVES.get(0)){
-                    return j;
-                }
-            }
-        }
-        //unreachable
-        return 0;
-    }
-
-    public static int ParanoidRed(ArrayList<Hexagon> field){
-
-        if (DEBUG) System.out.println("Paranoid Reached for RED");
-        ScoringEngine se = new ScoringEngine();
-        Hexagon bestMove = field.get(0);
-        ArrayList<Hexagon> bestMOVES = new ArrayList<>(); //List of bestMoves
-        ArrayList<Integer> bestScores = new ArrayList<>(); //List of bestScores
-
-        // loop through game and select move with best fitness score, GOAL : Minimize score
-        for(int start = 0; start<field.size(); start++){
-            if(field.get(start).getMyState() == Hexagon.state.BLANK) {
-                bestMove = field.get(start);
-                bestMove.setMyState(Hexagon.state.RED); // Change its color to red
-                bestScores.add((Integer) se.getRedScore()); // Save the score to simulate one turn.
-                bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
-                bestMOVES.add(bestMove);
-                break;
-            }
-        }
-
-        for(int i = 0; i<field.size(); i++){
-            if(field.get(i).getMyState() == Hexagon.state.BLANK){
-
-                field.get(i).setMyState(Hexagon.state.RED);
-
-                if( (Integer) se.getRedScore() < bestScores.get(0)){
-                    for(Integer j = 0; j < bestScores.size(); j++){
-                        bestScores.remove(j);
-                    }
-                    bestScores.add( (Integer) se.getRedScore());
-
-                    for(int z = 0; z < bestMOVES.size(); z++){
-                        bestMOVES.remove(z);
-                    }
-                    bestMove = field.get(i);
-                    bestMOVES.add(bestMove);
-                }
-                if( (Integer) se.getRedScore() == bestScores.get(0)){
-                    bestScores.add( (Integer) se.getRedScore());
-                    bestMOVES.add(field.get(i));
-                }
-                field.get(i).setMyState(Hexagon.state.BLANK);
-            }
-        }
-
-        if ( (bestMOVES.size() > 1) && (bestScores.size() > 1) ){
-            if (DEBUG) System.out.println("Multiple Optimal Moves");
-            int coordSum = 0;
-            int lowestCoords = Integer.MAX_VALUE;
-            Hexagon bestHex = bestMOVES.get(0);
-
-            for(int select = 0; select < bestMOVES.size() ; select++) {
-                coordSum = (Math.abs(bestMOVES.get(select).getQ()) + Math.abs(bestMOVES.get(select).getR()) + Math.abs(bestMOVES.get(select).getS()));
-                if (coordSum < lowestCoords){
-                    lowestCoords = coordSum;
-                    bestHex = bestMOVES.get(select);
-                    if (DEBUG) System.out.println("New Lowest: " + lowestCoords);
-                }
-            }
-            for (int j = 0; j < field.size(); j++) {
-                if (field.get(j) == bestHex){
-                    return j;
-                }
-            }
-        }
-
-        else{
-            for (int j = 0; j < field.size(); j++) {
-                if (field.get(j) == bestMOVES.get(0)){
-                    return j;
-                }
-            }
-        }
-        //unreachable
-        return 0;
+        return 0; //cant be reached
     }
 }
