@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.bots.Bot;
+import com.mygdx.game.bots.FitnessGroupBot;
+import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.coordsystem.Hexagon;
@@ -47,7 +49,7 @@ public class rundev {
         fieldsize=2;
 
         //Create field and initiate bots
-        botpone = new RandomBot();
+        botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
         botptwo = new OLABot();
         createHexagonFieldDefault();
     }

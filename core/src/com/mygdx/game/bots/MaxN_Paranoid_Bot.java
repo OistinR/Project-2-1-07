@@ -14,7 +14,7 @@ import com.mygdx.game.screens.GameScreen;
 
 public class MaxN_Paranoid_Bot extends Bot {
 
-    private static boolean DEBUG = true;
+    private static boolean DEBUG = false;
 
     private Hexagon.state myColor;
     private Hexagon.state opponentColor;
@@ -173,7 +173,7 @@ public class MaxN_Paranoid_Bot extends Bot {
             }
         }
         else{
-            System.out.println("Impossible ELSE statement");
+            if(DEBUG) System.out.println("Impossible ELSE statement");
         }
 
         return getBestHex(field, bestMOVES, bestScores, "MaxN");
@@ -270,7 +270,7 @@ public class MaxN_Paranoid_Bot extends Bot {
             }
         }
         else{
-            System.out.println("Impossible ELSE statement");
+            if(DEBUG)System.out.println("Impossible ELSE statement");
         }
 
         return getBestHex(field, bestMOVES, bestScores, "Paranoid");
