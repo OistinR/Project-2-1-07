@@ -31,7 +31,6 @@ public class MaxN_Paranoid_Bot extends Bot {
      * Decision making method to determine the best move depending on the turn and the tile to place.
      */
     public void calculate(ArrayList<Hexagon> field){
-        if (DEBUG) System.out.println("Arrived at calculate");
 
         //we create a copy of the current state of the game and we apply maxn on it.
         ArrayList<Hexagon> current_state_clone = new ArrayList<>();
@@ -88,8 +87,6 @@ public class MaxN_Paranoid_Bot extends Bot {
      */
 
     public static int MaxN(ArrayList<Hexagon> field, Hexagon.state color){
-
-        if (DEBUG) System.out.println("MaxN Reached");
 
         ScoringEngine se = new ScoringEngine();
         Hexagon bestMove = field.get(0);
@@ -190,7 +187,6 @@ public class MaxN_Paranoid_Bot extends Bot {
 
     public static int Paranoid(ArrayList<Hexagon> field, Hexagon.state color){
 
-        if (DEBUG) System.out.println("Paranoid Reached for BLUE");
         ScoringEngine se = new ScoringEngine();
         Hexagon bestMove = field.get(0);
         ArrayList<Hexagon> bestMOVES = new ArrayList<>(); //List of bestMoves
@@ -306,7 +302,7 @@ public class MaxN_Paranoid_Bot extends Bot {
                     }
                 }
                 else{
-                    System.out.println("Wrong algorithm name entered");
+                    if (DEBUG) System.out.println("Wrong algorithm name entered");
                 }
             }
             for (int j = 0; j < field.size(); j++) {
@@ -317,7 +313,7 @@ public class MaxN_Paranoid_Bot extends Bot {
         }
 
         else {
-            System.out.println("Only 1 Optimal Move!");
+            if (DEBUG) System.out.println("Only 1 Optimal Move!");
             // We just play the best move as there is only one available.
             for (int j = 0; j < field.size(); j++) {
                 if (field.get(j) == bestMOVES.get(0)) {
