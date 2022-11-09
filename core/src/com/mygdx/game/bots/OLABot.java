@@ -40,8 +40,8 @@ public class OLABot extends Bot{
             if(h.getMyState()==Hexagon.state.BLANK) {
                 h.setMyState(Hexagon.state.RED);
                 se.calculate(clone1);
-                if(se.getBlueScore()<=worstscore) {
-                    worstscore=se.getBlueScore();
+                if(se.getRedScore()<=worstscore) {
+                    worstscore=se.getRedScore();
                     worstpos=clone1.indexOf(h);
                 }
                 h.setMyState(Hexagon.state.BLANK);
@@ -51,7 +51,6 @@ public class OLABot extends Bot{
         if(worstpos!=-1) {
             field.get(worstpos).setMyState(Hexagon.state.RED);
         } else {
-            System.out.println("No worst location has been found by OLA");
             while(turn1) {
                 rnum = r.nextInt(field.size());
                 if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
@@ -92,15 +91,12 @@ public class OLABot extends Bot{
 
         // if the difference between the original score and the "best score we found" is == 2
         // we randomly select a tile instead to encourage groups. works poorly in small maps.
-        System.out.println("old score" + bestscoreOld);
-        System.out.println("new score" + bestscore);
 
         if(bestscore-bestscoreOld<2){
             boolean turn2 = true;
             while(turn2) {
                 rnum = r.nextInt(field.size());
                 if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
-                    System.out.println("random pos by OLA BOT");
                     field.get(rnum).setMyState(Hexagon.state.BLUE);
                     turn2=false;
                 }
@@ -111,7 +107,6 @@ public class OLABot extends Bot{
         else if(bestpos!=-1) {
             field.get(bestpos).setMyState(Hexagon.state.BLUE);
         } else {
-            System.out.println("No best pos was found an no blue hexagon was placed.");
         }
     }
 
