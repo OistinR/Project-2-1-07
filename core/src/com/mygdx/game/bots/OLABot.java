@@ -92,7 +92,7 @@ public class OLABot extends Bot{
         // if the difference between the original score and the "best score we found" is == 2
         // we randomly select a tile instead to encourage groups. works poorly in small maps.
 
-        if(bestscore-bestscoreOld<2){
+        if(bestscore-bestscoreOld<=2){
             boolean turn2 = true;
             while(turn2) {
                 rnum = r.nextInt(field.size());

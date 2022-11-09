@@ -18,6 +18,9 @@ public class ScoringEngine {
     private ArrayList<Integer> redList;
     private ArrayList<Integer> blueList;
 
+    private ArrayList<Integer> savedRedList;
+    private ArrayList<Integer> savedBlueList;
+
     /**
      *the method sets to 0 all the different variables that we will use to keep track of the scoring
      */
@@ -42,14 +45,15 @@ public class ScoringEngine {
                 floodcount=1;
                 floodfill(h,field,Hexagon.state.RED);
                 redList.add(floodcount);
-            } else if (h.getMyState()== Hexagon.state.BLUE) {
+            } else if (h.getMyState()== Hexagon.state.BLUE&&h.getChecked()==false) {
                 h.setChecked(true);
                 floodcount=1;
                 floodfill(h,field,Hexagon.state.BLUE);
                 blueList.add(floodcount);
             }
         }
-
+        savedBlueList = (ArrayList<Integer>) blueList.clone();
+        savedRedList = (ArrayList<Integer>) redList.clone();
         if(redList.isEmpty()==false) {
             redScore=1;
         } else {
@@ -69,9 +73,10 @@ public class ScoringEngine {
         for(int i=0; i<blueList.size(); i++) {
             blueScore = blueScore * blueList.get(i);
         }
-
         blueList.clear();
         redList.clear();
+        //System.out.println("this is red list " + savedRedList);
+        //System.out.println("this is blue list " + savedBlueList);
         resetChecked(field);
     }
 
@@ -142,5 +147,13 @@ public class ScoringEngine {
      */
     public int getBlueScore() {
         return blueScore;
+    }
+
+    public ArrayList<Integer> getBlueList() {
+        return savedBlueList;
+    }
+
+    public ArrayList<Integer> getRedList() {
+        return savedRedList;
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Omega;
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessEngine;
+import com.mygdx.game.bots.FitnessEngine2;
 import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
@@ -116,7 +117,7 @@ public class GameScreen implements Screen {
 
         SCREENWIDTH = Gdx.graphics.getWidth();
         SCREENHEIGHT = Gdx.graphics.getHeight();
-        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
+        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE,false);
         SEngine = new ScoringEngine();
         font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -129,8 +130,9 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED);
-        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE);
+        //bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED);
+        bot2 = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,true);
+        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
     }
 
     @Override
