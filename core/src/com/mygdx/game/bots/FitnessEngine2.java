@@ -10,7 +10,6 @@ import com.mygdx.game.bots.FitnessEngine;
 public class FitnessEngine2 {
 
     private ScoringEngine SEngine;
-    private FitnessEngine FEngine;
     private boolean DEBUG;
     private Hexagon.state player;
     private Hexagon.state opp;
@@ -24,47 +23,60 @@ public class FitnessEngine2 {
     private ArrayList<Integer> blueListWD;
     private ArrayList<Integer> redListWD;
 
+    private int fitnessOld;
+    private int fitnessNew;
+
     public FitnessEngine2(state player, state opp){
         this.player = player;
         this.opp = opp;
         SEngine = new ScoringEngine();
-        FEngine = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE);
-        DEBUG = false;
+        DEBUG = true;
     }
 
     public void update(ArrayList<Hexagon> field){
         for(Hexagon h:field){
 
             if(h.getMyState()==state.BLANK && h.getChecked()==false){
+                SEngine.calculate(field);
                 oldRedList = SEngine.getRedList();
                 h.setMyState(player); //Simulate if the hex is RED
 
-                h.setChecked(true);
-                SEngine.floodcount=1;
-                SEngine.floodfill(h,field,player);
-
-                FEngine.updateHexFitness(SEngine.floodcount,h,1);
+                SEngine.calculate(field);
 
                 newRedList = SEngine.getRedList();
-                ///////////////////////////////////////////////////////////////////
                 h.setMyState(state.BLANK); //Put the hex back to BLANK
+
+                if(DEBUG)System.out.println("this is oldred " + oldRedList);
+                if(DEBUG)System.out.println("this is newred " + newRedList);
+
+                if(oldRedList.size() > 0){
+                    removeNotAffected(oldRedList,newRedList);
+                    fitnessOld = countFitness(oldRedList,player,h);
+                    fitnessNew = countFitness(newRedList,player,h);
+                }
+                h.setMyFitness((fitnessNew-fitnessOld),1);
+                /////////////////////////////////////////
+                SEngine.calculate(field);
                 oldBlueList = SEngine.getBlueList();
                 h.setMyState(opp); //Simulate if the hex is BLUE
 
-                SEngine.floodcount=1;
-                SEngine.floodfill(h,field,opp);
+                SEngine.calculate(field);
 
-                FEngine.updateHexFitness(SEngine.floodcount,h,-1);
-
-                if(DEBUG)System.out.println(h.getR() + " " + h.getQ());
                 newBlueList = SEngine.getBlueList();
-
                 h.setMyState(state.BLANK); //Put the hex back to BLANK
-                redListWD = removeNotAffected(oldRedList,newRedList);
-                blueListWD = removeNotAffected(oldBlueList,newBlueList);
 
-                countFitness(redListWD,true,h);
-                countFitness(blueListWD,false,h);
+                if(DEBUG)System.out.println("this is oldblue " + oldBlueList);
+                if(DEBUG)System.out.println("this is newblue " + newBlueList);
+
+                if(oldBlueList.size() > 0){
+                    removeNotAffected(oldBlueList,newBlueList);
+                    fitnessOld = countFitness(oldBlueList,opp,h);
+                    fitnessNew = countFitness(newBlueList,opp,h);
+                }
+
+
+                h.setMyFitness(fitnessNew-fitnessOld,-1);
+
 
                 SEngine.resetChecked(field);
 
@@ -72,7 +84,7 @@ public class FitnessEngine2 {
 
         }
     }
-    public ArrayList<Integer> removeNotAffected(ArrayList<Integer>oldList,ArrayList<Integer>newList){
+    public void removeNotAffected(ArrayList<Integer>oldList,ArrayList<Integer>newList){
         for (int i = 0; i < oldList.size(); i++) {
             for (int j = 0; j < newList.size(); j++) {
                 if(oldList.get(i) == newList.get(j)){
@@ -80,14 +92,16 @@ public class FitnessEngine2 {
                     newList.remove(j);
                     i--;
                     j--;
+                    if(i<=0 || j<=0){
+                        break;
+                    }
                 }
             }
         }
 
 
-        return oldList;
     }
-    public void countFitness(ArrayList<Integer>List,Boolean player, Hexagon h){
+    public int countFitness(ArrayList<Integer>List,state playerA, Hexagon h){
         int fitness = 0;
         int value = 0;
         int temp = 0;
@@ -96,9 +110,11 @@ public class FitnessEngine2 {
             temp = getFitness(value);
             fitness += temp;
         }
-        if(player){h.setMyFitness((-1)*fitness,1);}
+        if(DEBUG)System.out.println(fitness);
+        return fitness;
+        //if(player == playerA){h.setMyFitness((-1)*fitness,1);}
 
-        else{h.setMyFitness(fitness,-1);}
+        //else{h.setMyFitness(fitness,-1);}
     }
     public int getFitness(int value){ //FA is Fitness Adapter
         switch (value){
@@ -106,25 +122,25 @@ public class FitnessEngine2 {
                 value = 1;
                 return value;
             case 2:
-                value = 8;
+                value = 5;
                 return value;
             case 3:
                 value = 10;
                 return value;
             case 4:
-                value = 8;
+                value = 5;
                 return value;
             case 5:
-                value = 6;
-                return value;
-            case 6:
                 value = 4;
                 return value;
-            case 7:
+            case 6:
                 value = 3;
                 return value;
-            case 8:
+            case 7:
                 value = 2;
+                return value;
+            case 8:
+                value = 1;
                 return value;
             default:
                 value = 1;

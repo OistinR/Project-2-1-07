@@ -11,8 +11,9 @@ import java.util.Random;
 public class FitnessGroupBot extends Bot{
     private Hexagon.state myColor;
     private Hexagon.state opponentColor;
+    private boolean random;
 
-    private FitnessEngine2 FE;
+    private FitnessEngine FE;
 
     /**
      *  This constructor sets the two variablesm and starts the fitness engine.
@@ -27,10 +28,11 @@ public class FitnessGroupBot extends Bot{
      * @param myColor the colour I want to maximise
      * @param opponentColor the colour I was to us to minimise
      */
-    public FitnessGroupBot(Hexagon.state myColor, Hexagon.state opponentColor){
+    public FitnessGroupBot(Hexagon.state myColor, Hexagon.state opponentColor, boolean random){
         this.myColor = myColor;
         this.opponentColor = opponentColor;
-        FE = new FitnessEngine2(Hexagon.state.RED, Hexagon.state.BLUE);
+        this.random = random;
+        FE = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE, random);
     }
 
     /** This method calculates the best place for the first hexagon(red)
@@ -97,7 +99,7 @@ public class FitnessGroupBot extends Bot{
             //right now this could be improved and needs to be in order to optimize. (which I may do in the future)
             switch(stateGame){
                 case P1P1:
-                    if(h.getFitness1()-h.getFitness2()>=maxFit){
+                    if(h.getFitness1()>=maxFit){
                         maxFit = h.getFitness1()-h.getFitness2();
                         if(field.get(highest).getFitness1()-field.get(highest).getFitness2()==maxFit){
                             bestList.add(count);
@@ -110,7 +112,7 @@ public class FitnessGroupBot extends Bot{
                     }
                     break;
                 case P1P2:
-                    if(h.getFitness2()-h.getFitness1()>=maxFit){
+                    if(h.getFitness2()>=maxFit){
                         maxFit = h.getFitness2()-h.getFitness1();
                         if(field.get(highest).getFitness2()-field.get(highest).getFitness1()==maxFit){
                             bestList.add(count);
@@ -123,7 +125,7 @@ public class FitnessGroupBot extends Bot{
                     }
                     break;
                 case P2P1:
-                    if((h.getFitness1()-h.getFitness2())*-1>=maxFit){
+                    if((h.getFitness1())*-1>=maxFit){
                         maxFit = (h.getFitness1()-h.getFitness2())*-1;
                         if((field.get(highest).getFitness1()-field.get(highest).getFitness2())*-1==maxFit){
                             bestList.add(count);
@@ -136,7 +138,7 @@ public class FitnessGroupBot extends Bot{
                     }
                     break;
                 case P2P2:
-                    if((h.getFitness2()-h.getFitness1())*-1>=maxFit){
+                    if((h.getFitness2())*-1>=maxFit){
                         maxFit = (h.getFitness2()-h.getFitness1())*-1;
                         if((field.get(highest).getFitness2()-field.get(highest).getFitness1())*-1==maxFit){
                             bestList.add(count);
