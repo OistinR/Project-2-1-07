@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -42,8 +43,8 @@ public class MenuScreen implements Screen {
         stage = new Stage(new FillViewport(1280, 720));
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
-        omegaSymbol = new Texture(Gdx.files.internal("omegaSymbol.png"));
 
+        omegaSymbol = new Texture(Gdx.files.internal("omegaSymbol.png"));
         PVP = new TextButton("Play: 2 Player", menuSkin);
         PVP.setColor(Color.BLACK);
         PVP.setPosition(325, 270);
@@ -130,7 +131,7 @@ public class MenuScreen implements Screen {
 
         if (clickAI) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true, false));
+            game.setScreen(new LoadingScreen(game, false, true));
         }
 
         BVB.addListener(new ClickListener() {
@@ -244,6 +245,10 @@ public class MenuScreen implements Screen {
     public void resume() {
         // TODO Auto-generated method stub
 
+    }
+
+    public void updateMapChoice(){
+        mapChoice = 0;
     }
 
 }
