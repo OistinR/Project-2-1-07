@@ -151,14 +151,29 @@ public class FitnessGroupBot extends Bot{
             }
         count++;
         }
-//        not sure if this is needed
-        if(bestList.size()>1){
-            Random r = new Random();
-            return bestList.get(r.nextInt(bestList.size()));
-        }
-        else{
+
+//        if(bestList.size()>1){
+//            int coordSum = 0;
+//            int lowestCoords = Integer.MAX_VALUE;
+//            Hexagon bestHex = bestList.get(0);
+//
+//            for(int select = 0; select < bestList.get(0) ; select++) {
+//                coordSum = (Math.abs(bestMOVES.get(select).getQ()) + Math.abs(bestMOVES.get(select).getR()) + Math.abs(bestMOVES.get(select).getS()));
+//                if (coordSum < lowestCoords){
+//                    lowestCoords = coordSum;
+//                    bestHex = bestMOVES.get(select);
+//                }
+//            }
+//            for (int j = 0; j < field.size(); j++) {
+//                if (field.get(j) == bestHex){
+//                    return j;
+//                }
+//            }
+//            return bestList.get(r.nextInt(bestList.size()));
+//        }
+//        else{
             return bestList.get(0);
-        }
+//        }
 
     }
 }
