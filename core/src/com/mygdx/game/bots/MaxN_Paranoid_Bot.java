@@ -100,7 +100,7 @@ public class MaxN_Paranoid_Bot extends Bot {
                 if (field.get(start).getMyState() == Hexagon.state.BLANK) {
                     bestMove = field.get(start); // take the default first blank tile of the board we encounter
                     bestMove.setMyState(Hexagon.state.BLUE); // Change its color to red
-                    bestScores.add((Integer) se.getBlueScore()); // Save the score to simulate one turn.
+                    bestScores.add((Integer) (se.getBlueScore() - se.getRedScore())); // Save the score to simulate one turn.
                     bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
                     bestMOVES.add(bestMove);
                     break;
@@ -113,11 +113,11 @@ public class MaxN_Paranoid_Bot extends Bot {
 
                     field.get(i).setMyState(Hexagon.state.BLUE);
 
-                    if ((Integer) se.getBlueScore() > bestScores.get(0)) {
+                    if ((Integer) (se.getBlueScore() - se.getRedScore()) > bestScores.get(0)) {
                         for (Integer j = 0; j < bestScores.size(); j++) {
                             bestScores.remove(j);
                         }
-                        bestScores.add((Integer) se.getBlueScore());
+                        bestScores.add((Integer) (se.getBlueScore() - se.getRedScore()));
 
                         for (int z = 0; z < bestMOVES.size(); z++) {
                             bestMOVES.remove(z);
@@ -125,8 +125,8 @@ public class MaxN_Paranoid_Bot extends Bot {
                         bestMove = field.get(i);
                         bestMOVES.add(bestMove);
                     }
-                    if ((Integer) se.getBlueScore() == bestScores.get(0)) {
-                        bestScores.add((Integer) se.getBlueScore());
+                    if ((Integer) (se.getBlueScore() - se.getRedScore()) == bestScores.get(0)) {
+                        bestScores.add((Integer) (se.getBlueScore() - se.getRedScore()));
                         bestMOVES.add(field.get(i));
                     }
                     field.get(i).setMyState(Hexagon.state.BLANK);
@@ -139,7 +139,7 @@ public class MaxN_Paranoid_Bot extends Bot {
                 if(field.get(start).getMyState() == Hexagon.state.BLANK) {
                     bestMove = field.get(start); // take the default first blank tile of the board we encounter
                     bestMove.setMyState(Hexagon.state.RED); // Change its color to red
-                    bestScores.add((Integer) se.getRedScore()); // Save the score to simulate one turn.
+                    bestScores.add((Integer) (se.getRedScore() - se.getBlueScore())); // Save the score to simulate one turn.
                     bestMove.setMyState(Hexagon.state.BLANK); // Change it again to blank.
                     bestMOVES.add(bestMove);
                     break;
@@ -152,11 +152,11 @@ public class MaxN_Paranoid_Bot extends Bot {
 
                     field.get(i).setMyState(Hexagon.state.RED);
 
-                    if( (Integer) se.getRedScore() > bestScores.get(0)){
+                    if( (Integer) (se.getRedScore() - se.getBlueScore()) > bestScores.get(0)){
                         for(Integer j = 0; j < bestScores.size(); j++){
                             bestScores.remove(j);
                         }
-                        bestScores.add( (Integer) se.getRedScore());
+                        bestScores.add( (Integer) (se.getRedScore() - se.getBlueScore()));
 
                         for(int z = 0; z < bestMOVES.size(); z++){
                             bestMOVES.remove(z);
@@ -164,8 +164,8 @@ public class MaxN_Paranoid_Bot extends Bot {
                         bestMove = field.get(i);
                         bestMOVES.add(bestMove);
                     }
-                    if( (Integer) se.getRedScore() == bestScores.get(0)){
-                        bestScores.add( (Integer) se.getRedScore());
+                    if( (Integer) (se.getRedScore() - se.getBlueScore()) == bestScores.get(0)){
+                        bestScores.add( (Integer) (se.getRedScore() - se.getBlueScore()));
                         bestMOVES.add(field.get(i));
                     }
                     field.get(i).setMyState(Hexagon.state.BLANK);
