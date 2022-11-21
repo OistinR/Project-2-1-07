@@ -23,15 +23,23 @@ public class TreeRando {
     public void generateTree(ArrayList<Hexagon> field){
         nodes.clear();
         nodes.add(new Node(field, GameScreen.state.P2P1));
+    //loop is a fucking mess doesnt work.
+        int Phase = 0;
+        for (int d = 0; d < depth; d++) {
+            for (int i = 0; i < nodes.size(); i++) {//better index implementation? never terminates
 
-        int d = 0;
-        int i = 0;
+                if (nodes.get(i).getDepth()==d)
+                    for (int j = 0; j < width; j++) {
+                        d = generateChildernRandomly(i, Phase);
+                    }
+                if(nodes.get(i).getDepth()==depth){//termination is too early
+                    break;
+                }
+            }
 
-        while(d<=depth) {
-            d = generateChildernRandomly(i, d);
-            i++;
+            Phase++;
+            if (Phase == 4) Phase = 0;
         }
-
     }
 
     public int generateChildernRandomly(int indexOfParent, int Phase){
@@ -53,7 +61,7 @@ public class TreeRando {
                 case 0:
                     break;
                 case 1: currentPhase = GameScreen.state.P1P2; hexState = Hexagon.state.BLUE;break;
-                case 2: currentPhase = GameScreen.state.P2P1; hexState = Hexagon.state.RED;break;
+                case 2: currentPhase = GameScreen.state.P2P1; break;
                 case 3: currentPhase = GameScreen.state.P2P2; hexState = Hexagon.state.BLUE;break;
             }
 
