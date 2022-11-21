@@ -1,15 +1,12 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.bots.Bot;
-import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
-import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.gametree.TreeRando;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 
 public class rundev {
@@ -37,7 +34,7 @@ public class rundev {
     public void init() {
         //Initiate variables
         round=1;
-        totalnumgames=10000;
+        totalnumgames=1;
         gamefinished=false;
 		field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -46,7 +43,7 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=2;
+        fieldsize=3;
 
         //Create field and initiate bots
         botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
@@ -76,7 +73,13 @@ public class rundev {
             createHexagonFieldDefault();
 
             i++;
-        }    
+        }
+
+        TreeRando tr = new TreeRando(1,3, Hexagon.state.BLUE, Hexagon.state.RED);
+
+        tr.generateTree(field);
+        System.out.println(tr.displayTree());
+
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;
         winpercd = ((double)draws.size()/(double)totalnumgames)*100;
@@ -144,6 +147,7 @@ public class rundev {
     public static void main(String[] args) {
         rundev dev = new rundev();
         dev.init();
+
         dev.update();
     }
 }

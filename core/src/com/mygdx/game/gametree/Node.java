@@ -6,186 +6,136 @@ import java.util.concurrent.ThreadLocalRandom;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.coordsystem.Hexagon.state;
 import com.mygdx.game.scoringsystem.ScoringEngine;
+import com.mygdx.game.screens.GameScreen;
 
 public class Node {
-    ArrayList<Hexagon> field;
-    ArrayList<Node> listOfChildren;
-    int hexQ;
-    int hexR;
-    Hexagon.state hexState;
-    Node parent;
-    int depth;
-    double combinedScore;
-    double nodeScore;
-    boolean root;
-    int visitScore;
-    ArrayList<Hexagon> usedHex;
-    ScoringEngine SEngine = new ScoringEngine();
+    private ArrayList<Hexagon> field;
+    private ArrayList<Node> listOfChildren;
+    private int hexQ;
+    private int hexR;
+    private Hexagon.state hexState;
+    private Node parent;
+    private int depth;
+    private double combinedScore;
+    private double nodeScore;
+    private int visitScore;
+    private ArrayList<Hexagon> usedHex;
+    private ScoringEngine SEngine = new ScoringEngine();
+    private GameScreen.state Phase;
 
-    public Node(Node Parent, Hexagon HexagonPlaced, boolean root){ // if node is child //create node if parent null
-        this.root = root;
-        this.parent = Parent;
-        this.depth = parent.depth + 1; // should this be automated? option for setting it manually?
-        this.listOfChildren = new ArrayList<Node>();
-        this.usedHex = new ArrayList<Hexagon>();
-        if(parent.hexState==state.RED){
-            this.hexState = Hexagon.state.BLUE;
-        }
-        else{
-            this.hexState = Hexagon.state.RED;
-        }
+    //constructor for root.
+    public Node(ArrayList<Hexagon> field, GameScreen.state Phase){
+        parent = null;
+        depth = 0;
+        listOfChildren = new ArrayList<Node>();
+        hexState = null;
+        visitScore = 0;
+        nodeScore = 0;
+        combinedScore = 0;
+        this.Phase = Phase;
+
         ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
-        ArrayList<Hexagon> usedClone = new ArrayList<Hexagon>();
         try {
-            for(Hexagon h : parent.field) {
+            for(Hexagon h : field) {
                 clone.add(h.clone());
             }
         } catch (Exception e) {}
+        this.field = clone;
+    }
+
+    // if node is a non-root node:
+    public Node(Node Parent, int hexQ, int hexR, Hexagon.state statePlaced, GameScreen.state Phase){
+        parent = Parent;
+        depth = parent.depth + 1;
+        listOfChildren = new ArrayList<Node>();
+        hexState = statePlaced;
+        this.Phase = Phase; //TODO AUTO CALCULATE THIS ON CREATION BASED ON PARENT PHASE
+
+        ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
         try {
-            for(Hexagon h : parent.usedHex) {
-                usedClone.add(h.clone());
+            for(Hexagon h : parent.getField()) {
+                clone.add(h.clone());
             }
         } catch (Exception e) {}
+
         this.field = clone;
+
+        //actually place the piece on the board. (how can this be improved?) Hashmap?
         for(Hexagon hex:this.field){
-            if(hex.getQ()==HexagonPlaced.getQ() && hex.getR()==HexagonPlaced.getR()){
-                hex.setMyState(hexState);
+            if(hex.getQ()==hexQ && hex.getR()==hexR){
+                hex.setMyState(statePlaced);
             }
         }
-        this.usedHex = usedClone;
-        this.hexQ = HexagonPlaced.getQ();
-        this.hexR = HexagonPlaced.getR();
-        this.hexState = HexagonPlaced.getMyState(); //get the state of the board from parent, then update with the hexagon
-        this.visitScore = 0; // for monte carlo
-        try{
-            this.usedHex.add(HexagonPlaced.clone());
-        }
-        catch(Exception e){}
-        this.nodeScore = this.assignScore();
-        this.combinedScore = this.parent.combinedScore + this.nodeScore;
+
+        this.hexQ = hexQ;
+        this.hexR = hexR;
+        assignScore();
     }
 
-    public Node(ArrayList<Hexagon> field, Hexagon HexagonPlaced, Hexagon.state state){ // if node is root
-            this.root = true;
-            this.parent = this;
-            this.usedHex = new ArrayList<Hexagon>();
-            this.depth = 0;
-            this.combinedScore = 0;
-            this.listOfChildren = new ArrayList<Node>();
-            this.hexState = state;
-            ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
-            try {
-                for(Hexagon h : field) {
-                    clone.add(h.clone());
-                }
-            } catch (Exception e) {}         
-            this.field = clone;
-            for(Hexagon hex:this.field){
-                if(hex.getQ()==HexagonPlaced.getQ() && hex.getR()==HexagonPlaced.getR()){
-                    hex.setMyState(hexState);
-                }
-            }
-            this.hexQ = HexagonPlaced.getQ();
-            this.hexR = HexagonPlaced.getR();
-            try {
-                this.usedHex.add(HexagonPlaced.clone());
-            } catch (Exception e) {} 
-            this.visitScore = 0;
-            this.nodeScore = this.assignScore();
-            this.combinedScore = this.parent.combinedScore + this.nodeScore;
-        
-    }
 
-    public void createChildren(){  // get children, children have the opposite colour of the parent
-        for(Hexagon hex:this.field){
-            for(Hexagon hexUsed:this.usedHex){
-            if((hex.getMyState()==Hexagon.state.BLANK)&&((hexUsed.getQ()!=hex.getQ()) || (hexUsed.getR()!=hex.getR()))){
-                Node newNode = new Node(this,hex,false);
-                //System.out.println(newNode.toString());
-                //System.out.println("created node");
-                if(this.getState()==Hexagon.state.RED){
-                   newNode.setState(Hexagon.state.BLUE);
-                }
-                else{
-                   newNode.setState(Hexagon.state.RED);
-                }
-                this.listOfChildren.add(newNode);
-            }
-        }}
-    }
+    public void assignScore(){
+        SEngine.calculate(field);
 
-    public void createNewPly(){
-        for(Node n:this.listOfChildren){
-            n.createChildren();
-        }
-    }
+        nodeScore = SEngine.getRedScore();//TODO implement score? based on evaluation function rn its just red score.
 
-    public Node getNextNode(){
-        int random = ThreadLocalRandom.current().nextInt(0, this.getChildArray().size()-1);
-        if(this.usedHex.contains(this.getChildArray().get(random))){
-            return this.getNextNode();
+        double childrenTotalScore = 0;
+        for (Node n:
+             listOfChildren) {
+            childrenTotalScore+=n.getCombinedScore();
         }
-        return this.getChildArray().get(random);
-    }
 
-    public double assignScore(){  // get score based on colour AFTER the hexagon in the node is placed
-        SEngine.calculate(this.field);
-        if(this.hexState==Hexagon.state.RED){
-            return SEngine.getRedScore();
-        
-        }
-        else{
-            return SEngine.getBlueScore();
-        }
+        combinedScore = nodeScore+childrenTotalScore;
     }
 
     public ArrayList<Hexagon> getField(){
-        return this.field;
+        return field;
     }
 
     public int getDepth(){
-        return this.depth;
+        return depth;
     }
 
-
     public Node getParent(){
-        return this.parent;
+        return parent;
+    }
+
+    public double getCombinedScore() {
+        return combinedScore;
     }
 
     public List<Node> getChildArray(){
-        return this.listOfChildren;
+        return listOfChildren;
     }
     
     public int getQ(){
-        return this.hexQ;
+        return hexQ;
     }
 
     public int getR(){
-        return this.hexR;
+        return hexR;
     }
 
     public Hexagon.state getState(){
-        return this.hexState;
+        return hexState;
     }
 
     public void setState(Hexagon.state newState){
         this.hexState = newState;
     }
 
-
     public String toString(){ // could be expanded
-        return("Depth: " + this.depth + " Score: " + this.nodeScore + " Q: " + this.hexQ + " R: " + this.hexR + " S: " + (-this.hexQ-this.hexR) + " State: " + this.hexState);
+        return("Depth: " + depth + " Score: " + nodeScore + " Q: " + hexQ + " R: " + hexR + " S: " + (-hexQ-hexR) + " State: " + hexState);
     }
 
     public void listChildren(){
         int sum = 0;
-        for(Node node:this.listOfChildren){
+        for(Node node:listOfChildren){
             System.out.println(node.toString());
             sum++;
         }
         System.out.println("Total children: " + sum);
-        if(this.listOfChildren.size() == 0){
-            System.out.println("Array is null and Miel is a cunt");
+        if(listOfChildren.size() == 0){
+            System.out.println("Array is EMPTY");
         }
     }
 }
