@@ -75,7 +75,7 @@ public class rundev {
             i++;
         }
 
-        TreeRando tr = new TreeRando(1,5, Hexagon.state.BLUE, Hexagon.state.RED);
+        TreeRando tr = new TreeRando(4,3, Hexagon.state.BLUE, Hexagon.state.RED);
 
         tr.generateTree(field);
         System.out.println(tr.displayTree());

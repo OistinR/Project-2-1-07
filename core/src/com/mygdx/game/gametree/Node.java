@@ -106,6 +106,10 @@ public class Node {
     public List<Node> getChildArray(){
         return listOfChildren;
     }
+
+    public boolean hasChildern(){
+        return !listOfChildren.isEmpty();
+    }
     
     public int getQ(){
         return hexQ;

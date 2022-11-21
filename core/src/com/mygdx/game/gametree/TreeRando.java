@@ -11,6 +11,8 @@ public class TreeRando {
     int depth, width;
     Hexagon.state myColor;
     Hexagon.state oppColor;
+    ArrayList<Integer> Layers;
+
 
     public TreeRando(int depth, int width,  Hexagon.state myColor, Hexagon.state oppColor){
         nodes = new ArrayList<>();
@@ -18,31 +20,29 @@ public class TreeRando {
         this.width=width;
         this.myColor = myColor;
         this.oppColor = oppColor;
+        Layers = new ArrayList<>();
+        for (int i = 0; i < depth+1; i++) {
+           Layers.add(i*width);
+        }
     }
 
     public void generateTree(ArrayList<Hexagon> field){
         nodes.clear();
         nodes.add(new Node(field, GameScreen.state.P2P1));
-    //loop is a fucking mess doesnt work.
-        int Phase = 0;
-        for (int d = 0; d < depth; d++) {
-            for (int i = 0; i < nodes.size(); i++) {//better index implementation? never terminates
-
-                if (nodes.get(i).getDepth()==d)
-                    for (int j = 0; j < width; j++) {
-                        d = generateChildernRandomly(i, Phase);
-                    }
-                if(nodes.get(i).getDepth()==depth){//termination is too early
-                    break;
+        if(depth >0) {
+            generateChildernRandomly(nodes.get(0), 0);
+        }
+        if (depth>1) {
+            for (int j = 0; j < nodes.size(); j++) {
+                if (!nodes.get(j).hasChildern()){
+                    if(!generateChildernRandomly(nodes.get(j), 0))
+                        break;
                 }
             }
-
-            Phase++;
-            if (Phase == 4) Phase = 0;
         }
     }
 
-    public int generateChildernRandomly(int indexOfParent, int Phase){
+    public boolean generateChildernRandomly(Node parent, int Phase){
 
         Random r = new Random();
         Hexagon hex = new Hexagon(0,0,0,0,0);
@@ -51,7 +51,7 @@ public class TreeRando {
         for (int w = 0; w < width; w++) {
 
             try {
-                hex = nodes.get(indexOfParent).getField().get(r.nextInt(nodes.get(indexOfParent).getField().size())).clone();
+                hex = parent.getField().get(r.nextInt(parent.getField().size())).clone();
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
@@ -65,18 +65,33 @@ public class TreeRando {
                 case 3: currentPhase = GameScreen.state.P2P2; hexState = Hexagon.state.BLUE;break;
             }
 
-            temp = new Node(nodes.get(indexOfParent), hex.getQ(),hex.getR(), hexState,currentPhase);
-            nodes.get(indexOfParent).getChildArray().add(temp);
+            temp = new Node(parent, hex.getQ(),hex.getR(), hexState,currentPhase);
+
+            if (temp.getDepth()>depth)
+                return false;
+            parent.getChildArray().add(temp);
             nodes.add(temp);
-            }
-        return temp.getDepth();
+        }
+        return true;
     }
 
     public String displayTree(){
         StringBuilder out = new StringBuilder();
+
         for (Node n:nodes) {
-            out.append(n.toString()+"\n");
+            out.append(n +"\n\n");
+            if(!n.getChildArray().isEmpty()){
+                for (Node no: n.getChildArray()) {
+                    out.append("\t Child: "+no.toString()+"\n");
+                }
+                out.append("\n");
+            }
+            else {
+                out.append("\t no childern \n");
+                out.append("\n");
+            }
         }
+        out.append("\n Total nodes generated at depth "+depth+" and width "+width+": "+nodes.size());
         return out.toString();
     }
 
