@@ -41,7 +41,8 @@ public class TreeRando {
             }
         }
     }
-
+    //TODO get states working in nodes, apply a value to each node based on state and who is playing, use combined score to get combined score of nodes.
+    //TODO Remove duplicate siblings
     public boolean generateChildernRandomly(Node parent, int Phase){
 
         Random r = new Random();

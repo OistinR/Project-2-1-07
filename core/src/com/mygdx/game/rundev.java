@@ -43,7 +43,7 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=3;
+        fieldsize=6;
 
         //Create field and initiate bots
         botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
@@ -74,9 +74,9 @@ public class rundev {
 
             i++;
         }
-
-        TreeRando tr = new TreeRando(5,12, Hexagon.state.BLUE, Hexagon.state.RED);
-
+        //miel is a cunt 3 2
+        TreeRando tr = new TreeRando(5,10, Hexagon.state.BLUE, Hexagon.state.RED);
+        //TODO Storage is a massive issue, larger map sizes means lower depth/widths.
         long runtime=0L;
         long startTime = System.nanoTime();
         tr.generateTree(field);
