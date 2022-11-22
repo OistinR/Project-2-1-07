@@ -76,8 +76,8 @@ public class rundev {
 
             i++;
         }
-        //miel is a cunt 3 2
-        TreeRando tr = new TreeRando(3,2);
+        //TODO issue: the tree cant tell when game is over so its possible that infinte loops can occur.
+        TreeRando tr = new TreeRando(8,5);
         // Storage is a massive issue, larger map sizes means lower depth/widths.
         long runtime=0L;
         long startTime = System.nanoTime();
@@ -87,7 +87,7 @@ public class rundev {
         runtime += duration/10000000;
         System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
 
-        System.out.println(tr.displayTree(true));
+        System.out.println(tr.displayTree(false));
 
         System.out.println("bots assessment of board: "+ tr.getNodes().get(0).getCombinedScore());
 
