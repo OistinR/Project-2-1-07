@@ -43,7 +43,7 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=6;
+        fieldsize=3;
 
         //Create field and initiate bots
         botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
@@ -75,8 +75,8 @@ public class rundev {
             i++;
         }
         //miel is a cunt 3 2
-        TreeRando tr = new TreeRando(5,10, Hexagon.state.BLUE, Hexagon.state.RED);
-        //TODO Storage is a massive issue, larger map sizes means lower depth/widths.
+        TreeRando tr = new TreeRando(2,2, Hexagon.state.BLUE, Hexagon.state.RED);
+        // Storage is a massive issue, larger map sizes means lower depth/widths.
         long runtime=0L;
         long startTime = System.nanoTime();
         tr.generateTree(field);
@@ -85,8 +85,7 @@ public class rundev {
         runtime += duration/10000000;
         System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
 
-
-        System.out.println(tr.displayTree(false));
+        System.out.println(tr.displayTree(true));
 
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;

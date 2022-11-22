@@ -30,50 +30,96 @@ public class TreeRando {
         nodes.clear();
         nodes.add(new Node(field, GameScreen.state.P2P1));
         if(depth >0) {
-            generateChildernRandomly(nodes.get(0), 0);
+            generateChildernRandomly(nodes.get(0), GameScreen.state.P1P1);
         }
+
         if (depth>1) {
-            for (int j = 0; j < nodes.size(); j++) {
+            for (int j = 0; j < nodes.size(); j++) {//do not use enhanced for loop.
                 if (!nodes.get(j).hasChildern()){
-                    if(!generateChildernRandomly(nodes.get(j), 0))
+                    if(!generateChildernRandomly(nodes.get(j), depthToPhase(nodes.get(j).getDepth())))
                         break;
                 }
             }
         }
     }
+
+    /** Helper method for node generation.
+     * converts the depth to phase
+     * 0 = P1P1
+     * etc TODO Finish this description
+     *
+     * @param currentDepth current depth of node
+     * @return
+     */
+
+    public GameScreen.state depthToPhase(int currentDepth){
+        int t = 0;
+        for (int i = 0; i < currentDepth; i++) {
+            t++;
+            if (t==4){
+                t=0;
+            }
+        }
+
+        GameScreen.state currentPhase = GameScreen.state.P1P1;
+        switch (t){
+            case 0:
+                break;
+            case 1: currentPhase = GameScreen.state.P1P2; break;
+            case 2: currentPhase = GameScreen.state.P2P1; break;
+            case 3: currentPhase = GameScreen.state.P2P2; break;
+        }
+        return currentPhase;
+    }
+
     //TODO get states working in nodes, apply a value to each node based on state and who is playing, use combined score to get combined score of nodes.
     //TODO Remove duplicate siblings
-    public boolean generateChildernRandomly(Node parent, int Phase){
+    public boolean generateChildernRandomly(Node parent, GameScreen.state currentPhase){
 
-        Random r = new Random();
+
         Hexagon hex = new Hexagon(0,0,0,0,0);
         //amount of times its generated.
-        Node temp = new Node(nodes.get(0),0,0,null,null);
+        Node temp = new Node(nodes.get(0),0,0, GameScreen.state.P1P1);
+        hex.setMyState(Hexagon.state.HOVER);
+        ArrayList<Hexagon> listOfPositions = new ArrayList<>();
+        Random r = new Random();
+        int randInt = 0;
         for (int w = 0; w < width; w++) {
 
             try {
-                hex = parent.getField().get(r.nextInt(parent.getField().size())).clone();
+                while(hex.getMyState()!= Hexagon.state.BLANK){
+                    hex = parent.getField().get(r.nextInt(parent.getField().size())).clone();
+
+                    if (hex.getMyState()== Hexagon.state.BLANK&&!isDuplicateHex(hex,listOfPositions)){
+                            listOfPositions.add(hex);}
+                    else{
+                        hex = new Hexagon(0,0,0,0,0);
+                        hex.setMyState(Hexagon.state.HOVER);
+                    }
+                }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
-            GameScreen.state currentPhase = GameScreen.state.P1P1;
-            Hexagon.state hexState = Hexagon.state.RED;
-            switch (Phase){
-                case 0:
-                    break;
-                case 1: currentPhase = GameScreen.state.P1P2; hexState = Hexagon.state.BLUE;break;
-                case 2: currentPhase = GameScreen.state.P2P1; break;
-                case 3: currentPhase = GameScreen.state.P2P2; hexState = Hexagon.state.BLUE;break;
-            }
-
-            temp = new Node(parent, hex.getQ(),hex.getR(), hexState,currentPhase);
+            temp = new Node(parent, hex.getQ(),hex.getR(), currentPhase);
 
             if (temp.getDepth()>depth)
                 return false;
             parent.getChildArray().add(temp);
             nodes.add(temp);
+            hex = new Hexagon(0,0,0,0,0);
+            hex.setMyState(Hexagon.state.HOVER);
         }
+        parent.assignScore();
         return true;
+    }
+    
+    public boolean isDuplicateHex(Hexagon hex, ArrayList<Hexagon> listofHex){
+        for (Hexagon h:listofHex){
+            if (hex.getQ()== h.getQ()&& hex.getR() == h.getR()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public String displayTree(boolean fullTree){

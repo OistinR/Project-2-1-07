@@ -44,12 +44,21 @@ public class Node {
     }
 
     // if node is a non-root node:
-    public Node(Node Parent, int hexQ, int hexR, Hexagon.state statePlaced, GameScreen.state Phase){
+    public Node(Node Parent, int hexQ, int hexR, GameScreen.state Phase){
         parent = Parent;
         depth = parent.depth + 1;
         listOfChildren = new ArrayList<Node>();
-        hexState = statePlaced;
+
         this.Phase = Phase; //TODO AUTO CALCULATE THIS ON CREATION BASED ON PARENT PHASE
+
+        switch (this.Phase){//this will allow us to use different scoring engines depending on phase perhaps
+            case P1P1:
+            case P2P1:
+                hexState = state.RED; break;
+            case P1P2:
+            case P2P2:
+                hexState = state.BLUE; break;
+        }
 
         ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
         try {
@@ -63,7 +72,7 @@ public class Node {
         //actually place the piece on the board. (how can this be improved?) Hashmap?
         for(Hexagon hex:this.field){
             if(hex.getQ()==hexQ && hex.getR()==hexR){
-                hex.setMyState(statePlaced);
+                hex.setMyState(hexState);
             }
         }
 
@@ -75,8 +84,10 @@ public class Node {
 
     public void assignScore(){
         SEngine.calculate(field);
+        //hard coded player 2
+        //TODO implement score? based on evaluation function?
 
-        nodeScore = SEngine.getRedScore();//TODO implement score? based on evaluation function rn its just red score.
+        nodeScore = SEngine.getBlueScore()-SEngine.getRedScore();
 
         double childrenTotalScore = 0;
         for (Node n:
@@ -128,7 +139,8 @@ public class Node {
     }
 
     public String toString(){ // could be expanded
-        return("Depth: " + depth + " Score: " + nodeScore + " Q: " + hexQ + " R: " + hexR + " S: " + (-hexQ-hexR) + " State: " + hexState);
+        return("Depth: " + depth + " Score: " + nodeScore + " score of leaf: "+ combinedScore +
+                " Q: " + hexQ + " R: " + hexR + " S: " + (-hexQ-hexR) + " State: " + hexState);
     }
 
     public void listChildren(){
