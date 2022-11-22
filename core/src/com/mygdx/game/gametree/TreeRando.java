@@ -75,20 +75,21 @@ public class TreeRando {
         return true;
     }
 
-    public String displayTree(){
+    public String displayTree(boolean fullTree){
         StringBuilder out = new StringBuilder();
-
-        for (Node n:nodes) {
-            out.append(n +"\n\n");
-            if(!n.getChildArray().isEmpty()){
-                for (Node no: n.getChildArray()) {
-                    out.append("\t Child: "+no.toString()+"\n");
+        if (fullTree){
+            for (Node n:nodes) {
+                out.append(n +"\n\n");
+                if(!n.getChildArray().isEmpty()){
+                    for (Node no: n.getChildArray()) {
+                        out.append("\t Child: "+no.toString()+"\n");
+                    }
+                    out.append("\n");
                 }
-                out.append("\n");
-            }
-            else {
-                out.append("\t no childern \n");
-                out.append("\n");
+                else {
+                    out.append("\t no childern \n");
+                    out.append("\n");
+                }
             }
         }
         out.append("\n Total nodes generated at depth "+depth+" and width "+width+": "+nodes.size());

@@ -75,10 +75,18 @@ public class rundev {
             i++;
         }
 
-        TreeRando tr = new TreeRando(4,3, Hexagon.state.BLUE, Hexagon.state.RED);
+        TreeRando tr = new TreeRando(5,12, Hexagon.state.BLUE, Hexagon.state.RED);
 
+        long runtime=0L;
+        long startTime = System.nanoTime();
         tr.generateTree(field);
-        System.out.println(tr.displayTree());
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        runtime += duration/10000000;
+        System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
+
+
+        System.out.println(tr.displayTree(false));
 
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;
