@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
+import com.mygdx.game.bots.TreeBot;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.gametree.Node;
-import com.mygdx.game.gametree.TreeRando;
+import com.mygdx.game.gametree.Tree;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
 
@@ -49,7 +50,7 @@ public class rundev {
 
         //Create field and initiate bots
         botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-        botptwo = new OLABot();
+        botptwo =  new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);//TODO INCORROECT
         createHexagonFieldDefault();
     }
 
@@ -76,29 +77,29 @@ public class rundev {
 
             i++;
         }
-        //TODO issue: the tree cant tell when game is over so its possible that infinte loops can occur.
-        TreeRando tr = new TreeRando(8,5);
-        // Storage is a massive issue, larger map sizes means lower depth/widths.
-        long runtime=0L;
-        long startTime = System.nanoTime();
-        tr.generateTree(field, GameScreen.state.P2P1,false);
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        runtime += duration/10000000;
-        System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
-
-        System.out.println(tr.displayTree(false));
-
-        System.out.println("bots assessment of board: "+ tr.getNodes().get(0).getCombinedScore());
-
-        double maxScore = 0;
-        for (Node n0: tr.getNodes().get(0).getChildArray()) {
-            if(maxScore<n0.getCombinedScore()){
-                maxScore = n0.getCombinedScore();
-            }
-            System.out.println(n0);
-        }
-        System.out.println("max score is: "+ maxScore);
+        //TODO issue: the tree cant tell when game is over so its possible that infinite loops can occur.
+//        Tree tr = new Tree(6,5);
+//        // Storage is a massive issue, larger map sizes means lower depth/widths.
+//        long runtime=0L;
+//        long startTime = System.nanoTime();
+//        tr.generateTree(field, GameScreen.state.P2P1,false);
+//        long endTime = System.nanoTime();
+//        long duration = (endTime - startTime);
+//        runtime += duration/10000000;
+//        System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
+//
+//        System.out.println(tr.displayTree(false));
+//
+//        System.out.println("bots assessment of board: "+ tr.getNodes().get(0).getCombinedScore());
+//
+//        double maxScore = 0;
+//        for (Node n0: tr.getNodes().get(0).getChildArray()) {
+//            if(maxScore<n0.getCombinedScore()){
+//                maxScore = n0.getCombinedScore();
+//            }
+//            System.out.println(n0);
+//        }
+//        System.out.println("max score is: "+ maxScore);
 
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;

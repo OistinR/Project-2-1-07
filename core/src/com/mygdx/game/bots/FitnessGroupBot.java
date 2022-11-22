@@ -69,6 +69,14 @@ public class FitnessGroupBot extends Bot{
 
     }
 
+
+    public int calculateTree(ArrayList<Hexagon> field, GameScreen.state state) { //does not support more than 2 players
+        FE.update(field);
+        return getBestHexagon(field, state);
+    }
+
+
+
     /**
      * This method searches through the field and finds the best place(s) to put a hexagon.
      * This of course depends on who is playing so, it accounts for: P1P1, P1P2, P2P1 and P2P2.(see ugly switch statement)

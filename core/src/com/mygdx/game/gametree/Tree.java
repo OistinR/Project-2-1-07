@@ -1,5 +1,6 @@
 package com.mygdx.game.gametree;
 
+import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.screens.GameScreen;
 
@@ -8,12 +9,13 @@ import java.util.Random;
 
 //TODO add method for getting best move, we would return Q R and color.
 
-public class TreeRando {
+public class Tree {
     ArrayList<Node> nodes;
     int depth, width;
     ArrayList<Integer> Layers;
+    FitnessGroupBot fgb;
 
-    public TreeRando(int depth, int width){
+    public Tree(int depth, int width){
         nodes = new ArrayList<>();
         this.depth=depth;
         this.width=width;
@@ -22,8 +24,13 @@ public class TreeRando {
            Layers.add(i*width);
         }
     }
-//boolean player is not needed we can obtain same info from board state to lazy to make switch statement rn
+    //boolean player is not needed we can obtain same info from board state to lazy to make switch statement rn
     public void generateTree(ArrayList<Hexagon> field, GameScreen.state boardState, boolean player){
+        if (player)
+            fgb = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
+        else
+            fgb = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED,false);
+
         nodes.clear();
         nodes.add(new Node(field, boardState));
 
@@ -33,11 +40,26 @@ public class TreeRando {
 
         if (depth>1) {
             for (int j = 0; j < nodes.size(); j++) { //do not use enhanced for loop.
-                if (!nodes.get(j).hasChildern()){
-                    if(!generateChildrenRandomly(nodes.get(j)))
+                int c = 0;
+                for (Hexagon he: nodes.get(j).getField()) {
+                    if (he.getMyState()== Hexagon.state.BLANK){
+                        c++;
+                    }
+                    if (c>3){
                         break;
+                    }
                 }
+
+                if (c>3){
+                    if (!nodes.get(j).hasChildern()){//
+                        if(!generateChildrenFitnessBot(nodes.get(j)))
+                            break;
+                    }
+                }
+
+
             }
+
         }
 
         for (int k = nodes.size()-1; k >=0 ; k--) { // this adds up the score starting from the bottom and working its way up.
@@ -55,11 +77,14 @@ public class TreeRando {
         Random r = new Random();
 
         for (int w = 0; w < width; w++) {
+
             try {
+
                 //TODO check if game is over and if it is check if we lose
                 // this selects a random position on the board, we can use a bot just as easily.
-
                 while(hex.getMyState()!= Hexagon.state.BLANK){
+
+
                     hex = parent.getField().get(r.nextInt(parent.getField().size())).clone();
 
                     if (hex.getMyState()== Hexagon.state.BLANK&&!isDuplicateHex(hex,listOfPositions)){
@@ -76,6 +101,9 @@ public class TreeRando {
             temp = new Node(parent, hex.getQ(),hex.getR());
             if (temp.getDepth()>depth)
                 return false;
+
+
+
             parent.getChildArray().add(temp);
             nodes.add(temp);
             hex = new Hexagon(0,0,0,0,0);
@@ -83,6 +111,48 @@ public class TreeRando {
         }
         return true;
     }
+    //TODO FIX: THIS METHOD CREATES IDENTICAL NODES FOR DEPTH. BAD. NOT DONE, WORKS, BUT VERY BAD.
+    public boolean generateChildrenFitnessBot(Node parent){
+        Hexagon hex = new Hexagon(0,0,0,0,0);
+        Node temp;
+        hex.setMyState(Hexagon.state.HOVER);
+        GameScreen.state Phase = GameScreen.state.P1P2;
+
+        if (parent.getPhase()!= GameScreen.state.P1P1&&parent.getPhase()!= GameScreen.state.P1P2) {//DON'T CHANGE PLEASE
+
+            return generateChildrenRandomly(parent);
+        }
+
+        switch (parent.getPhase()){
+            case P1P1:
+                break;
+            case P1P2: Phase = GameScreen.state.P2P1;break;
+            case P2P1: Phase = GameScreen.state.P2P2;break;
+            case P2P2: Phase = GameScreen.state.P1P1;break;
+        }
+
+        for (int w = 0; w < width; w++) {
+
+            try {
+                //TODO check if game is over and if it is check if we lose
+                // this selects a random position on the board, we can use a bot just as easily.
+                hex = parent.getField().get(fgb.calculateTree(parent.getField(),Phase)).clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+
+            temp = new Node(parent, hex.getQ(),hex.getR());
+            if (temp.getDepth()>depth)
+                return false;
+
+            parent.getChildArray().add(temp);
+            nodes.add(temp);
+            hex = new Hexagon(0,0,0,0,0);
+            hex.setMyState(Hexagon.state.HOVER);
+        }
+        return true;
+    }
+
     
     public boolean isDuplicateHex(Hexagon hex, ArrayList<Hexagon> listofHex){
         for (Hexagon h:listofHex){
@@ -116,6 +186,21 @@ public class TreeRando {
         }
         out.append("\n Total nodes generated at depth ").append(depth).append(" and width ").append(width).append(": ").append(nodes.size());
         return out.toString();
+    }
+
+    public int[] getBestMove(){
+        int bestQ = 0;
+        int bestR = 0;
+        double maxScore = 0;
+        for (Node n0: nodes.get(0).getChildArray()) {
+            if(maxScore<n0.getCombinedScore()){
+                maxScore = n0.getCombinedScore();
+                bestQ = n0.getQ();
+                bestR = n0.getR();
+            }
+        }
+
+        return new int[]{bestQ, bestR};
     }
 
 }
