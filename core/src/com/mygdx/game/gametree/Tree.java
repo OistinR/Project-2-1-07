@@ -49,7 +49,7 @@ public class Tree {
                         break;
                     }
                 }
-
+                //Goes in here when it should not.
                 if (c>3){
                     if (!nodes.get(j).hasChildern()){//
                         if(!generateChildrenFitnessBot(nodes.get(j)))
