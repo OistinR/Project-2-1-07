@@ -6,6 +6,7 @@ import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.gametree.Node;
 import com.mygdx.game.gametree.TreeRando;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 
@@ -75,7 +76,7 @@ public class rundev {
             i++;
         }
         //miel is a cunt 3 2
-        TreeRando tr = new TreeRando(2,2, Hexagon.state.BLUE, Hexagon.state.RED);
+        TreeRando tr = new TreeRando(4,5, Hexagon.state.BLUE, Hexagon.state.RED);
         // Storage is a massive issue, larger map sizes means lower depth/widths.
         long runtime=0L;
         long startTime = System.nanoTime();
@@ -85,7 +86,13 @@ public class rundev {
         runtime += duration/10000000;
         System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
 
-        System.out.println(tr.displayTree(true));
+        System.out.println(tr.displayTree(false));
+
+        System.out.println();
+
+        for (Node n0: tr.getNodes().get(0).getChildArray()) {
+            System.out.println(n0.toString());
+        }
 
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;

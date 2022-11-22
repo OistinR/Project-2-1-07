@@ -41,6 +41,12 @@ public class TreeRando {
                 }
             }
         }
+
+        for (int k = nodes.size()-1; k >=0 ; k--) { // this added up the score starting from the bottom and working its way up.
+            if (nodes.get(k).hasChildern()){
+                nodes.get(k).assignScore();
+            }
+        }
     }
 
     /** Helper method for node generation.
@@ -72,8 +78,7 @@ public class TreeRando {
         return currentPhase;
     }
 
-    //TODO get states working in nodes, apply a value to each node based on state and who is playing, use combined score to get combined score of nodes.
-    //TODO Remove duplicate siblings
+    //TODO apply a value to each node based on state and who is playing(WIP)
     public boolean generateChildernRandomly(Node parent, GameScreen.state currentPhase){
 
 
@@ -120,6 +125,10 @@ public class TreeRando {
             }
         }
         return false;
+    }
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
     }
 
     public String displayTree(boolean fullTree){

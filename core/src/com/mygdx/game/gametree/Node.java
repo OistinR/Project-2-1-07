@@ -85,7 +85,7 @@ public class Node {
     public void assignScore(){
         SEngine.calculate(field);
         //hard coded player 2
-        //TODO implement score? based on evaluation function?
+        //TODO implement score? based on evaluation function? also why does each node have a scoring engine we should change that
 
         nodeScore = SEngine.getBlueScore()-SEngine.getRedScore();
 
