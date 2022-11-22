@@ -96,7 +96,7 @@ public class rundev {
             if(maxScore<n0.getCombinedScore()){
                 maxScore = n0.getCombinedScore();
             }
-            System.out.println(n0.toString());
+            System.out.println(n0);
         }
         System.out.println("max score is: "+ maxScore);
 

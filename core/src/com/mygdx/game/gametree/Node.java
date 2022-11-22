@@ -109,7 +109,6 @@ public class Node {
         }
         else {
             nodeScore = SEngine.getBlueScore()-SEngine.getRedScore();
-
         }
         double childrenTotalScore = 0;
         for (Node n:listOfChildren) {
