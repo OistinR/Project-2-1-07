@@ -6,50 +6,48 @@ import com.mygdx.game.screens.GameScreen;
 import java.util.ArrayList;
 import java.util.Random;
 
+//TODO add method for getting best move, we would return Q R and color.
+
 public class TreeRando {
     ArrayList<Node> nodes;
     int depth, width;
-    Hexagon.state myColor;
-    Hexagon.state oppColor;
     ArrayList<Integer> Layers;
 
-
-    public TreeRando(int depth, int width,  Hexagon.state myColor, Hexagon.state oppColor){
+    public TreeRando(int depth, int width){
         nodes = new ArrayList<>();
         this.depth=depth;
         this.width=width;
-        this.myColor = myColor;
-        this.oppColor = oppColor;
         Layers = new ArrayList<>();
         for (int i = 0; i < depth+1; i++) {
            Layers.add(i*width);
         }
     }
-
-    public void generateTree(ArrayList<Hexagon> field){
+//boolean player is not needed we can obtain same info from board state to lazy to make switch statment rn
+    public void generateTree(ArrayList<Hexagon> field, GameScreen.state boardState, boolean player){
         nodes.clear();
-        nodes.add(new Node(field, GameScreen.state.P2P1));
+        nodes.add(new Node(field, boardState));
+
         if(depth >0) {
-            generateChildernRandomly(nodes.get(0), GameScreen.state.P1P1);
+            generateChildernRandomly(nodes.get(0));
         }
 
         if (depth>1) {
             for (int j = 0; j < nodes.size(); j++) {//do not use enhanced for loop.
                 if (!nodes.get(j).hasChildern()){
-                    if(!generateChildernRandomly(nodes.get(j), depthToPhase(nodes.get(j).getDepth())))
+                    if(!generateChildernRandomly(nodes.get(j)))
                         break;
                 }
             }
         }
 
-        for (int k = nodes.size()-1; k >=0 ; k--) { // this added up the score starting from the bottom and working its way up.
+        for (int k = nodes.size()-1; k >=0 ; k--) { // this adds up the score starting from the bottom and working its way up.
             if (nodes.get(k).hasChildern()){
-                nodes.get(k).assignScore();
+                nodes.get(k).assignScore(player);
             }
         }
     }
 
-    /** Helper method for node generation.
+    /** Helper method for node generation. not done not modular
      * converts the depth to phase
      * 0 = P1P1
      * etc TODO Finish this description
@@ -57,7 +55,7 @@ public class TreeRando {
      * @param currentDepth current depth of node
      * @return
      */
-
+    //TODO make dynamic so 0 = current state and so on.
     public GameScreen.state depthToPhase(int currentDepth){
         int t = 0;
         for (int i = 0; i < currentDepth; i++) {
@@ -79,19 +77,18 @@ public class TreeRando {
     }
 
     //TODO apply a value to each node based on state and who is playing(WIP)
-    public boolean generateChildernRandomly(Node parent, GameScreen.state currentPhase){
-
-
+    public boolean generateChildernRandomly(Node parent){
         Hexagon hex = new Hexagon(0,0,0,0,0);
-        //amount of times its generated.
-        Node temp = new Node(nodes.get(0),0,0, GameScreen.state.P1P1);
+        Node temp = new Node(nodes.get(0),0,0);
         hex.setMyState(Hexagon.state.HOVER);
         ArrayList<Hexagon> listOfPositions = new ArrayList<>();
         Random r = new Random();
-        int randInt = 0;
-        for (int w = 0; w < width; w++) {
 
+        for (int w = 0; w < width; w++) {
             try {
+                //TODO check if game is over and if it is check if we lose
+                //TODO this selects a random position on the board, we can use a bot just as easily.
+
                 while(hex.getMyState()!= Hexagon.state.BLANK){
                     hex = parent.getField().get(r.nextInt(parent.getField().size())).clone();
 
@@ -105,8 +102,8 @@ public class TreeRando {
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
-            temp = new Node(parent, hex.getQ(),hex.getR(), currentPhase);
 
+            temp = new Node(parent, hex.getQ(),hex.getR());
             if (temp.getDepth()>depth)
                 return false;
             parent.getChildArray().add(temp);
@@ -114,7 +111,6 @@ public class TreeRando {
             hex = new Hexagon(0,0,0,0,0);
             hex.setMyState(Hexagon.state.HOVER);
         }
-        parent.assignScore();
         return true;
     }
     

@@ -9,6 +9,7 @@ import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.gametree.Node;
 import com.mygdx.game.gametree.TreeRando;
 import com.mygdx.game.scoringsystem.ScoringEngine;
+import com.mygdx.game.screens.GameScreen;
 
 public class rundev {
     public enum state{
@@ -35,7 +36,7 @@ public class rundev {
     public void init() {
         //Initiate variables
         round=1;
-        totalnumgames=1;
+        totalnumgames=0;
         gamefinished=false;
 		field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -76,23 +77,28 @@ public class rundev {
             i++;
         }
         //miel is a cunt 3 2
-        TreeRando tr = new TreeRando(4,5, Hexagon.state.BLUE, Hexagon.state.RED);
+        TreeRando tr = new TreeRando(3,2);
         // Storage is a massive issue, larger map sizes means lower depth/widths.
         long runtime=0L;
         long startTime = System.nanoTime();
-        tr.generateTree(field);
+        tr.generateTree(field, GameScreen.state.P2P1,false);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         runtime += duration/10000000;
         System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
 
-        System.out.println(tr.displayTree(false));
+        System.out.println(tr.displayTree(true));
 
-        System.out.println();
+        System.out.println("bots assessment of board: "+ tr.getNodes().get(0).getCombinedScore());
 
+        double maxScore = 0;
         for (Node n0: tr.getNodes().get(0).getChildArray()) {
+            if(maxScore<n0.getCombinedScore()){
+                maxScore = n0.getCombinedScore();
+            }
             System.out.println(n0.toString());
         }
+        System.out.println("max score is: "+ maxScore);
 
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;
