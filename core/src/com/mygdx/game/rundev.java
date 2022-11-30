@@ -3,10 +3,12 @@ package com.mygdx.game;
 import java.util.ArrayList;
 
 import com.mygdx.game.bots.Bot;
+import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.TreeBot;
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.gametree.MonteCarloTree;
 import com.mygdx.game.gametree.Node;
 import com.mygdx.game.gametree.Tree;
 import com.mygdx.game.scoringsystem.ScoringEngine;
@@ -33,11 +35,12 @@ public class rundev {
     private ArrayList<Integer> bot2wins;
     private ArrayList<Integer> draws;
     private int totalnumgames;
+    private double finalWinRate;
 
     public void init() {
         //Initiate variables
         round=1;
-        totalnumgames=0;
+        totalnumgames=15;
         gamefinished=false;
 		field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -49,8 +52,8 @@ public class rundev {
         fieldsize=3;
 
         //Create field and initiate bots
-        botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-        botptwo =  new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);//TODO INCORROECT
+        botpone = new OLABot();
+        botptwo =  new OLABot();//TODO INCORROECT
         createHexagonFieldDefault();
     }
 
@@ -108,6 +111,7 @@ public class rundev {
         System.out.println("Bot 1 number of wins: "+bot1wins.size()+ " Win percentage: "+ winperc1+ " %" );
         System.out.println("Bot 2 number of wins: "+bot2wins.size()+ " Win percentage: "+ winperc2+ " %" );
         System.out.println("Number of draws: "+draws.size()+ " Draw percentage: "+ winpercd+" %");
+        this.finalWinRate = winperc1;
     }
 
     public void createHexagonFieldDefault() {
@@ -165,10 +169,31 @@ public class rundev {
         gamefinished=true;
     }
 
+    public ArrayList<Hexagon> getField(){
+        return this.field;
+    }
+
+    public double getWinRate(){
+        return this.finalWinRate;
+    }
+
+    public void setField(ArrayList<Hexagon> field){
+        ArrayList<Hexagon> clone = new ArrayList<>();
+        try{
+            for(Hexagon hex:field){
+                clone.add(hex.clone());
+            }
+        }
+        catch(Exception e){
+
+        }
+        this.field = field;
+    }
+
+
     public static void main(String[] args) {
         rundev dev = new rundev();
         dev.init();
-
         dev.update();
     }
 }

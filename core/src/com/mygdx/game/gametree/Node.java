@@ -1,7 +1,9 @@
 package com.mygdx.game.gametree;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.HashMap;
 
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.coordsystem.Hexagon.state;
@@ -22,6 +24,7 @@ public class Node {
     private ArrayList<Hexagon> usedHex;
     private ScoringEngine SEngine = new ScoringEngine();
     private GameScreen.state Phase;
+    private HashMap<String, Hexagon> hexagonMap;
 
     /**
      * This is the constructor for the root node.
@@ -40,6 +43,7 @@ public class Node {
         nodeScore = 0;
         combinedScore = 0;
         this.Phase = Phase;
+        hexagonMap = new HashMap<String, Hexagon>(); // To store the field as a hash map, is it needed?
 
         ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
 
@@ -49,7 +53,18 @@ public class Node {
             }
         } catch (Exception e) {}
         this.field = clone;
-    }
+
+        try{
+            for(Hexagon hex:field){
+                hexagonMap.put(String.valueOf(hex.getKey()), hex.clone());
+            }
+        }
+        catch(Exception e){
+
+        }
+
+        //colourHexagon(hexQ, hexR, hexState); // There is a method call here to colour the hash map
+    }                                           // But I am not using it so it's disabled now
 
     // if node is a non-root node:
     public Node(Node Parent, int hexQ, int hexR){
@@ -57,6 +72,7 @@ public class Node {
         depth = parent.depth + 1;
         listOfChildren = new ArrayList<Node>();
 
+        
         //get parent phase and make ours the next phase
         switch (Parent.getPhase()){
             case P1P1: this.Phase = GameScreen.state.P1P2;break;
@@ -88,17 +104,29 @@ public class Node {
 
         this.field = clone;
 
-        //actually place the piece on the board. (how can this be improved?) Hashmap?
-        for(Hexagon hex:this.field){
-            if(hex.getQ()==hexQ && hex.getR()==hexR){
+        try{
+            for(Hexagon hex:field){
+                hexagonMap.put(String.valueOf(hex.getKey()), hex.clone());
+            }
+        }
+        catch(Exception e){
+
+        }
+
+        for(Hexagon hex:field){
+            if(hex.getQ()==this.hexQ && hex.getR()==this.hexR){
                 hex.setMyState(hexState);
             }
         }
+
+        //colourHexagon(hexQ, hexR, hexState);
 
         this.hexQ = hexQ;
         this.hexR = hexR;
 
     }
+
+    
 
     public void assignScore(boolean playerOne){
         SEngine.calculate(field);
@@ -117,6 +145,20 @@ public class Node {
 
         combinedScore = nodeScore+childrenTotalScore;
     }
+
+    public void assignCombinedScore(){
+        double childrenTotalScore = 0;
+        for (Node n:listOfChildren) {
+            childrenTotalScore+=n.getCombinedScore();
+        }
+
+        combinedScore = nodeScore+childrenTotalScore;
+    }
+
+    //public void colourHexagon(int q, int r, Hexagon.state state){
+      //  String key = calculateKey(q, r);
+        //this.hexagonMap.get(key).setMyState(state);
+    //}
 
     public GameScreen.state getPhase() {
         return Phase;
@@ -142,6 +184,31 @@ public class Node {
         return listOfChildren;
     }
 
+    public void setScore(double score){
+        this.nodeScore = score;
+    }
+
+    public void incrementVisitScore(){
+        this.visitScore++;
+    }
+
+    public double getUctValue(){
+        if(this.getParent()==null){
+            return 0;
+        }
+        if(this.getVisitScore()==0){
+            return Integer.MAX_VALUE;
+        }
+        return((double) this.getScore()) + 1.41 * Math.sqrt(Math.log(this.getParent().getVisitScore())/(double) this.getVisitScore());
+    }
+
+    public boolean isRoot(){
+        if(this.parent.equals(null)){
+            return true;
+        }
+        return false;
+    }
+
     public boolean hasChildern(){
         return !listOfChildren.isEmpty();
     }
@@ -162,9 +229,47 @@ public class Node {
         this.hexState = newState;
     }
 
+    public String calculateKey(int q, int r){ // using signed Cantor mapping function
+        double x = q;
+        double y = r;
+        if(x >= 0){
+            x = 2*x;
+        }
+        else{
+            x = (-2*x)-1;
+        }
+        if(y >= 0){
+            y = 2*y;
+        }
+        else{
+            y = (-2*y)-1;
+        }
+        return String.valueOf((0.5 * (x + y) * (x + y + 1)) + y);
+    }
+
+    public double getScore(){
+        return this.nodeScore;
+    }
+
+    public int getVisitScore(){
+        return this.visitScore;
+    }
+
+    public void setCombinedScore(double score){
+        this.combinedScore = score;
+    }
+
+    public void createChildren(){
+        for(Hexagon hex:this.field){
+            if(hex.getMyState()==Hexagon.state.BLANK){
+                listOfChildren.add(new Node(this,hex.getQ(),hex.getR()));
+            }
+        }
+    }
+
     public String toString(){ // could be expanded
         return("Depth: " + depth + " Score: " + nodeScore + " score of leaf: "+ combinedScore +
-                " Q: " + hexQ + " R: " + hexR + " S: " + (-hexQ-hexR) + " State: " + hexState);
+                " Q: " + hexQ + " R: " + hexR + " S: " + (-hexQ-hexR) + " State: " + hexState + "Visit Score: " + visitScore);
     }
 
     public void listChildren(){

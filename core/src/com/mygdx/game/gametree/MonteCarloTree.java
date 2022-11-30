@@ -1,23 +1,27 @@
 package com.mygdx.game.gametree;
 
+import com.mygdx.game.rundev;
 import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.screens.GameScreen;
+import com.mygdx.game.screens.GameScreen.state;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-//TODO add method for getting best move, we would return Q R and color.
-
-public class Tree {
+public class MonteCarloTree {
     ArrayList<Node> nodes;
+    ArrayList<Node> firstLayerNodes;
     int depth, width;
     ArrayList<Integer> Layers;
     FitnessGroupBot fgb;
-    HashMap<String, Hexagon> hexagonMap;
+    int totalVisit;
+    int searchBias;
 
-    public Tree(int depth, int width){
+    public MonteCarloTree(int depth, int width){
         nodes = new ArrayList<>();
         this.depth=depth;
         this.width=width;
@@ -25,22 +29,14 @@ public class Tree {
         for (int i = 0; i < depth+1; i++) {
            Layers.add(i*width);
         }
-        this.hexagonMap = new HashMap<String, Hexagon>();
+        totalVisit = 0;
+        searchBias = 10;
+        firstLayerNodes = new ArrayList<>();
     }
     //boolean player is not needed we can obtain same info from board state to lazy to make switch statement rn
     public void generateTree(ArrayList<Hexagon> field, GameScreen.state boardState, boolean player){
 
-        try{
-            for(Hexagon hex:field){
-                hexagonMap.put(String.valueOf(hex.getKey()), hex.clone());
-                if(hexagonMap.containsKey(hex.getKey())){
-                    System.out.println("added hexagon with key: " + hex.getKey());
-                }
-            }
-        }
-        catch(Exception e){
-
-        }
+        
 
         if (player)
             fgb = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
@@ -220,8 +216,29 @@ public class Tree {
         return new int[]{bestQ, bestR};
     }
 
-    public HashMap<String, Hexagon> getMap(){
-        return this.hexagonMap;
+    //public HashMap<String, Hexagon> getMap(){
+    //    return this.hexagonMap;
+    //}
+
+
+    public double simulate(Node node){ // Take the field of the node, simulate games and take the winrate
+        ArrayList<Hexagon> clone = new ArrayList<>(); 
+        try{
+            for(Hexagon hex:node.getField()){
+                clone.add(hex.clone());
+            }
+        }
+        catch(Exception e){}
+        ArrayList<Hexagon> field = clone;
+        rundev dev = new rundev();
+        dev.init();
+        dev.setField(field);
+        dev.update();
+        double winrate = dev.getWinRate();
+        node.setScore(winrate);
+        System.out.println(winrate + " was the winrate");
+        return winrate;
+        
     }
 
     public String calculateKey(int q, int r){ // using signed Cantor mapping function
@@ -242,4 +259,106 @@ public class Tree {
         return String.valueOf((0.5 * (x + y) * (x + y + 1)) + y);
     }
 
+    public Node getNextNode(){ // Select the node to be simulated with UCT selection
+        double MaxUCT = 0;
+        Node toReturn = null;
+        for(Node n:this.getNodes()){
+            if(n.getUctValue()>MaxUCT){
+                MaxUCT = n.getUctValue();
+                toReturn = n;
+            }
+        }
+        return toReturn;
+    }
+
+    public void expand(Node node){ // add children of the expanded node to the tree
+        node.createChildren();
+        for(Node n:node.getChildArray()){
+            this.nodes.add(n);
+            if(n.getDepth()==1){
+                this.firstLayerNodes.add(n);
+            }
+        }
+    }
+
+    public void backpropogate(Node node){ // update the scores and increment the visit counters
+        Node currentNode = node;
+        while(currentNode.getDepth()>0){
+            currentNode.incrementVisitScore();
+            currentNode.setCombinedScore(currentNode.getScore());
+            currentNode.getParent().setCombinedScore(currentNode.getScore() + currentNode.getParent().getScore());
+            currentNode = currentNode.getParent();
+        }
+        if(currentNode.getDepth()==0){
+            currentNode.incrementVisitScore();
+            currentNode.assignCombinedScore();
+        }
+    }
+
+    public Node getNextBestMove(Node node){ // backtrack to layer one and
+        double bestScore = 0;
+        Node toReturn = node;
+        for(Node n:this.firstLayerNodes){
+            if(n.getCombinedScore()>bestScore){
+                bestScore = n.getCombinedScore();
+                toReturn = n;
+            }
+        }
+        return toReturn;
+    }
+
+    public Node search(Node root){ // Returns a nodde at depth 1 to be played
+        Node currentNode = root;
+        Node bestNode = root;
+        int cntr = 0;
+        int current_depth = 0;
+        root.createChildren();
+        this.expand(root);
+        this.simulate(root);
+        this.backpropogate(root);
+        System.out.println(root.toString());
+        while(cntr < searchBias*10){            // TODO: currently using a cntr, but should be a timer instead
+            currentNode = this.getNextNode(); 
+            System.out.println(currentNode.toString());
+            current_depth = currentNode.getDepth();
+            this.expand(currentNode);
+            this.simulate(currentNode);
+            this.backpropogate(currentNode);
+            if(currentNode.getScore()>bestNode.getScore()){
+                bestNode = currentNode;
+            }
+            cntr++;
+        }
+        System.out.println("The best node at the end: \n" + bestNode.toString());
+        return this.getNextBestMove(bestNode);
+    }
+
+    public static void main(String[] args) {
+        rundev dev = new rundev();
+        dev.init();
+        ArrayList<Hexagon> field = dev.getField();
+        for(Hexagon hex:field){
+            if(hex.getQ()==0 && hex.getR()==1){
+                hex.setMyState(Hexagon.state.BLUE);
+            }
+        }
+        for(Hexagon hex:field){
+            if(hex.getQ()==1 && hex.getR()==2){
+                hex.setMyState(Hexagon.state.BLUE);
+            }
+        }
+    
+        for(Hexagon hex:field){
+            if(hex.getQ()==-3 && hex.getR()==0){
+                hex.setMyState(Hexagon.state.BLUE);
+            }
+        }
+        MonteCarloTree mct = new MonteCarloTree(10, 20);
+        Node root = new Node(field, GameScreen.state.P1P2);
+        mct.getNodes().add(root);
+        //System.out.println("Size: " + field.size());
+        mct.search(new Node(field,GameScreen.state.P2P1));
+
+    }
 }
+
