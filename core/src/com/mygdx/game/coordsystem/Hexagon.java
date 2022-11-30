@@ -34,6 +34,8 @@ public class Hexagon implements Cloneable {
         BLANK,
         RED,
         BLUE,
+        GREEN,
+        YELLOW,
         HOVER
     }
 
@@ -43,6 +45,8 @@ public class Hexagon implements Cloneable {
     private Texture blankTileTexture = new Texture(Gdx.files.internal("Hex.png"));
     private Texture redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
     private Texture blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
+    private Texture greenTileTexture = new Texture(Gdx.files.internal("HexGreen.png"));
+    private Texture yellowTileTexture = new Texture(Gdx.files.internal("HexYellow.png"));
     private Texture highlightTexture = new Texture(Gdx.files.internal("Highlight.png"));
     private Sprite hexSprite;
 
@@ -79,6 +83,12 @@ public class Hexagon implements Cloneable {
                 break;
             case RED:
                 hexSprite.setTexture(redTileTexture);
+                break;
+            case GREEN:
+                hexSprite.setTexture(greenTileTexture);
+                break;
+            case YELLOW:
+                hexSprite.setTexture(yellowTileTexture);
                 break;
             case BLANK:
                 hexSprite.setTexture(blankTileTexture);

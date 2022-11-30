@@ -25,11 +25,11 @@ import java.util.ArrayList;
 public class MenuScreen implements Screen {
 
     private Omega game;
-    private boolean click = false, clickAI = false, clickInstruction = false, clickBVB = false;
+    private boolean click = false, clickAI = false, clickInstruction = false, clickBVB = false, click3P = false, click4P = false;
     private Stage stage;
     private Texture omegaSymbol;
     private Skin menuSkin;
-    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton;
+    private TextButton PVP, PVP3, PVP4, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton;
     public static int mapChoice = 0;
     private ArrayList<TextButton> listOfMapButtons;
 
@@ -46,18 +46,28 @@ public class MenuScreen implements Screen {
 
         PVP = new TextButton("Play: 2 Player", menuSkin);
         PVP.setColor(Color.BLACK);
-        PVP.setPosition(325, 270);
+        PVP.setPosition(125, 270);
         PVP.setSize(200, 100);
 
-        BVB = new TextButton("Play: Bot vs Bot", menuSkin);
-        BVB.setColor(Color.BLACK);
-        BVB.setPosition(725, 270);
-        BVB.setSize(200, 100);
+        PVP3 = new TextButton("Play: 3 Players", menuSkin);
+        PVP3.setColor(Color.BLACK);
+        PVP3.setPosition(325, 270);
+        PVP3.setSize(200, 100);
+
+        PVP4 = new TextButton("Play: 4 Players", menuSkin);
+        PVP4.setColor(Color.BLACK);
+        PVP4.setPosition(525, 270);
+        PVP4.setSize(200, 100);
 
         PVAI = new TextButton("Play: AI", menuSkin);
         PVAI.setColor(Color.BLACK);
-        PVAI.setPosition(525, 270);
+        PVAI.setPosition(725, 270);
         PVAI.setSize(200, 100);
+
+        BVB = new TextButton("Play: Bot vs Bot", menuSkin);
+        BVB.setColor(Color.BLACK);
+        BVB.setPosition(925, 270);
+        BVB.setSize(200, 100);
 
         listOfMapButtons = new ArrayList<>();
 
@@ -95,6 +105,8 @@ public class MenuScreen implements Screen {
         stage.addActor(BVB);
         stage.addActor(PVP);
         stage.addActor(PVAI);
+        stage.addActor(PVP3);
+        stage.addActor(PVP4);
         stage.addActor(mapDefault);
         stage.addActor(mapBug);
         stage.addActor(mapSimple);
@@ -119,7 +131,29 @@ public class MenuScreen implements Screen {
 
         if (click) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false, false));
+            game.setScreen(new LoadingScreen(game, false, false,2));
+        }
+
+        PVP3.addListener(new ClickListener() {
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+                click3P = true;
+            }
+        });
+
+        if (click3P) {
+            this.dispose();
+            game.setScreen(new LoadingScreen(game, false, false,3));
+        }
+
+        PVP4.addListener(new ClickListener() {
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+                click4P = true;
+            }
+        });
+
+        if (click4P) {
+            this.dispose();
+            game.setScreen(new LoadingScreen(game, false, false,4));
         }
 
         PVAI.addListener(new ClickListener() {
@@ -130,7 +164,7 @@ public class MenuScreen implements Screen {
 
         if (clickAI) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true, false));
+            game.setScreen(new LoadingScreen(game, true, false,2));
         }
 
         BVB.addListener(new ClickListener() {
@@ -141,7 +175,7 @@ public class MenuScreen implements Screen {
 
         if (clickBVB) { // Bot vs Bot
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true, true));
+            game.setScreen(new LoadingScreen(game, true, true,2));
         }
 
         mapSnowflake.addListener(new ClickListener() {
@@ -210,6 +244,10 @@ public class MenuScreen implements Screen {
         for (TextButton tb : listOfMapButtons) {
             tb.setColor(new Color(0f, 0f, 0f, 1f));
         }
+    }
+
+    public void resetMapChoice(){
+        mapChoice = 0;
     }
 
     @Override

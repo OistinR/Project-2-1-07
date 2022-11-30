@@ -26,35 +26,29 @@ import java.util.ArrayList;
  */
 
 public class GameScreen implements Screen {
-
-    public enum state {
-        P1P1,
-        P1P2,
-        P1P3,
-        P2P1,
-        P2P2,
-        P2P3
-    }
-
-    private state STATE = state.P1P1;
     private int round;
     private boolean gamefinished;
+
+    private boolean DEBUG = true;
+
+    private String[] stateArray;
+    private int stateTracker;
 
     /**
      * The information about the screen size
      */
     public static int SCREENWIDTH;
     public static int SCREENHEIGHT;
-    private boolean firstColor = true;
     /**
      * The different hexagon that can be placed and the game logic behind it
      */
     private ArrayList<Hexagon> field;
     private ScoringEngine SEngine;
     public BitmapFont font;
-    private boolean arrowPlayerOne;
     private Texture blueTileTexture;
     private Texture redTileTexture;
+    private Texture greenTileTexture;
+    private Texture yellowTileTexture;
     private Omega game;
 
     private ConfirmButton confirmButton;
@@ -62,6 +56,8 @@ public class GameScreen implements Screen {
 
     public Hexagon undoHexagon;
     public Hexagon undoHexagon2;
+    public Hexagon undoHexagon3;
+    public Hexagon undoHexagon4;
     public Hexagon undoHexagonPie;
     public Hexagon undoHexagonPie2;
     private boolean ai, ai2;
@@ -69,6 +65,10 @@ public class GameScreen implements Screen {
     private Bot bot, bot2;
 
     private PieButton pieButton;
+    private int playerCount;
+    private int playerTurn;
+    private int colorTurn;
+    private int hexCounter;
 
     /**
      *
@@ -76,11 +76,13 @@ public class GameScreen implements Screen {
      * @param ai   to see if we are playing against an AI or not
      * @param ai2  to see if we are playing bot vs bot
      */
-    public GameScreen(Omega game, boolean ai, boolean ai2) {
+    public GameScreen(Omega game, boolean ai, boolean ai2, int playerCount) {
         this.game = game;
         this.ai = ai;
         this.ai2 = ai2;
-
+        this.playerCount = playerCount;
+        createStateArray();
+        stateTracker = 0;
     }
 
     @Override
@@ -112,9 +114,13 @@ public class GameScreen implements Screen {
         SEngine = new ScoringEngine();
         font = new BitmapFont();
         font.setColor(Color.BLACK);
-        arrowPlayerOne = true;
+        playerTurn = 1;
+        colorTurn = 1;
+        hexCounter = 1;
         redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
         blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
+        greenTileTexture = new Texture(Gdx.files.internal("HexGreen.png"));
+        yellowTileTexture = new Texture(Gdx.files.internal("HexYellow.png"));
         confirmButton = new ConfirmButton(100, 60, game.mainBatch);
         undoButton = new UndoButton(1000, 60, game.mainBatch, false);
         pieButton = new PieButton(1000, 120, game.mainBatch);
@@ -132,7 +138,9 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.dispose();
-            game.setScreen(new MenuScreen(game));
+            MenuScreen newScreen = new MenuScreen(game);
+            newScreen.resetMapChoice();
+            game.setScreen(newScreen);
         }
 
         // Reset screen after every render tick
@@ -143,7 +151,7 @@ public class GameScreen implements Screen {
         // update hex field check below for info.
         updateHexField();
         updateScore();
-        updateState();
+        updateState2();
         // System.out.println(STATE);
 
         // TODO: make a boolean so that it doesnt draw the buttons when BVB
@@ -151,13 +159,17 @@ public class GameScreen implements Screen {
             confirmButton.update();
             font.draw(game.mainBatch, "Confirm move", 105, 90);
         }
-
-        if (!(round == 1) && !gamefinished) {
+        if (!(round == 1) && !gamefinished && playerCount == 2) {
             undoButton.update();
             undoButton.setActivated(true);
             font.draw(game.mainBatch, "Undo move", 1013, 90);
         }
-        if (round == 1 && STATE == state.P2P1) {
+        if (!gamefinished && playerCount != 2){
+            undoButton.update();
+            undoButton.setActivated(true);
+            font.draw(game.mainBatch, "Undo move", 1013, 90);
+        }
+        if (round == 1 && stateArray[stateTracker].equals("P2P1") && playerCount == 2) {
             pieButton.update();
             font.draw(game.mainBatch, "Switch?", 1025, 152);
         }
@@ -165,33 +177,55 @@ public class GameScreen implements Screen {
         // Draw text on screen
         font.draw(game.mainBatch, "Score Of Player Two (Blue): " + SEngine.getBlueScore(), 1000, 700);
         font.draw(game.mainBatch, "Score Of Player One (Pink): " + SEngine.getRedScore(), 100, 700);
+        if (playerCount > 2){
+            font.draw(game.mainBatch, "Score Of Player Three (Green): " + SEngine.getGreenScore(), 100, 150);
+        }
+        if (playerCount > 3){
+            font.draw(game.mainBatch, "Score Of Player Four (Yellow): " + SEngine.getYellowScore(), 1000, 150);
+        }
         font.draw(game.mainBatch, "Round " + round, 640, 690);
 
-        if (arrowPlayerOne)
+        if (playerTurn == 1)
             font.draw(game.mainBatch, "Player One's Turn", 610, 670);
-        else
+        else if (playerTurn == 2)
             font.draw(game.mainBatch, "Player Two's Turn", 610, 670);
+        else if (playerTurn == 3)
+            font.draw(game.mainBatch, "Player Three's Turn", 610,670);
+        else if (playerTurn == 4)
+            font.draw(game.mainBatch, "Player Four's Turn", 610,670);
 
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
 
-        if (firstColor && !gamefinished) {
-            game.mainBatch.draw(redTileTexture, 700, 70);
-            font.draw(game.mainBatch, "The next colour is : ", 550, 100);
-        } else if (!gamefinished) {
-            game.mainBatch.draw(blueTileTexture, 700, 70);
-            font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+        if (!gamefinished){
+            if (colorTurn == 1){
+                font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+                game.mainBatch.draw(redTileTexture, 700, 70);
+            } else if (colorTurn == 2){
+                font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+                game.mainBatch.draw(blueTileTexture, 700, 70);
+            } else if (colorTurn == 3){
+                font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+                game.mainBatch.draw(greenTileTexture, 700, 70);
+            } else if (colorTurn == 4){
+                font.draw(game.mainBatch, "The next colour is : ", 550, 100);
+                game.mainBatch.draw(yellowTileTexture, 700, 70);
+            } else if (colorTurn == 5 && playerCount == 2 && round == 1){
+                font.draw(game.mainBatch, "Waiting for player to confirm move", 550, 100);
+            } else if (colorTurn == 5){
+                font.draw(game.mainBatch, "Waiting for player to confirm or undo move", 550, 100);
+            }
         }
 
         game.mainBatch.end();
     }
 
-    public void updateState() {
-        int numhex = numHex() - 4 * (round - 1);
-
+    public void updateState2(){
         // check if game is done
-        if (field.size() - (numhex + (4 * (round - 1))) < 4) {
+        if ((field.size() - numHex()) < (playerCount*playerCount) && stateArray[stateTracker].equals("P1P1")){
             gameFinish();
         }
+
+        // bot v bot stuff idk this is broken
         if (ai2 && ai && (!gamefinished)) {
             botmove();
             bot2move();
@@ -203,48 +237,412 @@ public class GameScreen implements Screen {
             round++;
             return;
         }
-        // starting moves done by P1
-        if (numhex == 1 && STATE == state.P1P1) {
-            STATE = state.P1P2;
-            arrowPlayerOne = true;
 
+        // main loop
+        if ((stateTracker + 1)%(playerCount+1) == 0 && confirmButton.mouseDown()){
+            //CONFIRM STATE
+            colorTurn = 1;
+            if (stateTracker == stateArray.length-1) {
+                System.out.println("NEW ROUND");
+                stateTracker = 0;
+                playerTurn = 1;
+                round++;
+                undoHexagon = null;
+                undoHexagon2 = null;
+                undoHexagon3 = null;
+                undoHexagon4 = null;
+            }
+            else{
+                stateTracker++;
+                playerTurn++;
+                if (playerCount != 2) {
+                    undoHexagon = null;
+                    undoHexagon2 = null;
+                    undoHexagon3 = null;
+                    undoHexagon4 = null;
+                }
+                else if (numHex() != 2) {
+                    undoHexagon = null;
+                    undoHexagon2 = null;
+                    undoHexagon3 = null;
+                    undoHexagon4 = null;
+                }
+                else{
+                    if (DEBUG) System.out.println("PIE");
+                }
+            }
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
         }
-        // intermediate move (2nd move for P1)
-        else if (numhex == 2 && (STATE == state.P1P2 || STATE == state.P1P1)) {
-            STATE = state.P1P3;
-            arrowPlayerOne = true;
-        }
-        // starting moves done by P2
-        else if (numhex == 3 && STATE == state.P2P1) {
-            STATE = state.P2P2;
-            arrowPlayerOne = false;
-        }
-        // intermediate move (2nd move for P2)
-        else if (numhex == 4 && (STATE == state.P2P2 || STATE == state.P2P1)) {
-            STATE = state.P2P3;
-            arrowPlayerOne = false;
-        }
-        // general moves
-        if (STATE == state.P1P3 && confirmButton.mouseDown()) {
-            STATE = state.P2P1;
-            arrowPlayerOne = false;
-            if (round == 1 && !ai) {
+        else{
+            // NOT CONFIRM STATE
+            if (ai && playerTurn != 1) {
+                botmove();
+                playerTurn = 1;
+                stateTracker = 0;
+                hexCounter += playerCount;
+                round++;
+            }
+            if ((stateTracker + 1)%(playerCount+1) == 0){
+                //change text
+                colorTurn = 5;
+            }
+            if (numHex() == hexCounter){
+                hexCounter++;
+                stateTracker++;
+                colorTurn++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            if (round == 1 && !ai && playerCount == 2) {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
-            } else if (ai){
+            }
+        }
+        return;
+    }
+
+    public void updateState() {
+        int numhex = numHex() - (playerCount*playerCount) * (round - 1);
+
+        // check if game is done
+        if (field.size() - (numhex + ((playerCount*playerCount) * (round - 1))) < (playerCount*playerCount) && stateArray [stateTracker].equals("P1P1")) {
+            gameFinish();
+        }
+
+        if (ai2 && ai && (!gamefinished)) {
+            botmove();
+            bot2move();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            round++;
+            return;
+        }
+        // player 1 phase 1
+        if (numhex == 1 && stateArray[stateTracker].equals("P1P1")) {
+            // GO TO P1P2
+            playerTurn = 1;
+            colorTurn = 2;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+        }
+        // player 1 phase 2 2 PLAYERS
+        else if (numhex == 2 && (stateArray[stateTracker].equals("P1P1") || stateArray[stateTracker].equals("P1P2")) && playerCount == 2) {
+            // GO TO P1P3
+            playerTurn = 1;
+            colorTurn = 5;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+        }
+        // player 1 phase 2 MORE PLAYERS
+        else if (numhex == 2 && (stateArray[stateTracker].equals("P1P1") || stateArray[stateTracker].equals("P1P2"))) {
+            // GO TO P1P3
+            playerTurn = 1;
+            colorTurn = 3;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+        }
+        // player 1 phase 3 2 PLAYERS
+        else if (stateArray[stateTracker].equals("P1P3") && confirmButton.mouseDown() && playerCount == 2){
+            // GO TO P2P1
+            playerTurn = 2;
+            colorTurn = 1;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            if (round == 1 && !ai && playerCount == 2) {
+                undoHexagonPie = undoHexagon;
+                undoHexagonPie2 = undoHexagon2;
+            } else if (ai) {
                 botmove();
             }
             undoHexagon = null;
             undoHexagon2 = null;
         }
-        if (STATE == state.P2P3 && confirmButton.mouseDown()) {
-            STATE = state.P1P1;
-            arrowPlayerOne = true;
+        // player 1 phase 3 3 PLAYERS
+        else if (stateArray[stateTracker].equals("P1P3") && numhex == 3 && playerCount == 3){
+            // GO TO P1P4
+            playerTurn = 1;
+            colorTurn = 5;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+        }
+        // player 1 phase 3 4 PLAYERS
+        else if (stateArray[stateTracker].equals("P1P3") && numhex == 3 && playerCount == 4){
+            // GO TO P1P4
+            playerTurn = 1;
+            colorTurn = 4;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+        }
+        // player 2 phase 1
+        else if (numhex == 3 && stateArray[stateTracker].equals("P2P1") && playerCount == 2) {
+            // GO TO P2P2
+            playerTurn = 2;
+            colorTurn = 2;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+        }
+        // player 2 phase 2
+        else if (numhex == 4 && (stateArray[stateTracker].equals("P2P1") || stateArray[stateTracker].equals("P2P2")) && playerCount == 2) {
+            // GO TO P2P3
+            playerTurn = 2;
+            colorTurn = 5;
+            stateTracker++;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+        }
+        // player 2 phase 3 2 PLAYERS
+        else if (stateArray[stateTracker].equals("P2P3") && confirmButton.mouseDown() && playerCount == 2){
+            // GO BACK TO P1P1
+            playerTurn = 1;
+            colorTurn = 1;
+            stateTracker = 0;
+            if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
             undoHexagon = null;
             undoHexagon2 = null;
             round++;
         }
 
+        if (playerCount > 2){
+            // player 1 phase 4 MORE THAN 3 PLAYERS
+            if (stateArray[stateTracker].equals("P1P4") && numhex == 4){
+                // GO TO P1P5
+                playerTurn = 1;
+                colorTurn = 5;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 1 phase 4 3 PLAYERS
+            else if (stateArray[stateTracker].equals("P1P4") && confirmButton.mouseDown() && playerCount == 3){
+                // GO TO P2P1
+                playerTurn = 2;
+                colorTurn = 1;
+                stateTracker++;
+                undoHexagon = null;
+                undoHexagon2 = null;
+                undoHexagon3 = null;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 2 phase 1 3 PLAYERS
+            else if (numhex == 4 && stateArray[stateTracker].equals("P2P1") && playerCount == 3) {
+                // GO TO P2P2
+                playerTurn = 2;
+                colorTurn = 2;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 2 phase 2 3 PLAYERS
+            else if (numhex == 5 && stateArray[stateTracker].equals("P2P2") && playerCount == 3) {
+                // GO TO P2P3
+                playerTurn = 2;
+                colorTurn = 3;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 2 phase 3 3 PLAYERS
+            else if (numhex == 6 && stateArray[stateTracker].equals("P2P3") && playerCount == 3) {
+                // GO TO P2P4
+                playerTurn = 2;
+                colorTurn = 5;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 2 phase 4 4 PLAYERS
+            else if (stateArray[stateTracker].equals("P2P4") && numhex == 8){
+                // GO TO P2P5
+                playerTurn = 2;
+                colorTurn = 5;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 2 phase 4 3 PLAYERS
+            else if (stateArray[stateTracker].equals("P2P4") && confirmButton.mouseDown() && playerCount == 3){
+                // GO TO P3P1
+                playerTurn = 3;
+                colorTurn = 1;
+                stateTracker++;
+                undoHexagon = null;
+                undoHexagon2 = null;
+                undoHexagon3 = null;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 3 phase 1 3 PLAYERS
+            else if (numhex == 7 && stateArray[stateTracker].equals("P3P1") && playerCount == 3) {
+                // GO TO P3P2
+                playerTurn = 3;
+                colorTurn = 2;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 3 phase 2 3 PLAYERS
+            else if (numhex == 8 && stateArray[stateTracker].equals("P3P2") && playerCount == 3) {
+                // GO TO P3P3
+                playerTurn = 3;
+                colorTurn = 3;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 3 phase 3 3 PLAYERS
+            else if (numhex == 9 && stateArray[stateTracker].equals("P3P3") && playerCount == 3) {
+                // GO TO P3P4
+                playerTurn = 3;
+                colorTurn = 5;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 3 phase 4 4 PLAYERS
+            else if (stateArray[stateTracker].equals("P3P4") && (numhex == 12)){
+                // GO TO P3P5
+                playerTurn = 3;
+                colorTurn = 5;
+                stateTracker++;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+            }
+            // player 3 phase 4 3 PLAYERS
+            else if (stateArray[stateTracker].equals("P3P4") && confirmButton.mouseDown() && playerCount == 3){
+                // GO BACK TO P1P1
+                playerTurn = 1;
+                colorTurn = 1;
+                stateTracker = 0;
+                if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                undoHexagon = null;
+                undoHexagon2 = null;
+                undoHexagon3 = null;
+                round++;
+            }
+
+            if (playerCount > 3){
+                // player 1 phase 5
+                if (stateArray[stateTracker].equals("P1P5") && confirmButton.mouseDown()){
+                    // GO TO P2P1
+                    playerTurn = 2;
+                    colorTurn = 1;
+                    stateTracker++;
+                    undoHexagon = null;
+                    undoHexagon2 = null;
+                    undoHexagon3 = null;
+                    undoHexagon4 = null;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 2 phase 1 4 PLAYERS
+                else if (numhex == 5 && stateArray[stateTracker].equals("P2P1")) {
+                    // GO TO P2P2
+                    playerTurn = 2;
+                    colorTurn = 2;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 2 phase 2 4 PLAYERS
+                else if (numhex == 6 && stateArray[stateTracker].equals("P2P2")) {
+                    // GO TO P2P3
+                    playerTurn = 2;
+                    colorTurn = 3;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 2 phase 3 4 PLAYERS
+                else if (numhex == 7 && stateArray[stateTracker].equals("P2P3")) {
+                    // GO TO P2P4
+                    playerTurn = 2;
+                    colorTurn = 4;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 2 phase 5
+                if (stateArray[stateTracker].equals("P2P5") && confirmButton.mouseDown()){
+                    // GO TO P3P1
+                    playerTurn = 3;
+                    colorTurn = 1;
+                    stateTracker++;
+                    undoHexagon = null;
+                    undoHexagon2 = null;
+                    undoHexagon3 = null;
+                    undoHexagon4 = null;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 3 phase 1 4 PLAYERS
+                else if (numhex == 9 && stateArray[stateTracker].equals("P3P1")) {
+                    // GO TO P3P2
+                    playerTurn = 3;
+                    colorTurn = 2;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 3 phase 2 4 PLAYERS
+                else if (numhex == 10 && stateArray[stateTracker].equals("P3P2")) {
+                    // GO TO P3P3
+                    playerTurn = 3;
+                    colorTurn = 3;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 3 phase 3 4 PLAYERS
+                else if (numhex == 11 && stateArray[stateTracker].equals("P3P3")) {
+                    // GO TO P3P4
+                    playerTurn = 3;
+                    colorTurn = 4;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 3 phase 5
+                if (stateArray[stateTracker].equals("P3P5") && confirmButton.mouseDown()){
+                    // GO TO P4P1
+                    playerTurn = 4;
+                    colorTurn = 1;
+                    stateTracker++;
+                    undoHexagon = null;
+                    undoHexagon2 = null;
+                    undoHexagon3 = null;
+                    undoHexagon4 = null;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 4 phase 1
+                else if (numhex == 13 && stateArray[stateTracker].equals("P4P1")) {
+                    // GO TO P4P2
+                    playerTurn = 4;
+                    colorTurn = 2;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 4 phase 2
+                else if (numhex == 14 && stateArray[stateTracker].equals("P4P2")) {
+                    // GO TO P4P3
+                    playerTurn = 4;
+                    colorTurn = 3;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 4 phase 3
+                else if (numhex == 15 && stateArray[stateTracker].equals("P4P3")) {
+                    // GO TO P4P4
+                    playerTurn = 4;
+                    colorTurn = 4;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 4 phase 4
+                else if (numhex == 16 && stateArray[stateTracker].equals("P4P4")) {
+                    // GO TO P4P5
+                    playerTurn = 4;
+                    colorTurn = 5;
+                    stateTracker++;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                }
+                // player 4 phase 5
+                else if (stateArray[stateTracker].equals("P4P5") && confirmButton.mouseDown()){
+                    // GO BACK TO P1P1
+                    playerTurn = 1;
+                    colorTurn = 1;
+                    stateTracker = 0;
+                    if (DEBUG) System.out.println("NEW STATE: " + stateArray[stateTracker]);
+                    undoHexagon = null;
+                    undoHexagon2 = null;
+                    undoHexagon3 = null;
+                    undoHexagon4 = null;
+                    round++;
+                }
+            }
+        }
     }
 
     public int numHex() {
@@ -255,6 +653,73 @@ public class GameScreen implements Screen {
             }
         }
         return num;
+    }
+
+    public void createStateArray(){
+        if (playerCount == 2){
+            stateArray = new String[6];
+            stateArray[0] = "P1P1";
+            stateArray[1] = "P1P2";
+            stateArray[2] = "P1P3";
+            stateArray[3] = "P2P1";
+            stateArray[4] = "P2P2";
+            stateArray[5] = "P2P3";
+            if (DEBUG){
+                for (int i = 0; i < stateArray.length; i++){
+                    System.out.print(stateArray[i] + " ");
+                }
+            }
+        }
+        else if (playerCount == 3){
+            stateArray = new String[12];
+            stateArray[0] = "P1P1";
+            stateArray[1] = "P1P2";
+            stateArray[2] = "P1P3";
+            stateArray[3] = "P1P4";
+            stateArray[4] = "P2P1";
+            stateArray[5] = "P2P2";
+            stateArray[6] = "P2P3";
+            stateArray[7] = "P2P4";
+            stateArray[8] = "P3P1";
+            stateArray[9] = "P3P2";
+            stateArray[10] = "P3P3";
+            stateArray[11] = "P3P4";
+            if (DEBUG){
+                for (int i = 0; i < stateArray.length; i++){
+                    System.out.print(stateArray[i] + " ");
+                }
+            }
+        }
+        else if (playerCount == 4){
+            stateArray = new String[20];
+            stateArray[0] = "P1P1";
+            stateArray[1] = "P1P2";
+            stateArray[2] = "P1P3";
+            stateArray[3] = "P1P4";
+            stateArray[4] = "P1P5";
+            stateArray[5] = "P2P1";
+            stateArray[6] = "P2P2";
+            stateArray[7] = "P2P3";
+            stateArray[8] = "P2P4";
+            stateArray[9] = "P2P5";
+            stateArray[10] = "P3P1";
+            stateArray[11] = "P3P2";
+            stateArray[12] = "P3P3";
+            stateArray[13] = "P3P4";
+            stateArray[14] = "P3P5";
+            stateArray[15] = "P4P1";
+            stateArray[16] = "P4P2";
+            stateArray[17] = "P4P3";
+            stateArray[18] = "P4P4";
+            stateArray[19] = "P4P5";
+            if (DEBUG){
+                for (int i = 0; i < stateArray.length; i++){
+                    System.out.print(stateArray[i] + " ");
+                }
+            }
+        }
+
+
     }
 
     @Override
@@ -391,35 +856,47 @@ public class GameScreen implements Screen {
                 }
 
                 // add the hover sprite to the currently hovered over tile
-                if (h.mouseHover() && STATE != state.P1P3 && STATE != state.P2P3) {
+                if (h.mouseHover() && ((stateTracker + 1)%(playerCount+1) != 0)) {
                     if (h.getMyState() == Hexagon.state.BLANK) {
                         h.setMyState(Hexagon.state.HOVER);
 
                     }
                 }
 
-                if (h.mouseDown() && STATE != state.P1P3 && STATE != state.P2P3) {// check if mouse is clicking current
+                if (h.mouseDown() && ((stateTracker + 1)%(playerCount+1) != 0)) {// check if mouse is clicking current
                                                                                   // tile
                     if (h.getMyState() == Hexagon.state.HOVER) {
                         updateColor(h);
                         if (undoHexagon == null) {
                             undoHexagon = h;
-                        } else {
+                            System.out.println("undoHexagon set");
+                        } else if (undoHexagon2 == null){
                             undoHexagon2 = h;
+                            System.out.println("undoHexagon2 set");
+                        } else if (undoHexagon3 == null && playerCount > 2){
+                            undoHexagon3 = h;
+                            System.out.println("undoHexagon3 set");
+                        } else if (undoHexagon4 == null && playerCount > 3){
+                            undoHexagon4 = h;
+                            System.out.println("undoHexagon4 set");
                         }
                     } else {
                         System.out.println("you cannot colour that hexagon");
                     }
                 }
 
-                if (undoButton.mouseDown() && (STATE == state.P1P3 || STATE == state.P2P3)) { // undo IFF p1 or p2 turn
+                if (undoButton.mouseDown() && ((stateTracker + 1)%(playerCount+1) == 0)) { // undo IFF p1 or p2 turn
                                                                                               // is over
                     undo();
+                    colorTurn = 1;
+                    hexCounter -= playerCount;
                     undoHexagon = null;
                     undoHexagon2 = null;
+                    undoHexagon3 = null;
+                    undoHexagon4 = null;
                 }
 
-                if (pieButton.mouseDown() && round == 1 && STATE == state.P2P1) {
+                if (pieButton.mouseDown() && round == 1 && stateArray[stateTracker].equals("P2P1") && playerCount == 2) {
                     for (Hexagon a : field) {
                         if (undoHexagonPie.equals(a)) {
                             a.setMyState(Hexagon.state.BLUE);
@@ -428,6 +905,7 @@ public class GameScreen implements Screen {
                             a.setMyState(Hexagon.state.RED);
                         }
                     }
+                    playerTurn = 1;
                 }
             }
             h.update();
@@ -438,7 +916,8 @@ public class GameScreen implements Screen {
      * All the logic behind the undo button
      */
     public void undo() {
-
+        if (DEBUG) System.out.println("start of undo, state: " + stateArray[stateTracker]);
+        if (DEBUG) System.out.println("start of undo, stateTracker: " + stateTracker);
         for (Hexagon h : field) {
             if (undoHexagon.equals(h)) {
                 h.setMyState(Hexagon.state.BLANK);
@@ -446,13 +925,20 @@ public class GameScreen implements Screen {
             if (undoHexagon2.equals(h)) {
                 h.setMyState(Hexagon.state.BLANK);
             }
-            if (STATE == state.P1P3) {
-                STATE = state.P1P1; // set the tracker to the right value depending on who is playing
-            }
-            if (STATE == state.P2P3) {
-                STATE = state.P2P1;
+            if (playerCount > 2) {
+                if (undoHexagon3.equals(h)) {
+                    h.setMyState(Hexagon.state.BLANK);
+                }
+                if (playerCount > 3) {
+                    if (undoHexagon4.equals(h)) {
+                        h.setMyState(Hexagon.state.BLANK);
+                    }
+                }
             }
         }
+        stateTracker = stateTracker - playerCount;
+        if (DEBUG) System.out.println("start of undo, state: " + stateArray[stateTracker]);
+        if (DEBUG) System.out.println("end of undo, stateTracker: " + stateTracker);
     }
 
     /**
@@ -461,12 +947,14 @@ public class GameScreen implements Screen {
      *          the players turn
      */
     public void updateColor(Hexagon h) {
-        if (firstColor) {
+        if (colorTurn == 1) {
             h.setMyState(Hexagon.state.RED);
-            firstColor = false;
-        } else {
+        } else if (colorTurn == 2){
             h.setMyState(Hexagon.state.BLUE);
-            firstColor = true;
+        } else if (colorTurn == 3){
+            h.setMyState(Hexagon.state.GREEN);
+        } else if (colorTurn == 4){
+            h.setMyState(Hexagon.state.YELLOW);
         }
     }
 

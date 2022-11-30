@@ -20,6 +20,7 @@ public class LoadingScreen implements Screen {
     private Stage stage;
     private int close;
     private boolean ai, ai2;
+    private int playerCount;
 
     /**
      *
@@ -28,13 +29,14 @@ public class LoadingScreen implements Screen {
      *             not
      * @param ai2  the boolean value that show if we are playing bot vs bot
      */
-    public LoadingScreen(Omega game, boolean ai, boolean ai2) {
+    public LoadingScreen(Omega game, boolean ai, boolean ai2, int playerCount) {
         super();
         this.game = game;
         stage = new Stage(new FillViewport(1280, 720));
         close = 0;
         this.ai = ai;
         this.ai2 = ai2;
+        this.playerCount = playerCount;
     }
 
     @Override
@@ -67,7 +69,7 @@ public class LoadingScreen implements Screen {
 
         if (close == 6) {
             this.dispose();
-            game.setScreen(new GameScreen(game, ai, ai2));
+            game.setScreen(new GameScreen(game, ai, ai2, playerCount));
         } else {
             close++;
         }

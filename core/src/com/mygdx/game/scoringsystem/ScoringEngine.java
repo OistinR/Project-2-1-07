@@ -13,10 +13,16 @@ public class ScoringEngine {
 
     private int redScore;
     private int blueScore;
+    private int greenScore;
+    private int yellowScore;
     private int floodcount;
 
     private ArrayList<Integer> redList;
     private ArrayList<Integer> blueList;
+    private ArrayList<Integer> greenList;
+    private ArrayList<Integer> yellowList;
+
+    private boolean DEBUG = false;
 
     /**
      *the method sets to 0 all the different variables that we will use to keep track of the scoring
@@ -24,9 +30,13 @@ public class ScoringEngine {
     public ScoringEngine() {
         redScore = 0;
         blueScore = 0;
+        greenScore = 0;
+        yellowScore = 0;
         floodcount = 0;
         redList = new ArrayList<>();
         blueList = new ArrayList<>();
+        greenList = new ArrayList<>();
+        yellowList = new ArrayList<>();
     }
 
     /**
@@ -36,21 +46,33 @@ public class ScoringEngine {
     public void calculate(ArrayList<Hexagon> field) {
         redScore=0;
         blueScore=0;
+        greenScore=0;
+        yellowScore=0;
         for (Hexagon h:field) {
             if(h.getMyState()==Hexagon.state.RED&&h.getChecked()==false) {
                 h.setChecked(true);
                 floodcount=1;
                 floodfill(h,field,Hexagon.state.RED);
                 redList.add(floodcount);
-            } else if (h.getMyState()== Hexagon.state.BLUE) {
+            } else if (h.getMyState()== Hexagon.state.BLUE&&h.getChecked()==false) {
                 h.setChecked(true);
                 floodcount=1;
                 floodfill(h,field,Hexagon.state.BLUE);
                 blueList.add(floodcount);
+            } else if (h.getMyState() == Hexagon.state.GREEN&&h.getChecked()==false){
+                h.setChecked(true);
+                floodcount=1;
+                floodfill(h,field,Hexagon.state.GREEN);
+                greenList.add(floodcount);
+            } else if (h.getMyState() == Hexagon.state.YELLOW&&h.getChecked()==false){
+                h.setChecked(true);
+                floodcount=1;
+                floodfill(h,field,Hexagon.state.YELLOW);
+                yellowList.add(floodcount);
             }
         }
 
-        if(redList.isEmpty()==false) {
+        if(!(redList.isEmpty())) {
             redScore=1;
         } else {
             redScore=0;
@@ -60,7 +82,7 @@ public class ScoringEngine {
             redScore = redScore * redList.get(i);
         }
 
-        if(blueList.isEmpty()==false) {
+        if(!(blueList.isEmpty())) {
             blueScore=1;
         } else {
             blueScore=0;
@@ -70,8 +92,42 @@ public class ScoringEngine {
             blueScore = blueScore * blueList.get(i);
         }
 
+        if(!(greenList.isEmpty())) {
+            if (DEBUG) System.out.println("GreenList not empty");
+            greenScore = 1;
+        } else {
+            if (DEBUG) System.out.println("GreenList empty");
+            greenScore = 0;
+        }
+
+        for(int i=0; i<greenList.size(); i++){
+            if (DEBUG) {
+                System.out.println("greenScore: " + greenScore);
+                System.out.println("GreenList.get(i): " + greenList.get(i));
+            }
+            greenScore = greenScore * greenList.get(i);
+        }
+
+        if(!(yellowList.isEmpty())) {
+            if (DEBUG) System.out.println("YellowList not empty");
+            yellowScore = 1;
+        } else {
+            if (DEBUG) System.out.println("YellowList empty");
+            yellowScore = 0;
+        }
+
+        for(int i=0; i<yellowList.size(); i++){
+            if (DEBUG) {
+                System.out.println("yellowScore: " + yellowScore);
+                System.out.println("YellowList.get(i): " + yellowList.get(i));
+            }
+            yellowScore = yellowScore * yellowList.get(i);
+        }
+
         blueList.clear();
         redList.clear();
+        greenList.clear();
+        yellowList.clear();
         resetChecked(field);
     }
 
@@ -142,5 +198,21 @@ public class ScoringEngine {
      */
     public int getBlueScore() {
         return blueScore;
+    }
+
+    /**
+     *
+     * @return return the score of the green player
+     */
+    public int getGreenScore(){
+        return greenScore;
+    }
+
+    /**
+     *
+     * @return return the score of the yellow player
+     */
+    public int getYellowScore(){
+        return yellowScore;
     }
 }
