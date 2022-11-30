@@ -337,22 +337,22 @@ public class MonteCarloTree {
         rundev dev = new rundev();
         dev.init();
         ArrayList<Hexagon> field = dev.getField();
-        for(Hexagon hex:field){
-            if(hex.getQ()==0 && hex.getR()==1){
-                hex.setMyState(Hexagon.state.BLUE);
-            }
-        }
-        for(Hexagon hex:field){
-            if(hex.getQ()==1 && hex.getR()==2){
-                hex.setMyState(Hexagon.state.BLUE);
-            }
-        }
-    
-        for(Hexagon hex:field){
-            if(hex.getQ()==-3 && hex.getR()==0){
-                hex.setMyState(Hexagon.state.BLUE);
-            }
-        }
+//        for(Hexagon hex:field){
+//            if(hex.getQ()==0 && hex.getR()==1){
+//                hex.setMyState(Hexagon.state.BLUE);
+//            }
+//        }
+//        for(Hexagon hex:field){
+//            if(hex.getQ()==1 && hex.getR()==2){
+//                hex.setMyState(Hexagon.state.BLUE);
+//            }
+//        }
+//
+//        for(Hexagon hex:field){
+//            if(hex.getQ()==-3 && hex.getR()==0){
+//                hex.setMyState(Hexagon.state.BLUE);
+//            }
+//        }
         MonteCarloTree mct = new MonteCarloTree(10, 20);
         Node root = new Node(field, GameScreen.state.P1P2);
         mct.getNodes().add(root);

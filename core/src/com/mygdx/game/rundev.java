@@ -52,7 +52,7 @@ public class rundev {
         fieldsize=3;
 
         //Create field and initiate bots
-        botpone = new OLABot();
+        botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
         botptwo =  new OLABot();//TODO INCORROECT
         createHexagonFieldDefault();
     }

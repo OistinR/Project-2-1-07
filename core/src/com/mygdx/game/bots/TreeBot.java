@@ -1,6 +1,8 @@
 package com.mygdx.game.bots;
 
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.gametree.MonteCarloTree;
+import com.mygdx.game.gametree.Node;
 import com.mygdx.game.gametree.Tree;
 import com.mygdx.game.screens.GameScreen;
 
@@ -15,33 +17,33 @@ public class TreeBot{
     }
 
     public void calculate(ArrayList<Hexagon> field, GameScreen.state bState) {
-        myTree.generateTree(field, bState, bState== GameScreen.state.P1P1 ||bState== GameScreen.state.P1P2 );
-        int[] QR = myTree.getBestMove();
+        int[] QR;
+        MonteCarloTree mct = new MonteCarloTree(10, 20);
+        Node root = new Node(field, GameScreen.state.P2P1);
+        mct.getNodes().add(root);
+        Node bestNode = mct.search(root);
 
-        for (Hexagon h :
-             field) {
-            if (h.getQ()==QR[0]&&h.getR()==QR[1]){
-             h.setMyState(myTree.getNodes().get(1).getState());
-            }
-        }
+        QR = new int[]{bestNode.getQ(), bestNode.getR()};
 
-        switch (bState){
-            case P1P1: bState = GameScreen.state.P1P2;break;
-            case P1P2: bState = GameScreen.state.P2P1;break;
-            case P2P1: bState = GameScreen.state.P2P2;break;
-            case P2P2: bState = GameScreen.state.P1P1;break;
-        }
-        //breaking here
-
-        myTree.generateTree(field, bState, bState== GameScreen.state.P1P1 ||bState== GameScreen.state.P1P2 );
-
-        QR = myTree.getBestMove();
         for (Hexagon h :
                 field) {
             if (h.getQ()==QR[0]&&h.getR()==QR[1]){
-                h.setMyState(myTree.getNodes().get(1).getState());
+                h.setMyState(bestNode.getState());
             }
         }
 
+        mct = new MonteCarloTree(10, 20);
+        root = new Node(field, GameScreen.state.P2P2);
+        mct.getNodes().add(root);
+        bestNode = mct.search(root);
+
+        QR = new int[]{bestNode.getQ(), bestNode.getR()};
+
+        for (Hexagon h :
+                field) {
+            if (h.getQ()==QR[0]&&h.getR()==QR[1]){
+                h.setMyState(bestNode.getState());
+            }
+        }
     }
 }
