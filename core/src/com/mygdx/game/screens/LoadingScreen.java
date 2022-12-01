@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  * This class is displayed when we are loading the game, we put a new screen on
  * to show that the game is still running
  */
+
 public class LoadingScreen implements Screen {
 
     private Omega game;

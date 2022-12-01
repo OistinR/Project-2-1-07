@@ -1,7 +1,10 @@
 package com.mygdx.game;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.mygdx.game.experiment.experiment;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 
@@ -9,11 +12,12 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
  * Use this class to run teh libgdx application
  */
 public class DesktopLauncher {
+
 	public static void main(String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setWindowedMode(1280, 720);
-		config.setWindowIcon("omegaSymbol.png");;
+		config.setWindowIcon("omegaSymbol.png");
 
 		new Lwjgl3Application(new Omega(), config);
 	}
