@@ -8,27 +8,28 @@ import java.io.IOException;
 
 public class experiment {
 
-    PrintWriter writeToFile;
     File file;
     BufferedReader br;
     String datainString;
 
     // default file path:
-    // C:\Users\Fred\Documents\GitHub\Project-2-1-07\core\src\experiment
+    // C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment
 
     public void writeDatatoCSV(String filepath, ArrayList<Float> data) throws IOException {
-        try {
 
-            writeToFile = new PrintWriter(filepath);
-            file = new File(filepath);
+        /*
+         * Structure goes as follows (for the CSV file), first number is for BOT1,
+         * second number is for BOT2
+         */
+
+        try (PrintWriter writeToFile = new PrintWriter(filepath);) {
 
             for (int i = 0; i < data.size(); i++) {
                 if (i < data.size() - 1) {
-                    datainString = data.get(i) + ", ";
+                    writeToFile.write(data.get(i) + ", ");
                 } else
-                    datainString = data.get(i) + " ";
+                    writeToFile.write(data.get(i) + "");
 
-                writeToFile.write(datainString);
             }
 
             /*

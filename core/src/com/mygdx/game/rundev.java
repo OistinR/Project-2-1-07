@@ -25,7 +25,10 @@ public class rundev {
     }
 
     private int round;
-    private ArrayList<Float> data = new ArrayList<Float>();
+    private ArrayList<Float> dataWinPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataLossPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataDrawPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataWins = new ArrayList<Float>();
     private experiment exp = new experiment();
     private int fieldsize;
     private boolean gamefinished;
@@ -151,25 +154,48 @@ public class rundev {
         dev.init();
         dev.update();
 
-        String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/experiment/losses.csv";
+        String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/lossesPerc.csv";
+
+        dev.dataLossPerc.add((float) (100 - dev.winperc1));
+        dev.dataLossPerc.add((float) (100 - dev.winperc2));
         try {
-            dev.data.add((float) (100 - dev.winperc1));
-            dev.data.add((float) (100 - dev.winperc2));
-            dev.exp.writeDatatoCSV(filePath, dev.data);
+            dev.exp.writeDatatoCSV(filePath, dev.dataLossPerc);
+            System.out.println("Wrote in lossesPerc.csv");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/experiment/wins.csv";
-        try {
-            dev.data.add((float) (dev.winperc1));
-            dev.data.add((float) (dev.winperc2));
-            dev.exp.writeDatatoCSV(filePath, dev.data);
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/winsPerc.csv";
 
+        dev.dataWinPerc.add((float) (dev.winperc1));
+        dev.dataWinPerc.add((float) (dev.winperc2));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataWinPerc);
+            System.out.println("Wrote in winsPerc.csv");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/numberOfWins.csv";
+
+        dev.dataWins.add((float) (dev.bot1wins.size()));
+        dev.dataWins.add((float) (dev.bot2wins.size()));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataWins);
+            System.out.println("Wrote in numberOfWins.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/drawsPerc.csv";
+
+        dev.dataDrawPerc.add((float) (dev.draws.size()));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataDrawPerc);
+            System.out.println("Wrote in drawsPer.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
