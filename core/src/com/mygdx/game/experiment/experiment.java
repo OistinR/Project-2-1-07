@@ -13,7 +13,8 @@ public class experiment {
     String datainString;
 
     // default file path:
-    // C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment
+    // C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV
+    // Files/
 
     public void writeDatatoCSV(String filepath, ArrayList<Float> data) throws IOException {
 
@@ -25,16 +26,21 @@ public class experiment {
         try (PrintWriter writeToFile = new PrintWriter(filepath);) {
 
             for (int i = 0; i < data.size(); i++) {
-                if (i < data.size() - 1) {
-                    writeToFile.write(data.get(i) + ", ");
+                if (i == 0) {
+                    writeToFile.write(Float.toString(data.get(i)));
                 } else
-                    writeToFile.write(data.get(i) + "");
+                    writeToFile.write(", " + data.get(i));
 
             }
+
+            // Performance is such a vague term for experiments, since we could be talking
+            // about computational performance or logistical performance (wins/losses)
+            // Clearfy with group before next group meeting
 
             /*
              * Which agent offers the best performance based on the heuristic value of his
              * wins and losses?
+             * (I honestly dont understand this question at all)
              */
 
             /*
@@ -64,6 +70,7 @@ public class experiment {
 
     // actually we really dont need this method since we can read the file directly
     // from MATLAB
+    // important:(!DELETE BEFORE HANDING IN CODE IF NOT USED!)
     /*
      * 
      * public void readDataFromCSV(String filepath) throws IOException {

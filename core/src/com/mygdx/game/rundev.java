@@ -29,6 +29,7 @@ public class rundev {
     private ArrayList<Float> dataLossPerc = new ArrayList<Float>();
     private ArrayList<Float> dataDrawPerc = new ArrayList<Float>();
     private ArrayList<Float> dataWins = new ArrayList<Float>();
+    private ArrayList<Float> dataDraws = new ArrayList<Float>();
     private experiment exp = new experiment();
     private int fieldsize;
     private boolean gamefinished;
@@ -154,7 +155,7 @@ public class rundev {
         dev.init();
         dev.update();
 
-        String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/lossesPerc.csv";
+        String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/lossesPerc.csv";
 
         dev.dataLossPerc.add((float) (100 - dev.winperc1));
         dev.dataLossPerc.add((float) (100 - dev.winperc2));
@@ -165,7 +166,7 @@ public class rundev {
             e.printStackTrace();
         }
 
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/winsPerc.csv";
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/winsPerc.csv";
 
         dev.dataWinPerc.add((float) (dev.winperc1));
         dev.dataWinPerc.add((float) (dev.winperc2));
@@ -176,7 +177,17 @@ public class rundev {
             e.printStackTrace();
         }
 
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/numberOfWins.csv";
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/drawsPerc.csv";
+
+        dev.dataDrawPerc.add((float) (dev.winpercd));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataDrawPerc);
+            System.out.println("Wrote in drawsPerc.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfWins.csv";
 
         dev.dataWins.add((float) (dev.bot1wins.size()));
         dev.dataWins.add((float) (dev.bot2wins.size()));
@@ -187,12 +198,12 @@ public class rundev {
             e.printStackTrace();
         }
 
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/drawsPerc.csv";
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfDraws.csv";
 
-        dev.dataDrawPerc.add((float) (dev.draws.size()));
+        dev.dataDraws.add((float) (dev.draws.size()));
         try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataDrawPerc);
-            System.out.println("Wrote in drawsPer.csv");
+            dev.exp.writeDatatoCSV(filePath, dev.dataDraws);
+            System.out.println("Wrote in numberOfDraws.csv");
         } catch (IOException e) {
             e.printStackTrace();
         }
