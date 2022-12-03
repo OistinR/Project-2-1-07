@@ -59,7 +59,7 @@ public class rundev {
 
         // Create field and initiate bots
         botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-        botptwo = new OLABot();
+        botptwo = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, false);
         createHexagonFieldDefault();
     }
 

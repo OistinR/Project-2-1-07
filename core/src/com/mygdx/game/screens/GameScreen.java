@@ -63,9 +63,8 @@ public class GameScreen implements Screen {
     private Omega game;
 
     private ConfirmButton confirmButton;
-	  private UndoButton undoButton;
+    private UndoButton undoButton;
     private ConfirmButton backToMenu;
-
 
     public Hexagon undoHexagon;
     public Hexagon undoHexagon2;
@@ -114,10 +113,9 @@ public class GameScreen implements Screen {
                 break;
         }
 
-
         SCREENWIDTH = Gdx.graphics.getWidth();
         SCREENHEIGHT = Gdx.graphics.getHeight();
-        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE,false);
+        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE, false);
         SEngine = new ScoringEngine();
         font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -130,9 +128,9 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        //bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED);
-        bot2 = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,true);
-        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
+        // bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED);
+        bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+        bot = new OLABot();
     }
 
     @Override
@@ -156,11 +154,11 @@ public class GameScreen implements Screen {
         // update hex field check below for info.
         updateHexField();
         updateScore();
-        
+
         updateState();
         // System.out.println(STATE);
 
-        if(!(ai&&ai2)) {
+        if (!(ai && ai2)) {
 
             if (backToMenu.mouseDown()) {
                 this.dispose();
@@ -185,7 +183,8 @@ public class GameScreen implements Screen {
                 font.draw(game.mainBatch, "Switch?", 1025, 152);
             }
 
-            if (undoButton.mouseDown() && (STATE == state.P1P3 || STATE == state.P2P3)) { // undo IFF p1 or p2 turn// is over
+            if (undoButton.mouseDown() && (STATE == state.P1P3 || STATE == state.P2P3)) { // undo IFF p1 or p2 turn// is
+                                                                                          // over
                 undo();
                 undoHexagon = null;
                 undoHexagon2 = null;
@@ -214,8 +213,6 @@ public class GameScreen implements Screen {
             font.draw(game.mainBatch, "Player Two's Turn", 610, 670);
 
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
-
-
 
         game.mainBatch.end();
     }
@@ -266,7 +263,7 @@ public class GameScreen implements Screen {
             if (round == 1 && !ai2) {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
-            } else if (ai2){
+            } else if (ai2) {
                 bot2move();
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
@@ -282,8 +279,6 @@ public class GameScreen implements Screen {
             undoHexagon2 = null;
             round++;
         }
-
-
 
     }
 
@@ -341,7 +336,7 @@ public class GameScreen implements Screen {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
                 if (s <= fieldsize && s >= -fieldsize) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
+                    field.add(new Hexagon(q, r, 50, game.mainBatch, 0, 0));
                 }
             }
         }
@@ -355,32 +350,31 @@ public class GameScreen implements Screen {
 
         int s;
         int fieldsize = 5;
-            for (int r = fieldsize; r >= -fieldsize; r--) {
-                if(r>3||r<-3) {
-                    field.add(new Hexagon(0, r, 50, game.mainBatch,0,0));
-                    field.add(new Hexagon(r, 0, 50, game.mainBatch,0,0));
-                }
-
+        for (int r = fieldsize; r >= -fieldsize; r--) {
+            if (r > 3 || r < -3) {
+                field.add(new Hexagon(0, r, 50, game.mainBatch, 0, 0));
+                field.add(new Hexagon(r, 0, 50, game.mainBatch, 0, 0));
             }
 
+        }
 
-        field.add(new Hexagon(-4, 4, 50, game.mainBatch,0,0));
-        field.add(new Hexagon(-5, 5, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(-4, 4, 50, game.mainBatch, 0, 0));
+        field.add(new Hexagon(-5, 5, 50, game.mainBatch, 0, 0));
 
-        field.add(new Hexagon(4, -4, 50, game.mainBatch,0,0));
-        field.add(new Hexagon(5, -5, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(4, -4, 50, game.mainBatch, 0, 0));
+        field.add(new Hexagon(5, -5, 50, game.mainBatch, 0, 0));
 
-        field.add(new Hexagon(-5, -1, 50, game.mainBatch,0,0));
-        field.add(new Hexagon(-1, -5, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(-5, -1, 50, game.mainBatch, 0, 0));
+        field.add(new Hexagon(-1, -5, 50, game.mainBatch, 0, 0));
 
-        field.add(new Hexagon(6, 0, 50, game.mainBatch,0,0));
-        field.add(new Hexagon(0, 6, 50, game.mainBatch,0,0));
+        field.add(new Hexagon(6, 0, 50, game.mainBatch, 0, 0));
+        field.add(new Hexagon(0, 6, 50, game.mainBatch, 0, 0));
 
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
-                if (s <= fieldsize && s >= -fieldsize&&r<4&&r>-4&&q<4&&q>-4) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
+                if (s <= fieldsize && s >= -fieldsize && r < 4 && r > -4 && q < 4 && q > -4) {
+                    field.add(new Hexagon(q, r, 50, game.mainBatch, 0, 0));
                 }
             }
         }
@@ -396,7 +390,7 @@ public class GameScreen implements Screen {
             for (int r = 2; r >= -2; r--) {
                 s = -q - r;
                 if (s <= fieldsize && s >= -fieldsize) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
+                    field.add(new Hexagon(q, r, 50, game.mainBatch, 0, 0));
                 }
             }
         }
@@ -411,8 +405,9 @@ public class GameScreen implements Screen {
         for (int q = -fieldsize - 3; q <= fieldsize + 3; q++) {
             for (int r = fieldsize - 1; r >= -fieldsize + 1; r--) {
                 s = -q - r;
-                if (s <= fieldsize+3 && s >= -fieldsize-3 && s!=3&& s!=-3&&r!=3&& r!=-3&&q!=3&& q!=-3) {
-                    field.add(new Hexagon(q, r, 50, game.mainBatch,0,0));
+                if (s <= fieldsize + 3 && s >= -fieldsize - 3 && s != 3 && s != -3 && r != 3 && r != -3 && q != 3
+                        && q != -3) {
+                    field.add(new Hexagon(q, r, 50, game.mainBatch, 0, 0));
 
                 }
             }
@@ -433,26 +428,27 @@ public class GameScreen implements Screen {
                     h.setMyState(Hexagon.state.BLANK);
                 }
 
-            // add the hover sprite to the currently hovered over tile
-            if (h.mouseHover() && STATE!=state.P1P3 && STATE!=state.P2P3) {
-                if (h.getMyState() == Hexagon.state.BLANK) {
-                    h.setMyState(Hexagon.state.HOVER);
-                }
+                // add the hover sprite to the currently hovered over tile
+                if (h.mouseHover() && STATE != state.P1P3 && STATE != state.P2P3) {
+                    if (h.getMyState() == Hexagon.state.BLANK) {
+                        h.setMyState(Hexagon.state.HOVER);
+                    }
 
-                if (h.mouseDown() && STATE != state.P1P3 && STATE != state.P2P3) {// check if mouse is clicking current
-                                                                                  // tile
-                    if (h.getMyState() == Hexagon.state.HOVER) {
-                        updateColor(h);
-                        if (undoHexagon == null) {
-                            undoHexagon = h;
+                    if (h.mouseDown() && STATE != state.P1P3 && STATE != state.P2P3) {// check if mouse is clicking
+                                                                                      // current
+                                                                                      // tile
+                        if (h.getMyState() == Hexagon.state.HOVER) {
+                            updateColor(h);
+                            if (undoHexagon == null) {
+                                undoHexagon = h;
+                            } else {
+                                undoHexagon2 = h;
+                            }
                         } else {
-                            undoHexagon2 = h;
+                            System.out.println("you cannot colour that hexagon");
                         }
-                    } else {
-                        System.out.println("you cannot colour that hexagon");
                     }
                 }
-            }
                 if (pieButton.mouseDown() && round == 1 && STATE == state.P2P1) {
                     for (Hexagon a : field) {
                         if (undoHexagonPie.equals(a)) {
@@ -512,7 +508,8 @@ public class GameScreen implements Screen {
     public void updateScore() {
         SEngine.calculate(field);
     }
-    public void updateFitness(){
+
+    public void updateFitness() {
         SFitness.update(field);
     }
 
