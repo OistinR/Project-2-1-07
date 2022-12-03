@@ -129,8 +129,8 @@ public class GameScreen implements Screen {
 
         // Choose any bot here that extends Bot abstract class
         // bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED);
-        bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
-        bot = new OLABot();
+        bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, false);
+        bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
     }
 
     @Override

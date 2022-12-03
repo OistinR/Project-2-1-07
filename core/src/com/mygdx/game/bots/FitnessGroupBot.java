@@ -91,20 +91,19 @@ public class FitnessGroupBot extends Bot{
         int maxFit = -50;
         for (Hexagon h:field) {
 
-            if(h.getMyState()!= Hexagon.state.BLANK){
+            if (h.getMyState() != Hexagon.state.BLANK) {
                 count++;
                 continue;
             }
             int highest = 0;
             //right now this could be improved and needs to be in order to optimize. (which I may do in the future)
-            switch(stateGame){
+            switch (stateGame) {
                 case P1P1:
-                    if(h.getFitness1()>=maxFit){
-                        maxFit = h.getFitness1()-h.getFitness2();
-                        if(field.get(highest).getFitness1()-field.get(highest).getFitness2()==maxFit){
+                    if (h.getFitness1() >= maxFit) {
+                        maxFit = h.getFitness1() - h.getFitness2();
+                        if (field.get(highest).getFitness1() - field.get(highest).getFitness2() == maxFit) {
                             bestList.add(count);
-                        }
-                        else{
+                        } else {
                             bestList.clear();
                             bestList.add(count);
                         }
@@ -112,12 +111,11 @@ public class FitnessGroupBot extends Bot{
                     }
                     break;
                 case P1P2:
-                    if(h.getFitness2()>=maxFit){
-                        maxFit = h.getFitness2()-h.getFitness1();
-                        if(field.get(highest).getFitness2()-field.get(highest).getFitness1()==maxFit){
+                    if (h.getFitness2() >= maxFit) {
+                        maxFit = h.getFitness2() - h.getFitness1();
+                        if (field.get(highest).getFitness2() - field.get(highest).getFitness1() == maxFit) {
                             bestList.add(count);
-                        }
-                        else{
+                        } else {
                             bestList.clear();
                             bestList.add(count);
                         }
@@ -125,12 +123,11 @@ public class FitnessGroupBot extends Bot{
                     }
                     break;
                 case P2P1:
-                    if((h.getFitness1())*-1>=maxFit){
-                        maxFit = (h.getFitness1()-h.getFitness2())*-1;
-                        if((field.get(highest).getFitness1()-field.get(highest).getFitness2())*-1==maxFit){
+                    if ((h.getFitness1()) * -1 >= maxFit) {
+                        maxFit = (h.getFitness1() - h.getFitness2()) * -1;
+                        if ((field.get(highest).getFitness1() - field.get(highest).getFitness2()) * -1 == maxFit) {
                             bestList.add(count);
-                        }
-                        else{
+                        } else {
                             bestList.clear();
                             bestList.add(count);
                         }
@@ -138,12 +135,11 @@ public class FitnessGroupBot extends Bot{
                     }
                     break;
                 case P2P2:
-                    if((h.getFitness2())*-1>=maxFit){
-                        maxFit = (h.getFitness2()-h.getFitness1())*-1;
-                        if((field.get(highest).getFitness2()-field.get(highest).getFitness1())*-1==maxFit){
+                    if ((h.getFitness2()) * -1 >= maxFit) {
+                        maxFit = (h.getFitness2() - h.getFitness1()) * -1;
+                        if ((field.get(highest).getFitness2() - field.get(highest).getFitness1()) * -1 == maxFit) {
                             bestList.add(count);
-                        }
-                        else{
+                        } else {
                             bestList.clear();
                             bestList.add(count);
                         }
@@ -151,31 +147,12 @@ public class FitnessGroupBot extends Bot{
                     }
                     break;
             }
-        count++;
+            count++;
         }
 
-//        if(bestList.size()>1){
-//            int coordSum = 0;
-//            int lowestCoords = Integer.MAX_VALUE;
-//            Hexagon bestHex = bestList.get(0);
-//
-//            for(int select = 0; select < bestList.get(0) ; select++) {
-//                coordSum = (Math.abs(bestMOVES.get(select).getQ()) + Math.abs(bestMOVES.get(select).getR()) + Math.abs(bestMOVES.get(select).getS()));
-//                if (coordSum < lowestCoords){
-//                    lowestCoords = coordSum;
-//                    bestHex = bestMOVES.get(select);
-//                }
-//            }
-//            for (int j = 0; j < field.size(); j++) {
-//                if (field.get(j) == bestHex){
-//                    return j;
-//                }
-//            }
-//            return bestList.get(r.nextInt(bestList.size()));
-//        }
-//        else{
-            return bestList.get(0);
-//        }
+        Random r = new Random();
+        int tempr =r.nextInt(bestList.size());
+        return bestList.get(tempr);
 
     }
 }
