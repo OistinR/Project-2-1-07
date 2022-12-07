@@ -2,11 +2,20 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
+import com.badlogic.gdx.scenes.scene2d.ui.Tree;
+import com.badlogic.gdx.utils.Array;
+
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
+
 import com.mygdx.game.bots.TreeBot;
+
+import com.mygdx.game.bots.RandomBot;
+import com.mygdx.game.bots.gametree.TreeBot;
+
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.gametree.MonteCarloTree;
 import com.mygdx.game.gametree.Node;
@@ -40,7 +49,7 @@ public class rundev {
     public void init() {
         //Initiate variables
         round=1;
-        totalnumgames=15;
+        totalnumgames=1000;
         gamefinished=false;
 		field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -52,8 +61,9 @@ public class rundev {
         fieldsize=3;
 
         //Create field and initiate bots
+
+        botptwo = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
-        botptwo =  new OLABot();//TODO INCORROECT
         createHexagonFieldDefault();
     }
 
@@ -61,14 +71,14 @@ public class rundev {
         double winperc1;
         double winperc2;
         double winpercd;
-        int i=0;
+        int i=1;
         while(i<=totalnumgames) {
             while(!gamefinished) {
                 updateState();
                 makeMove();
                 updateState();
             } 
-            if(i%100==0) {
+            if(i%10==0) {
                 System.out.println(i+" games simulated.");
             }
 
