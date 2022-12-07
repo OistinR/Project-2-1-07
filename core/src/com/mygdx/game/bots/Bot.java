@@ -29,7 +29,6 @@ public abstract class Bot {
         long startTime = System.nanoTime();
         calculate(field);
         long endTime = System.nanoTime();
-        //test test test test test test
         long duration = (endTime - startTime);
         runtime += duration/1000;
     }
