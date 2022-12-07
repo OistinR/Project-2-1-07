@@ -1,18 +1,18 @@
 package com.mygdx.game.bots;
 
 import com.mygdx.game.coordsystem.Hexagon;
-import com.mygdx.game.gametree.MonteCarloTree;
-import com.mygdx.game.gametree.Node;
-import com.mygdx.game.gametree.Tree;
+import com.mygdx.game.gametreemc.MonteCarloTree;
+import com.mygdx.game.gametreemc.Node;
+import com.mygdx.game.gametreemc.Tree;
 import com.mygdx.game.screens.GameScreen;
 
 import java.util.ArrayList;
 
-public class TreeBot{
+public class TreeBotMC{
     Tree myTree;
 
 
-    public TreeBot(int depth, int width){
+    public TreeBotMC(int depth, int width){
         myTree = new Tree(depth,width);
     }
 

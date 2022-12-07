@@ -1,4 +1,4 @@
-package com.mygdx.game.gametree;
+package com.mygdx.game.gametreemc;
 
 import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.coordsystem.Hexagon;

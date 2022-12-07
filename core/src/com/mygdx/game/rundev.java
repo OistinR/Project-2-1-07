@@ -11,15 +11,14 @@ import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 
-import com.mygdx.game.bots.TreeBot;
+import com.mygdx.game.bots.TreeBotMC;
 
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.coordsystem.Hexagon;
-import com.mygdx.game.gametree.MonteCarloTree;
-import com.mygdx.game.gametree.Node;
-import com.mygdx.game.gametree.Tree;
+import com.mygdx.game.gametreemc.MonteCarloTree;
+import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
 

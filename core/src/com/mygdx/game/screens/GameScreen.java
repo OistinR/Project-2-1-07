@@ -77,7 +77,7 @@ public class GameScreen implements Screen {
     private boolean ai, ai2;
 
     private Bot bot;
-    private TreeBot bot2;
+    private Bot bot2;
 
     private PieButton pieButton;
 
@@ -533,9 +533,8 @@ public class GameScreen implements Screen {
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
     private void bot2move() {
-        bot2.calculate(field, STATE);
-//        bot2.execMove(field);
-//        System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
+        bot2.execMove(field);
+        System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
 

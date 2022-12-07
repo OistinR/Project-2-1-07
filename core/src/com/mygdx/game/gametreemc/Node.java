@@ -1,4 +1,4 @@
-package com.mygdx.game.gametree;
+package com.mygdx.game.gametreemc;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
