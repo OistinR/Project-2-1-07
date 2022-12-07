@@ -7,6 +7,12 @@ import com.mygdx.game.coordsystem.Hexagon.state;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import java.util.Random;
 
+/**
+ * This is the first fitness Engine that we made, its purpose is to help bot making moves based on the fitness value that
+ * the engine returns, we attribute a score to each hexagon placement based on the group that it can make by placing
+ * a coloured hexagon at that spot
+ */
+
 public class FitnessEngine {
 
     private ScoringEngine SEngine;
@@ -16,6 +22,13 @@ public class FitnessEngine {
     private boolean random;
     private int list [];
     Random rand = new Random();
+
+    /**
+     *
+     * @param player to know the players colour, to try to increase our score
+     * @param opp to know the opponent colour, to try to decrease his score
+     * @param random when figuring out which fitness value is the best, we used random to try different values
+     */
 
     public FitnessEngine(state player, state opp,boolean random){
         this.player = player;

@@ -7,6 +7,12 @@ import com.mygdx.game.coordsystem.Hexagon.state;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.bots.FitnessEngine;
 
+/**
+ * This is the second Fitness engine that we have created, its purpose is to help bot making moves based on the fitness value that
+ * the engine returns, compared to the first one, it also attributes a fitness score for the different hexagon that we colour,
+ * but the calculation of the fitness score is based on the difference from the preview groups and the groups after the simulation
+ */
+
 public class FitnessEngine2 {
 
     private ScoringEngine SEngine;
@@ -25,6 +31,12 @@ public class FitnessEngine2 {
 
     private int fitnessOld;
     private int fitnessNew;
+
+    /**
+     *
+     * @param player to know the players colour, to try to increase our score
+     * @param opp to know the opponent colour, to try to decrease his score
+     */
 
     public FitnessEngine2(state player, state opp){
         this.player = player;

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ *
+ */
+
 public class FitnessGroupBot extends Bot{
     private Hexagon.state myColor;
     private Hexagon.state opponentColor;
