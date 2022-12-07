@@ -1,19 +1,27 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.utils.Array;
+
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
+
+import com.mygdx.game.bots.TreeBot;
+
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.gametree.TreeBot;
+
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.gametree.MonteCarloTree;
+import com.mygdx.game.gametree.Node;
+import com.mygdx.game.gametree.Tree;
 import com.mygdx.game.scoringsystem.ScoringEngine;
+import com.mygdx.game.screens.GameScreen;
 
 public class rundev {
     public enum state{
@@ -36,6 +44,7 @@ public class rundev {
     private ArrayList<Integer> bot2wins;
     private ArrayList<Integer> draws;
     private int totalnumgames;
+    private double finalWinRate;
 
     public void init() {
         //Initiate variables
@@ -49,9 +58,10 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=2;
+        fieldsize=3;
 
         //Create field and initiate bots
+
         botptwo = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
         createHexagonFieldDefault();
@@ -79,7 +89,31 @@ public class rundev {
             createHexagonFieldDefault();
 
             i++;
-        }    
+        }
+        //TODO issue: the tree cant tell when game is over so its possible that infinite loops can occur.
+//        Tree tr = new Tree(6,5);
+//        // Storage is a massive issue, larger map sizes means lower depth/widths.
+//        long runtime=0L;
+//        long startTime = System.nanoTime();
+//        tr.generateTree(field, GameScreen.state.P2P1,false);
+//        long endTime = System.nanoTime();
+//        long duration = (endTime - startTime);
+//        runtime += duration/10000000;
+//        System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
+//
+//        System.out.println(tr.displayTree(false));
+//
+//        System.out.println("bots assessment of board: "+ tr.getNodes().get(0).getCombinedScore());
+//
+//        double maxScore = 0;
+//        for (Node n0: tr.getNodes().get(0).getChildArray()) {
+//            if(maxScore<n0.getCombinedScore()){
+//                maxScore = n0.getCombinedScore();
+//            }
+//            System.out.println(n0);
+//        }
+//        System.out.println("max score is: "+ maxScore);
+
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;
         winpercd = ((double)draws.size()/(double)totalnumgames)*100;
@@ -87,6 +121,7 @@ public class rundev {
         System.out.println("Bot 1 number of wins: "+bot1wins.size()+ " Win percentage: "+ winperc1+ " %" );
         System.out.println("Bot 2 number of wins: "+bot2wins.size()+ " Win percentage: "+ winperc2+ " %" );
         System.out.println("Number of draws: "+draws.size()+ " Draw percentage: "+ winpercd+" %");
+        this.finalWinRate = winperc1;
     }
 
     public void createHexagonFieldDefault() {
@@ -143,6 +178,28 @@ public class rundev {
         }
         gamefinished=true;
     }
+
+    public ArrayList<Hexagon> getField(){
+        return this.field;
+    }
+
+    public double getWinRate(){
+        return this.finalWinRate;
+    }
+
+    public void setField(ArrayList<Hexagon> field){
+        ArrayList<Hexagon> clone = new ArrayList<>();
+        try{
+            for(Hexagon hex:field){
+                clone.add(hex.clone());
+            }
+        }
+        catch(Exception e){
+
+        }
+        this.field = field;
+    }
+
 
     public static void main(String[] args) {
         rundev dev = new rundev();

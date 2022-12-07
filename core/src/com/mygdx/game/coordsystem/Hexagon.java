@@ -32,6 +32,7 @@ public class Hexagon implements Cloneable {
 
     private boolean checked;
 
+
     /**
      * Enumerator for the various possible tile states
      * @BLANK unowned - the gray blank tile state
@@ -246,7 +247,28 @@ public class Hexagon implements Cloneable {
     public int getY() {
         return -r*size/2 + q*size/4 + s*size/4;
     }
+    
+    public String getKey(){
+        double x = this.q;
+        double y = this.r;
+        if(x >= 0){
+            x = 2*x;
+        }
+        else{
+            x = (-2*x)-1;
+        }
+        if(y >= 0){
+            y = 2*y;
+        }
+        else{
+            y = (-2*y)-1;
+        }
+        return String.valueOf((0.5 * (x + y) * (x + y + 1)) + y);
+    }
 
+    public String toString(){
+        return "Key: " + this.getKey() + " this Q: " + this.q + " this R: " + this.r;
+    }
 
     /**
      * @return clones the hexagon via java clone.
