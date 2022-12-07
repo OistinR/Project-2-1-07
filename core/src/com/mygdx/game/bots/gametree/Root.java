@@ -12,13 +12,37 @@ public class Root {
     private Hexagon.state rootstate;
     private Hexagon.state playerstate;
     private ArrayList<Integer> leafscores;
+    private int positive;
+    private int negative;
 
-    public Root(int roothexq, int roothexr ,Hexagon.state rootstate, Hexagon.state playerstate) {
+
+    public Root(int roothexq, int roothexr, Hexagon.state rootstate, Hexagon.state playerstate) {
         this.roothexq = roothexq;
         this.roothexr = roothexr;
         this.rootstate = rootstate;
         this.playerstate = playerstate;
+        positive=0;
+        negative=0;
+
         leafscores = new ArrayList<Integer>();
+
+    }
+
+    public void addLeaf2(int score) {
+        if(score>0) {
+            positive++;
+        } else if(score<0) {
+            negative++;
+        }
+    }
+
+    public int getScore2() {
+        if(playerstate==Hexagon.state.RED) {
+            return positive-negative;
+        } else if(playerstate==Hexagon.state.BLUE) {
+            return negative-positive;
+        }
+        return 0;
     }
 
     public void addLeaf(int score) {

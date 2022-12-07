@@ -42,7 +42,7 @@ public class TreeBot extends Bot {
 
         //TWO VARIABLES BELOW CAN BE MODIFIED
         trainingbot = new MaxN_Paranoid_Bot(oppstate,playerstate);
-        depthmax = 2;
+        depthmax = 3;
     }
 
     public void setDepthLimit(ArrayList<Hexagon> field) {
@@ -65,8 +65,6 @@ public class TreeBot extends Bot {
     public void calculate(ArrayList<Hexagon> field) {
         Random r = new Random();
         int rnum;
-        boolean turn1=true;
-        boolean turn2=true;
 
         rootsR = new ArrayList<Root>();
         rootsB = new ArrayList<Root>();
@@ -81,6 +79,7 @@ public class TreeBot extends Bot {
         rnum = r.nextInt(optrootsR.size());
         for(Hexagon hex:field) {
             if(optrootsR.get(rnum).getRootQ()==hex.getQ()&&optrootsR.get(rnum).getRootR()==hex.getR()) {
+
                 hex.setMyState(Hexagon.state.RED);
             }
         }
@@ -112,27 +111,29 @@ public class TreeBot extends Bot {
 
     public void setRoots(Hexagon.state player) {
         int best = Integer.MIN_VALUE;
-        int worst = Integer.MAX_VALUE;
+        int worst = Integer.MIN_VALUE;
+
 
         for(Root r:rootsR) {
+                //System.out.println(player + " PLAYER STATE PLACING RED ROOTS, no. of score "+r.getScore2());
             if(player==Hexagon.state.RED) {
-                if (r.getScore()>best) {
-                    best=r.getScore();
+                if (r.getScore2()>best) {
+                    best=r.getScore2();
                 }
             } else if(player==Hexagon.state.BLUE) {
-                if(r.getScore()<worst) {
-                    worst=r.getScore();
+                if(r.getScore2()>worst) {
+                    worst=r.getScore2();
                 }
             }
         }
 
         for(Root r:rootsR) {
             if(player==Hexagon.state.RED) {
-                if(r.getScore()==best) {
+                if(r.getScore2()==best) {
                     optrootsR.add(r);
                 }
             } else if(player==Hexagon.state.BLUE) {
-                if(r.getScore()==worst) {
+                if(r.getScore2()==worst) {
                     optrootsR.add(r);
                 }
             }
@@ -141,24 +142,25 @@ public class TreeBot extends Bot {
         //--
 
         for(Root r:rootsB) {
+            //System.out.println(player + " PLAYER STATE PLACING BLUE ROOTS, no. of score "+r.getScore2());
             if(player==Hexagon.state.BLUE) {
-                if (r.getScore()>best) {
-                    best=r.getScore();
+                if (r.getScore2()>best) {
+                    best=r.getScore2();
                 }
             } else if(player==Hexagon.state.RED) {
-                if(r.getScore()<worst) {
-                    worst=r.getScore();
+                if(r.getScore2()>worst) {
+                    worst=r.getScore2();
                 }
             }
         }
 
         for(Root r:rootsB) {
             if(player==Hexagon.state.BLUE) {
-                if(r.getScore()==best) {
+                if(r.getScore2()==best) {
                     optrootsB.add(r);
                 }
             } else if(player==Hexagon.state.RED) {
-                if(r.getScore()==worst) {
+                if(r.getScore2()==worst) {
                     optrootsB.add(r);
                 }
             }
@@ -187,17 +189,20 @@ public class TreeBot extends Bot {
                 }
 
                 if(depthlimit==0) {
+
                     SE.calculate(clone);
-                    if(root.getRootState()==Hexagon.state.RED) {
-                        root.addLeaf(SE.getRedScore());
-                    } else if(root.getRootState()==Hexagon.state.BLUE) {
-                        root.addLeaf(SE.getBlueScore());
-                    }
+                    root.addLeaf2(SE.getRedScore()-SE.getBlueScore());
+
+                    // if(root.getRootState()==Hexagon.state.RED) {
+                    //     root.addLeaf2(SE.getRedScore()-SE.getBlueScore());
+                    // } else if(root.getRootState()==Hexagon.state.BLUE) {
+                    //     root.addLeaf2(SE.getBlueScore()-SE.getRedScore());
+                    // }
                 }
 
                 ArrayList<Hexagon> clone2 = new ArrayList<Hexagon>();
                 try {
-                    for(Hexagon h : field) {
+                    for(Hexagon h : clone) {
                         clone2.add(h.clone());
                     }
                 } catch (Exception e) {}
@@ -225,16 +230,18 @@ public class TreeBot extends Bot {
             if(hcc.getMyState()==Hexagon.state.BLANK){
                 hcc.setMyState(color);
 
-
                 if(d==depthlimit) {
                     SE.calculate(recursionfield);
-                    if(root.getRootState()==Hexagon.state.RED) {
-                        root.addLeaf(SE.getRedScore());
-                        return;
-                    } else if(root.getRootState()==Hexagon.state.BLUE) {
-                        root.addLeaf(SE.getBlueScore());
-                        return;
-                    }
+                    //System.out.println(SE.getRedScore()+ "   " +SE.getBlueScore() + " FOR ROOT Q: "+ root.getRootQ()+ "  R: "+root.getRootR());
+                    root.addLeaf2(SE.getRedScore()-SE.getBlueScore());
+
+                    // if(root.getRootState()==Hexagon.state.RED) {
+                    //     root.addLeaf2(SE.getRedScore()-SE.getBlueScore());
+                    //     return;
+                    // } else if(root.getRootState()==Hexagon.state.BLUE) {
+                    //     root.addLeaf2(SE.getBlueScore()-SE.getRedScore());
+                    //     return;
+                    // }
                 }
 
                 ArrayList<Hexagon> clone3 = new ArrayList<Hexagon>();
