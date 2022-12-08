@@ -76,6 +76,9 @@ The second mode is player versus AI. To play the game in this mode, go to the ma
 The current available bots are:
 - Random bot
 - One Look Ahead (OLA) bot
+- MaxN Paranoid bot
+- Tree Bot
+- Group Fitness bot
  
  Note: changing against which bot you play is currently not available in the main menu. The default bot the player plays against is the OLA bot.
 
