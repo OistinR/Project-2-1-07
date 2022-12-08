@@ -15,6 +15,13 @@ public class Root {
     private int positive;
     private int negative;
 
+    /**
+     * @param roothexq
+     * @param roothexr
+     * @param rootstate
+     * @param playerstate
+     * Root constructor
+     */
 
     public Root(int roothexq, int roothexr, Hexagon.state rootstate, Hexagon.state playerstate) {
         this.roothexq = roothexq;
@@ -28,6 +35,10 @@ public class Root {
 
     }
 
+    /**
+     * Second method for adding a score from a leaf
+     * @param score
+     */
     public void addLeaf2(int score) {
         if(score>0) {
             positive++;
@@ -36,6 +47,9 @@ public class Root {
         }
     }
 
+    /**
+     * @return score for the second method
+     */
     public int getScore2() {
         if(playerstate==Hexagon.state.RED) {
             return positive-negative;
@@ -45,10 +59,17 @@ public class Root {
         return 0;
     }
 
+    /**
+     * First method for adding a score from a leaf
+     * @param score
+     */
     public void addLeaf(int score) {
         leafscores.add(score);
     }
 
+    /**
+     * @return score for the first method
+     */
     public int getScore() {
         if(playerstate==Hexagon.state.RED) {
             if(rootstate==Hexagon.state.RED) {
@@ -66,14 +87,23 @@ public class Root {
         return 0;
     }
 
+    /**
+     * @return rootstate
+     */
     public Hexagon.state getRootState() {
         return rootstate;
     }
 
+    /**
+     * @return roothexq
+     */
     public int getRootQ() {
         return roothexq;
     }
 
+    /**
+     * @return roothexr
+     */
     public int getRootR() {
         return roothexr;
     }

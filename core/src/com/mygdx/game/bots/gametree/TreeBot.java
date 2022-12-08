@@ -29,6 +29,12 @@ public class TreeBot extends Bot {
     private ArrayList<Root> optrootsR;
     private ArrayList<Root> optrootsB;
 
+    
+    /**
+     * Tree Bot constructor
+     * @param playerstate
+     * @param oppstate
+     */
     public TreeBot(Hexagon.state playerstate, Hexagon.state oppstate){
         this.playerstate = playerstate;
         this.oppstate = oppstate;
@@ -45,6 +51,10 @@ public class TreeBot extends Bot {
         depthmax = 3;
     }
 
+    /**
+     * Method for setting the depth limit of the tree bot
+     * @param field
+     */
     public void setDepthLimit(ArrayList<Hexagon> field) {
         int tiles=0;
         for(Hexagon h:field) {
@@ -59,9 +69,12 @@ public class TreeBot extends Bot {
         if(depthmax<depthlimit) {
             depthlimit=depthmax;
         }
-        //System.out.println("The depth limit is: "+depthlimit);
     }
 
+    /**
+     * computes and executes the found moves on the board
+     * @param field
+     */
     public void calculate(ArrayList<Hexagon> field) {
         Random r = new Random();
         int rnum;
@@ -95,10 +108,12 @@ public class TreeBot extends Bot {
             }
         }
 
-
-        //printOptimalRoots(playerstate);
     }
 
+    /**
+     * Debug tool which prints the optimal roots
+     * @param player
+     */
     public void printOptimalRoots(Hexagon.state player) {
         System.out.println("For playing as the colour "+player);
         for(Root r:optrootsR) {
@@ -109,6 +124,10 @@ public class TreeBot extends Bot {
         }
     }
 
+    /**
+     * Set and choose the best root
+     * @param player
+     */
     public void setRoots(Hexagon.state player) {
         int best = Integer.MIN_VALUE;
         int worst = Integer.MIN_VALUE;
@@ -167,6 +186,13 @@ public class TreeBot extends Bot {
         }
     }
 
+    /**
+     * Compute the all the scores of the roots by recursively going down the tree untill the depth limit is met
+     * @param field
+     * @param color
+     * @param player
+     */
+
     public void computeRoots(ArrayList<Hexagon> field, Hexagon.state color, Hexagon.state player) {
         // Copy the current state of the board
         ArrayList<Hexagon> clone = new ArrayList<Hexagon>();
@@ -219,6 +245,14 @@ public class TreeBot extends Bot {
 
     }
 
+    /**
+     * The recursion method which is used inside compute roots 
+     * @param recursionfield
+     * @param d
+     * @param color
+     * @param player
+     * @param root
+     */
     public void recursion(ArrayList<Hexagon> recursionfield, int d, Hexagon.state color, Hexagon.state player, Root root) {
         if(d>depthlimit) return;
 
@@ -234,14 +268,6 @@ public class TreeBot extends Bot {
                     SE.calculate(recursionfield);
                     //System.out.println(SE.getRedScore()+ "   " +SE.getBlueScore() + " FOR ROOT Q: "+ root.getRootQ()+ "  R: "+root.getRootR());
                     root.addLeaf2(SE.getRedScore()-SE.getBlueScore());
-
-                    // if(root.getRootState()==Hexagon.state.RED) {
-                    //     root.addLeaf2(SE.getRedScore()-SE.getBlueScore());
-                    //     return;
-                    // } else if(root.getRootState()==Hexagon.state.BLUE) {
-                    //     root.addLeaf2(SE.getBlueScore()-SE.getRedScore());
-                    //     return;
-                    // }
                 }
 
                 ArrayList<Hexagon> clone3 = new ArrayList<Hexagon>();
