@@ -48,7 +48,7 @@ public class rundev {
     public void init() {
         //Initiate variables
         round=1;
-        totalnumgames=10;
+        totalnumgames=100;
         gamefinished=false;
 		field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -57,10 +57,11 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=3;
+        fieldsize=2;
 
         //Create field and initiate bots
 
+        //botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
         botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
         botptwo = new RandomBot();
         createHexagonFieldDefault();
@@ -77,7 +78,7 @@ public class rundev {
                 makeMove();
                 updateState();
             } 
-            if(i%1==0) {
+            if(i%10==0) {
                 System.out.println(i+" games simulated.");
             }
 
