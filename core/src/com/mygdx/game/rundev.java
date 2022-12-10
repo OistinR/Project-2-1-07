@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
@@ -17,6 +18,7 @@ import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.experiment.experiment;
 import com.mygdx.game.gametreemc.MonteCarloTree;
 import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.scoringsystem.ScoringEngine;
@@ -44,11 +46,18 @@ public class rundev {
     private ArrayList<Integer> draws;
     private int totalnumgames;
     private double finalWinRate;
+    private ArrayList<Float> dataWinPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataLossPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataDrawPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataWins = new ArrayList<Float>();
+    private ArrayList<Float> dataDraws = new ArrayList<Float>();
+    private experiment exp = new experiment();
+    private double winperc1, winperc2, winpercd;
 
     public void init() {
         // Initiate variables
         round = 1;
-        totalnumgames = 100;
+        totalnumgames = 5000;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -57,21 +66,18 @@ public class rundev {
         draws = new ArrayList<>();
 
         // Initiate fieldsize
-        fieldsize = 4;
+        fieldsize = 2;
 
         // Create field and initiate bots
 
         // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
-        botpone = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-        botptwo = new RandomBot();
+        botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+        botptwo = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
         createHexagonFieldDefault();
     }
 
     public void update() {
-        double winperc1;
-        double winperc2;
-        double winpercd;
-        int i = 1;
+        int i = 0;
         while (i <= totalnumgames) {
             while (!gamefinished) {
                 updateState();
@@ -206,5 +212,57 @@ public class rundev {
         rundev dev = new rundev();
         dev.init();
         dev.update();
+        String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/lossesPerc.csv";
+
+        dev.dataLossPerc.add((float) (100 - dev.winperc1));
+        dev.dataLossPerc.add((float) (100 - dev.winperc2));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataLossPerc);
+            System.out.println("Wrote in lossesPerc.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/winsPerc.csv";
+
+        dev.dataWinPerc.add((float) (dev.winperc1));
+        dev.dataWinPerc.add((float) (dev.winperc2));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataWinPerc);
+            System.out.println("Wrote in winsPerc.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/drawsPerc.csv";
+
+        dev.dataDrawPerc.add((float) (dev.winpercd));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataDrawPerc);
+            System.out.println("Wrote in drawsPerc.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfWins.csv";
+
+        dev.dataWins.add((float) (dev.bot1wins.size()));
+        dev.dataWins.add((float) (dev.bot2wins.size()));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataWins);
+            System.out.println("Wrote in numberOfWins.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfDraws.csv";
+
+        dev.dataDraws.add((float) (dev.draws.size()));
+        try {
+            dev.exp.writeDatatoCSV(filePath, dev.dataDraws);
+            System.out.println("Wrote in numberOfDraws.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
