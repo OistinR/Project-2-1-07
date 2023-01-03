@@ -3,6 +3,7 @@ package com.mygdx.game.bots.MCST;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
+import com.mygdx.game.screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class MCST {
          */
         int numIterations = 10;
         List<Integer> moves = available_moves(field);
-        Node_MCST rootNode = new Node_MCST(field, moves);
+        Node_MCST rootNode = new Node_MCST(field, moves, GameScreen.state.P1P1);
 
 
         for (int i = 0; i < numIterations; i++) {
@@ -101,16 +102,32 @@ public class MCST {
     Node_MCST expandNode(Node_MCST currentNode) {
         // Generate a list of all possible moves
         List<Integer> moves = available_moves(currentNode.boardState);
+        GameScreen.state child_phase;
+        switch (currentNode.phase){
+            case P1P1: child_phase = GameScreen.state.P1P2;break;
+            case P1P2: child_phase = GameScreen.state.P2P1;break;
+            case P2P1: child_phase = GameScreen.state.P2P2;break;
+            case P2P2: child_phase = GameScreen.state.P1P1;break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + currentNode.phase);
+        }
 
         // Create a child node for each move
         for (Integer move : moves) {
-            Node_MCST child = new Node_MCST(currentNode.boardState,moves);
+            Node_MCST child = new Node_MCST(currentNode.boardState,moves,child_phase);
 
             /*
-            TODO need to implement a way so that the hexagon colour changes with the current player
+            TODO test to see if it works
              */
             child.boardState = new ArrayList<Hexagon>(currentNode.boardState);
-            child.boardState.get(move).setMyState(Hexagon.state.RED);
+            if(child_phase==GameScreen.state.P1P1 || child_phase==GameScreen.state.P1P2)
+                child.boardState.get(move).setMyState(Hexagon.state.RED);
+            else if(child_phase==GameScreen.state.P2P1 || child_phase==GameScreen.state.P2P2){
+                child.boardState.get(move).setMyState(Hexagon.state.BLUE);
+            }
+            else{
+                throw new IllegalStateException("The children phase is not assign correctly: ");
+            }
 
             child.moves = new ArrayList<Integer>(moves);
             child.moves.remove(move);
