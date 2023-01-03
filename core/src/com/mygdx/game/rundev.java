@@ -48,7 +48,7 @@ public class rundev {
     public void init() {
         //Initiate variables
         round=1;
-        totalnumgames=1000;
+        totalnumgames=1;
         gamefinished=false;
 		field = new ArrayList<>();
         SEngine = new ScoringEngine();
