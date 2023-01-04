@@ -219,8 +219,6 @@ public class GameScreen implements Screen {
 
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
 
-
-
         game.mainBatch.end();
     }
 

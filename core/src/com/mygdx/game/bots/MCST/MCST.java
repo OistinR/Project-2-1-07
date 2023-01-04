@@ -16,7 +16,7 @@ public class MCST {
     // Plays a single game of board game and returns the winner (1 for first player, -1 for second player)
     public int playGame(ArrayList<Hexagon> field, List<Integer>moves) {
         ScoringEngine SEngine = new ScoringEngine();
-        System.out.println(moves.size());
+        //System.out.println(moves.size());
 
         ArrayList<Hexagon> clone_field = new ArrayList<Hexagon>();
         List<Integer> clone_moves = new ArrayList<Integer>();
@@ -72,7 +72,7 @@ public class MCST {
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
          */
-        int numIterations = 5000;
+        int numIterations = 10000;
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
         Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE);
@@ -80,7 +80,7 @@ public class MCST {
 
         for (int i = 0; i < numIterations; i++) {
             // Selection step: starting from the root node, traverse the tree using the UCB1 formula until a leaf node is reached
-            System.out.println("number of iterations : " + i);
+            //System.out.println("number of iterations : " + i);
             Node_MCST currentNode = rootNode;
             while (!currentNode.isLeaf()) {
                 currentNode = selectChild(currentNode);
@@ -89,8 +89,7 @@ public class MCST {
 
 
             // Expansion step: if the leaf node is not a terminal node, create child nodes for all possible moves and choose one at random
-            if (!currentNode.isTerminal(currentNode.moves)) {
-
+            if (!currentNode.isTerminal(currentNode.moves,field)) {
                 currentNode = expandNode(currentNode);
             }
 
@@ -146,7 +145,7 @@ public class MCST {
         }
         List<Integer> moves = movescopy;
 
-        System.out.println("different moves " + moves);
+        //System.out.println("different moves " + moves);
         GameScreen.state child_phase;
         switch (currentNode.phase){
             case P1P1: child_phase = GameScreen.state.P1P2;break;

@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Array;
 
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessGroupBot;
+import com.mygdx.game.bots.MCST.MCST;
+import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 
@@ -48,7 +50,7 @@ public class rundev {
     public void init() {
         //Initiate variables
         round=1;
-        totalnumgames=1;
+        totalnumgames=5;
         gamefinished=false;
 		field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -57,12 +59,13 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=3;
+        fieldsize=4;
 
         //Create field and initiate bots
 
         botptwo = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
+        botMCST = new MCST();
         createHexagonFieldDefault();
     }
 
@@ -72,6 +75,7 @@ public class rundev {
         double winpercd;
         int i=1;
         while(i<=totalnumgames) {
+            System.out.println("game "+i+"");
             while(!gamefinished) {
                 updateState();
                 makeMove();
@@ -89,29 +93,6 @@ public class rundev {
 
             i++;
         }
-        //TODO issue: the tree cant tell when game is over so its possible that infinite loops can occur.
-//        Tree tr = new Tree(6,5);
-//        // Storage is a massive issue, larger map sizes means lower depth/widths.
-//        long runtime=0L;
-//        long startTime = System.nanoTime();
-//        tr.generateTree(field, GameScreen.state.P2P1,false);
-//        long endTime = System.nanoTime();
-//        long duration = (endTime - startTime);
-//        runtime += duration/10000000;
-//        System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i think)");
-//
-//        System.out.println(tr.displayTree(false));
-//
-//        System.out.println("bots assessment of board: "+ tr.getNodes().get(0).getCombinedScore());
-//
-//        double maxScore = 0;
-//        for (Node n0: tr.getNodes().get(0).getChildArray()) {
-//            if(maxScore<n0.getCombinedScore()){
-//                maxScore = n0.getCombinedScore();
-//            }
-//            System.out.println(n0);
-//        }
-//        System.out.println("max score is: "+ maxScore);
 
         winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
         winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;
@@ -153,18 +134,21 @@ public class rundev {
         return num;
     }
 
+
     public void makeMove() {
         botpone.execMove(field);
-        botptwo.execMove(field);
+        MCSTmove(GameScreen.state.P2P1);
+        MCSTmove(GameScreen.state.P2P2);
     }
 
     public void gameFinish() {
         SEngine.calculate(field);
         int p1score=SEngine.getRedScore();
         int p2score=SEngine.getBlueScore();
-        //System.out.println("GAME HAS ENDED");
-        //System.out.println("PLAYER 1 (RED) SCORE: "+p1score);
-        //System.out.println("PLAYER 2 (BLUE) SCORE: "+p2score);
+
+        System.out.println("GAME HAS ENDED");
+        System.out.println("PLAYER 1 (RED) SCORE: "+p1score);
+        System.out.println("PLAYER 2 (BLUE) SCORE: "+p2score);
         if(p1score>p2score) {
             //System.out.println("PLAYER 1 (RED) WON");
             bot1wins.add(p1score);
@@ -198,7 +182,32 @@ public class rundev {
         }
         this.field = field;
     }
+    private MCST botMCST;
+    private int count =0;
 
+    private void MCSTmove(GameScreen.state STATE){
+
+        ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
+        try {
+            for(Hexagon h : field) {
+                copy_field.add(h.clone());
+            }
+        } catch (Exception e) {}
+
+        count++;
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE);
+        //System.out.println("the best move " + bestMove.move_played);
+        //System.out.println(count);
+
+        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P1P2)
+            field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
+        else if(bestMove.phase==GameScreen.state.P2P1 || bestMove.phase==GameScreen.state.P2P2){
+            field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
+        }
+        else{
+            throw new IllegalStateException("The children phase is not assign correctly: ");
+        }
+    }
 
     public static void main(String[] args) {
         rundev dev = new rundev();

@@ -34,7 +34,7 @@ public class Node_MCST {
     public boolean isLeaf(){
         return children.size() == 0;
     }
-    public boolean isTerminal(List<Integer> moves){
-        return moves.size() < 4;
+    public boolean isTerminal(List<Integer> moves, ArrayList<Hexagon> field){
+        return moves.size() < (field.size()%4);
     }
 }
