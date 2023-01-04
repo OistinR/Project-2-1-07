@@ -27,7 +27,7 @@ public class MCST {
         SEngine.calculate(clone_field);
         int p1score=SEngine.getRedScore();
         int p2score=SEngine.getBlueScore();
-        if(p1score>p2score){
+        if(p1score<p2score){
             return 1;
         }
         else{
@@ -62,7 +62,7 @@ public class MCST {
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
          */
-        int numIterations = 100;
+        int numIterations = 5000;
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
         Node_MCST rootNode = new Node_MCST(field, moves,-1, GameScreen.state.P1P1);
@@ -98,6 +98,7 @@ public class MCST {
         }
 
         // Return the move corresponding to the child node with the highest win rate
+
         return selectBestChild(rootNode);
     }
 
@@ -130,7 +131,7 @@ public class MCST {
     Node_MCST expandNode(Node_MCST currentNode) {
         // Generate a list of all possible moves
         List<Integer> moves = currentNode.moves;
-        System.out.println(moves);
+        System.out.println("different moves " + moves);
         GameScreen.state child_phase;
         switch (currentNode.phase){
             case P1P1: child_phase = GameScreen.state.P1P2;break;
@@ -191,7 +192,7 @@ public class MCST {
         ArrayList<Hexagon> field = mcst.createHexagonFieldDefault();
 
         Node_MCST bestMove = mcst.runMCST(field);
-        System.out.println(bestMove.move_played);
+        System.out.println("the best move " + bestMove.move_played);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P1P2)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);

@@ -10,12 +10,10 @@ import com.mygdx.game.Omega;
 
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessEngine;
-import com.mygdx.game.bots.FitnessEngine2;
 import com.mygdx.game.bots.FitnessGroupBot;
+import com.mygdx.game.bots.MCST.MCST;
+import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
-import com.mygdx.game.bots.OLABot;
-import com.mygdx.game.bots.RandomBot;
-import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
@@ -78,6 +76,7 @@ public class GameScreen implements Screen {
 
     private Bot bot;
     private Bot bot2;
+    private MCST botMCST;
 
     private PieButton pieButton;
 
@@ -136,6 +135,7 @@ public class GameScreen implements Screen {
         // Choose any bot here that extends Bot abstract class
         bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE,Hexagon.state.RED);
         bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
+        botMCST = new MCST();
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
     }
 
@@ -234,6 +234,7 @@ public class GameScreen implements Screen {
         if (ai2 && ai && (!gamefinished)) {
             botmove();
             bot2move();
+
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -271,7 +272,8 @@ public class GameScreen implements Screen {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
-                bot2move();
+                //bot2move();
+                MCSTmove();
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -536,6 +538,19 @@ public class GameScreen implements Screen {
         bot2.execMove(field);
         System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
+    }
+    private void MCSTmove(){
+        Node_MCST bestMove = botMCST.runMCST(field);
+        System.out.println("the best move " + bestMove.move_played);
+
+        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P1P2)
+            field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
+        else if(bestMove.phase==GameScreen.state.P2P1 || bestMove.phase==GameScreen.state.P2P2){
+            field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
+        }
+        else{
+            throw new IllegalStateException("The children phase is not assign correctly: ");
+        }
     }
 
     /**
