@@ -19,7 +19,7 @@ public class Node_MCST {
     protected List<Node_MCST> children;
     public GameScreen.state phase;
 
-    Node_MCST(ArrayList<Hexagon> field, List<Integer> moves,int move_played, GameScreen.state phase){
+    public Node_MCST(ArrayList<Hexagon> field, List<Integer> moves, int move_played, GameScreen.state phase){
             this.boardState = field;
             this.parent = null;
             this.moves = moves;

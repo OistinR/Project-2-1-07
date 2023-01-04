@@ -273,7 +273,9 @@ public class GameScreen implements Screen {
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
                 //bot2move();
-                MCSTmove();
+                MCSTmove(STATE);
+                updateState();
+                MCSTmove(STATE);
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -539,8 +541,16 @@ public class GameScreen implements Screen {
         System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
-    private void MCSTmove(){
-        Node_MCST bestMove = botMCST.runMCST(field);
+    private void MCSTmove(state STATE){
+
+        ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
+        try {
+            for(Hexagon h : field) {
+                copy_field.add(h.clone());
+            }
+        } catch (Exception e) {}
+
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE);
         System.out.println("the best move " + bestMove.move_played);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P1P2)
@@ -552,6 +562,7 @@ public class GameScreen implements Screen {
             throw new IllegalStateException("The children phase is not assign correctly: ");
         }
     }
+
 
     /**
      * Method executed when the game is finished

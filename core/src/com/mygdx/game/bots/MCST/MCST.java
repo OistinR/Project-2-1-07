@@ -18,8 +18,18 @@ public class MCST {
         ScoringEngine SEngine = new ScoringEngine();
         System.out.println(moves.size());
 
-        ArrayList<Hexagon> clone_field = new ArrayList<Hexagon>(field);
-        List<Integer>clone_moves = new ArrayList<Integer>(moves);
+        ArrayList<Hexagon> clone_field = new ArrayList<Hexagon>();
+        List<Integer> clone_moves = new ArrayList<Integer>();
+
+        try {
+            for(Hexagon h : field) {
+                clone_field.add(h.clone());
+            }
+        } catch (Exception e) {}
+
+        for (Integer move: moves) {
+            clone_moves.add(move);
+        }
 
         while (clone_moves.size() >= 4) {
             playRandom(clone_field,clone_moves);
@@ -27,7 +37,7 @@ public class MCST {
         SEngine.calculate(clone_field);
         int p1score=SEngine.getRedScore();
         int p2score=SEngine.getBlueScore();
-        if(p1score<p2score){
+        if(p1score<p2score){ //change if the MCST is player one, now it's working for player 2
             return 1;
         }
         else{
@@ -58,14 +68,14 @@ public class MCST {
     }
 
     // Runs the MCTS algorithm for a fixed number of iterations and returns the best move
-    public Node_MCST runMCST(ArrayList<Hexagon> field) {
+    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE) {
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
          */
         int numIterations = 5000;
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
-        Node_MCST rootNode = new Node_MCST(field, moves,-1, GameScreen.state.P1P1);
+        Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE);
 
 
         for (int i = 0; i < numIterations; i++) {
@@ -130,7 +140,12 @@ public class MCST {
 
     Node_MCST expandNode(Node_MCST currentNode) {
         // Generate a list of all possible moves
-        List<Integer> moves = currentNode.moves;
+        List<Integer> movescopy = new ArrayList<>();
+        for (Integer move: currentNode.moves  ) {
+            movescopy.add(move);
+        }
+        List<Integer> moves = movescopy;
+
         System.out.println("different moves " + moves);
         GameScreen.state child_phase;
         switch (currentNode.phase){
@@ -143,13 +158,17 @@ public class MCST {
         }
 
         // Create a child node for each move
+        ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
+
         for (Integer move_played : moves) {
+            try {
+                for(Hexagon h : currentNode.boardState) {
+                    copy_field.add(h.clone());
+                }
+            } catch (Exception e) {}
 
-            Node_MCST child = new Node_MCST(currentNode.boardState,moves,move_played,child_phase);
+            Node_MCST child = new Node_MCST(copy_field,moves,move_played,child_phase);
 
-            /*
-            TODO test to see if it works
-             */
             child.boardState = new ArrayList<Hexagon>(currentNode.boardState);
             if(child_phase==GameScreen.state.P1P1 || child_phase==GameScreen.state.P1P2)
                 child.boardState.get(move_played).setMyState(Hexagon.state.RED);
@@ -191,7 +210,7 @@ public class MCST {
         MCST mcst = new MCST();
         ArrayList<Hexagon> field = mcst.createHexagonFieldDefault();
 
-        Node_MCST bestMove = mcst.runMCST(field);
+        Node_MCST bestMove = mcst.runMCST(field, GameScreen.state.P1P1);
         System.out.println("the best move " + bestMove.move_played);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P1P2)
@@ -207,7 +226,7 @@ public class MCST {
     }
     public ArrayList<Hexagon> createHexagonFieldDefault() {
         int s;
-        int fieldsize = 3;
+        int fieldsize = 5;
         ArrayList<Hexagon> field = new ArrayList<>();
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
