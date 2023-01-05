@@ -199,9 +199,9 @@ public class rundev {
         //System.out.println("the best move " + bestMove.move_played);
         //System.out.println(count);
 
-        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P1P2)
+        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
-        else if(bestMove.phase==GameScreen.state.P2P1 || bestMove.phase==GameScreen.state.P2P2){
+        else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
             field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
         }
         else{

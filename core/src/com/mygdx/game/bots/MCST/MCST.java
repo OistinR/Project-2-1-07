@@ -14,7 +14,7 @@ public class MCST {
     private static final boolean DEBUG = true;
 
     // Plays a single game of board game and returns the winner (1 for first player, -1 for second player)
-    public int playGame(ArrayList<Hexagon> field, List<Integer>moves) {
+    public int playGame(ArrayList<Hexagon> field, List<Integer>moves,GameScreen.state STATE) {
         ScoringEngine SEngine = new ScoringEngine();
         //System.out.println(moves.size());
 
@@ -31,8 +31,17 @@ public class MCST {
             clone_moves.add(move);
         }
 
-        while (clone_moves.size() >= 4) {
-            playRandom(clone_field,clone_moves);
+        //TODO need to check this, accurate enough
+        while (clone_moves.size() > field.size()%4) {
+            playRandom(clone_field,clone_moves,STATE);
+            switch (STATE){
+                case P1P1: STATE = GameScreen.state.P1P2;break;
+                case P1P2: STATE = GameScreen.state.P2P1;break;
+                case P2P1: STATE = GameScreen.state.P2P2;break;
+                case P2P2: STATE = GameScreen.state.P1P1;break;
+                default:
+                    throw new IllegalStateException("Unexpected value in the state");
+            }
         }
         SEngine.calculate(clone_field);
         int p1score=SEngine.getRedScore();
@@ -45,15 +54,18 @@ public class MCST {
         }
     }
 
-    public void playRandom(ArrayList<Hexagon> clone_field, List<Integer>clone_moves){
+    public void playRandom(ArrayList<Hexagon> clone_field, List<Integer>clone_moves, GameScreen.state STATE){
         Random r = new Random();
-        int rnum = r.nextInt(clone_moves.size());
-        clone_field.get(rnum).setMyState(Hexagon.state.RED);
-        clone_moves.remove(rnum);
-
-        rnum = r.nextInt(clone_moves.size());
-        clone_field.get(rnum).setMyState(Hexagon.state.BLUE);
-        clone_moves.remove(rnum);
+        if(STATE == GameScreen.state.P1P1 || STATE == GameScreen.state.P2P1){
+            int rnum = r.nextInt(clone_moves.size());
+            clone_field.get(rnum).setMyState(Hexagon.state.RED);
+            clone_moves.remove(rnum);
+        }
+        if(STATE == GameScreen.state.P1P2 || STATE == GameScreen.state.P2P2){
+            int rnum = r.nextInt(clone_moves.size());
+            clone_field.get(rnum).setMyState(Hexagon.state.BLUE);
+            clone_moves.remove(rnum);
+        }
     }
 
     // Find an available hexagon
@@ -72,7 +84,7 @@ public class MCST {
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
          */
-        int numIterations = 10000;
+        int numIterations = 20000;
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
         Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE);
@@ -89,13 +101,13 @@ public class MCST {
 
 
             // Expansion step: if the leaf node is not a terminal node, create child nodes for all possible moves and choose one at random
-            if (!currentNode.isTerminal(currentNode.moves,field)) {
+            if (!currentNode.isTerminal(currentNode.moves,field,currentNode.phase)) {
                 currentNode = expandNode(currentNode);
             }
 
 
             // Simulation step: play a game starting from the chosen node and determine the winner
-            int winner = playGame(currentNode.boardState,currentNode.moves);
+            int winner = playGame(currentNode.boardState,currentNode.moves,currentNode.phase);
 
 
             // Backpropagation step: update the win counts and visit counts of all nodes on the path from the leaf to the root
@@ -160,6 +172,7 @@ public class MCST {
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
 
         for (Integer move_played : moves) {
+            //TODO can this method go outside of the for? to create it only ones?
             try {
                 for(Hexagon h : currentNode.boardState) {
                     copy_field.add(h.clone());
@@ -169,9 +182,9 @@ public class MCST {
             Node_MCST child = new Node_MCST(copy_field,moves,move_played,child_phase);
 
             child.boardState = new ArrayList<Hexagon>(currentNode.boardState);
-            if(child_phase==GameScreen.state.P1P1 || child_phase==GameScreen.state.P1P2)
+            if(child_phase==GameScreen.state.P1P1 || child_phase==GameScreen.state.P2P1)
                 child.boardState.get(move_played).setMyState(Hexagon.state.RED);
-            else if(child_phase==GameScreen.state.P2P1 || child_phase==GameScreen.state.P2P2){
+            else if(child_phase==GameScreen.state.P1P2 || child_phase==GameScreen.state.P2P2){
                 child.boardState.get(move_played).setMyState(Hexagon.state.BLUE);
             }
             else{
