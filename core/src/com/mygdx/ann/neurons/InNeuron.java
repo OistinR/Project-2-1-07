@@ -5,22 +5,22 @@ package com.mygdx.ann.neurons;
 public class InNeuron {
 
     private int index;
-    private int value;
+    private double value;
     
     public InNeuron(int index) {
         this.index = index;
-        value = 0;
+        value = Integer.MIN_VALUE;
     }
 
     public int getIndex() {
         return index;
     }
     
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setVal(int newValue) {
+    public void setVal(double newValue) {
         value=newValue;
     }
 }

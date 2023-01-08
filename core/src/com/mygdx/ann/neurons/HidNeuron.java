@@ -6,18 +6,24 @@ import java.util.ArrayList;
 
 public class HidNeuron {
 
+    private double z;
+    private double h;
+
     private int index;
     private int layerindex;
 
-    private int bias;
+    private double bias;
     private ArrayList<Synapse> synapses;
     
     public HidNeuron(int index, int layerindex, int prevcount) {
+        h=Double.MIN_VALUE;
+
         this.index = index;
         this.layerindex = layerindex;
 
         bias = 0;
 
+        synapses = new ArrayList<>();
         for(int i=0; i<prevcount; i++) {
             synapses.add(new Synapse());
         }
@@ -31,15 +37,31 @@ public class HidNeuron {
         return layerindex;
     }
 
-    public int getBias() {
+    public double getBias() {
         return bias;
     }
 
-    public void setBias(int updatedBias) {
+    public void setBias(double updatedBias) {
         bias=updatedBias;
     }
 
     public ArrayList<Synapse> getSynapses() {
         return synapses;
+    }
+
+    public double getH() {
+        return h;
+    }
+
+    public void setH(double newValue) {
+        h = newValue;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    public void setZ(double newValue) {
+        z = newValue;
     }
 }

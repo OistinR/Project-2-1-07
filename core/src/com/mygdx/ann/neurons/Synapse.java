@@ -4,17 +4,17 @@ package com.mygdx.ann.neurons;
 
 public class Synapse {
     
-    private int weight;
+    private double weight;
     
     public Synapse() {
         weight=1;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int updatedweight) {
+    public void setWeight(double updatedweight) {
         weight=updatedweight;
     }
 }
