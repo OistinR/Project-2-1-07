@@ -84,6 +84,16 @@ public class MCST {
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
          */
+        //for this to work the root node needs to be the state before the hexagon we want to place, fastest solution
+        switch (STATE){
+            case P1P1: STATE = GameScreen.state.P2P2;break;
+            case P1P2: STATE = GameScreen.state.P1P1;break;
+            case P2P1: STATE = GameScreen.state.P1P2;break;
+            case P2P2: STATE = GameScreen.state.P2P1;break;
+            default:
+                throw new IllegalStateException("Unexpected value of the STATE");
+        }
+
         int numIterations = 20000;
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
@@ -225,9 +235,9 @@ public class MCST {
         Node_MCST bestMove = mcst.runMCST(field, GameScreen.state.P1P1);
         System.out.println("the best move " + bestMove.move_played);
 
-        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P1P2)
+        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
-        else if(bestMove.phase==GameScreen.state.P2P1 || bestMove.phase==GameScreen.state.P2P2){
+        else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
             field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
         }
         else{
