@@ -6,11 +6,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -30,9 +33,10 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private Texture omegaSymbol;
     private Skin menuSkin;
-    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton;
+    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton, confirm;
     public static int mapChoice = 0;
     private ArrayList<TextButton> listOfMapButtons;
+    private SelectBox<String> bots1, bots2;
 
     /**
      * @param game the class that connect all the classes between each other
@@ -42,7 +46,6 @@ public class MenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new FillViewport(1280, 720));
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-
 
         omegaSymbol = new Texture(Gdx.files.internal("omegaSymbol.png"));
         PVP = new TextButton("Play: 2 Player", menuSkin);
@@ -93,6 +96,24 @@ public class MenuScreen implements Screen {
         instructionButton.setPosition(45, 25);
         instructionButton.setSize(150, 50);
 
+        bots1 = new SelectBox<String>(menuSkin);
+        bots1.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
+        bots1.setPosition(750, 250);
+        bots1.setSize(200, 50);
+
+        bots2 = new SelectBox<String>(menuSkin);
+        bots2.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
+        bots2.setPosition(750, 300);
+        bots2.setSize(200, 50);
+
+        confirm = new TextButton("Confirm", menuSkin);
+        confirm.setColor(Color.BLACK);
+        confirm.setPosition(820, 300);
+
+        stage.addActor(bots1);
+        stage.addActor(bots2);
+        stage.addActor(confirm);
+
         stage.addActor(BVB);
         stage.addActor(PVP);
         stage.addActor(PVAI);
@@ -111,6 +132,27 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0.90f, 1.00f, 1.00f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        bots1.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                String bot1 = bots1.getSelected();
+            }
+        });
+
+        bots2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                String bot2 = bots2.getSelected();
+            }
+        });
+
+        confirm.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+
+            }
+        });
 
         PVP.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
@@ -131,7 +173,7 @@ public class MenuScreen implements Screen {
 
         if (clickAI) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false, true));
+            game.setScreen(new PVBSelectionScreen(game));
         }
 
         BVB.addListener(new ClickListener() {
@@ -247,7 +289,7 @@ public class MenuScreen implements Screen {
 
     }
 
-    public void updateMapChoice(){
+    public void updateMapChoice() {
         mapChoice = 0;
     }
 
