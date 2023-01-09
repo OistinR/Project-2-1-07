@@ -5,8 +5,8 @@ import java.util.Random;
 
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
-
-/** One-look ahead bot 
+//n
+/** One-look ahead bot
  *  looks one move ahead and makes decisions based on the bots best move vs the players first move.
  *  it also contains some random behaviour to encourage groups to be formed.
  */

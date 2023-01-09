@@ -2,6 +2,8 @@
  * The purpose of the bot is too apply the maxN & paranoid algorithm using the score of the game and not the fitness score.
  */
 
+//n^2
+
 package com.mygdx.game.bots;
 
 import java.util.ArrayList;

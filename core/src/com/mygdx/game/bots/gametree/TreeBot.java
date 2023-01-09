@@ -11,7 +11,7 @@ import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
-
+//O( ( n^(D+2) ) / (n-1) ) see https://stackoverflow.com/questions/515214/total-number-of-nodes-in-a-tree-data-structure
 public class TreeBot extends Bot {
 
     private Hexagon.state playerstate;
@@ -73,9 +73,9 @@ public class TreeBot extends Bot {
         optrootsR = new ArrayList<Root>();
         optrootsB = new ArrayList<Root>();
 
-        setDepthLimit(field);
+        setDepthLimit(field);//
 
-        computeRoots(field, Hexagon.state.RED, playerstate);
+        computeRoots(field, Hexagon.state.RED, playerstate);//n*(recusion:n*n*depth -> O(Dn^3))
         setRoots(playerstate);
 
         rnum = r.nextInt(optrootsR.size());
@@ -220,11 +220,10 @@ public class TreeBot extends Bot {
         if(color==Hexagon.state.RED) {
             trainingbot.calculate(recursionfield);
         }
-        
+        //n*n
         for(Hexagon hcc : recursionfield) {
             if(hcc.getMyState()==Hexagon.state.BLANK){
                 hcc.setMyState(color);
-
 
                 if(d==depthlimit) {
                     SE.calculate(recursionfield);
@@ -253,7 +252,6 @@ public class TreeBot extends Bot {
                 hcc.setMyState(Hexagon.state.BLANK);
             }
         }
-
     }
 
 

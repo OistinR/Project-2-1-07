@@ -9,7 +9,7 @@ import com.mygdx.game.screens.GameScreen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+//Interations*n^2
 public class MCST {
     private static final boolean DEBUG = true;
 
@@ -107,14 +107,14 @@ public class MCST {
             //System.out.println(i);
 
             while (!currentNode.isLeaf()) {
-                currentNode = selectChild(currentNode);
+                currentNode = selectChild(currentNode); //n
 
             }
 
 
             // Expansion step: if the leaf node is not a terminal node, create child nodes for all possible moves and choose one at random
             if (!currentNode.isTerminal(currentNode.moves,field)) {
-                currentNode = expandNode(currentNode);
+                currentNode = expandNode(currentNode);//n
                 //have a second look at it
             }
 

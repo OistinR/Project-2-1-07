@@ -1,5 +1,5 @@
 package com.mygdx.game.bots;
-
+//n^2
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.screens.GameScreen;
 
