@@ -33,7 +33,6 @@ public class MCST {
 
         //TODO need to check this, accurate enough
         while (clone_moves.size() > field.size()%4) {
-            playRandom(clone_field,clone_moves,STATE);
             switch (STATE){
                 case P1P1: STATE = GameScreen.state.P1P2;break;
                 case P1P2: STATE = GameScreen.state.P2P1;break;
@@ -42,6 +41,7 @@ public class MCST {
                 default:
                     throw new IllegalStateException("Unexpected value in the state");
             }
+            playRandom(clone_field,clone_moves,STATE);
         }
         SEngine.calculate(clone_field);
         int p1score=SEngine.getRedScore();
@@ -58,12 +58,12 @@ public class MCST {
         Random r = new Random();
         if(STATE == GameScreen.state.P1P1 || STATE == GameScreen.state.P2P1){
             int rnum = r.nextInt(clone_moves.size());
-            clone_field.get(rnum).setMyState(Hexagon.state.RED);
+            clone_field.get(clone_moves.get(rnum)).setMyState(Hexagon.state.RED);
             clone_moves.remove(rnum);
         }
         if(STATE == GameScreen.state.P1P2 || STATE == GameScreen.state.P2P2){
             int rnum = r.nextInt(clone_moves.size());
-            clone_field.get(rnum).setMyState(Hexagon.state.BLUE);
+            clone_field.get(clone_moves.get(rnum)).setMyState(Hexagon.state.BLUE);
             clone_moves.remove(rnum);
         }
     }
@@ -94,7 +94,7 @@ public class MCST {
                 throw new IllegalStateException("Unexpected value of the STATE");
         }
 
-        int numIterations = 20000;
+        int numIterations = 2000;
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
         Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE);
@@ -104,6 +104,8 @@ public class MCST {
             // Selection step: starting from the root node, traverse the tree using the UCB1 formula until a leaf node is reached
             //System.out.println("number of iterations : " + i);
             Node_MCST currentNode = rootNode;
+            //System.out.println(i);
+
             while (!currentNode.isLeaf()) {
                 currentNode = selectChild(currentNode);
 
@@ -111,8 +113,9 @@ public class MCST {
 
 
             // Expansion step: if the leaf node is not a terminal node, create child nodes for all possible moves and choose one at random
-            if (!currentNode.isTerminal(currentNode.moves,field,currentNode.phase)) {
+            if (!currentNode.isTerminal(currentNode.moves,field)) {
                 currentNode = expandNode(currentNode);
+                //have a second look at it
             }
 
 
@@ -150,10 +153,18 @@ public class MCST {
     }
     double calcUCB1(Node_MCST node) {
         // Calculate the exploitation term
-        double exploitation = (double) node.winCount / node.visitCount;
+        double exploitation = (double) node.winCount / (double) node.visitCount;
+        if (node.visitCount == 0) {
+            exploitation = Double.POSITIVE_INFINITY;
+        }
+        //System.out.println("this is exploitation " + exploitation);
 
         // Calculate the exploration term
         double exploration = Math.sqrt(2 * Math.log(node.parent.visitCount) / node.visitCount);
+        if (node.visitCount == 0) {
+            exploration = Double.POSITIVE_INFINITY;
+        }
+        //System.out.println("this is exploration " + exploration);
 
         // Return the UCB1 score
         return exploitation + exploration;
@@ -178,10 +189,9 @@ public class MCST {
                 throw new IllegalStateException("Unexpected value: " + currentNode.phase);
         }
 
-        // Create a child node for each move
-        ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
-
         for (Integer move_played : moves) {
+            // Create a child node for each move
+            ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
             //TODO can this method go outside of the for? to create it only ones?
             try {
                 for(Hexagon h : currentNode.boardState) {
@@ -191,7 +201,7 @@ public class MCST {
 
             Node_MCST child = new Node_MCST(copy_field,moves,move_played,child_phase);
 
-            child.boardState = new ArrayList<Hexagon>(currentNode.boardState);
+            //child.boardState = new ArrayList<Hexagon>(currentNode.boardState);
             if(child_phase==GameScreen.state.P1P1 || child_phase==GameScreen.state.P2P1)
                 child.boardState.get(move_played).setMyState(Hexagon.state.RED);
             else if(child_phase==GameScreen.state.P1P2 || child_phase==GameScreen.state.P2P2){
@@ -200,8 +210,9 @@ public class MCST {
             else{
                 throw new IllegalStateException("The children phase is not assign correctly: ");
             }
-
+            //need to print out all the different moves per child
             child.moves = new ArrayList<Integer>(moves);
+            //System.out.println(child.moves);
             child.moves.remove(move_played);
 
             child.parent = currentNode;
@@ -231,8 +242,12 @@ public class MCST {
 
         MCST mcst = new MCST();
         ArrayList<Hexagon> field = mcst.createHexagonFieldDefault();
+        Node_MCST currentNode = new Node_MCST(field, new ArrayList<Integer>(),0, GameScreen.state.P1P1);
+        System.out.println(currentNode.visitCount);
+        System.out.println(currentNode.winCount);
+        mcst.calcUCB1(currentNode);
 
-        Node_MCST bestMove = mcst.runMCST(field, GameScreen.state.P1P1);
+        /** Node_MCST bestMove = mcst.runMCST(field, GameScreen.state.P1P1);
         System.out.println("the best move " + bestMove.move_played);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
@@ -243,6 +258,7 @@ public class MCST {
         else{
             throw new IllegalStateException("The children phase is not assign correctly: ");
         }
+         **/
 
 
     }

@@ -64,7 +64,8 @@ public class rundev {
         //Create field and initiate bots
 
         botptwo = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
-        botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
+        //botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
+        //botptwo = new OLABot();
         botMCST = new MCST();
         createHexagonFieldDefault();
     }
@@ -136,9 +137,9 @@ public class rundev {
 
 
     public void makeMove() {
-        botpone.execMove(field);
-        MCSTmove(GameScreen.state.P2P1);
-        MCSTmove(GameScreen.state.P2P2);
+        MCSTmove(GameScreen.state.P1P1);
+        MCSTmove(GameScreen.state.P1P2);
+        botptwo.execMove(field);
     }
 
     public void gameFinish() {
