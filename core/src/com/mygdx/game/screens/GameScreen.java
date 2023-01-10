@@ -10,12 +10,10 @@ import com.mygdx.game.Omega;
 
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessEngine;
-import com.mygdx.game.bots.FitnessEngine2;
 import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
-import com.mygdx.game.bots.TreeBotMC;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.buttons.ConfirmButton;
@@ -24,7 +22,6 @@ import com.mygdx.game.buttons.PieButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
 
 import java.util.ArrayList;
 
@@ -280,12 +277,6 @@ public class GameScreen implements Screen {
                 }
             }
         }
-
-        // remove this if everything works in the new menu
-        // Choose any bot here that extends Bot abstract class
-        // bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
-        // bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-
     }
 
     @Override
