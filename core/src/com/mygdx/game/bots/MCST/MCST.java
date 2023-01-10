@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class MCST {
     private static final boolean DEBUG = true;
+    public boolean player1;
 
     // Plays a single game of board game and returns the winner (1 for first player, -1 for second player)
     public int playGame(ArrayList<Hexagon> field, List<Integer>moves,GameScreen.state STATE) {
@@ -46,11 +47,21 @@ public class MCST {
         SEngine.calculate(clone_field);
         int p1score=SEngine.getRedScore();
         int p2score=SEngine.getBlueScore();
-        if(p1score<p2score){ //change if the MCST is player one, now it's working for player 2
-            return 1;
+        if(player1){
+            if(p1score>p2score){
+                return 1;
+            }
+            else{
+                return -1;
+            }
         }
-        else{
-            return -1;
+        else{ //not player 1
+            if(p1score<p2score){
+                return 1;
+            }
+            else{
+                return -1;
+            }
         }
     }
 
@@ -80,7 +91,8 @@ public class MCST {
     }
 
     // Runs the MCTS algorithm for a fixed number of iterations and returns the best move
-    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE) {
+    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE, boolean Player1) {
+        this.player1 = Player1;
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
          */

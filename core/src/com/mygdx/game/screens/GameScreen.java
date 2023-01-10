@@ -230,8 +230,17 @@ public class GameScreen implements Screen {
             gameFinish();
         }
         if (ai2 && ai && (!gamefinished)) {
-            botmove();
-            bot2move();
+            //botmove();
+            //bot2move();
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MCSTmove(state.P1P1,true);
+            MCSTmove(state.P1P2,true);
+            MCSTmove(state.P2P1,false);
+            MCSTmove(state.P2P2,false);
 
             try {
                 Thread.sleep(500);
@@ -271,9 +280,9 @@ public class GameScreen implements Screen {
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
                 //bot2move();
-                MCSTmove(STATE);
+                MCSTmove(STATE,false);
                 updateState();
-                MCSTmove(STATE);
+                MCSTmove(STATE,false);
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -539,7 +548,7 @@ public class GameScreen implements Screen {
         System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
-    private void MCSTmove(state STATE){
+    private void MCSTmove(state STATE, boolean player1){
 
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
@@ -548,7 +557,7 @@ public class GameScreen implements Screen {
             }
         } catch (Exception e) {}
 
-        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE);
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
         System.out.println("the best move " + bestMove.move_played);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)

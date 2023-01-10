@@ -137,8 +137,8 @@ public class rundev {
 
 
     public void makeMove() {
-        MCSTmove(GameScreen.state.P1P1);
-        MCSTmove(GameScreen.state.P1P2);
+        MCSTmove(GameScreen.state.P1P1,true);
+        MCSTmove(GameScreen.state.P1P2,true);
         botptwo.execMove(field);
     }
 
@@ -186,7 +186,7 @@ public class rundev {
     private MCST botMCST;
     private int count =0;
 
-    private void MCSTmove(GameScreen.state STATE){
+    private void MCSTmove(GameScreen.state STATE,boolean player1){
 
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
@@ -196,7 +196,7 @@ public class rundev {
         } catch (Exception e) {}
 
         count++;
-        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE);
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
         //System.out.println("the best move " + bestMove.move_played);
         //System.out.println(count);
 
