@@ -1,6 +1,7 @@
 package com.mygdx.ann.neurons;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 // Java representation of a hidden neuron with as many synapses as previous neurons
 
@@ -9,6 +10,8 @@ public class HidNeuron {
     private double z;
     private double h;
 
+    private double delta;
+
     private int index;
     private int layerindex;
 
@@ -16,12 +19,15 @@ public class HidNeuron {
     private ArrayList<Synapse> synapses;
     
     public HidNeuron(int index, int layerindex, int prevcount) {
+        z=Double.MIN_VALUE;
         h=Double.MIN_VALUE;
+        delta=Double.MIN_VALUE;
+
 
         this.index = index;
         this.layerindex = layerindex;
 
-        bias = 0;
+        bias = ThreadLocalRandom.current().nextDouble();
 
         synapses = new ArrayList<>();
         for(int i=0; i<prevcount; i++) {
@@ -63,5 +69,13 @@ public class HidNeuron {
 
     public void setZ(double newValue) {
         z = newValue;
+    }
+
+    public double getDelta() {
+        return delta;
+    }
+
+    public void setDelta(double newdelta) {
+        delta=newdelta;
     }
 }

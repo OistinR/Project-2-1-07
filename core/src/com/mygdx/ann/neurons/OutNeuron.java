@@ -1,6 +1,7 @@
 package com.mygdx.ann.neurons;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 // Java representation of a output neuron with as many synapses as previous neurons
 
@@ -8,6 +9,8 @@ public class OutNeuron {
 
     private double z;
     private double y;
+
+    private double delta;
 
     private int index;
 
@@ -17,10 +20,11 @@ public class OutNeuron {
     public OutNeuron(int index, int prevcount) {
         z=Double.MIN_VALUE;
         y=Double.MIN_VALUE;
+        delta=Double.MIN_VALUE;
 
         this.index = index;
 
-        bias = 0;
+        bias = ThreadLocalRandom.current().nextDouble();
 
         synapses = new ArrayList<>();
         for(int i=0; i<prevcount; i++) {
@@ -58,6 +62,14 @@ public class OutNeuron {
 
     public void setZ(double newValue) {
         z = newValue;
+    }
+
+    public double getDelta() {
+        return delta;
+    }
+
+    public void setDelta(double newdelta) {
+        delta=newdelta;
     }
     
 }

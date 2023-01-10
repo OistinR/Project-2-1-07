@@ -1,5 +1,7 @@
 package com.mygdx.ann.neurons;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 // Java representation of a synapse 
 
 public class Synapse {
@@ -7,7 +9,7 @@ public class Synapse {
     private double weight;
     
     public Synapse() {
-        weight=1;
+        weight=ThreadLocalRandom.current().nextDouble();
     }
 
     public double getWeight() {
