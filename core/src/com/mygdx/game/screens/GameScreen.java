@@ -133,35 +133,25 @@ public class GameScreen implements Screen {
         backToMenu = new ConfirmButton(1000, 600, game.mainBatch);
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
-        if (ai && !ai2) {
-            switch (botSelection) {
-                case 1: {
-                    bot = new RandomBot();
-                    bot2 = new RandomBot();
-                }
-                case 2: {
-                    bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-                    bot2 = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-                    System.out.println("now going to bot");
-                }
-                case 3: {
-                    bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-                    bot2 = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-                }
-                case 4: {
-                    bot = new OLABot();
-                    bot2 = new OLABot();
-                }
-                case 5: {
-                    bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-                    bot2 = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-                }
+        switch (botSelection) {
+            case 1: {
+                bot2 = new RandomBot();
+            }
+            case 2: {
+                bot2 = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                System.out.println("now going to bot");
+            }
+            case 3: {
+                bot2 = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+            }
+            case 4: {
+                bot2 = new OLABot();
+            }
+            case 5: {
+                bot2 = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
             }
         }
 
-        if (ai && ai2) {
-
-        }
 
         // Choose any bot here that extends Bot abstract class
         // bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
