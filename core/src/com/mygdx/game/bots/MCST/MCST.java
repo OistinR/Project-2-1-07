@@ -107,16 +107,26 @@ public class MCST {
         }
 
         int numIterations = 2000;
+        long start_time = System.nanoTime();
+        long end_time = System.nanoTime();
+
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
         Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE);
+        int count=0;
 
-
-        for (int i = 0; i < numIterations; i++) {
+        //for (int i = 0; i < numIterations; i++) {
+        while((end_time-start_time)/1000000000<5){
+            /*
+            if(count%1000==0)
+                System.out.println(count);
+            count++;*/
             // Selection step: starting from the root node, traverse the tree using the UCB1 formula until a leaf node is reached
-            //System.out.println("number of iterations : " + i);
+            end_time = System.nanoTime();
+
+
             Node_MCST currentNode = rootNode;
-            //System.out.println(i);
+
 
             while (!currentNode.isLeaf()) {
                 currentNode = selectChild(currentNode);

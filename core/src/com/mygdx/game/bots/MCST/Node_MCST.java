@@ -14,8 +14,8 @@ public class Node_MCST {
     protected Node_MCST parent;
     protected List<Integer> moves;
     public int move_played;
-    protected int winCount;
-    protected int visitCount;
+    public int winCount;
+    public int visitCount;
     protected List<Node_MCST> children;
     public GameScreen.state phase;
 
@@ -36,5 +36,8 @@ public class Node_MCST {
     }
     public boolean isTerminal(List<Integer> moves,ArrayList<Hexagon> field){
         return moves.size() < field.size()%4;
+    }
+    public double returnWinrate(){
+        return (double) winCount/(double)visitCount;
     }
 }

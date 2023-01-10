@@ -226,17 +226,12 @@ public class GameScreen implements Screen {
         int numhex = numHex() - 4 * (round - 1);
 
         // check if game is done
-        if (field.size() - (numhex + (4 * (round - 1))) < 4) {
+        if (field.size() - (numhex + (4 * (round - 1))) < 4 && STATE == state.P1P1) {
             gameFinish();
         }
         if (ai2 && ai && (!gamefinished)) {
             //botmove();
             //bot2move();
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             MCSTmove(state.P1P1,true);
             MCSTmove(state.P1P2,true);
             MCSTmove(state.P2P1,false);
@@ -287,6 +282,7 @@ public class GameScreen implements Screen {
                 arrowPlayerOne = true;
                 round++;
             }
+            //
             undoHexagon = null;
             undoHexagon2 = null;
         }
@@ -559,6 +555,7 @@ public class GameScreen implements Screen {
 
         Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
         System.out.println("the best move " + bestMove.move_played);
+        System.out.println("after the move the MCST is that % sure to win " + bestMove.returnWinrate());
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
