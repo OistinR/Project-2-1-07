@@ -15,6 +15,7 @@ import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
+import com.mygdx.game.bots.TreeBotMC;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.buttons.ConfirmButton;
@@ -77,6 +78,7 @@ public class GameScreen implements Screen {
 
     private Bot bot;
     private Bot bot2;
+    private int botSelection;
 
     private PieButton pieButton;
 
@@ -86,11 +88,11 @@ public class GameScreen implements Screen {
      * @param ai   to see if we are playing against an AI or not
      * @param ai2  to see if we are playing bot vs bot
      */
-    public GameScreen(Omega game, boolean ai, boolean ai2) {
+    public GameScreen(Omega game, boolean ai, boolean ai2, int index) {
         this.game = game;
+        botSelection = index;
         this.ai = ai;
         this.ai2 = ai2;
-
     }
 
     @Override
@@ -117,10 +119,9 @@ public class GameScreen implements Screen {
                 break;
         }
 
-
         SCREENWIDTH = Gdx.graphics.getWidth();
         SCREENHEIGHT = Gdx.graphics.getHeight();
-        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE,false);
+        SFitness = new FitnessEngine(Hexagon.state.RED, Hexagon.state.BLUE, false);
         SEngine = new ScoringEngine();
         font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -132,11 +133,39 @@ public class GameScreen implements Screen {
         backToMenu = new ConfirmButton(1000, 600, game.mainBatch);
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
+        if (ai && !ai2) {
+            switch (botSelection) {
+                case 1: {
+                    bot = new RandomBot();
+                    bot2 = new RandomBot();
+                }
+                case 2: {
+                    bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                    bot2 = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                    System.out.println("now going to bot");
+                }
+                case 3: {
+                    bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+                    bot2 = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+                }
+                case 4: {
+                    bot = new OLABot();
+                    bot2 = new OLABot();
+                }
+                case 5: {
+                    bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+                    bot2 = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+                }
+            }
+        }
+
+        if (ai && ai2) {
+
+        }
+
         // Choose any bot here that extends Bot abstract class
-        bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
-        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
-        bot = new OLABot()
-        //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
+        // bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+        // bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
     }
 
     @Override
