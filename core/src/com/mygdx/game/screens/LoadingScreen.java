@@ -70,7 +70,6 @@ public class LoadingScreen implements Screen {
         if (close == 6) {
             this.dispose();
             game.setScreen(new GameScreen(game, ai, ai2, index, 0));
-            System.out.println("going into gamescreen");
         } else {
             close++;
         }

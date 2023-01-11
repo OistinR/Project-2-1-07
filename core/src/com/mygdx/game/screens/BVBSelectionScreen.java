@@ -84,8 +84,6 @@ public class BVBSelectionScreen implements Screen {
                 index = bots1.getSelectedIndex();
                 index2 = bots2.getSelectedIndex();
                 game.setScreen(new LoadingScreen(game, ai, ai2, index, index2));
-                System.out.println(bots1.getSelectedIndex());
-                System.out.println(bots2.getSelectedIndex());
             }
         });
     }

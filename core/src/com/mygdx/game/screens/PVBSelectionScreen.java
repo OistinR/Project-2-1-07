@@ -69,8 +69,6 @@ public class PVBSelectionScreen implements Screen {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 index = bots1.getSelectedIndex();
                 game.setScreen(new LoadingScreen(game, ai, ai2, index, 0));
-                System.out.println("going into loading screen");
-                System.out.println(bots1.getSelectedIndex());
             }
         });
 

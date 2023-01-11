@@ -136,7 +136,6 @@ public class MenuScreen implements Screen {
         if (clickAI) {
             this.dispose();
             game.setScreen(new PVBSelectionScreen(game, false, true));
-            System.out.println("we are now in PVB");
         }
 
         BVB.addListener(new ClickListener() {
