@@ -83,6 +83,7 @@ public class GameScreen implements Screen {
     private Bot bot;
     private Bot bot2;
 
+    private int index2, botSelection;
     private PieButton pieButton;
 
     /**
@@ -91,11 +92,12 @@ public class GameScreen implements Screen {
      * @param ai   to see if we are playing against an AI or not
      * @param ai2  to see if we are playing bot vs bot
      */
-    public GameScreen(Omega game, boolean ai, boolean ai2) {
+    public GameScreen(Omega game, boolean ai, boolean ai2, int index, int index2) {
         this.game = game;
+        botSelection = index;
+        this.index2 = index2;
         this.ai = ai;
         this.ai2 = ai2;
-
     }
 
     @Override
