@@ -120,7 +120,7 @@ public class MenuScreen implements Screen {
 
         if (click) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false, false));
+            game.setScreen(new LoadingScreen(game, false, false, 0, 0));
         }
 
         PVAI.addListener(new ClickListener() {
@@ -131,7 +131,7 @@ public class MenuScreen implements Screen {
 
         if (clickAI) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false, true));
+            game.setScreen(new PVBSelectionScreen(game, false, true));
         }
 
         BVB.addListener(new ClickListener() {
@@ -142,7 +142,7 @@ public class MenuScreen implements Screen {
 
         if (clickBVB) { // Bot vs Bot
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true, true));
+            game.setScreen(new BVBSelectionScreen(game, true, true));
         }
 
         mapSnowflake.addListener(new ClickListener() {
