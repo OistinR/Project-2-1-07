@@ -13,6 +13,9 @@ public class FitnessGroupBot extends Bot{
     private Hexagon.state opponentColor;
     private boolean random;
 
+    private Hexagon recentHex;
+    private Hexagon recentHex2;
+
     private FitnessEngine FE;
 
     /**
@@ -50,10 +53,13 @@ public class FitnessGroupBot extends Bot{
         int one = -1;
         if (myColor== Hexagon.state.BLUE){
             one = getBestHexagon(field, GameScreen.state.P2P1);
+            field.get(one).setPlayer(2);
         }else {
             one = getBestHexagon(field, GameScreen.state.P1P1);
+            field.get(one).setPlayer(1);
         }
 
+        recentHex = field.get(one);
         field.get(one).setMyState(Hexagon.state.RED);
 
 
@@ -62,11 +68,15 @@ public class FitnessGroupBot extends Bot{
         int two = -1;
         if (myColor== Hexagon.state.RED){
             two = getBestHexagon(field, GameScreen.state.P2P2);
+            field.get(two).setPlayer(1);
         }else {
             two = getBestHexagon(field, GameScreen.state.P1P2);
+            field.get(one).setPlayer(2);
         }
-        field.get(two).setMyState(Hexagon.state.BLUE);
 
+        recentHex2 = field.get(two);
+        field.get(two).setMyState(Hexagon.state.BLUE);
+        System.out.println("Placed hex " + field.get(two).toString());
     }
 
 
@@ -185,6 +195,14 @@ public class FitnessGroupBot extends Bot{
             return bestList.get(0);
 //        }
 
+    }
+
+    public Hexagon getRecentHex(){
+        return this.recentHex;
+    }
+
+    public Hexagon getRecentHex2(){
+        return this.recentHex2;
     }
 }
 

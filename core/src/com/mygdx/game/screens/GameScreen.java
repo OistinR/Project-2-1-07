@@ -74,6 +74,10 @@ public class GameScreen implements Screen {
     public Hexagon undoHexagon2;
     public Hexagon undoHexagonPie;
     public Hexagon undoHexagonPie2;
+    public Hexagon recentHex1;
+    public Hexagon recentHex2;
+    public Hexagon recentHex3;
+    public Hexagon recentHex4;
     private boolean ai, ai2;
 
     private Bot bot;
@@ -232,8 +236,29 @@ public class GameScreen implements Screen {
             gameFinish();
         }
         if (ai2 && ai && (!gamefinished)) {
+            if (recentHex1 != null) {
+                recentHex1.setRecent(false);
+                recentHex1 = null;
+                recentHex2.setRecent(false);
+                recentHex2 = null;
+            }
             botmove();
+            recentHex1 = bot.getRecentHex();
+            recentHex1.setRecent(true);
+            recentHex2 = bot.getRecentHex2();
+            recentHex2.setRecent(true);
+
+            if (recentHex3 != null ) {
+                recentHex3.setRecent(false);
+                recentHex3 = null;
+                recentHex4.setRecent(false);
+                recentHex4 = null;
+            }
             bot2move();
+            recentHex3 = bot2.getRecentHex();
+            recentHex3.setRecent(true);
+            recentHex4 = bot2.getRecentHex2();
+            recentHex4.setRecent(true);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -246,7 +271,6 @@ public class GameScreen implements Screen {
         if (numhex == 1 && STATE == state.P1P1) {
             STATE = state.P1P2;
             arrowPlayerOne = true;
-
         }
         // intermediate move (2nd move for P1)
         else if (numhex == 2 && (STATE == state.P1P2 || STATE == state.P1P1)) {
@@ -267,6 +291,12 @@ public class GameScreen implements Screen {
         if (STATE == state.P1P3 && confirmButton.mouseDown()) {
             STATE = state.P2P1;
             arrowPlayerOne = false;
+            if (recentHex3 != null ) {
+                recentHex3.setRecent(false);
+                recentHex3 = null;
+                recentHex4.setRecent(false);
+                recentHex4 = null;
+            }
             if (round == 1 && !ai2) {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
@@ -275,6 +305,16 @@ public class GameScreen implements Screen {
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
+                recentHex3 = bot2.getRecentHex();
+                recentHex3.setRecent(true);
+                recentHex4 = bot2.getRecentHex2();
+                recentHex4.setRecent(true);
+
+                recentHex1.setRecent(false);
+                recentHex1 = null;
+                recentHex2.setRecent(false);
+                recentHex2 = null;
+
             }
             undoHexagon = null;
             undoHexagon2 = null;
@@ -285,10 +325,11 @@ public class GameScreen implements Screen {
             undoHexagon = null;
             undoHexagon2 = null;
             round++;
+            recentHex1.setRecent(false);
+            recentHex1 = null;
+            recentHex2.setRecent(false);
+            recentHex2 = null;
         }
-
-
-
     }
 
     public int numHex() {
@@ -446,11 +487,34 @@ public class GameScreen implements Screen {
                 if (h.mouseDown() && STATE != state.P1P3 && STATE != state.P2P3) {// check if mouse is clicking current
                                                                                   // tile
                     if (h.getMyState() == Hexagon.state.HOVER) {
+                        if (STATE == state.P1P1 || STATE == state.P1P2){
+                            h.setPlayer(1);
+                        }
+                        else if (STATE == state.P2P1 || STATE == state.P2P2){
+                            h.setPlayer(2);
+                        }
                         updateColor(h);
                         if (undoHexagon == null) {
                             undoHexagon = h;
                         } else {
                             undoHexagon2 = h;
+                        }
+                        if (recentHex1 == null){
+                            recentHex1 = h;
+                            h.setRecent(true);
+                        }
+                        else if (recentHex2 == null){
+                            recentHex2 = h;
+                            h.setRecent(true);
+                        }
+                        else if (!ai2) {
+                            if (recentHex3 == null) {
+                                recentHex3 = h;
+                                h.setRecent(true);
+                            } else if (recentHex4 == null) {
+                                recentHex4 = h;
+                                h.setRecent(true);
+                            }
                         }
                     } else {
                         System.out.println("you cannot colour that hexagon");
@@ -488,10 +552,19 @@ public class GameScreen implements Screen {
             }
             if (STATE == state.P1P3) {
                 STATE = state.P1P1; // set the tracker to the right value depending on who is playing
+                recentHex1.setRecent(false);
+                recentHex1 = null;
+                recentHex2.setRecent(false);
+                recentHex2 = null;
             }
             if (STATE == state.P2P3) {
                 STATE = state.P2P1;
+                recentHex3.setRecent(false);
+                recentHex3 = null;
+                recentHex4.setRecent(false);
+                recentHex4 = null;
             }
+
         }
     }
 

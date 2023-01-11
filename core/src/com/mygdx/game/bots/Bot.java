@@ -11,6 +11,8 @@ import com.mygdx.game.coordsystem.Hexagon;
 public abstract class Bot {
 
     protected long runtime;
+    private Hexagon recentHex;
+    private Hexagon recentHex2;
 
     /**
      * constructer for intialising the runtime of the bot.
@@ -48,4 +50,8 @@ public abstract class Bot {
     public long getRuntime() {
         return runtime;
     }
+
+    public Hexagon getRecentHex() { return recentHex;}
+
+    public Hexagon getRecentHex2() { return recentHex2; }
 }

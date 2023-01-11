@@ -75,6 +75,7 @@ public class MaxN_Paranoid_Bot extends Bot {
 
             if (DEBUG) System.out.println("use maxn, Color BLUE");
             int pos2 = MaxN(current2_state_clone, myColor);
+
             field.get(pos2).setMyState(Hexagon.state.BLUE);
 
         }

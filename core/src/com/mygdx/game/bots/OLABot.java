@@ -49,11 +49,13 @@ public class OLABot extends Bot{
         }
 
         if(worstpos!=-1) {
+            field.get(worstpos).setPlayer(2);
             field.get(worstpos).setMyState(Hexagon.state.RED);
         } else {
             while(turn1) {
                 rnum = r.nextInt(field.size());
                 if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
+                    field.get(rnum).setPlayer(2);
                     field.get(rnum).setMyState(Hexagon.state.RED);
                     turn1=false;
                 }
@@ -97,6 +99,7 @@ public class OLABot extends Bot{
             while(turn2) {
                 rnum = r.nextInt(field.size());
                 if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
+                    field.get(rnum).setPlayer(2);
                     field.get(rnum).setMyState(Hexagon.state.BLUE);
                     turn2=false;
                 }
@@ -105,6 +108,7 @@ public class OLABot extends Bot{
         //otherwise we take the best tile found by simulations
         // Project 1 girls is weird
         else if(bestpos!=-1) {
+            field.get(bestpos).setPlayer(2);
             field.get(bestpos).setMyState(Hexagon.state.BLUE);
         } else {
         }

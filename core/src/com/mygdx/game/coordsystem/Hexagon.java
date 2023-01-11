@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.screens.GameScreen;
 
+import static com.mygdx.game.screens.GameScreen.state.*;
+
 /**
  * This is the general Hexagon-shaped tile object.
  * This object contains both the location of each tile, its state and the visual sprite of the tile.
@@ -32,6 +34,9 @@ public class Hexagon implements Cloneable {
 
     private boolean checked;
 
+    private boolean recent;
+    private int player;
+
 
     /**
      * Enumerator for the various possible tile states
@@ -53,6 +58,12 @@ public class Hexagon implements Cloneable {
     private Texture blankTileTexture;
     private Texture redTileTexture;
     private Texture blueTileTexture;
+    private Texture redTileTexture2;
+    private Texture blueTileTexture2;
+    private Texture redTileRecentTexture;
+    private Texture blueTileRecentTexture;
+    private Texture redTileRecentTexture2;
+    private Texture blueTileRecentTexture2;
     private Texture highlightTexture;
     private Sprite hexSprite;
 
@@ -66,6 +77,12 @@ public class Hexagon implements Cloneable {
         blankTileTexture = new Texture(Gdx.files.internal("Hex.png"));
         redTileTexture = new Texture(Gdx.files.internal("HexRed.png"));
         blueTileTexture = new Texture(Gdx.files.internal("HexBlue.png"));
+        redTileTexture2 = new Texture(Gdx.files.internal("HexRedP2.png"));
+        blueTileTexture2 = new Texture(Gdx.files.internal("HexBlueP2.png"));
+        redTileRecentTexture = new Texture(Gdx.files.internal("HexRedRecent.png"));
+        blueTileRecentTexture = new Texture(Gdx.files.internal("HexBlueRecent.png"));
+        redTileRecentTexture2 = new Texture(Gdx.files.internal("HexRedRecent2.png"));
+        blueTileRecentTexture2 = new Texture(Gdx.files.internal("HexBlueRecent2.png"));
         highlightTexture = new Texture(Gdx.files.internal("Highlight.png"));
 
         this.q = q;
@@ -78,6 +95,7 @@ public class Hexagon implements Cloneable {
 		this.SCREENWIDTH = Gdx.graphics.getWidth();
 		this.SCREENHEIGHT = Gdx.graphics.getHeight();
         this.checked = false;
+        this.recent = false;
         fitnessText = new BitmapFont();
         //this enables the fitness score being rendered over the hexagon
         DEBUG = true;
@@ -107,10 +125,40 @@ public class Hexagon implements Cloneable {
     public void update(GameScreen.state stateGame){
         switch (myState) {
             case BLUE:
-                hexSprite.setTexture(blueTileTexture);
+                if (player == 1){
+                    if (recent) {
+                        hexSprite.setTexture(blueTileRecentTexture);
+                    }
+                    else{
+                        hexSprite.setTexture(blueTileTexture);
+                    }
+                }
+                else if (player == 2){
+                    if (recent) {
+                        hexSprite.setTexture(blueTileRecentTexture2);
+                    }
+                    else{
+                        hexSprite.setTexture(blueTileTexture2);
+                    }
+                }
                 break;
             case RED:
-                hexSprite.setTexture(redTileTexture);
+                if (player == 1){
+                    if (recent) {
+                        hexSprite.setTexture(redTileRecentTexture);
+                    }
+                    else{
+                        hexSprite.setTexture(redTileTexture);
+                    }
+                }
+                else if (player == 2) {
+                    if (recent) {
+                        hexSprite.setTexture(redTileRecentTexture2);
+                    }
+                    else{
+                        hexSprite.setTexture(redTileTexture2);
+                    }
+                }
                 break;
             case BLANK:
                 hexSprite.setTexture(blankTileTexture);
@@ -278,5 +326,15 @@ public class Hexagon implements Cloneable {
     public Hexagon clone() throws CloneNotSupportedException {
         Hexagon newHex = (Hexagon) super.clone();
         return newHex;
+    }
+
+    public void setRecent(boolean update){
+        recent = update;
+        if (recent) System.out.println("Recent set to True");
+        else System.out.println("Recent set to False");
+    }
+
+    public void setPlayer(int player){
+        this.player = player;
     }
 }

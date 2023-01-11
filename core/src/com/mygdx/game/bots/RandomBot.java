@@ -23,6 +23,7 @@ public class RandomBot extends Bot {
         while(turn1) {
             rnum = r.nextInt(field.size());
             if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
+                field.get(rnum).setPlayer(1);
                 field.get(rnum).setMyState(Hexagon.state.RED);
                 turn1=false;
             }
@@ -31,6 +32,7 @@ public class RandomBot extends Bot {
         while(turn2) {
             rnum = r.nextInt(field.size());
             if(field.get(rnum).getMyState()==Hexagon.state.BLANK) {
+                field.get(rnum).setPlayer(2);
                 field.get(rnum).setMyState(Hexagon.state.BLUE);
                 turn2=false;
             }

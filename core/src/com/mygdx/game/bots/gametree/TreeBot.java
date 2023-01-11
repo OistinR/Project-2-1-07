@@ -29,6 +29,9 @@ public class TreeBot extends Bot {
     private ArrayList<Root> optrootsR;
     private ArrayList<Root> optrootsB;
 
+    private Hexagon recentHex;
+    private Hexagon recentHex2;
+
     
     /**
      * Tree Bot constructor
@@ -93,7 +96,14 @@ public class TreeBot extends Bot {
         for(Hexagon hex:field) {
             if(optrootsR.get(rnum).getRootQ()==hex.getQ()&&optrootsR.get(rnum).getRootR()==hex.getR()) {
 
+                if (playerstate == Hexagon.state.RED){
+                    hex.setPlayer(1);
+                }
+                else{
+                    hex.setPlayer(2);
+                }
                 hex.setMyState(Hexagon.state.RED);
+                recentHex = hex;
             }
         }
 
@@ -104,7 +114,14 @@ public class TreeBot extends Bot {
         rnum = r.nextInt(optrootsB.size());
         for(Hexagon hex:field) {
             if(optrootsB.get(rnum).getRootQ()==hex.getQ()&&optrootsB.get(rnum).getRootR()==hex.getR()) {
+                if (playerstate == Hexagon.state.RED){
+                    hex.setPlayer(1);
+                }
+                else{
+                    hex.setPlayer(2);
+                }
                 hex.setMyState(Hexagon.state.BLUE);
+                recentHex2 = hex;
             }
         }
 
@@ -289,5 +306,11 @@ public class TreeBot extends Bot {
 
     }
 
+    public Hexagon getRecentHex() {
+        System.out.println("recent hex returned");
+        return recentHex;
+    }
 
+
+    public Hexagon getRecentHex2() { return recentHex2; }
 }
