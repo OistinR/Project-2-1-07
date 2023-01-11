@@ -139,10 +139,150 @@ public class GameScreen implements Screen {
         backToMenu = new ConfirmButton(1000, 600, game.mainBatch);
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
-        // Choose any bot here that extends Bot abstract class
-        bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
-        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
-        //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
+        if (!ai && ai2) {
+            switch (botSelection) {
+                case 0: {
+                    bot2 = new RandomBot();
+                }
+                case 1: {
+                    bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, false);
+                }
+                case 2: {
+                    bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                }
+                case 3: {
+                    bot2 = new OLABot();
+                }
+                case 4: {
+                    bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                }
+            }
+        }
+
+        if (ai && ai2) {
+            switch (botSelection) {
+                case 0: {
+                    switch (index2) {
+                        case 0: {
+                            bot = new RandomBot();
+                            bot2 = new RandomBot();
+                        }
+                        case 1: {
+                            bot = new RandomBot();
+                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
+                        }
+                        case 2: {
+                            bot = new RandomBot();
+                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                        case 3: {
+                            bot = new RandomBot();
+                            bot2 = new OLABot();
+                        }
+                        case 4: {
+                            bot = new RandomBot();
+                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                    }
+                }
+                case 1: {
+                    switch (index2) {
+                        case 0: {
+                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                            bot2 = new RandomBot();
+                        }
+                        case 1: {
+                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
+                        }
+                        case 2: {
+                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                        case 3: {
+                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                            bot2 = new OLABot();
+                        }
+                        case 4: {
+                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                    }
+                }
+                case 2: {
+                    switch (index2) {
+                        case 0: {
+                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new RandomBot();
+                        }
+                        case 1: {
+                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
+                        }
+                        case 2: {
+                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                        case 3: {
+                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new OLABot();
+                        }
+                        case 4: {
+                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                    }
+                }
+                case 3: {
+                    switch (index2) {
+                        case 0: {
+                            bot = new OLABot();
+                            bot2 = new RandomBot();
+                        }
+                        case 1: {
+                            bot = new OLABot();
+                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
+                        }
+                        case 2: {
+                            bot = new OLABot();
+                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                        case 3: {
+                            bot = new OLABot();
+                            bot2 = new OLABot();
+                        }
+                        case 4: {
+                            bot = new OLABot();
+                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                    }
+                }
+                case 4: {
+                    switch (index2) {
+                        case 0: {
+                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new RandomBot();
+                        }
+                        case 1: {
+                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
+                        }
+                        case 2: {
+                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                        case 3: {
+                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new OLABot();
+                        }
+                        case 4: {
+                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
