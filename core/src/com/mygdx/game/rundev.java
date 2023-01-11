@@ -59,7 +59,7 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=4;
+        fieldsize=3;
 
         //Create field and initiate bots
 
@@ -81,6 +81,7 @@ public class rundev {
                 updateState();
                 makeMove();
                 updateState();
+                round++;
             } 
             if(i%10==0) {
                 System.out.println(i+" games simulated.");
@@ -137,8 +138,8 @@ public class rundev {
 
 
     public void makeMove() {
-        MCSTmove(GameScreen.state.P1P1,true);
-        MCSTmove(GameScreen.state.P1P2,true);
+        MCSTmove(GameScreen.state.P1P1,true,round);
+        MCSTmove(GameScreen.state.P1P2,true,round);
         botptwo.execMove(field);
     }
 
@@ -186,7 +187,8 @@ public class rundev {
     private MCST botMCST;
     private int count =0;
 
-    private void MCSTmove(GameScreen.state STATE,boolean player1){
+    //TODO if it crashes when being player 2, and that the best move is -2, need to implement the MCSTmove from GameScreen
+    private void MCSTmove(GameScreen.state STATE,boolean player1,int round){
 
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
@@ -196,7 +198,7 @@ public class rundev {
         } catch (Exception e) {}
 
         count++;
-        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1,round);
         //System.out.println("the best move " + bestMove.move_played);
         //System.out.println(count);
 

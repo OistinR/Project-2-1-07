@@ -67,6 +67,9 @@ public class GameScreen implements Screen {
 	  private UndoButton undoButton;
     private ConfirmButton backToMenu;
 
+    private Node_MCST bestMove;
+    private boolean pieRuleActive;
+
 
     public Hexagon undoHexagon;
     public Hexagon undoHexagon2;
@@ -137,6 +140,7 @@ public class GameScreen implements Screen {
         bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         botMCST = new MCST();
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
+        pieRuleActive = false;
     }
 
     @Override
@@ -223,7 +227,11 @@ public class GameScreen implements Screen {
     }
 
     public void updateState() {
+
         int numhex = numHex() - 4 * (round - 1);
+        if(pieRuleActive)
+            numhex = numHex() - 4 * (round - 1) + 2;
+
 
         // check if game is done
         if (field.size() - (numhex + (4 * (round - 1))) < 4 && STATE == state.P1P1) {
@@ -232,10 +240,11 @@ public class GameScreen implements Screen {
         if (ai2 && ai && (!gamefinished)) {
             //botmove();
             //bot2move();
-            MCSTmove(state.P1P1,true);
-            MCSTmove(state.P1P2,true);
-            MCSTmove(state.P2P1,false);
-            MCSTmove(state.P2P2,false);
+            MCSTmove(state.P1P1,true,round);
+            MCSTmove(state.P1P2,true,round);
+
+            MCSTmove(state.P2P1,false,round);
+            MCSTmove(state.P2P2,false,round);
 
             try {
                 Thread.sleep(500);
@@ -246,23 +255,24 @@ public class GameScreen implements Screen {
             return;
         }
         // starting moves done by P1
-        if (numhex == 1 && STATE == state.P1P1) {
+
+        if ((numhex == 1 && STATE == state.P1P1))  {
             STATE = state.P1P2;
             arrowPlayerOne = true;
 
         }
         // intermediate move (2nd move for P1)
-        else if (numhex == 2 && (STATE == state.P1P2 || STATE == state.P1P1)) {
+        else if ((numhex == 2 && (STATE == state.P1P2 || STATE == state.P1P1))) {
             STATE = state.P1P3;
             arrowPlayerOne = true;
         }
         // starting moves done by P2
-        else if (numhex == 3 && STATE == state.P2P1) {
+        else if ((numhex == 3 && STATE == state.P2P1)) {
             STATE = state.P2P2;
             arrowPlayerOne = false;
         }
         // intermediate move (2nd move for P2)
-        else if (numhex == 4 && (STATE == state.P2P2 || STATE == state.P2P1)) {
+        else if ((numhex == 4 && (STATE == state.P2P2 || STATE == state.P2P1))) {
             STATE = state.P2P3;
             arrowPlayerOne = false;
         }
@@ -275,9 +285,12 @@ public class GameScreen implements Screen {
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
                 //bot2move();
-                MCSTmove(STATE,false);
+                MCSTmove(STATE,false,round);
                 updateState();
-                MCSTmove(STATE,false);
+                if(bestMove.move_played != -2){
+                    MCSTmove(STATE,false,round);}
+                else
+                    pieRuleActive = true ;
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -544,7 +557,7 @@ public class GameScreen implements Screen {
         System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
-    private void MCSTmove(state STATE, boolean player1){
+    private void MCSTmove(state STATE, boolean player1, int round){
 
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
@@ -553,11 +566,23 @@ public class GameScreen implements Screen {
             }
         } catch (Exception e) {}
 
-        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
+        bestMove = botMCST.runMCST(copy_field,STATE,player1,round);
         System.out.println("the best move " + bestMove.move_played);
         System.out.println("after the move the MCST is that % sure to win " + bestMove.returnWinrate());
 
-        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
+        if(bestMove.move_played == -2){
+            try{
+                for(Hexagon h:field){
+                    if(h.getMyState() == Hexagon.state.BLUE)
+                        h.setMyState(Hexagon.state.RED);
+                    else if(h.getMyState() == Hexagon.state.RED)
+                        h.setMyState(Hexagon.state.BLUE);
+                    copy_field.add(h.clone());
+                }
+            } catch (Exception e) {}
+
+        }
+        else if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
         else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
             field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);

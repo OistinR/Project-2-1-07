@@ -16,16 +16,18 @@ public class Node_MCST {
     public int move_played;
     public int winCount;
     public int visitCount;
+    public int round;
     protected List<Node_MCST> children;
     public GameScreen.state phase;
 
-    public Node_MCST(ArrayList<Hexagon> field, List<Integer> moves, int move_played, GameScreen.state phase){
+    public Node_MCST(ArrayList<Hexagon> field, List<Integer> moves, int move_played, GameScreen.state phase, int round){
             this.boardState = field;
             this.parent = null;
             this.moves = moves;
             this.move_played = move_played;
             winCount = 0;
             this.phase = phase;
+            this.round = round;
 
             visitCount = 0;
             children = new ArrayList<>();

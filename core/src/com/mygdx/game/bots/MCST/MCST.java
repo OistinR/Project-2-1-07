@@ -91,7 +91,7 @@ public class MCST {
     }
 
     // Runs the MCTS algorithm for a fixed number of iterations and returns the best move
-    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE, boolean Player1) {
+    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE, boolean Player1, int round) {
         this.player1 = Player1;
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
@@ -112,13 +112,15 @@ public class MCST {
 
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
-        Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE);
+        Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE,round);
         int count=0;
+        double convert_sec = 1000000000;
+        double maxTime = 1;
 
         //for (int i = 0; i < numIterations; i++) {
-        while((end_time-start_time)/1000000000<5){
-            /*
-            if(count%1000==0)
+        while((end_time-start_time)/convert_sec<maxTime){
+
+            /*if(count%1000==0)
                 System.out.println(count);
             count++;*/
             // Selection step: starting from the root node, traverse the tree using the UCB1 formula until a leaf node is reached
@@ -199,6 +201,7 @@ public class MCST {
             movescopy.add(move);
         }
         List<Integer> moves = movescopy;
+        int round = currentNode.round;
 
         //System.out.println("different moves " + moves);
         GameScreen.state child_phase;
@@ -206,7 +209,7 @@ public class MCST {
             case P1P1: child_phase = GameScreen.state.P1P2;break;
             case P1P2: child_phase = GameScreen.state.P2P1;break;
             case P2P1: child_phase = GameScreen.state.P2P2;break;
-            case P2P2: child_phase = GameScreen.state.P1P1;break;
+            case P2P2: child_phase = GameScreen.state.P1P1; round++;break;
             default:
                 throw new IllegalStateException("Unexpected value: " + currentNode.phase);
         }
@@ -221,7 +224,7 @@ public class MCST {
                 }
             } catch (Exception e) {}
 
-            Node_MCST child = new Node_MCST(copy_field,moves,move_played,child_phase);
+            Node_MCST child = new Node_MCST(copy_field,moves,move_played,child_phase,round);
 
             //child.boardState = new ArrayList<Hexagon>(currentNode.boardState);
             if(child_phase==GameScreen.state.P1P1 || child_phase==GameScreen.state.P2P1)
@@ -237,6 +240,24 @@ public class MCST {
             //System.out.println(child.moves);
             child.moves.remove(move_played);
 
+            child.parent = currentNode;
+            currentNode.children.add(child);
+        }
+        //Pie rule for the expand case
+        if(round==1 && child_phase == GameScreen.state.P2P1){
+            ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
+            //TODO can this method go outside of the for? to create it only ones?
+            try {
+                for(Hexagon h : currentNode.boardState) {
+                    if(h.getMyState() == Hexagon.state.BLUE)
+                        h.setMyState(Hexagon.state.RED);
+                    else if(h.getMyState() == Hexagon.state.RED)
+                        h.setMyState(Hexagon.state.BLUE);
+                    copy_field.add(h.clone());
+                }
+            } catch (Exception e) {}
+
+            Node_MCST child = new Node_MCST(copy_field,moves,-2,child_phase,round);
             child.parent = currentNode;
             currentNode.children.add(child);
         }
@@ -263,8 +284,9 @@ public class MCST {
 
 
         MCST mcst = new MCST();
+        int round=1;
         ArrayList<Hexagon> field = mcst.createHexagonFieldDefault();
-        Node_MCST currentNode = new Node_MCST(field, new ArrayList<Integer>(),0, GameScreen.state.P1P1);
+        Node_MCST currentNode = new Node_MCST(field, new ArrayList<Integer>(),0, GameScreen.state.P1P1,round);
         System.out.println(currentNode.visitCount);
         System.out.println(currentNode.winCount);
         mcst.calcUCB1(currentNode);
