@@ -330,8 +330,6 @@ public class Hexagon implements Cloneable {
 
     public void setRecent(boolean update){
         recent = update;
-        if (recent) System.out.println("Recent set to True");
-        else System.out.println("Recent set to False");
     }
 
     public void setPlayer(int player){

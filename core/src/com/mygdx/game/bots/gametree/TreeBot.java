@@ -307,7 +307,6 @@ public class TreeBot extends Bot {
     }
 
     public Hexagon getRecentHex() {
-        System.out.println("recent hex returned");
         return recentHex;
     }
 

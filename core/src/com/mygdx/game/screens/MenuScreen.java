@@ -120,7 +120,12 @@ public class MenuScreen implements Screen {
 
         if (click) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false, false, 0, 0));
+            if (mapChoice == 0) {
+                game.setScreen(new CustomizeDefaultScreen(game, false, false, 0, 0));
+            }
+            else{
+                game.setScreen(new LoadingScreen(game, false, false, 0, 0));
+            }
         }
 
         PVAI.addListener(new ClickListener() {

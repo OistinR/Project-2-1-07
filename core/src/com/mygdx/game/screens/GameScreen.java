@@ -523,7 +523,7 @@ public class GameScreen implements Screen {
      */
     public void createHexagonFieldDefault() {
         int s;
-        int fieldsize = 2;
+        int fieldsize = CustomizeDefaultScreen.mapIndex;
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;

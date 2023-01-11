@@ -36,12 +36,12 @@ public class PVBSelectionScreen implements Screen {
 
         bots1 = new SelectBox<String>(menuSkin);
         bots1.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
-        bots1.setPosition(500, 350);
+        bots1.setPosition(550, 350);
         bots1.setSize(200, 50);
 
         confirm = new TextButton("Confirm", menuSkin);
         confirm.setColor(Color.BLACK);
-        confirm.setPosition(500, 300);
+        confirm.setPosition(620, 300);
 
         stage.addActor(bots1);
         stage.addActor(confirm);
@@ -68,7 +68,12 @@ public class PVBSelectionScreen implements Screen {
         confirm.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 index = bots1.getSelectedIndex();
-                game.setScreen(new LoadingScreen(game, ai, ai2, index, 0));
+                if (MenuScreen.mapChoice == 0){
+                    game.setScreen(new CustomizeDefaultScreen(game, ai, ai2, index, 0));
+                }
+                else {
+                    game.setScreen(new LoadingScreen(game, ai, ai2, index, 0));
+                }
             }
         });
 

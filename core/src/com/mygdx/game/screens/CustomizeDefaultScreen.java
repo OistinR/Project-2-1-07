@@ -10,48 +10,42 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.Omega;
 
-public class BVBSelectionScreen implements Screen {
+public class CustomizeDefaultScreen implements Screen {
     Stage stage;
     Omega game;
     boolean ai, ai2;
     TextButton confirm;
-    SelectBox<String> bots1, bots2;
+    SelectBox<String> size;
     Skin menuSkin;
     int index, index2;
+    public static int mapIndex;
+    public boolean openable;
 
-    public BVBSelectionScreen(Omega game, boolean ai, boolean ai2) {
+    public CustomizeDefaultScreen(Omega game, boolean ai, boolean ai2, int index, int index2) {
         super();
         stage = new Stage(new FillViewport(1280, 720));
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
         this.game = game;
         this.ai = ai;
         this.ai2 = ai2;
+        openable = true;
 
-        bots1 = new SelectBox<String>(menuSkin);
-        bots1.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
-        bots1.setPosition(450, 350);
-        bots1.setSize(200, 50);
-
-        bots2 = new SelectBox<String>(menuSkin);
-        bots2.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
-        bots2.setPosition(650, 350);
-        bots2.setSize(200, 50);
+        size = new SelectBox<String>(menuSkin);
+        size.setItems("Size 3", "Size 4", "Size 5", "Size 6", "Size 7");
+        size.setPosition(550, 350);
+        size.setSize(200, 50);
 
         confirm = new TextButton("Confirm", menuSkin);
         confirm.setColor(Color.BLACK);
         confirm.setPosition(620, 300);
 
-        stage.addActor(bots1);
-        stage.addActor(bots2);
+        stage.addActor(size);
         stage.addActor(confirm);
     }
 
@@ -67,13 +61,7 @@ public class BVBSelectionScreen implements Screen {
         stage.act(delta);
         stage.draw();
 
-        bots1.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-            }
-        });
-
-        bots2.addListener(new ChangeListener() {
+        size.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
             }
@@ -81,13 +69,10 @@ public class BVBSelectionScreen implements Screen {
 
         confirm.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
-                index = bots1.getSelectedIndex();
-                index2 = bots2.getSelectedIndex();
-                if (MenuScreen.mapChoice == 0){
-                    game.setScreen(new CustomizeDefaultScreen(game, ai, ai2, index, index2));
-                }
-                else {
+                if (openable) {
+                    mapIndex = size.getSelectedIndex() + 2;
                     game.setScreen(new LoadingScreen(game, ai, ai2, index, index2));
+                    openable = false;
                 }
             }
         });
