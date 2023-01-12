@@ -21,6 +21,7 @@ import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.buttons.PieButton;
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.experiment.GameState;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import java.util.ArrayList;
@@ -81,6 +82,9 @@ public class GameScreen implements Screen {
 
     private PieButton pieButton;
 
+    //! testing
+    GameState gState;
+
     /**
      *
      * @param game communicates with the main class to switch between classes
@@ -91,6 +95,9 @@ public class GameScreen implements Screen {
         this.game = game;
         this.ai = ai;
         this.ai2 = ai2;
+
+        //! testing
+        gState = new GameState();
 
     }
 
@@ -272,6 +279,9 @@ public class GameScreen implements Screen {
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
                 bot2move();
+                //! testing
+                gState.update(field, new double[]{(double) round});
+                System.out.println(gState.toString());
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
