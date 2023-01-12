@@ -230,21 +230,25 @@ public class GameScreen implements Screen {
 
         int numhex = numHex() - 4 * (round - 1);
         if(pieRuleActive)
-            numhex = numHex() - 4 * (round - 1) + 2;
-
+            numhex = numHex() - ((4 * (round - 2)) + 2);
 
         // check if game is done
-        if (field.size() - (numhex + (4 * (round - 1))) < 4 && STATE == state.P1P1) {
+        //System.out.println(field.size() - (numhex + (4 * (round - 1))));
+        if (!pieRuleActive && field.size() - (numhex + (4 * (round - 1))) < 4 && STATE == state.P1P1) {
+            gameFinish();
+        }else if (field.size() - (numhex + (4 * (round - 1)))+2 < 4 && STATE == state.P1P1) {
             gameFinish();
         }
         if (ai2 && ai && (!gamefinished)) {
             //botmove();
             //bot2move();
-            MCSTmove(state.P1P1,true,round);
-            MCSTmove(state.P1P2,true,round);
-
-            MCSTmove(state.P2P1,false,round);
-            MCSTmove(state.P2P2,false,round);
+            MCSTmove(state.P1P1,true,round,pieRuleActive);
+            MCSTmove(state.P1P2,true,round,pieRuleActive);
+            MCSTmove(state.P2P1,false,round,pieRuleActive);
+            if(bestMove.move_played != -2)
+                MCSTmove(state.P2P2,false,round,pieRuleActive);
+            else
+                pieRuleActive=true;
 
             try {
                 Thread.sleep(500);
@@ -285,12 +289,18 @@ public class GameScreen implements Screen {
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
                 //bot2move();
-                MCSTmove(STATE,false,round);
+                System.out.println("crash1");
+                MCSTmove(STATE,false,round,pieRuleActive);
+                System.out.println("crash2");
                 updateState();
+                System.out.println("crash3");
                 if(bestMove.move_played != -2){
-                    MCSTmove(STATE,false,round);}
-                else
+                    System.out.println("crash4");
+                    MCSTmove(STATE,false,round,pieRuleActive);}
+                else {
                     pieRuleActive = true ;
+                }
+                System.out.println("crash5");
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -557,7 +567,7 @@ public class GameScreen implements Screen {
         System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
-    private void MCSTmove(state STATE, boolean player1, int round){
+    private void MCSTmove(state STATE, boolean player1, int round, boolean pieRuleActive){
 
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
@@ -566,8 +576,9 @@ public class GameScreen implements Screen {
             }
         } catch (Exception e) {}
 
-        bestMove = botMCST.runMCST(copy_field,STATE,player1,round);
+        bestMove = botMCST.runMCST(copy_field,STATE,player1,round,pieRuleActive);
         System.out.println("the best move " + bestMove.move_played);
+        System.out.println("the best move list of available action " + bestMove.moves);
         System.out.println("after the move the MCST is that % sure to win " + bestMove.returnWinrate());
 
         if(bestMove.move_played == -2){

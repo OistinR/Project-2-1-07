@@ -12,7 +12,7 @@ public class Node_MCST {
 
     protected ArrayList<Hexagon> boardState;
     protected Node_MCST parent;
-    protected List<Integer> moves;
+    public List<Integer> moves;
     public int move_played;
     public int winCount;
     public int visitCount;

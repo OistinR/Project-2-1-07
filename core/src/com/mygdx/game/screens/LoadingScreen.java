@@ -65,7 +65,7 @@ public class LoadingScreen implements Screen {
         game.mainBatch.end();
         game.sr.end();
 
-        if (close == 6) {
+        if (close == 0) {
             this.dispose();
             game.setScreen(new GameScreen(game, ai, ai2));
         } else {

@@ -198,7 +198,7 @@ public class rundev {
         } catch (Exception e) {}
 
         count++;
-        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1,round);
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1,round,false);
         //System.out.println("the best move " + bestMove.move_played);
         //System.out.println(count);
 

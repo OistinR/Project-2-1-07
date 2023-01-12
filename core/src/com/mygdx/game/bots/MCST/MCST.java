@@ -15,7 +15,7 @@ public class MCST {
     public boolean player1;
 
     // Plays a single game of board game and returns the winner (1 for first player, -1 for second player)
-    public int playGame(ArrayList<Hexagon> field, List<Integer>moves,GameScreen.state STATE) {
+    public int playGame(ArrayList<Hexagon> field, List<Integer>moves,GameScreen.state STATE,boolean pieRuleActive) {
         ScoringEngine SEngine = new ScoringEngine();
         //System.out.println(moves.size());
 
@@ -33,7 +33,13 @@ public class MCST {
         }
 
         //TODO need to check this, accurate enough
-        while (clone_moves.size() > field.size()%4) {
+        int adjust = 0;
+        if(pieRuleActive){
+            adjust = 2;
+        }
+        System.out.println((adjust+ field.size())%4);
+        System.out.println("this is the length of moves " + clone_moves.size());
+        while (clone_moves.size() > (adjust+ field.size())%4) {
             switch (STATE){
                 case P1P1: STATE = GameScreen.state.P1P2;break;
                 case P1P2: STATE = GameScreen.state.P2P1;break;
@@ -91,7 +97,7 @@ public class MCST {
     }
 
     // Runs the MCTS algorithm for a fixed number of iterations and returns the best move
-    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE, boolean Player1, int round) {
+    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE, boolean Player1, int round, boolean pieRuleActive) {
         this.player1 = Player1;
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
@@ -144,7 +150,8 @@ public class MCST {
 
 
             // Simulation step: play a game starting from the chosen node and determine the winner
-            int winner = playGame(currentNode.boardState,currentNode.moves,currentNode.phase);
+            int winner = playGame(currentNode.boardState,currentNode.moves,currentNode.phase,pieRuleActive);
+            System.out.println("the end result " + winner);
 
 
             // Backpropagation step: update the win counts and visit counts of all nodes on the path from the leaf to the root
@@ -271,6 +278,7 @@ public class MCST {
     Node_MCST selectBestChild(Node_MCST currentNode) {
         Node_MCST bestChild = null;
         double bestWinRate = Double.NEGATIVE_INFINITY;
+        System.out.println("select the child");
         for (Node_MCST child : currentNode.children) {
             double winRate = (double) child.winCount / child.visitCount;
             if (winRate > bestWinRate) {
