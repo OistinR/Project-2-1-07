@@ -114,9 +114,10 @@ public class MCST {
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
         Node_MCST rootNode = new Node_MCST(field, moves,-1, STATE);
         int count=0;
+        double time = 2;
 
         //for (int i = 0; i < numIterations; i++) {
-        while((end_time-start_time)/1000000000<5){
+        while((end_time-start_time)/1000000000<time){
             /*
             if(count%1000==0)
                 System.out.println(count);
@@ -268,20 +269,6 @@ public class MCST {
         System.out.println(currentNode.visitCount);
         System.out.println(currentNode.winCount);
         mcst.calcUCB1(currentNode);
-
-        /** Node_MCST bestMove = mcst.runMCST(field, GameScreen.state.P1P1);
-        System.out.println("the best move " + bestMove.move_played);
-
-        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
-            field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
-        else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
-            field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
-        }
-        else{
-            throw new IllegalStateException("The children phase is not assign correctly: ");
-        }
-         **/
-
 
     }
     public ArrayList<Hexagon> createHexagonFieldDefault() {
