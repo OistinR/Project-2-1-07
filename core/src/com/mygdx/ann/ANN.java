@@ -26,8 +26,6 @@ public class ANN {
     InLayer ILAYER;
     ArrayList<HidLayer> HLAYERS;
     OutLayer OLAYER;
-
-
     
     public ANN(int insize, int outsize, int hidnum, int hidsize) {
         this.insize = insize;
@@ -149,7 +147,6 @@ public class ANN {
             forwardPass = forwardProp(ILAYER, HLAYERS, OLAYER, true);
         }
     }
-
 
     public void changeInput(InLayer inputLayer, ArrayList<Double> values) {
         for(int i=0; i<values.size(); i++) {
@@ -329,7 +326,6 @@ public class ANN {
 
         return list.get(index)/sum;
     }
-
 
     public static void main(String[] args) {
         ANN ann = new ANN(2, 1, 2, 20);
