@@ -3,9 +3,9 @@ package com.mygdx.game.experiment;
 import com.mygdx.game.coordsystem.Hexagon;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class GameState {
+
     ArrayList<Double> state;
 
     public GameState(){
@@ -28,7 +28,6 @@ public class GameState {
         for (int i = 0; i < features.length; i++) {
             state.add(features[i]);
         }
-
     }
 
 
@@ -48,15 +47,13 @@ public class GameState {
         for (int i = 0; i < features.length; i++) {
             state.add(features[i]);
         }
-
     }
 
     public ArrayList<Double> getState() {
         return state;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         StringBuilder out = new StringBuilder();
         out.append("Hexagons: \n");
         for (int i = 0; i < state.size(); i++) {
@@ -64,4 +61,7 @@ public class GameState {
         }
         return out.toString();
     }
+
+
+
 }

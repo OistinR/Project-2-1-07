@@ -18,6 +18,7 @@ import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.experiment.StateWrite;
 import com.mygdx.game.experiment.experiment;
 import com.mygdx.game.gametreemc.MonteCarloTree;
 import com.mygdx.game.gametreemc.Node;
@@ -209,58 +210,14 @@ public class rundev {
     }
 
     public static void main(String[] args) {
-        rundev dev = new rundev();
-        dev.init();
-        dev.update();
-        String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/lossesPerc.csv";
-
-        dev.dataLossPerc.add((float) (100 - dev.winperc1));
-        dev.dataLossPerc.add((float) (100 - dev.winperc2));
+//        rundev dev = new rundev();
+//        dev.init();
+//        dev.update();
+        StateWrite sw = new StateWrite();
+        ArrayList<Double> ar = new ArrayList<>();
+        ar.add(69.0);
         try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataLossPerc);
-            System.out.println("Wrote in lossesPerc.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/winsPerc.csv";
-
-        dev.dataWinPerc.add((float) (dev.winperc1));
-        dev.dataWinPerc.add((float) (dev.winperc2));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataWinPerc);
-            System.out.println("Wrote in winsPerc.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/drawsPerc.csv";
-
-        dev.dataDrawPerc.add((float) (dev.winpercd));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataDrawPerc);
-            System.out.println("Wrote in drawsPerc.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfWins.csv";
-
-        dev.dataWins.add((float) (dev.bot1wins.size()));
-        dev.dataWins.add((float) (dev.bot2wins.size()));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataWins);
-            System.out.println("Wrote in numberOfWins.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfDraws.csv";
-
-        dev.dataDraws.add((float) (dev.draws.size()));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataDraws);
-            System.out.println("Wrote in numberOfDraws.csv");
+            sw.writeTo(ar);
         } catch (IOException e) {
             e.printStackTrace();
         }

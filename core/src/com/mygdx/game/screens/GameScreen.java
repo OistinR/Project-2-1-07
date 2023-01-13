@@ -22,8 +22,11 @@ import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.buttons.PieButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.experiment.GameState;
+import com.mygdx.game.experiment.StateWrite;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 //TODO: Bug where the confirm button is not being pressed by the bot, you have to press it yourself (if you press undo for the bot move then the game crashes)
@@ -230,12 +233,14 @@ public class GameScreen implements Screen {
 
         game.mainBatch.end();
     }
-
+//! testing
+   private StateWrite  sw = new StateWrite();
+private ArrayList<Double> data = new ArrayList<>();
     public void updateState() {
         int numhex = numHex() - 4 * (round - 1);
 
         // check if game is done
-        if (field.size() - (numhex + (4 * (round - 1))) < 4) {
+        if (field.size() - (numhex + (4 * (round - 1))) < 4 && STATE==state.P1P1) {
             gameFinish();
         }
         if (ai2 && ai && (!gamefinished)) {
@@ -278,10 +283,28 @@ public class GameScreen implements Screen {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
+                gState.update(field, new double[]{(double) round});
+                for (Double d:
+                     gState.getState()) {
+                    data.add(d);
+                }
                 bot2move();
                 //! testing
+
                 gState.update(field, new double[]{(double) round});
-                System.out.println(gState.toString());
+                for (Double d:
+                        gState.getState()) {
+                    data.add(d);
+                }
+                if(round==3){
+                    try {
+                        sw.writeTo(data);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("DONE");
+                }
+
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
