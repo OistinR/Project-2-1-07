@@ -3,8 +3,9 @@ package com.mygdx.ann;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Scanner;
+import java.io.*;
+import java.lang.management.OperatingSystemMXBean;
 
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.ann.layers.HidLayer;
 import com.mygdx.ann.layers.InLayer;
 import com.mygdx.ann.layers.OutLayer;
@@ -19,7 +20,7 @@ public class ANN {
     private int hidnum;
     private int hidsize;
 
-    private final double LEARNINGRATE = 0.5;
+    private final double LEARNINGRATE = 0.0001;
 
     private final double ACCURACY = 0.001;
 
@@ -57,19 +58,43 @@ public class ANN {
         OLAYER.initialize();
     }
 
-    public void exec(ArrayList<Double> values, ArrayList<Double> labels) {
+    public ArrayList<Double> execFP(ArrayList<Double> values) {
         // ! Change the input values for the ANN
         changeInput(ILAYER, values);
 
         // ! Call the forward pass and get output values
-        ArrayList<Double> forwardPass = forwardProp(ILAYER, HLAYERS, OLAYER, false);
+        return forwardProp(ILAYER, HLAYERS, OLAYER, false);
+    }
 
+    public void execBP(ArrayList<Double> y, ArrayList<Double> labels) {
         // ! Run backward propegation
-        backwardProp(ILAYER, HLAYERS, OLAYER, forwardPass, labels);
+        backwardProp(ILAYER, HLAYERS, OLAYER, y, labels);
+    }
+
+    public void copyWB(ANN ann) {
+        // ! The weights and biases from the ANN called 'ann' will be copied into this object
+        for(int i=0; i<ann.getHiddenLayers().size(); i++) {
+            HidLayer hlayer = ann.getHiddenLayers().get(i);
+            for(int j=0; j<hlayer.getNeurons().size(); j++) {
+                ArrayList<HidNeuron> hlayerneurons = hlayer.getNeurons();
+                for(int k=0; k<hlayerneurons.get(j).getSynapses().size(); k++) {
+                    HLAYERS.get(i).getNeurons().get(j).getSynapses().get(k).setWeight(hlayerneurons.get(j).getSynapses().get(k).getWeight());
+                }
+                HLAYERS.get(i).getNeurons().get(j).setBias(hlayerneurons.get(j).getBias());
+            }
+        }
+
+        for(int i=0; i<ann.getOutputLayer().getNeurons().size(); i++) {
+            for(int j=0; j<ann.getOutputLayer().getNeurons().get(i).getSynapses().size(); j++) {
+                OLAYER.getNeurons().get(i).getSynapses().get(j).setWeight(ann.getOutputLayer().getNeurons().get(i).getSynapses().get(j).getWeight());
+            }
+            OLAYER.getNeurons().get(i).setBias(ann.getOutputLayer().getNeurons().get(i).getBias());
+        }
     }
 
     public void execforandgate() {
         init();
+
         // ! Set the inputs and labels
         ArrayList<Double> values = new ArrayList<>();
         values.add((double)ThreadLocalRandom.current().nextInt(0, 2)); values.add((double)ThreadLocalRandom.current().nextInt(0, 2));
@@ -88,7 +113,7 @@ public class ANN {
         backwardProp(ILAYER, HLAYERS, OLAYER, forwardPass, labels);
 
         int loop=1;
-        while(loop<=9999999) {
+        while(loop<=1000000000) {
             values.clear();            
             values.add((double)ThreadLocalRandom.current().nextInt(0, 2)); values.add((double)ThreadLocalRandom.current().nextInt(0, 2));
             changeInput(ILAYER, values);
@@ -107,9 +132,8 @@ public class ANN {
             changeInput(ILAYER, values);
 
             ArrayList<Double> label1 = new ArrayList<>();
-            label1.add(1.0); label1.add(0.0);
+            label1.add(1.0);
             ArrayList<Double> forwardPass1 = forwardProp(ILAYER, HLAYERS, OLAYER, false);
-
 
             values.clear();            
             values.add(1.0); values.add(0.0);
@@ -120,7 +144,7 @@ public class ANN {
             ArrayList<Double> forwardPass2 = forwardProp(ILAYER, HLAYERS, OLAYER, false);
 
             double error = computeError(forwardPass1, label1).get(computeError(forwardPass1, label1).size()-1)+computeError(forwardPass2, label2).get(computeError(forwardPass2, label2).size()-1);
-            if(loop%2000==0) {
+            if(loop%1000==0) {
                 System.out.println("ERROR OF ANN ..."+ error + "... AT ITERATION "+loop);
             }
             if(error<ACCURACY) {
@@ -176,12 +200,12 @@ public class ANN {
         ArrayList<InNeuron> inputneurons = inputLayer.getNeurons();
         ArrayList<OutNeuron> outputneurons = outputLayer.getNeurons();
 
-        // ! Update the input neurons' weights
+        // ! Update the output neurons' weights
         for(int i=0; i<outputneurons.size(); i++) {
             for(int j=0; j<outputneurons.get(i).getSynapses().size(); j++) {
                 double weight = outputneurons.get(i).getSynapses().get(j).getWeight();
 
-                double dz = outputneurons.get(i).getY() * (1-outputneurons.get(i).getY());
+                double dz = 1.0;//outputneurons.get(i).getY() * (1-outputneurons.get(i).getY());
                 double dy = -1*(labels.get(i)-outputneurons.get(i).getY());
                 
                 // ! Set the initial delta of the output neurons
@@ -191,6 +215,7 @@ public class ANN {
 
                 // ! Change output neurons' weights
                 double derivative = dz*dy*dw;
+                //System.out.println(derivative);
                 outputneurons.get(i).getSynapses().get(j).setWeight(weight-(LEARNINGRATE*derivative));
             }
         }
@@ -217,14 +242,16 @@ public class ANN {
                         for(int k=0; k<outputneurons.size(); k++) {
                             double delta = outputneurons.get(k).getDelta();
                             double theta = outputneurons.get(k).getSynapses().get(i).getWeight();
-                            double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
+                            double dz = derivReLU(hiddenneurons.get(i).getZ());
+                            //double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
                             hiddelta = hiddelta+(delta*theta*dz);
                         }
                     } else {
                         for(int k=0; k<HidLayers.get(p+1).getNeurons().size(); k++) {
                             double delta = HidLayers.get(p+1).getNeurons().get(k).getDelta();
                             double theta = HidLayers.get(p+1).getNeurons().get(k).getSynapses().get(i).getWeight();
-                            double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
+                            double dz = derivReLU(hiddenneurons.get(i).getZ());
+                            //double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
                             hiddelta = hiddelta+(delta*theta*dz);
                         }
                     }
@@ -275,7 +302,7 @@ public class ANN {
                 }
                 z = z + hidneuronlist.get(j).getBias();
                 hidneuronlist.get(j).setZ(z);
-                hidneuronlist.get(j).setH(sigmoid(z));
+                hidneuronlist.get(j).setH(ReLU(z));
             }
         }
 
@@ -291,9 +318,9 @@ public class ANN {
                 z = z + (outneuronlist.get(j).getSynapses().get(i).getWeight()*hiddenLayers.get(hiddenLayers.size()-1).getNeurons().get(i).getH());
             }
             z = z + outneuronlist.get(j).getBias();
-            outneuronlist.get(j).setZ(z);
 
-            outneuronlist.get(j).setY(sigmoid(z));
+            outneuronlist.get(j).setZ(z);
+            outneuronlist.get(j).setY(z);
 
             zlist.add(z);
         }
@@ -321,6 +348,19 @@ public class ANN {
         return 1/(1+Math.exp(-x));
     }
 
+    public double ReLU(double x) {
+        return Math.max(0.0, x);
+    }
+
+    public double derivReLU(double x) {
+        if(x<0) {
+            return 0;
+        } else if(x>0) {
+            return 1;
+        }
+        return 0;
+    }
+
     public double SoftMax(ArrayList<Double> list, int index) {
         double sum=0;
         for(int i=0; i<list.size(); i++) {
@@ -330,9 +370,61 @@ public class ANN {
         return list.get(index)/sum;
     }
 
+    public ArrayList<HidLayer> getHiddenLayers() {
+        return HLAYERS;
+    }
+
+    public OutLayer getOutputLayer() {
+        return OLAYER;
+    }
+
+    public void getWBFromCSV() {
+        System.out.println("Retrieving data from NBW.csv ...");
+        ArrayList<Double> data = new ArrayList<>();
+        try {
+
+            Scanner sc = new Scanner(new File("core\\src\\com\\mygdx\\ann\\data\\NNBW.csv"));
+
+            while (sc.hasNext()) {  
+                data.add(Double.parseDouble(sc.next()));
+            }   
+            sc.close(); 
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }  
+
+        int ITERATION = 0;
+
+        for(int i=0; i<HLAYERS.size(); i++) {
+            for(int j=0; j<HLAYERS.get(i).getNeurons().size(); j++) {
+                for(int k=0; k<HLAYERS.get(i).getNeurons().get(j).getSynapses().size(); k++) {
+                    HLAYERS.get(i).getNeurons().get(j).getSynapses().get(k).setWeight(data.get(ITERATION));
+                    ITERATION++;
+                }
+            }
+        }
+        for(int i=0; i<HLAYERS.size(); i++) {
+            for(int j=0; j<HLAYERS.get(i).getNeurons().size(); j++) {
+                HLAYERS.get(i).getNeurons().get(j).setBias(data.get(ITERATION));
+                ITERATION++;
+            }
+        }
+        for(int i=0; i<OLAYER.getNeurons().size(); i++) {
+            for(int j=0; j<OLAYER.getNeurons().get(i).getSynapses().size(); j++) {
+                OLAYER.getNeurons().get(i).getSynapses().get(j).setWeight(data.get(ITERATION));
+                ITERATION++;
+            }
+        }
+        for(int i=0; i<OLAYER.getNeurons().size(); i++) {
+            OLAYER.getNeurons().get(i).setBias(data.get(ITERATION));
+            ITERATION++;
+        }
+        System.out.println(ITERATION);
+    }
 
     public static void main(String[] args) {
-        ANN ann = new ANN(2, 1, 2, 20);
+        ANN ann = new ANN(2, 1, 1, 2);
         ann.execforandgate();
     }
 }
