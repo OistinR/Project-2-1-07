@@ -242,16 +242,16 @@ public class ANN {
                         for(int k=0; k<outputneurons.size(); k++) {
                             double delta = outputneurons.get(k).getDelta();
                             double theta = outputneurons.get(k).getSynapses().get(i).getWeight();
-                            double dz = derivReLU(hiddenneurons.get(i).getZ());
-                            //double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
+                            //double dz = derivReLU(hiddenneurons.get(i).getZ());
+                            double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
                             hiddelta = hiddelta+(delta*theta*dz);
                         }
                     } else {
                         for(int k=0; k<HidLayers.get(p+1).getNeurons().size(); k++) {
                             double delta = HidLayers.get(p+1).getNeurons().get(k).getDelta();
                             double theta = HidLayers.get(p+1).getNeurons().get(k).getSynapses().get(i).getWeight();
-                            double dz = derivReLU(hiddenneurons.get(i).getZ());
-                            //double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
+                            //double dz = derivReLU(hiddenneurons.get(i).getZ());
+                            double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
                             hiddelta = hiddelta+(delta*theta*dz);
                         }
                     }
@@ -302,7 +302,7 @@ public class ANN {
                 }
                 z = z + hidneuronlist.get(j).getBias();
                 hidneuronlist.get(j).setZ(z);
-                hidneuronlist.get(j).setH(ReLU(z));
+                hidneuronlist.get(j).setH(sigmoid(z));
             }
         }
 

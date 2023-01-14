@@ -11,7 +11,7 @@ import java.util.Random;
 public class Node_MCST {
 
     protected ArrayList<Hexagon> boardState;
-    protected Node_MCST parent;
+    public Node_MCST parent;
     protected List<Integer> moves;
     public int move_played;
     public int winCount;
