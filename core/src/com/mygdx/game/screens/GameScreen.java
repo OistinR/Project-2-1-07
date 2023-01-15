@@ -22,7 +22,7 @@ import com.mygdx.game.buttons.UndoButton;
 import com.mygdx.game.buttons.PieButton;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.experiment.GameState;
-import com.mygdx.game.experiment.StateWrite;
+
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
@@ -233,8 +233,6 @@ public class GameScreen implements Screen {
 
         game.mainBatch.end();
     }
-//! testing
-   private StateWrite  sw = new StateWrite();
 private ArrayList<Double> data = new ArrayList<>();
     public void updateState() {
         int numhex = numHex() - 4 * (round - 1);
@@ -297,11 +295,7 @@ private ArrayList<Double> data = new ArrayList<>();
                     data.add(d);
                 }
                 if(round==3){
-                    try {
-                        sw.writeTo(data);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
                     System.out.println("DONE");
                 }
 

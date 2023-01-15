@@ -1,6 +1,9 @@
 package com.mygdx.game;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
@@ -18,6 +21,8 @@ import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.experiment.GameState;
+
 import com.mygdx.game.experiment.StateWrite;
 import com.mygdx.game.experiment.experiment;
 import com.mygdx.game.gametreemc.MonteCarloTree;
@@ -54,11 +59,21 @@ public class rundev {
     private ArrayList<Float> dataDraws = new ArrayList<Float>();
     private experiment exp = new experiment();
     private double winperc1, winperc2, winpercd;
+    private ArrayList<Double> ar;
+
+    private GameState gameState;
+    private File fileWrite;
+    private FileWriter writer;
+    private  StringBuilder output;
+    private StateWrite sw;
 
     public void init() {
+        fileWrite = new File("core\\src\\com\\mygdx\\trainingData.csv");
         // Initiate variables
+        ar = new ArrayList<>();
+        gameState = new GameState();
         round = 1;
-        totalnumgames = 5000;
+        totalnumgames = 10;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -72,14 +87,19 @@ public class rundev {
         // Create field and initiate bots
 
         // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
-        botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-        botptwo = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+        botpone = new RandomBot();
+        botptwo = new RandomBot();
         createHexagonFieldDefault();
     }
 
     public void update() {
+        output = new StringBuilder();
         int i = 0;
-        while (i <= totalnumgames) {
+        while (i < totalnumgames) {
+            ar.clear();
+
+            output.append("\n");
+
             while (!gamefinished) {
                 updateState();
                 makeMove();
@@ -89,6 +109,12 @@ public class rundev {
                 System.out.println(i + " games simulated.");
             }
 
+            //TODO write ar to the output string builder
+                for (Double feature:ar) {
+                    output.append(feature.toString()).append(",");
+                }
+
+
             round = 1;
             gamefinished = false;
             field = new ArrayList<>();
@@ -97,32 +123,17 @@ public class rundev {
 
             i++;
         }
-        // TODO issue: the tree cant tell when game is over so its possible that
-        // infinite loops can occur.
-        // Tree tr = new Tree(6,5);
-        // // Storage is a massive issue, larger map sizes means lower depth/widths.
-        // long runtime=0L;
-        // long startTime = System.nanoTime();
-        // tr.generateTree(field, GameScreen.state.P2P1,false);
-        // long endTime = System.nanoTime();
-        // long duration = (endTime - startTime);
-        // runtime += duration/10000000;
-        // System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i
-        // think)");
-        //
-        // System.out.println(tr.displayTree(false));
-        //
-        // System.out.println("bots assessment of board: "+
-        // tr.getNodes().get(0).getCombinedScore());
-        //
-        // double maxScore = 0;
-        // for (Node n0: tr.getNodes().get(0).getChildArray()) {
-        // if(maxScore<n0.getCombinedScore()){
-        // maxScore = n0.getCombinedScore();
-        // }
-        // System.out.println(n0);
-        // }
-        // System.out.println("max score is: "+ maxScore);
+
+//        System.out.println(output);
+        try {
+            writer = new FileWriter(fileWrite);
+            writer.write(output.toString());
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("error with IO: ");
+            e.printStackTrace();
+        }
+
 
         winperc1 = ((double) bot1wins.size() / (double) totalnumgames) * 100;
         winperc2 = ((double) bot2wins.size() / (double) totalnumgames) * 100;
@@ -166,7 +177,14 @@ public class rundev {
 
     public void makeMove() {
         botpone.execMove(field);
+        ar.add(999.0);
+        gameState.update(field);
+        ar.addAll(gameState.getState());
+        ar.add(999.0);
         botptwo.execMove(field);
+        gameState.update(field);
+        ar.addAll(gameState.getState());
+
     }
 
     public void gameFinish() {
@@ -210,16 +228,11 @@ public class rundev {
     }
 
     public static void main(String[] args) {
-//        rundev dev = new rundev();
-//        dev.init();
-//        dev.update();
+//      rundev dev = new rundev();
+//      dev.init();
+//      dev.update();
         StateWrite sw = new StateWrite();
-        ArrayList<Double> ar = new ArrayList<>();
-        ar.add(69.0);
-        try {
-            sw.writeTo(ar);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(sw.readFrom());
+
     }
 }
