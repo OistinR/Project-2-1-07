@@ -8,6 +8,8 @@ import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.sql.rowset.RowSetWarning;
+
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.ann.layers.HidLayer;
 import com.mygdx.ann.layers.OutLayer;
@@ -18,6 +20,7 @@ import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
+import com.mygdx.game.screens.GameScreen.state;
 
 
 public class DQN {
@@ -30,6 +33,10 @@ public class DQN {
     private ScoringEngine SE;
 
     private ArrayList<Hexagon> state;
+
+    private ArrayList<Double> data;
+    private double MEAN;
+    private double SD;
 
     private final double EPSILON = 0.0;
     private final int trainamount=99999999;
@@ -45,16 +52,18 @@ public class DQN {
         state = createState();
         boardsize = state.size();
 
-        MAINNET = new ANN(boardsize+1, boardsize, 1, boardsize*3);
-        TARGETNET = new ANN(boardsize+1, boardsize,1, boardsize*3);
+        MAINNET = new ANN(boardsize+1, boardsize, 1, boardsize*4);
+        TARGETNET = new ANN(boardsize+1, boardsize,1, boardsize*4);
 
         SE = new ScoringEngine();
 
         botMCST = new MCST();
+
+        data = new ArrayList<>();
     }
 
     public void execMove(ArrayList<Hexagon> field) {
-        ANN NeuralNet = new ANN(boardsize+1, boardsize, 1, boardsize*3);
+        ANN NeuralNet = new ANN(boardsize+1, boardsize, 1, boardsize*4);
         NeuralNet.init();
         NeuralNet.getWBFromCSV();
 
@@ -69,13 +78,13 @@ public class DQN {
 
         inputmove1 = getInputfromState(field, Hexagon.state.RED);
         ymove1 = NeuralNet.execFP(inputmove1);
-        Qmove1 = getQmax(ymove1);
+        Qmove1 = getLegalQmax(field,ymove1);
         System.out.println("Q for red piece"+Qmove1);
         field.get(Qmove1).setMyState(Hexagon.state.RED);
 
         inputmove2 = getInputfromState(field, Hexagon.state.BLUE);
         ymove2 = NeuralNet.execFP(inputmove2);
-        Qmove2 = getQmax(ymove2);
+        Qmove2 = getLegalQmax(field,ymove2);
         System.out.println("Q for blue piece"+Qmove2);
         field.get(Qmove2).setMyState(Hexagon.state.BLUE);
     }
@@ -105,8 +114,6 @@ public class DQN {
                 Episode(Hexagon.state.BLUE);
                 test2 = state.size()-numHexLeft() - tmp;
                 gameaverage = gameaverage+test2;
-                //MCSTmove(GameScreen.state.P2P1,false);
-                //MCSTmove(GameScreen.state.P2P2,false);
             }
             gameaverage = gameaverage/round;
             summaryaverage = summaryaverage+gameaverage;
@@ -116,12 +123,12 @@ public class DQN {
                 annwon++;
             } else mcstwon++;
 
-            // if(game%10==0) {
-            //     TARGETNET.copyWB(MAINNET);
-            // }
+            if(game%100==0) {
+                TARGETNET.copyWB(MAINNET);
+            }
 
             if(game%summary==0) {
-
+                //StandardMD();
                 ArrayList<Hexagon> teststate = createState();
                 teststate.get(1).setMyState(Hexagon.state.RED); teststate.get(4).setMyState(Hexagon.state.BLUE);
                 teststate.get(2).setMyState(Hexagon.state.RED); teststate.get(7).setMyState(Hexagon.state.BLUE);
@@ -142,21 +149,16 @@ public class DQN {
                     System.out.println("Win percentage ANN: "+winperc +"%" + " ...games: "+num+" - "+game);
                 }
 
-                if(a==2.0) {
-                    System.out.println("Writing to .csv ...");
-                    writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
-                }
-
                 annwon=0;
                 mcstwon=0;
                 summaryaverage=0;
                 System.out.println(" ");
             }
 
-            // if(game==100000) {
-            //     System.out.println("Writing to .csv ...");
-            //     writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
-            // }
+            if(game==5000) {
+                System.out.println("Writing to .csv ...");
+                writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
+            }
     
             gameaverage=0;
             round=0;
@@ -168,7 +170,85 @@ public class DQN {
 
     }
 
+    public void StandardMD() {
+        double mean=0;
+        for(int i=0; i<data.size(); i++) {
+            mean=mean+data.get(i);
+        }
+        MEAN=mean/data.size();
+
+        double sd=0;
+        for(int i=0; i<data.size(); i++) {
+            sd = sd+(data.get(i)-mean)*(data.get(i)-mean);
+        }
+        SD=sd/(data.size()-1);
+
+        System.out.println("Mean of rewards: ..."+MEAN+" Standard deviation of rewards: ..."+SD);
+    }
+
     public void Episode(Hexagon.state colour) {
+        ArrayList<Double> labels = new ArrayList<>();
+        double reward = 0;
+        int Qm = 0;
+        int Qt = 0;
+
+        while(Qm<state.size()) {
+            // ! Copy the state so it will only be used for evaluation
+            ArrayList<Hexagon> clonestate = new ArrayList<Hexagon>();
+            try {
+                for(Hexagon h : state) {
+                    clonestate.add(h.clone());
+                }
+            } catch (Exception e) {}
+
+            // * Play the Q move at the Qm index
+            clonestate.get(Qm).setMyState(colour);
+
+            // * Get reward at state st
+            SE.calculate(clonestate);
+            reward = reward + (SE.getBlueScore() - SE.getRedScore());
+
+            // * Perform action at to create state st+1 and evaluate it at the TARGET Network
+            ArrayList<Double> input = getInputfromState(clonestate,colour);
+            ArrayList<Double> ytarget = TARGETNET.execFP(input);
+
+            // * Get max LEGAL Q value of output of TARGET Network
+            Qt = getLegalQmax(clonestate, ytarget);
+            if(colour==Hexagon.state.RED) {
+                clonestate.get(Qt).setMyState(Hexagon.state.BLUE);
+            } else clonestate.get(Qt).setMyState(Hexagon.state.RED);
+
+            // * Get reward at state st+1
+            SE.calculate(clonestate);
+            reward = reward + (SE.getBlueScore() - SE.getRedScore());
+
+            // * Compute the loss for the Q(s,a) value chosen
+            //data.add(reward);
+            reward = (reward+1.5)/10;
+            double loss = reward+ytarget.get(Qt);
+            //System.out.println("Loss ..."+loss);
+            labels.add(loss);
+
+
+            // * Update Qm index and reset reward
+            Qm++;
+            reward = 0;
+
+        }
+
+        // ! Back propegate using the labels created
+        ArrayList<Double> input = getInputfromState(state,colour);
+        ArrayList<Double> ymain = MAINNET.execFP(input);
+        MAINNET.execBP(ymain, labels);
+                
+        // ! Play the move with the highest Q value to progress the game
+        int Q = getLegalQmax(state, ymain);
+        state.get(Q).setMyState(colour);
+
+    }
+
+
+    public void Episodetest(Hexagon.state colour) {
         double reward = 0;
         int Q = 0;
 
@@ -207,11 +287,24 @@ public class DQN {
             //     toreturn.set(i, value);
             // }
             if(field.get(i).getMyState()!=Hexagon.state.BLANK) {
-                toreturn.set(i, -100.0);
+                toreturn.set(i, -1.0);
             }
             
         }
         return toreturn;
+    }
+
+    public int getLegalQmax(ArrayList<Hexagon> field, ArrayList<Double> list) {
+        double max=Double.MIN_VALUE-1;
+        int maxi=0;
+        for(int i=0; i<list.size(); i++) {
+            if((list.get(i)>max)&&(field.get(i).getMyState()==Hexagon.state.BLANK)) {
+                max=list.get(i);
+                maxi=i;
+            }
+        }
+        return maxi;
+
     }
 
     public int getQmax(ArrayList<Double> list) {

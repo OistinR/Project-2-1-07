@@ -206,7 +206,7 @@ public class ANN {
                 double weight = outputneurons.get(i).getSynapses().get(j).getWeight();
 
                 double dz = 1.0;//outputneurons.get(i).getY() * (1-outputneurons.get(i).getY());
-                double dy = -1*(labels.get(i)-outputneurons.get(i).getY());
+                double dy = -2*(labels.get(i)-outputneurons.get(i).getY());
                 
                 // ! Set the initial delta of the output neurons
                 outputneurons.get(i).setDelta(dz*dy);
