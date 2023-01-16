@@ -106,7 +106,7 @@ public class MCST {
                 throw new IllegalStateException("Unexpected value of the STATE");
         }
 
-        int numIterations = 1500;
+        int numIterations = 5000;
         long start_time = System.nanoTime();
         long end_time = System.nanoTime();
 
@@ -149,13 +149,17 @@ public class MCST {
             while (currentNode != null) {
                 currentNode.visitCount++;
                 currentNode.winCount += winner;
+                if(winner==1){
+                    currentNode.numWin += 1;
+                }
                 currentNode = currentNode.parent;
             }
         }
 
         // Return the move corresponding to the child node with the highest win rate
 
-        return selectBestChild(rootNode);
+        //return selectBestChild(rootNode);
+        return rootNode;
     }
 
     public Node_MCST selectChild(Node_MCST currentNode) {

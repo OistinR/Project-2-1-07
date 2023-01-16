@@ -33,7 +33,7 @@ public class DQN {
 
     private final double EPSILON = 0.0;
     private final int trainamount=99999999;
-    private final int summary = 1000;
+    private final int summary = 100;
 
     private MCST botMCST;
     private Bot bot = new RandomBot();

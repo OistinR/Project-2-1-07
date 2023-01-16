@@ -16,7 +16,8 @@ public class Node_MCST {
     public int move_played;
     public int winCount;
     public int visitCount;
-    protected List<Node_MCST> children;
+    public int numWin;
+    public List<Node_MCST> children;
     public GameScreen.state phase;
 
     public Node_MCST(ArrayList<Hexagon> field, List<Integer> moves, int move_played, GameScreen.state phase){
@@ -25,6 +26,7 @@ public class Node_MCST {
             this.moves = moves;
             this.move_played = move_played;
             winCount = 0;
+            numWin = 0;
             this.phase = phase;
 
             visitCount = 0;
@@ -38,6 +40,6 @@ public class Node_MCST {
         return moves.size() < field.size()%4;
     }
     public double returnWinrate(){
-        return (double) winCount/(double)visitCount;
+        return (double) numWin/(double)visitCount;
     }
 }

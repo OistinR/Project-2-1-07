@@ -7,6 +7,7 @@ import com.mygdx.game.bots.MCST.MCST;
 import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.coordsystem.Hexagon;
+import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
 
@@ -34,7 +35,7 @@ public class RL {
         state = createState();
         boardsize = state.size();
 
-        MAINNET = new ANN(boardsize+1, boardsize, 2, boardsize+1);
+        MAINNET = new ANN(boardsize, boardsize, 2, boardsize+1);
 
         SE = new ScoringEngine();
 
@@ -48,6 +49,9 @@ public class RL {
         int opponent=0;
         int round=0;
 
+        int tmp=0;
+        int test2=0;
+
         double gameaverage=0;
         double summaryaverage=0;
 
@@ -55,10 +59,13 @@ public class RL {
             while(numHexLeft()>=4) {
                 round++;
                 bot.execMove(state);
+                tmp = state.size()-numHexLeft();
                 //MCSTmove(GameScreen.state.P1P1,true);
                 //MCSTmove(GameScreen.state.P1P2,true);
                 Episode(Hexagon.state.RED);
                 Episode(Hexagon.state.BLUE);
+                test2 = state.size()-numHexLeft() - tmp;
+                gameaverage = gameaverage+test2;
                 //System.out.println(round);
             }
             System.out.println(game);
@@ -116,6 +123,7 @@ public class RL {
 
         ArrayList<Double> input = getInputfromState(state,colour);
         ArrayList<Double> ymain = MAINNET.execFP(input);
+        //System.out.println(ymain);
         int bestMove = 0;
         double bestMoveProb = -1;
 
@@ -135,24 +143,20 @@ public class RL {
 
     public ArrayList<Double> createLabels(ArrayList<Hexagon> field,Hexagon.state colour) {
         ArrayList<Double> toreturn = new ArrayList<>();
-        double value;
+        Node_MCST value;
+        if(colour == Hexagon.state.RED){
+            value = MCSTpredict(field,GameScreen.state.P2P1,false);
+        }
+        else{
+            value = MCSTpredict(field,GameScreen.state.P2P2,false);
+        }
         for(int i=0; i<field.size(); i++) {
-
             toreturn.add(i, 0.0);
             if(field.get(i).getMyState()==Hexagon.state.BLANK) {
-                if(colour == Hexagon.state.RED){
-                    value = MCSTpredict(field,GameScreen.state.P2P1,false,i);
-                    if(value<0)
-                        toreturn.set(i, 0.0);
-                    else
-                        toreturn.set(i, value);
-                }
-                else{
-                    value = MCSTpredict(field,GameScreen.state.P2P2,false,i);
-                    if(value<0)
-                        toreturn.set(i, 0.0);
-                    else
-                        toreturn.set(i, value);
+                for(Node_MCST child : value.children){
+                    if(child.move_played == i)
+                        //System.out.println("this is the winrate per child " + (double)child.numWin/(double)value.visitCount);
+                        toreturn.set(i,(double)child.numWin/(double)value.visitCount);
                 }
             }
         }
@@ -161,7 +165,7 @@ public class RL {
 
     public ArrayList<Hexagon> createState() {
         int s;
-        int fieldsize = 3;
+        int fieldsize = 2;
         ArrayList<Hexagon> field = new ArrayList<>();
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
@@ -174,24 +178,18 @@ public class RL {
         return field;
     }
 
-    private double MCSTpredict(ArrayList<Hexagon> field,GameScreen.state STATE, boolean player1, int move){
+    private Node_MCST MCSTpredict(ArrayList<Hexagon> field,GameScreen.state STATE, boolean player1){
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
             for(Hexagon h : field) {
                 copy_field.add(h.clone());
-            }
-            if(STATE == GameScreen.state.P2P1){
-                copy_field.get(move).setMyState(Hexagon.state.RED);
-            }
-            else{
-                copy_field.get(move).setMyState(Hexagon.state.BLUE);
             }
         } catch (Exception e) {}
 
         //System.out.println(numHexLeft());
         Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
         //System.out.println(bestMove.parent.returnWinrate());
-        return bestMove.parent.returnWinrate();
+        return bestMove;
 
     }
     private void MCSTmove(GameScreen.state STATE, boolean player1){
@@ -224,11 +222,6 @@ public class RL {
             } else if(statefield.get(i).getMyState()==Hexagon.state.BLUE){
                 inutreturn.add(-1.0);
             } else System.out.println("An error has occurred when reading the board");
-        }
-        if(col==Hexagon.state.RED) {
-            inutreturn.add(1.0);
-        } else if(col==Hexagon.state.BLUE) {
-            inutreturn.add(-1.0);
         }
         return inutreturn;
     }

@@ -20,7 +20,7 @@ public class ANN {
     private int hidnum;
     private int hidsize;
 
-    private final double LEARNINGRATE = 0.0001;
+    private final double LEARNINGRATE = 0.01;
 
     private final double ACCURACY = 0.001;
 
@@ -205,7 +205,7 @@ public class ANN {
             for(int j=0; j<outputneurons.get(i).getSynapses().size(); j++) {
                 double weight = outputneurons.get(i).getSynapses().get(j).getWeight();
 
-                double dz = 1.0;//outputneurons.get(i).getY() * (1-outputneurons.get(i).getY());
+                double dz = derivReLU(outputneurons.get(i).getZ()); //outputneurons.get(i).getY() * (1-outputneurons.get(i).getY());
                 double dy = -1*(labels.get(i)-outputneurons.get(i).getY());
                 
                 // ! Set the initial delta of the output neurons
@@ -242,16 +242,16 @@ public class ANN {
                         for(int k=0; k<outputneurons.size(); k++) {
                             double delta = outputneurons.get(k).getDelta();
                             double theta = outputneurons.get(k).getSynapses().get(i).getWeight();
-                            //double dz = derivReLU(hiddenneurons.get(i).getZ());
-                            double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
+                            double dz = derivReLU(hiddenneurons.get(i).getZ());
+                            //double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
                             hiddelta = hiddelta+(delta*theta*dz);
                         }
                     } else {
                         for(int k=0; k<HidLayers.get(p+1).getNeurons().size(); k++) {
                             double delta = HidLayers.get(p+1).getNeurons().get(k).getDelta();
                             double theta = HidLayers.get(p+1).getNeurons().get(k).getSynapses().get(i).getWeight();
-                            //double dz = derivReLU(hiddenneurons.get(i).getZ());
-                            double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
+                            double dz = derivReLU(hiddenneurons.get(i).getZ());
+                            //double dz = hiddenneurons.get(i).getH() * (1-hiddenneurons.get(i).getH());
                             hiddelta = hiddelta+(delta*theta*dz);
                         }
                     }
@@ -302,7 +302,7 @@ public class ANN {
                 }
                 z = z + hidneuronlist.get(j).getBias();
                 hidneuronlist.get(j).setZ(z);
-                hidneuronlist.get(j).setH(sigmoid(z));
+                hidneuronlist.get(j).setH(ReLU(z));
             }
         }
 
@@ -320,7 +320,7 @@ public class ANN {
             z = z + outneuronlist.get(j).getBias();
 
             outneuronlist.get(j).setZ(z);
-            outneuronlist.get(j).setY(z);
+            outneuronlist.get(j).setY(ReLU(z));
 
             zlist.add(z);
         }
