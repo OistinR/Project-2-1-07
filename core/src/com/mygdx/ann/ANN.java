@@ -366,7 +366,6 @@ public class ANN {
         for(int i=0; i<list.size(); i++) {
             sum=sum+list.get(i);
         }
-
         return list.get(index)/sum;
     }
 

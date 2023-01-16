@@ -28,7 +28,7 @@ public class DQN {
     private ANN TARGETNET;
     private ANN MAINNET;
 
-    private final double DISCOUNT = 0.1;
+    private final double DISCOUNT = 0.9;
 
     private ScoringEngine SE;
 
@@ -40,7 +40,7 @@ public class DQN {
 
     private final double EPSILON = 0.0;
     private final int trainamount=99999999;
-    private final int summary = 1000;
+    private final int summary = 100;
 
     private MCST botMCST;
     private Bot bot = new RandomBot();
@@ -52,18 +52,19 @@ public class DQN {
         state = createState();
         boardsize = state.size();
 
-        MAINNET = new ANN(boardsize+1, boardsize, 1, boardsize*4);
-        TARGETNET = new ANN(boardsize+1, boardsize,1, boardsize*4);
+        MAINNET = new ANN(boardsize+1, boardsize, 1, boardsize*6);
+        TARGETNET = new ANN(boardsize+1, boardsize,1, boardsize*6);
 
         SE = new ScoringEngine();
 
         botMCST = new MCST();
 
         data = new ArrayList<>();
+
     }
 
     public void execMove(ArrayList<Hexagon> field) {
-        ANN NeuralNet = new ANN(boardsize+1, boardsize, 1, boardsize*4);
+        ANN NeuralNet = new ANN(boardsize+1, boardsize, 1, boardsize*6);
         NeuralNet.init();
         NeuralNet.getWBFromCSV();
 
@@ -94,6 +95,9 @@ public class DQN {
         MAINNET.init();
         TARGETNET.init();
 
+        MAINNET.getWBFromCSV();
+        TARGETNET.getWBFromCSV();
+
         int game = 1;
         int annwon=0;
         int mcstwon=0;
@@ -104,11 +108,15 @@ public class DQN {
         
         double gameaverage=0;
         double summaryaverage=0;
+
+        double topwp = 0;
         
         while(game<trainamount) {
             while(numHexLeft()>=4) {
                 round++;
-                bot.execMove(state);
+                //bot.execMove(state);
+                MCSTmove(GameScreen.state.P1P1, true);
+                MCSTmove(GameScreen.state.P1P2, true);
                 tmp = state.size()-numHexLeft();
                 Episode(Hexagon.state.RED);
                 Episode(Hexagon.state.BLUE);
@@ -128,7 +136,7 @@ public class DQN {
             }
 
             if(game%summary==0) {
-                //StandardMD();
+                StandardMD();
                 ArrayList<Hexagon> teststate = createState();
                 teststate.get(1).setMyState(Hexagon.state.RED); teststate.get(4).setMyState(Hexagon.state.BLUE);
                 teststate.get(2).setMyState(Hexagon.state.RED); teststate.get(7).setMyState(Hexagon.state.BLUE);
@@ -147,17 +155,17 @@ public class DQN {
                     int num = game-summary;
                     double winperc =((double)annwon / ((double)annwon + (double)mcstwon)) *100;
                     System.out.println("Win percentage ANN: "+winperc +"%" + " ...games: "+num+" - "+game);
+                    if(winperc>topwp) {
+                        topwp = winperc;
+                        System.out.println("Writing to .csv ...");
+                        writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
+                    }
                 }
 
                 annwon=0;
                 mcstwon=0;
                 summaryaverage=0;
                 System.out.println(" ");
-            }
-
-            if(game==5000) {
-                System.out.println("Writing to .csv ...");
-                writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
             }
     
             gameaverage=0;
@@ -224,11 +232,9 @@ public class DQN {
 
             // * Compute the loss for the Q(s,a) value chosen
             //data.add(reward);
-            reward = (reward+1.5)/10;
-            double loss = reward+ytarget.get(Qt);
-            //System.out.println("Loss ..."+loss);
+            reward = (reward+3.9)/68;
+            double loss = reward+DISCOUNT*ytarget.get(Qt);
             labels.add(loss);
-
 
             // * Update Qm index and reset reward
             Qm++;
@@ -295,7 +301,7 @@ public class DQN {
     }
 
     public int getLegalQmax(ArrayList<Hexagon> field, ArrayList<Double> list) {
-        double max=Double.MIN_VALUE-1;
+        double max=-999999999;
         int maxi=0;
         for(int i=0; i<list.size(); i++) {
             if((list.get(i)>max)&&(field.get(i).getMyState()==Hexagon.state.BLANK)) {
@@ -340,7 +346,7 @@ public class DQN {
 
     public ArrayList<Hexagon> createState() {
         int s;
-        int fieldsize = 2;
+        int fieldsize = 3;
         ArrayList<Hexagon> field = new ArrayList<>();
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {

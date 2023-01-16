@@ -138,7 +138,7 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot2 = new RandomBot();
+        bot = new RandomBot();
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         dqn = new DQN();
@@ -345,7 +345,7 @@ public class GameScreen implements Screen {
      */
     public void createHexagonFieldDefault() {
         int s;
-        int fieldsize = 2;
+        int fieldsize = 3;
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
@@ -529,7 +529,7 @@ public class GameScreen implements Screen {
      * check the mouvement of the bot and the time the bot took to place the hexagon
      */
     private void botmove() {
-        //bot.execMove(field);
+        bot.execMove(field);
         //dqn.execMove(field);
         //System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
 
