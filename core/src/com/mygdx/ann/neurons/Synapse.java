@@ -9,7 +9,7 @@ public class Synapse {
     private double weight;
     
     public Synapse() {
-        weight=ThreadLocalRandom.current().nextDouble();
+        weight=ThreadLocalRandom.current().nextDouble(-0.1,0.1);
     }
 
     public double getWeight() {

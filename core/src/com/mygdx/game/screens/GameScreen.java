@@ -6,6 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.ann.ANN;
+import com.mygdx.ann.DQN;
 import com.mygdx.game.Omega;
 
 import com.mygdx.game.bots.Bot;
@@ -85,8 +87,11 @@ public class GameScreen implements Screen {
 
     private PieButton pieButton;
 
+
+    private DQN dqn;
+
     //! testing
-    GameState gState;
+    GameState gState; 
 
     /**
      *
@@ -144,9 +149,10 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
-        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
+        bot2 = new RandomBot();
+        //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
+        dqn = new DQN();
     }
 
     @Override
@@ -238,7 +244,9 @@ private ArrayList<Double> data = new ArrayList<>();
         int numhex = numHex() - 4 * (round - 1);
 
         // check if game is done
-        if (field.size() - (numhex + (4 * (round - 1))) < 4 && STATE==state.P1P1) {
+
+        if (field.size() - (numhex + (4 * (round - 1))) < 4  && STATE == state.P1P1) {
+
             gameFinish();
         }
         if (ai2 && ai && (!gamefinished)) {
@@ -551,8 +559,9 @@ private ArrayList<Double> data = new ArrayList<>();
      * check the mouvement of the bot and the time the bot took to place the hexagon
      */
     private void botmove() {
-        bot.execMove(field);
-        System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
+        //bot.execMove(field);
+        //dqn.execMove(field);
+        //System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
 
     }
 
@@ -560,8 +569,9 @@ private ArrayList<Double> data = new ArrayList<>();
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
     private void bot2move() {
-        bot2.execMove(field);
-        System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
+        dqn.execMove(field);
+        //bot2.execMove(field);
+        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
 

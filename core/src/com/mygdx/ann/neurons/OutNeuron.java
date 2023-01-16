@@ -24,7 +24,7 @@ public class OutNeuron {
 
         this.index = index;
 
-        bias = ThreadLocalRandom.current().nextDouble();
+        bias = ThreadLocalRandom.current().nextDouble(-0.1,0.1);
 
         synapses = new ArrayList<>();
         for(int i=0; i<prevcount; i++) {
