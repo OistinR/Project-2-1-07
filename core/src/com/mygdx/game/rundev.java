@@ -97,7 +97,7 @@ public class rundev {
         int i = 0;
         while (i < totalnumgames) {
             ar.clear();
-
+            if (i>0)
             output.append("\n");
 
             while (!gamefinished) {
@@ -113,8 +113,7 @@ public class rundev {
                 for (Double feature:ar) {
                     output.append(feature.toString()).append(",");
                 }
-
-
+            output.append("999.0");
             round = 1;
             gamefinished = false;
             field = new ArrayList<>();
@@ -124,7 +123,6 @@ public class rundev {
             i++;
         }
 
-//        System.out.println(output);
         try {
             writer = new FileWriter(fileWrite);
             writer.write(output.toString());
@@ -228,11 +226,12 @@ public class rundev {
     }
 
     public static void main(String[] args) {
+
 //      rundev dev = new rundev();
 //      dev.init();
 //      dev.update();
-        StateWrite sw = new StateWrite();
-        System.out.println(sw.readFrom());
 
+        StateWrite sw = new StateWrite();
+        sw.readFrom();
     }
 }
