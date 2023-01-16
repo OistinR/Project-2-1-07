@@ -1,5 +1,10 @@
 package com.mygdx.game;
 
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
@@ -19,6 +24,11 @@ import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.coordsystem.Hexagon;
+
+import com.mygdx.game.experiment.GameState;
+
+import com.mygdx.game.experiment.StateWrite;
+import com.mygdx.game.experiment.experiment;
 import com.mygdx.game.gametreemc.MonteCarloTree;
 import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.scoringsystem.ScoringEngine;
@@ -47,12 +57,30 @@ public class rundev {
     private int totalnumgames;
     private double finalWinRate;
 
+    private ArrayList<Float> dataWinPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataLossPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataDrawPerc = new ArrayList<Float>();
+    private ArrayList<Float> dataWins = new ArrayList<Float>();
+    private ArrayList<Float> dataDraws = new ArrayList<Float>();
+    private experiment exp = new experiment();
+    private double winperc1, winperc2, winpercd;
+    private ArrayList<Double> ar;
+
+    private GameState gameState;
+    private File fileWrite;
+    private FileWriter writer;
+    private  StringBuilder output;
+    private StateWrite sw;
+
     public void init() {
-        //Initiate variables
-        round=1;
-        totalnumgames=10;
-        gamefinished=false;
-		field = new ArrayList<>();
+        fileWrite = new File("core\\src\\com\\mygdx\\trainingData.csv");
+        // Initiate variables
+        ar = new ArrayList<>();
+        gameState = new GameState();
+        round = 1;
+        totalnumgames = 10;
+        gamefinished = false;
+        field = new ArrayList<>();
         SEngine = new ScoringEngine();
         bot1wins = new ArrayList<>();
         bot2wins = new ArrayList<>();
@@ -63,21 +91,32 @@ public class rundev {
 
         //Create field and initiate bots
 
-        botptwo = new RandomBot();
-        //botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE,false);
-        //botptwo = new OLABot();
+
         botMCST = new MCST();
+
+        // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
+        botpone = new RandomBot();
+        botptwo = new RandomBot();
+
         createHexagonFieldDefault();
     }
 
     public void update() {
+
         double winperc1;
         double winperc2;
         double winpercd;
-        int i=1;
-        while(i<=totalnumgames) {
-            //System.out.println("game "+i+"");
-            while(!gamefinished) {
+   
+
+        output = new StringBuilder();
+        int i = 0;
+        while (i < totalnumgames) {
+            ar.clear();
+            if (i>0)
+            output.append("\n");
+
+            while (!gamefinished) {
+
                 updateState();
                 makeMove();
                 updateState();
@@ -86,8 +125,15 @@ public class rundev {
                 System.out.println(i+" games simulated.");
             }
 
-            round=1;
-            gamefinished=false;
+
+            //TODO write ar to the output string builder
+                for (Double feature:ar) {
+                    output.append(feature.toString()).append(",");
+                }
+            output.append("999.0");
+            round = 1;
+            gamefinished = false;
+
             field = new ArrayList<>();
             SEngine = new ScoringEngine();
             createHexagonFieldDefault();
@@ -95,13 +141,25 @@ public class rundev {
             i++;
         }
 
-        winperc1 = ((double)bot1wins.size()/(double)totalnumgames)*100;
-        winperc2 = ((double)bot2wins.size()/(double)totalnumgames)*100;
-        winpercd = ((double)draws.size()/(double)totalnumgames)*100;
 
-        System.out.println("Bot 1 number of wins: "+bot1wins.size()+ " Win percentage: "+ winperc1+ " %" );
-        System.out.println("Bot 2 number of wins: "+bot2wins.size()+ " Win percentage: "+ winperc2+ " %" );
-        System.out.println("Number of draws: "+draws.size()+ " Draw percentage: "+ winpercd+" %");
+        try {
+            writer = new FileWriter(fileWrite);
+            writer.write(output.toString());
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("error with IO: ");
+            e.printStackTrace();
+        }
+
+
+        winperc1 = ((double) bot1wins.size() / (double) totalnumgames) * 100;
+        winperc2 = ((double) bot2wins.size() / (double) totalnumgames) * 100;
+        winpercd = ((double) draws.size() / (double) totalnumgames) * 100;
+
+        System.out.println("Bot 1 number of wins: " + bot1wins.size() + " Win percentage: " + winperc1 + " %");
+        System.out.println("Bot 2 number of wins: " + bot2wins.size() + " Win percentage: " + winperc2 + " %");
+        System.out.println("Number of draws: " + draws.size() + " Draw percentage: " + winpercd + " %");
+
         this.finalWinRate = winperc1;
     }
 
@@ -137,9 +195,19 @@ public class rundev {
 
 
     public void makeMove() {
-        MCSTmove(GameScreen.state.P1P1,true);
-        MCSTmove(GameScreen.state.P1P2,true);
+
+        //MCSTmove(GameScreen.state.P1P1,true);
+        //MCSTmove(GameScreen.state.P1P2,true);
+
+        botpone.execMove(field);
+        ar.add(999.0);
+        gameState.update(field);
+        ar.addAll(gameState.getState());
+        ar.add(999.0);
         botptwo.execMove(field);
+        gameState.update(field);
+        ar.addAll(gameState.getState());
+
     }
 
     public void gameFinish() {
@@ -186,6 +254,7 @@ public class rundev {
     private MCST botMCST;
     private int count =0;
 
+
     private void MCSTmove(GameScreen.state STATE,boolean player1){
 
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
@@ -210,9 +279,14 @@ public class rundev {
         }
     }
 
+
     public static void main(String[] args) {
-        rundev dev = new rundev();
-        dev.init();
-        dev.update();
+
+//      rundev dev = new rundev();
+//      dev.init();
+//      dev.update();
+
+        StateWrite sw = new StateWrite();
+        sw.readFrom();
     }
 }
