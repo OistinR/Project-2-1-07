@@ -46,18 +46,20 @@ public class rundev {
     private ArrayList<Integer> draws;
     private int totalnumgames;
     private double finalWinRate;
+    private long runtime;
     private ArrayList<Float> dataWinPerc = new ArrayList<Float>();
     private ArrayList<Float> dataLossPerc = new ArrayList<Float>();
     private ArrayList<Float> dataDrawPerc = new ArrayList<Float>();
     private ArrayList<Float> dataWins = new ArrayList<Float>();
     private ArrayList<Float> dataDraws = new ArrayList<Float>();
+    private ArrayList<Long> worstRunTime = new ArrayList<Long>();
     private experiment exp = new experiment();
     private double winperc1, winperc2, winpercd;
 
     public void init() {
         // Initiate variables
         round = 1;
-        totalnumgames = 5000;
+        totalnumgames = 10000;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -69,11 +71,12 @@ public class rundev {
         fieldsize = 2;
 
         // Create field and initiate bots
-
-        // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
-        botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
+        botpone = new RandomBot();
         botptwo = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+        // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
+        //
         createHexagonFieldDefault();
+
     }
 
     public void update() {
@@ -93,8 +96,8 @@ public class rundev {
             field = new ArrayList<>();
             SEngine = new ScoringEngine();
             createHexagonFieldDefault();
-
             i++;
+
         }
         // TODO issue: the tree cant tell when game is over so its possible that
         // infinite loops can occur.
@@ -130,6 +133,7 @@ public class rundev {
         System.out.println("Bot 1 number of wins: " + bot1wins.size() + " Win percentage: " + winperc1 + " %");
         System.out.println("Bot 2 number of wins: " + bot2wins.size() + " Win percentage: " + winperc2 + " %");
         System.out.println("Number of draws: " + draws.size() + " Draw percentage: " + winpercd + " %");
+        System.out.println("Worst runtime: " + getWorstRuntime());
         this.finalWinRate = winperc1;
     }
 
@@ -165,7 +169,28 @@ public class rundev {
 
     public void makeMove() {
         botpone.execMove(field);
+        // only checking the runtime of the second bot since first bot is baseline bot,
+        // randombot
+        runtime = 0;
+        long startTime = System.nanoTime();
         botptwo.execMove(field);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        runtime += duration;
+        worstRunTime.add(runtime);
+    }
+
+    /**
+     * @return worst runtime of the bot
+     */
+    public long getWorstRuntime() {
+        long tempVar = 0;
+        for (int i = 0; i < worstRunTime.size(); i++) {
+            if (worstRunTime.get(i) > tempVar) {
+                tempVar = worstRunTime.get(i);
+            }
+        }
+        return tempVar;
     }
 
     public void gameFinish() {
@@ -186,6 +211,7 @@ public class rundev {
             draws.add(p1score);
         }
         gamefinished = true;
+
     }
 
     public ArrayList<Hexagon> getField() {
@@ -212,6 +238,7 @@ public class rundev {
         rundev dev = new rundev();
         dev.init();
         dev.update();
+
         String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/lossesPerc.csv";
 
         dev.dataLossPerc.add((float) (100 - dev.winperc1));
@@ -264,5 +291,6 @@ public class rundev {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }
