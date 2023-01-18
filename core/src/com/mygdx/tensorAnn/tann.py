@@ -1,6 +1,10 @@
-# import tensorflow as tf
-#
-# print(tf.__version__)
+import tensorflow as tf
+from sklearn.model_selection import train_test_split
+from tensorflow.python.keras import Sequential
+from tensorflow.python.keras.layers import Dense
+import numpy as np
+
+print(tf.__version__)
 import csv
 preMoves = []
 postMoves = []
@@ -21,11 +25,13 @@ def read_Data():
         for lines in csvFile:
             for num in lines:
                 if flag and num == "999.0":
-                    preMoves.insert(preMoves.__sizeof__(), [pregame.copy()])
+                    if(len(pregame)!=0):
+                        preMoves.insert(preMoves.__sizeof__(), [pregame.copy()])
                     pregame.clear()
                     flag = False
                 elif (not flag) and num == "999.0":
-                    postMoves.insert(postMoves.__sizeof__(), [postgame.copy()])
+                    if(len(postgame)!=0):
+                        postMoves.insert(postMoves.__sizeof__(), [postgame.copy()])
                     postgame.clear()
                     flag = True
                 elif flag:
@@ -33,47 +39,37 @@ def read_Data():
                     pregame.insert(pregame.__sizeof__(), float(num))
                 else:
                     postgame.insert(postgame.__sizeof__(), float(num))
-        del postMoves[0]
-
+         # ? I know why this happens but im not going to tell you
         print("read successful")
+        # del postMoves[0]
 
 
-
-
-def duplicateRemover(list1, list2):
-    if list1.__sizeof__()!=list2.__sizeof__():
-        print("sizes are not equal")
-        return -1
-
-    i = 0
-
-    while i < list1.__sizeof__():
-        j = 0
-        while j < list1[i].__sizeof__():
-            k = 0
-            while k < list1[i][j].__sizeof__():
-                if list1[i][j][k] == list2[i][j][k]:
-                    list2[i][j][k] = 0.0
-
-    return list2
-
-
-def convertToFloat(listStr):#this was a java implementation transfered over, it took like minutes for 10 game
-    i = 0
-    while i < listStr.__sizeof__():
-        j = 0
-        while j < listStr[i].__sizeof__():
-            k = 0
-            while k < listStr[i][j].__sizeof__():
-                listStr[i][j][k] = float(listStr[i][j][k])
-
-
+read_Data()
 #preMoves = []
 #postMoves = []
 
-read_Data()
-# convertToFloat(preMoves)
-# convertToFloat(postMoves)
-print(postMoves[0])
-duplicateRemover(preMoves,postMoves)
-print(postMoves[1])
+# X_train, X_test, Y_train, Y_test = train_test_split(preMoves, postMoves)
+#
+# X_train.head()
+# # Y_train.head()
+# print(len(preMoves[0]))
+# print(len(preMoves[0][0]))
+X = np.array(preMoves.copy());
+Y = np.array(postMoves.copy());
+
+X_train, X_test, Y_train, Y_split = train_test_split(X,Y, test_size=0.2)
+# ? this needed?
+
+# for list in preMoves:
+#     print(len(list))
+#     for list2 in list:
+#         print(list2)
+
+model = Sequential()
+model.add(Dense(units=19,activation='relu',input_dim=19))
+model.add(Dense(units=64,activation='relu'))
+model.add(Dense(units=19,activation='sigmoid'))
+model.compile(loss='binary_crossentropy', optimizer='sgd', metrics='accuracy')
+i = 0
+while i< len(X_train):
+    model.fit(X_train[i],Y_train[i],epochs=1, batch_size=1)

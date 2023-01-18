@@ -78,7 +78,7 @@ public class rundev {
         ar = new ArrayList<>();
         gameState = new GameState();
         round = 1;
-        totalnumgames = 1000;
+        totalnumgames = 10;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -116,7 +116,6 @@ public class rundev {
             output.append("\n");
 
             while (!gamefinished) {
-
                 updateState();
                 makeMove();
                 updateState();
@@ -126,7 +125,7 @@ public class rundev {
 //            }
 
 
-            //TODO write ar to the output string builder
+
                 for (Double feature:ar) {
                     output.append(feature.toString()).append(",");
                 }
@@ -183,6 +182,18 @@ public class rundev {
         }
     }
 
+    private void duplicateRemover(ArrayList<Double> before, ArrayList<Double> after ){
+        if(before.size()!= after.size()){
+            throw new RuntimeException("length of arraylists is not the equal");
+        }
+        for (int i = 0; i < after.size(); i++) {
+            if(after.get(i).equals(before.get(i))){
+                after.set(i, 0.0);
+            }
+        }
+    }
+
+
     public int numHex() {
         int num=0;
         for(Hexagon h:field) {
@@ -207,9 +218,14 @@ public class rundev {
         MCSTmove(GameScreen.state.P2P1,false);
         MCSTmove(GameScreen.state.P2P2,false);
         gameState.update(field);
+        // ! this is fucky the sub list should be dynamic
+        temp = new ArrayList<>(ar.subList(ar.size() - 1 - gameState.getState().size(), ar.size() - 1));
+        duplicateRemover(temp,gameState.getState());
+
         ar.addAll(gameState.getState());
 
     }
+    private ArrayList<Double> temp;
 
     public void gameFinish() {
         SEngine.calculate(field);
