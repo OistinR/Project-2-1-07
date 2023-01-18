@@ -26,6 +26,14 @@ public class StateWrite {
     ArrayList<ArrayList<Double>> TempPreGameStates = new ArrayList<>();
     ArrayList<ArrayList<Double>> TempPostGameStates = new ArrayList<>();
 
+    public ArrayList<ArrayList<ArrayList<Double>>> getPostMoveStates() {
+        return postMoveStates;
+    }
+
+    public ArrayList<ArrayList<ArrayList<Double>>> getPreMoveStates() {
+        return preMoveStates;
+    }
+
     public void readFrom(){
 
             try{
@@ -65,16 +73,15 @@ public class StateWrite {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+        //System.out.println(preMoveStates.get(0).get(0) +"||"+ postMoveStates.get(0).get(0).size());
 
         for (int i = 0; i < preMoveStates.size(); i++) {
             for (int j = 0; j < preMoveStates.get(i).size(); j++) {
                 duplicateRemover(preMoveStates.get(i).get(j), postMoveStates.get(i).get(j));
-                System.out.println(preMoveStates.get(i).get(j) +"||"+ postMoveStates.get(i).get(j));
             }
         }
 
-
-
+        System.out.println("read successful");
         }
 
         private void duplicateRemover(ArrayList<Double> before, ArrayList<Double> after ){

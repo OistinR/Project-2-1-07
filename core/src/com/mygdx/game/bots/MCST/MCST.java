@@ -106,7 +106,7 @@ public class MCST {
                 throw new IllegalStateException("Unexpected value of the STATE");
         }
 
-        int numIterations = 100;
+        int numIterations = 500;
         long start_time = System.nanoTime();
         long end_time = System.nanoTime();
 
@@ -260,7 +260,6 @@ public class MCST {
         return bestChild;
     }
     public static void main(String[] args) {
-
 
         MCST mcst = new MCST();
         ArrayList<Hexagon> field = mcst.createHexagonFieldDefault();

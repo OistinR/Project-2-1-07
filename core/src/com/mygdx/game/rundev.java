@@ -78,7 +78,7 @@ public class rundev {
         ar = new ArrayList<>();
         gameState = new GameState();
         round = 1;
-        totalnumgames = 10;
+        totalnumgames = 1000;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -87,7 +87,7 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=3;
+        fieldsize=2;
 
         //Create field and initiate bots
 
@@ -121,9 +121,9 @@ public class rundev {
                 makeMove();
                 updateState();
             } 
-            if(i%10==0) {
-                System.out.println(i+" games simulated.");
-            }
+//            if(i%10==0) {
+//                System.out.println(i+" games simulated.");
+//            }
 
 
             //TODO write ar to the output string builder
@@ -155,10 +155,10 @@ public class rundev {
         winperc1 = ((double) bot1wins.size() / (double) totalnumgames) * 100;
         winperc2 = ((double) bot2wins.size() / (double) totalnumgames) * 100;
         winpercd = ((double) draws.size() / (double) totalnumgames) * 100;
-
-        System.out.println("Bot 1 number of wins: " + bot1wins.size() + " Win percentage: " + winperc1 + " %");
-        System.out.println("Bot 2 number of wins: " + bot2wins.size() + " Win percentage: " + winperc2 + " %");
-        System.out.println("Number of draws: " + draws.size() + " Draw percentage: " + winpercd + " %");
+//
+//        System.out.println("Bot 1 number of wins: " + bot1wins.size() + " Win percentage: " + winperc1 + " %");
+//        System.out.println("Bot 2 number of wins: " + bot2wins.size() + " Win percentage: " + winperc2 + " %");
+//        System.out.println("Number of draws: " + draws.size() + " Draw percentage: " + winpercd + " %");
 
         this.finalWinRate = winperc1;
     }
@@ -196,15 +196,16 @@ public class rundev {
 
     public void makeMove() {
 
-        //MCSTmove(GameScreen.state.P1P1,true);
-        //MCSTmove(GameScreen.state.P1P2,true);
+        //
 
         botpone.execMove(field);
+
         ar.add(999.0);
         gameState.update(field);
         ar.addAll(gameState.getState());
         ar.add(999.0);
-        botptwo.execMove(field);
+        MCSTmove(GameScreen.state.P2P1,false);
+        MCSTmove(GameScreen.state.P2P2,false);
         gameState.update(field);
         ar.addAll(gameState.getState());
 
@@ -215,9 +216,9 @@ public class rundev {
         int p1score=SEngine.getRedScore();
         int p2score=SEngine.getBlueScore();
 
-        System.out.println("GAME HAS ENDED");
-        System.out.println("PLAYER 1 (RED) SCORE: "+p1score);
-        System.out.println("PLAYER 2 (BLUE) SCORE: "+p2score);
+//        System.out.println("GAME HAS ENDED");
+//        System.out.println("PLAYER 1 (RED) SCORE: "+p1score);
+//        System.out.println("PLAYER 2 (BLUE) SCORE: "+p2score);
         if(p1score>p2score) {
             //System.out.println("PLAYER 1 (RED) WON");
             bot1wins.add(p1score);
@@ -266,8 +267,7 @@ public class rundev {
 
         count++;
         Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
-        //System.out.println("the best move " + bestMove.move_played);
-        //System.out.println(count);
+
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
@@ -282,11 +282,11 @@ public class rundev {
 
     public static void main(String[] args) {
 
-//      rundev dev = new rundev();
-//      dev.init();
-//      dev.update();
+      rundev dev = new rundev();
+      dev.init();
+      dev.update();
 
-        StateWrite sw = new StateWrite();
-        sw.readFrom();
+//        StateWrite sw = new StateWrite();
+//        sw.readFrom();
     }
 }

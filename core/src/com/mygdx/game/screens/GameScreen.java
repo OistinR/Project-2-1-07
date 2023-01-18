@@ -88,7 +88,7 @@ public class GameScreen implements Screen {
     private PieButton pieButton;
 
 
-    private DQN dqn;
+    private ANN Sim;
 
     //! testing
     GameState gState; 
@@ -152,7 +152,7 @@ public class GameScreen implements Screen {
         bot2 = new RandomBot();
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
-        dqn = new DQN();
+        Sim = new ANN(1,1,1,1);
     }
 
     @Override
@@ -375,7 +375,7 @@ private ArrayList<Double> data = new ArrayList<>();
      */
     public void createHexagonFieldDefault() {
         int s;
-        int fieldsize = 2;
+        int fieldsize = 3;
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
@@ -569,7 +569,7 @@ private ArrayList<Double> data = new ArrayList<>();
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
     private void bot2move() {
-        dqn.execMove(field);
+        Sim.execMove(field);
         //bot2.execMove(field);
         //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
