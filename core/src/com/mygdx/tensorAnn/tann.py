@@ -1,7 +1,7 @@
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras import Sequential
-from tensorflow.python.keras.layers import Dense
+from tensorflow.python.keras.layers import Dense, Flatten
 import numpy as np
 
 print(tf.__version__)
@@ -54,10 +54,11 @@ read_Data()
 # # Y_train.head()
 # print(len(preMoves[0]))
 # print(len(preMoves[0][0]))
-X = np.array(preMoves.copy());
-Y = np.array(postMoves.copy());
+X = np.asarray(preMoves.copy())
 
-X_train, X_test, Y_train, Y_split = train_test_split(X,Y, test_size=0.2)
+Y = np.asarray(postMoves.copy())
+
+# X_train, X_test, Y_train, Y_split = train_test_split(X,Y, test_size=0.2)
 # ? this needed?
 
 # for list in preMoves:
@@ -66,10 +67,11 @@ X_train, X_test, Y_train, Y_split = train_test_split(X,Y, test_size=0.2)
 #         print(list2)
 
 model = Sequential()
-model.add(Dense(units=19,activation='relu',input_dim=19))
-model.add(Dense(units=64,activation='relu'))
-model.add(Dense(units=19,activation='sigmoid'))
+model.add(Dense(19, input_shape = (19,)))
+model.add(Dense(units=8, activation='sigmoid'))
+model.add(Dense(19, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='sgd', metrics='accuracy')
-i = 0
-while i< len(X_train):
-    model.fit(X_train[i],Y_train[i],epochs=1, batch_size=1)
+
+model.fit(X,Y, epochs=20)
+predict = model.predict([X[0]])
+print(predict)
