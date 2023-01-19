@@ -44,34 +44,61 @@ def read_Data():
         # del postMoves[0]
 
 
-read_Data()
-#preMoves = []
-#postMoves = []
+def training():
+    read_Data()
+    #preMoves = []
+    #postMoves = []
 
-# X_train, X_test, Y_train, Y_test = train_test_split(preMoves, postMoves)
-#
-# X_train.head()
-# # Y_train.head()
-# print(len(preMoves[0]))
-# print(len(preMoves[0][0]))
-X = np.asarray(preMoves.copy())
+    # X_train, X_test, Y_train, Y_test = train_test_split(preMoves, postMoves)
+    #
+    # X_train.head()
+    # # Y_train.head()
+    # print(len(preMoves[0]))
+    # print(len(preMoves[0][0]))
+    X = np.asarray(preMoves.copy())
 
-Y = np.asarray(postMoves.copy())
+    Y = np.asarray(postMoves.copy())
 
-# X_train, X_test, Y_train, Y_split = train_test_split(X,Y, test_size=0.2)
-# ? this needed?
+    # X_train, X_test, Y_train, Y_split = train_test_split(X,Y, test_size=0.2)
+    # ? this needed?
 
-# for list in preMoves:
-#     print(len(list))
-#     for list2 in list:
-#         print(list2)
+    # for list in preMoves:
+    #     print(len(list))
+    #     for list2 in list:
+    #         print(list2)
 
-model = Sequential()
-model.add(Dense(19, input_shape = (19,)))
-model.add(Dense(units=8, activation='sigmoid'))
-model.add(Dense(19, activation='sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer='sgd', metrics='accuracy')
+    model = Sequential()
+    model.add(Flatten(input_shape = (19,)))
+    model.add(Dense(units=20, activation='softmax'))
+    model.add(Dense(units=20, activation='softmax'))
+    model.add(Dense(units=20, activation='tanh'))
+    model.add(Dense(19, activation='tanh'))
+    model.compile(loss='binary_crossentropy', optimizer="Adamax", metrics='accuracy')
 
-model.fit(X,Y, epochs=20)
-predict = model.predict([X[0]])
-print(predict)
+    model.fit(X,Y, epochs=100, batch_size=100)
+
+
+    model.save('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
+
+
+def main():
+    # read_Data()
+    training()
+    new_model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
+    X = np.asarray(preMoves.copy())
+    Y = np.asarray(postMoves.copy())
+    predict = np.asarray(new_model.predict(X[0]))
+
+
+    maxindex = np.max(predict)
+    minindex = np.min(predict)
+
+    print(predict)
+    print(Y[0])
+
+    print("best index red:"+str(maxindex))
+    print("best index blue:"+str(minindex))
+    print("best index red:"+str(Y[0][0][predict.argmax()]))
+    print("best index blue:"+str(Y[0][0][predict.argmin()]))
+
+main()

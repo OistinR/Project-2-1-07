@@ -78,7 +78,7 @@ public class rundev {
         ar = new ArrayList<>();
         gameState = new GameState();
         round = 1;
-        totalnumgames = 10;
+        totalnumgames = 500;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
