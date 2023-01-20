@@ -14,7 +14,7 @@ postMoves = []
 
 # opening the CSV file
 def read_Data():
-    with open("C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/trainingData6.csv", mode='r') as file:
+    with open("C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/trainingData2.csv", mode='r') as file:
         # reading the CSV file
         csvFile = csv.reader(file)
         # displaying the contents of the CSV file
@@ -75,25 +75,25 @@ def training():
     # model.compile(loss='binary_crossentropy', optimizer="Adam", metrics='accuracy')
     model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
 
-    model.fit(X,Y, epochs=100, batch_size=32)#batch = 20 takes longer for better
+    model.fit(X,Y, epochs=100, batch_size=32)#batch = 5000 games for 100 epoch and 32 batch is 15min+
 
     model.save('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
-    print(model.evaluate(preMoves,postMoves))
+    # print(model.evaluate(preMoves,postMoves))
     winsound.Beep(440, 500)
 
 def main():
 
-    # read_Data()
+    read_Data()
     # print(len(preMoves))
     # print(len(postMoves))
     # print(len(preMoves[0]))
     # print(len(postMoves[0]))
     # print(preMoves)
-    # print(postMoves)
-    training()
+    # # print(postMoves)
+    # training()
     # winsound.Beep(440, 500)
-    # new_model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
-    # print(new_model.evaluate(preMoves, postMoves))
+    new_model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
+    print(new_model.evaluate(preMoves, postMoves))
 
     # print(preMoves[0])
     # X = np.asarray(preMoves.copy())
