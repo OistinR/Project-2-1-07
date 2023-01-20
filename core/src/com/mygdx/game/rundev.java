@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class rundev {
         ar = new ArrayList<>();
         gameState = new GameState();
         round = 1;
-        totalnumgames = 500;
+        totalnumgames = 5000;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -87,7 +88,7 @@ public class rundev {
         draws = new ArrayList<>();
 
         //Initiate fieldsize
-        fieldsize=2;
+        fieldsize=3;
 
         //Create field and initiate bots
 
@@ -129,7 +130,8 @@ public class rundev {
                 for (Double feature:ar) {
                     output.append(feature.toString()).append(",");
                 }
-            output.append("999.0");
+            output.setLength(output.length() - 1);
+//            output.replace(output.length()-1,output.length()-1,"");
             round = 1;
             gamefinished = false;
 
@@ -142,6 +144,7 @@ public class rundev {
 
 
         try {
+            output.append(",999.0");
             writer = new FileWriter(fileWrite);
             writer.write(output.toString());
             writer.close();
@@ -184,7 +187,11 @@ public class rundev {
 
     private void duplicateRemover(ArrayList<Double> before, ArrayList<Double> after ){
         if(before.size()!= after.size()){
-            throw new RuntimeException("length of arraylists is not the equal");
+            System.out.println("sizes not equal");
+            System.out.println(before);
+            System.out.println(after);
+            return;
+//            throw new RuntimeException("length of arraylists is not the equal");
         }
         for (int i = 0; i < after.size(); i++) {
             if(after.get(i).equals(before.get(i))){
@@ -214,15 +221,29 @@ public class rundev {
         ar.add(999.0);
         gameState.update(field);
         ar.addAll(gameState.getState());
+        ar.add(1.0);
         ar.add(999.0);
-        MCSTmove(GameScreen.state.P2P1,false);
-        MCSTmove(GameScreen.state.P2P2,false);
-        gameState.update(field);
-        // ! this is fucky the sub list should be dynamic
-        temp = new ArrayList<>(ar.subList(ar.size() - 1 - gameState.getState().size(), ar.size() - 1));
-        duplicateRemover(temp,gameState.getState());
 
+        MCSTmove(GameScreen.state.P2P1,false);
+
+        gameState.update(field);
+        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
+        duplicateRemover(temp,gameState.getState());
         ar.addAll(gameState.getState());
+
+        ar.add(999.0);
+        gameState.update(field);
+        ar.addAll(gameState.getState());
+        ar.add(-1.0);
+        ar.add(999.0);
+
+        MCSTmove(GameScreen.state.P2P2,false);
+
+        gameState.update(field);
+        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
+        duplicateRemover(temp,gameState.getState());
+        ar.addAll(gameState.getState());
+
 
     }
     private ArrayList<Double> temp;
@@ -274,7 +295,7 @@ public class rundev {
 
     private void MCSTmove(GameScreen.state STATE,boolean player1){
 
-        ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
+        ArrayList<Hexagon> copy_field = new ArrayList<>();
         try {
             for(Hexagon h : field) {
                 copy_field.add(h.clone());
@@ -283,7 +304,6 @@ public class rundev {
 
         count++;
         Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
-
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
@@ -302,6 +322,7 @@ public class rundev {
       dev.init();
       dev.update();
 
+        Toolkit.getDefaultToolkit().beep();
 //        StateWrite sw = new StateWrite();
 //        sw.readFrom();
     }
