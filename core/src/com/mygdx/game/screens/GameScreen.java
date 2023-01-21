@@ -570,8 +570,7 @@ private ArrayList<Double> data = new ArrayList<>();
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
     private void bot2move() {
-        r.calculate(field,1.0f);
-        r.calculate(field,-1.0f);
+        r.calculate(field);
 //        Sim.execMove(field);
 //        //bot2.execMove(field);
 //        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");

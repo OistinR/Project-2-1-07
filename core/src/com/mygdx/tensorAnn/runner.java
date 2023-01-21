@@ -24,8 +24,8 @@ public class runner  extends Bot {
     }
 
     //Whoosplaying = 1 for red -1 for blue
-
-    public void execMove(ArrayList<Hexagon> field, Double Whoisplaying) {
+    @Override
+    public void execMove(ArrayList<Hexagon> field) {
         runtime=0;
         long startTime = System.nanoTime();
         calculate(field);
@@ -34,9 +34,8 @@ public class runner  extends Bot {
         long duration = (endTime - startTime);
         runtime += duration/1000;
     }
-
-    public void calculate(ArrayList<Hexagon> field, float Whoisplaying) {
-
+    @Override
+    public void calculate(ArrayList<Hexagon> field) {
         GameState gs = new GameState();
         gs.update(field);
         Session s = bestBoy.session();
@@ -45,7 +44,7 @@ public class runner  extends Bot {
             features[i]= (float)(double)gs.getState().get(i);
         }
 
-        features[37] = Whoisplaying;
+        features[37] = 1.0f;
 //        System.out.println(features);
 
         FloatBuffer db = FloatBuffer.wrap(features);
@@ -62,40 +61,61 @@ public class runner  extends Bot {
                 maxindex = i;
             }
         }
-        if(Whoisplaying ==1)
-            field.get(maxindex).setMyState(Hexagon.state.RED);
-        else
-            field.get(maxindex).setMyState(Hexagon.state.BLUE);
-    }
 
-    public static void main(String[] args) {
-        /*
-        final MetaGraphDef metaGraphDef;
-        try {
-            metaGraphDef = MetaGraphDef.parseFrom(bestBoy.metaGraphDef());
-            final SignatureDef signatureDef = metaGraphDef.getSignatureDefMap().get("serving_default");
-
-            final TensorInfo inputTensorInfo = signatureDef.getInputsMap()
-                    .values()
-                    .stream()
-                    .filter(Objects::nonNull)
-                    .findFirst()
-                    .orElseThrow(ArithmeticException::new);
-            final TensorInfo outputTensorInfo = signatureDef.getOutputsMap()
-                    .values()
-                    .stream()
-                    .filter(Objects::nonNull)
-                    .findFirst()
-                    .orElseThrow(ArithmeticException::new);
-            System.out.println(inputTensorInfo.getName());
-            System.out.println(outputTensorInfo.getName());
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
+        field.get(maxindex).setMyState(Hexagon.state.RED);
+        gs = new GameState();
+        gs.update(field);
+        s = bestBoy.session();
+        features = new float[38];
+        for (int i = 0; i < 36; i++) {
+            features[i]= (float)(double)gs.getState().get(i);
         }
 
-         */
-    }
-//    List<Tensor<?>> result = s.runner().feed("InputLayer",input).fetch("output").run();
+        features[37] = -1.0f;
+//        System.out.println(features);
 
-//    System.out.print(result);
+        db = FloatBuffer.wrap(features);
+
+        input = Tensor.create(new long[]{1,38}, db);
+        result = s.runner().feed("serving_default_dense_input:0",input).fetch("StatefulPartitionedCall:0").run();
+//        System.out.println(Arrays.deepToString(result.get(0).copyTo(new float[1][37])));
+        output1 = result.get(0).copyTo(new float[1][37]);
+        max = -2;
+        maxindex = 0;
+        for (int i = 0; i <output1[0].length ; i++) {
+            if (output1[0][i]>max){
+                max = output1[0][i];
+                maxindex = i;
+            }
+        }
+        field.get(maxindex).setMyState(Hexagon.state.BLUE);
+    }
+// code used for getting tensor names, not original
+//    public static void main(String[] args) {
+//        /*
+//        final MetaGraphDef metaGraphDef;
+//        try {
+//            metaGraphDef = MetaGraphDef.parseFrom(bestBoy.metaGraphDef());
+//            final SignatureDef signatureDef = metaGraphDef.getSignatureDefMap().get("serving_default");
+//
+//            final TensorInfo inputTensorInfo = signatureDef.getInputsMap()
+//                    .values()
+//                    .stream()
+//                    .filter(Objects::nonNull)
+//                    .findFirst()
+//                    .orElseThrow(ArithmeticException::new);
+//            final TensorInfo outputTensorInfo = signatureDef.getOutputsMap()
+//                    .values()
+//                    .stream()
+//                    .filter(Objects::nonNull)
+//                    .findFirst()
+//                    .orElseThrow(ArithmeticException::new);
+//            System.out.println(inputTensorInfo.getName());
+//            System.out.println(outputTensorInfo.getName());
+//        } catch (InvalidProtocolBufferException e) {
+//            e.printStackTrace();
+//        }
+//
+//         */
+//    }
 }

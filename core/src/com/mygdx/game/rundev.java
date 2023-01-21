@@ -217,17 +217,14 @@ public class rundev {
         MCSTmove(GameScreen.state.P1P1,true);
 //        botpone.calculate(field);
 //        botpone.calculate(field);
-        r.calculate(field,1);
-        r.calculate(field,-1);
+        r.execMove(field);
 
 //        ar.add(999.0);
 //        gameState.update(field);
 //        ar.addAll(gameState.getState());
-        //add features here
+//         add features here
 //        ar.add(1.0);
 //        ar.add(999.0);
-
-
 
 //        gameState.update(field);
 //        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
