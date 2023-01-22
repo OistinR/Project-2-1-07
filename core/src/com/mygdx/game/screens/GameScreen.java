@@ -138,7 +138,7 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot = new RandomBot();
+        bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         dqn = new DQN();

@@ -10,10 +10,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.sql.rowset.RowSetWarning;
 
-import com.badlogic.gdx.utils.Array;
+import java.util.*;
 import com.mygdx.ann.layers.HidLayer;
 import com.mygdx.ann.layers.OutLayer;
 import com.mygdx.game.bots.Bot;
+import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.MCST.MCST;
 import com.mygdx.game.bots.MCST.Node_MCST;
@@ -27,8 +28,9 @@ public class DQN {
 
     private ANN TARGETNET;
     private ANN MAINNET;
+    private ANN ENEMYNET;
 
-    private final double DISCOUNT = 0.9;
+    private final double DISCOUNT = 0.99;
 
     private ScoringEngine SE;
 
@@ -38,12 +40,12 @@ public class DQN {
     private double MEAN;
     private double SD;
 
-    private final double EPSILON = 0.0;
-    private final int trainamount=99999999;
-    private final int summary = 100;
+    private final double EPSILON = 0.1;
+    private final int trainamount=999999999;
+    private final int summary = 10;
 
     private MCST botMCST;
-    private Bot bot = new RandomBot();
+    private Bot bot;
 
     private int boardsize;
 
@@ -52,19 +54,20 @@ public class DQN {
         state = createState();
         boardsize = state.size();
 
-        MAINNET = new ANN(boardsize+1, boardsize, 1, boardsize*6);
-        TARGETNET = new ANN(boardsize+1, boardsize,1, boardsize*6);
+        MAINNET = new ANN(boardsize+1, boardsize, 1, 128);
+        TARGETNET = new ANN(boardsize+1, boardsize,1, 128);
 
         SE = new ScoringEngine();
 
         botMCST = new MCST();
+        bot = new RandomBot();
 
         data = new ArrayList<>();
 
     }
 
     public void execMove(ArrayList<Hexagon> field) {
-        ANN NeuralNet = new ANN(boardsize+1, boardsize, 1, boardsize*6);
+        ANN NeuralNet = new ANN(boardsize+1, boardsize, 1, 128);
         NeuralNet.init();
         NeuralNet.getWBFromCSV();
 
@@ -95,8 +98,8 @@ public class DQN {
         MAINNET.init();
         TARGETNET.init();
 
-        MAINNET.getWBFromCSV();
-        TARGETNET.getWBFromCSV();
+        //MAINNET.getWBFromCSV();
+        //TARGETNET.getWBFromCSV();
 
         int game = 1;
         int annwon=0;
@@ -109,18 +112,20 @@ public class DQN {
         double gameaverage=0;
         double summaryaverage=0;
 
-        double topwp = 0;
+        double topwp = 10;
+
+        int mcstit = 1;
         
         while(game<trainamount) {
-            while(numHexLeft()>=4) {
+            while(numHexLeft(state)>=4) {
                 round++;
                 //bot.execMove(state);
-                MCSTmove(GameScreen.state.P1P1, true);
-                MCSTmove(GameScreen.state.P1P2, true);
-                tmp = state.size()-numHexLeft();
+                MCSTmove(GameScreen.state.P1P1, true, state, mcstit);
+                MCSTmove(GameScreen.state.P1P2, true, state, mcstit);
+                tmp = state.size()-numHexLeft(state);
                 Episode(Hexagon.state.RED);
                 Episode(Hexagon.state.BLUE);
-                test2 = state.size()-numHexLeft() - tmp;
+                test2 = state.size()-numHexLeft(state) - tmp;
                 gameaverage = gameaverage+test2;
             }
             gameaverage = gameaverage/round;
@@ -131,35 +136,120 @@ public class DQN {
                 annwon++;
             } else mcstwon++;
 
-            if(game%100==0) {
+            if(game%10==0) {
                 TARGETNET.copyWB(MAINNET);
             }
 
             if(game%summary==0) {
-                StandardMD();
-                ArrayList<Hexagon> teststate = createState();
-                teststate.get(1).setMyState(Hexagon.state.RED); teststate.get(4).setMyState(Hexagon.state.BLUE);
-                teststate.get(2).setMyState(Hexagon.state.RED); teststate.get(7).setMyState(Hexagon.state.BLUE);
-                ArrayList<Double> testlabels = createLabels(teststate, 1, 1);
-                ArrayList<Double> fwp = MAINNET.execFP(testlabels);
-                double error = MAINNET.computeError(fwp, testlabels).get(MAINNET.computeError(fwp, testlabels).size()-1);
-                System.out.println("Error of ANN: "+error);
+                File LL = new File("core\\src\\com\\mygdx\\ann\\data\\LearnLog.txt");
 
-                double a = summaryaverage/summary;
-                System.out.println("Average legal moves played... "+a);
+                int num = game-summary;
+                System.out.println("Summary of game... "+num+" - "+game);
+                try {
+                    FileWriter fileWriter = new FileWriter(LL,true);
+                    StringBuilder line = new StringBuilder();
+                    line.append("Summary of game... "+num+" - "+game);   
+                    line.append("\n");
+                    fileWriter.write(line.toString());
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 if(annwon==0) {
-                    int num = game-summary;
-                    System.out.println("Win percentage: 0.0%" + " ...games: "+num+" - "+game);
+                    num = game-summary;
+                    System.out.println("Win percentage BOB (Double DQN): 0.0%");
+                    try {
+                        FileWriter fileWriter = new FileWriter(LL,true);
+                        StringBuilder line = new StringBuilder();
+                        line.append("Win percentage BOB (Double DQN): 0.0%");   
+                        line.append("\n");
+                        fileWriter.write(line.toString());
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    int num = game-summary;
+                    num = game-summary;
                     double winperc =((double)annwon / ((double)annwon + (double)mcstwon)) *100;
-                    System.out.println("Win percentage ANN: "+winperc +"%" + " ...games: "+num+" - "+game);
+                    System.out.println("Win percentage BOB (Double DQN): "+winperc +"%");
+                    try {
+                        FileWriter fileWriter = new FileWriter(LL,true);
+                        StringBuilder line = new StringBuilder();
+                        line.append("Win percentage BOB (Double DQN): "+winperc +"%");   
+                        line.append("\n");
+                        fileWriter.write(line.toString());
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if(winperc>topwp) {
                         topwp = winperc;
                         System.out.println("Writing to .csv ...");
                         writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
                     }
+                    if(winperc>=50.0) {
+                        mcstit = mcstit + 1;
+                        int temp = mcstit-1;
+                        System.out.println("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);
+                        try {
+                            FileWriter fileWriter = new FileWriter(LL,true);
+                            StringBuilder line = new StringBuilder();
+                            line.append("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);   
+                            line.append("\n");
+                            fileWriter.write(line.toString());
+                            fileWriter.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        topwp=10;
+                    }
+                }
+
+                double a = summaryaverage/summary;
+                System.out.println("Average legal moves played... "+a);
+                try {
+                    FileWriter fileWriter = new FileWriter(LL,true);
+                    StringBuilder line = new StringBuilder();
+                    line.append("Average legal moves played... "+a);   
+                    line.append("\n");
+                    fileWriter.write(line.toString());
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                ArrayList<Hexagon> teststate = createState();
+                teststate.get(1).setMyState(Hexagon.state.RED); teststate.get(4).setMyState(Hexagon.state.BLUE);
+                teststate.get(2).setMyState(Hexagon.state.RED); teststate.get(7).setMyState(Hexagon.state.BLUE);
+                ArrayList<Double> testlabels = createLabels2(teststate);
+                ArrayList<Double> fwp = MAINNET.execFP(testlabels);
+                double error = MAINNET.computeError(fwp, testlabels).get(MAINNET.computeError(fwp, testlabels).size()-1);
+                System.out.println("Error of ANN: "+error);
+
+                try {
+                    FileWriter fileWriter = new FileWriter(LL,true);
+                    StringBuilder line = new StringBuilder();
+                    line.append("Error of ANN: "+error);   
+                    line.append("\n");
+                    fileWriter.write(line.toString());
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Playing against MCST with "+mcstit+" iterations.");
+
+                try {
+                    FileWriter fileWriter = new FileWriter(LL,true);
+                    StringBuilder line = new StringBuilder();
+                    line.append("Playing versus MCST running "+mcstit+" iterations");   
+                    line.append("\n");
+                    line.append(" ");
+                    line.append("\n");
+                    fileWriter.write(line.toString());
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
                 annwon=0;
@@ -196,6 +286,7 @@ public class DQN {
 
     public void Episode(Hexagon.state colour) {
         ArrayList<Double> labels = new ArrayList<>();
+
         double reward = 0;
         int Qm = 0;
         int Qt = 0;
@@ -216,32 +307,54 @@ public class DQN {
             SE.calculate(clonestate);
             reward = reward + (SE.getBlueScore() - SE.getRedScore());
 
-            // * Perform action at to create state st+1 and evaluate it at the TARGET Network
-            ArrayList<Double> input = getInputfromState(clonestate,colour);
-            ArrayList<Double> ytarget = TARGETNET.execFP(input);
+            ArrayList<Double> input = new ArrayList<>();
+            ArrayList<Double> ytarget = new ArrayList<>();
+            for(int i=0; i<1; i++) {
+                // * Perform action at to create state st+1 and evaluate it at the TARGET Network
+                input = getInputfromState(clonestate,colour);
+                ytarget = TARGETNET.execFP(input);
 
-            // * Get max LEGAL Q value of output of TARGET Network
-            Qt = getLegalQmax(clonestate, ytarget);
-            if(colour==Hexagon.state.RED) {
-                clonestate.get(Qt).setMyState(Hexagon.state.BLUE);
-            } else clonestate.get(Qt).setMyState(Hexagon.state.RED);
+                // * Get max LEGAL Q value of output of TARGET Network
+                Qt = getLegalQmax(clonestate, ytarget);
+                if(colour==Hexagon.state.RED && i%2==0) {
+                    clonestate.get(Qt).setMyState(Hexagon.state.BLUE);
+                } else if(colour==Hexagon.state.BLUE && i%2!=0) {
+                    clonestate.get(Qt).setMyState(Hexagon.state.BLUE);
+                } else clonestate.get(Qt).setMyState(Hexagon.state.RED);
 
-            // * Get reward at state st+1
-            SE.calculate(clonestate);
-            reward = reward + (SE.getBlueScore() - SE.getRedScore());
 
+                // * Get reward at state st+1
+                SE.calculate(clonestate);
+                reward = reward + (SE.getBlueScore() - SE.getRedScore());
+
+                // * Play bot if in correct state
+                if(numHexLeft(clonestate)>=4 && i!=0) {
+                    if(colour==Hexagon.state.RED && i%2==0) {
+                        MCSTmove(GameScreen.state.P1P1, true, clonestate,100);
+                        MCSTmove(GameScreen.state.P1P2, true, clonestate,100);     
+                        //bot.execMove(clonestate);               
+                    } else if(colour==Hexagon.state.BLUE && i%2!=0) {
+                        MCSTmove(GameScreen.state.P1P1, true, clonestate,100);
+                        MCSTmove(GameScreen.state.P1P2, true, clonestate,100);
+                        //bot.execMove(clonestate);
+                    }
+                }
+            }
             // * Compute the loss for the Q(s,a) value chosen
-            //data.add(reward);
-            reward = (reward+3.9)/68;
-            double loss = reward+DISCOUNT*ytarget.get(Qt);
+            double loss=0;
+            if(reward>0) {
+                loss = 1+DISCOUNT*ytarget.get(Qt);
+            } else loss = -1+DISCOUNT*ytarget.get(Qt);
+            //double loss = (reward+4)/70+DISCOUNT*ytarget.get(Qt);
             labels.add(loss);
 
             // * Update Qm index and reset reward
             Qm++;
             reward = 0;
-
         }
 
+        labels = createLabels(state, labels);
+    
         // ! Back propegate using the labels created
         ArrayList<Double> input = getInputfromState(state,colour);
         ArrayList<Double> ymain = MAINNET.execFP(input);
@@ -249,55 +362,44 @@ public class DQN {
                 
         // ! Play the move with the highest Q value to progress the game
         int Q = getLegalQmax(state, ymain);
-        state.get(Q).setMyState(colour);
-
-    }
-
-
-    public void Episodetest(Hexagon.state colour) {
-        double reward = 0;
-        int Q = 0;
-
-        ArrayList<Double> input = getInputfromState(state,colour);
-        ArrayList<Double> ymain = MAINNET.execFP(input);
-
         double U = ThreadLocalRandom.current().nextDouble();
 
         if(U>EPSILON) {
-            Q = getQmax(ymain);
-            reward = 1.0;
-            state.get(Q).setMyState(colour);
+            Q = getLegalQmax(state,ymain);
         } else {
-            Q = ThreadLocalRandom.current().nextInt(0,state.size());
-            reward = 1.0;
-            state.get(Q).setMyState(colour);
+            Q = getLegalQ(state, ymain).get(ThreadLocalRandom.current().nextInt(0,getLegalQ(state, ymain).size()));
         }
 
-       //System.out.println(MAINNET.getOutputLayer().getNeurons().get(0).getSynapses().get(0).getWeight());
+        state.get(Q).setMyState(colour);
+        
+    }
 
-        double label = reward;
-
-        ArrayList<Double> labels = createLabels(state, Q, label);
-
-        // !
-        MAINNET.execBP(ymain, labels);
-
+    public ArrayList<Double> createLabels2(ArrayList<Hexagon> field) {
+        ArrayList<Double> toreturn = new ArrayList<>();
+        for(int i=0; i<field.size(); i++) {
+            toreturn.add(0.0);
+        }
+        return toreturn;
     }
 
 
-    public ArrayList<Double> createLabels(ArrayList<Hexagon> field, int index, double value) {
-        ArrayList<Double> toreturn = new ArrayList<>();
+    public ArrayList<Double> createLabels(ArrayList<Hexagon> field, ArrayList<Double> label) {
         for(int i=0; i<field.size(); i++) {
-            toreturn.add(1.0);
-            // if(i==index) {
-            //     toreturn.set(i, value);
-            // }
-            if(field.get(i).getMyState()!=Hexagon.state.BLANK) {
-                toreturn.set(i, -1.0);
+            if(field.get(i).getMyState()==Hexagon.state.BLANK){
+                label.set(i, 0.0);
             }
-            
         }
-        return toreturn;
+        return label;
+    }
+
+    public ArrayList<Integer> getLegalQ(ArrayList<Hexagon> field, ArrayList<Double> list) {
+        ArrayList<Integer> a = new ArrayList<>();
+        for(int i=0; i<list.size(); i++) {
+            if((field.get(i).getMyState()==Hexagon.state.BLANK)) {
+                a.add(i);
+            }
+        }
+        return a;
     }
 
     public int getLegalQmax(ArrayList<Hexagon> field, ArrayList<Double> list) {
@@ -310,7 +412,6 @@ public class DQN {
             }
         }
         return maxi;
-
     }
 
     public int getQmax(ArrayList<Double> list) {
@@ -358,35 +459,40 @@ public class DQN {
         }
         return field;
     }
+    
 
-    private void MCSTmove(GameScreen.state STATE, boolean player1){
+    private void MCSTmove(GameScreen.state STATE, boolean player1, ArrayList<Hexagon> field, int numiteration){
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
-            for(Hexagon h : state) {
+            for(Hexagon h : field) {
                 copy_field.add(h.clone());
             }
         } catch (Exception e) {}
 
-        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1, numiteration);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
-            state.get(bestMove.move_played).setMyState(Hexagon.state.RED);
+            field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
         else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
-            state.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
+            field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
         }
         else{
             throw new IllegalStateException("The children phase is not assign correctly: ");
         }
     }
 
-    public int numHexLeft() {
+    public int numHexLeft(ArrayList<Hexagon> field) {
         int num=0;
-        for(Hexagon h:state) {
+        for(Hexagon h:field) {
             if((h.getMyState()==Hexagon.state.BLANK)) {
                 num++;
             }
         }
         return num;
+    }
+
+    public double Tanh(double x) {
+        return (Math.exp(x)-Math.exp(-x))/(Math.exp(x)+Math.exp(-x));
     }
 
     public static void main(String[] args) {

@@ -91,7 +91,7 @@ public class MCST {
     }
 
     // Runs the MCTS algorithm for a fixed number of iterations and returns the best move
-    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE, boolean Player1) {
+    public Node_MCST runMCST(ArrayList<Hexagon> field, GameScreen.state STATE, boolean Player1, int iterationNum) {
         this.player1 = Player1;
         /*
         TODO find a way if it's better to use numIterations or to make it run for a certain amount of time
@@ -106,7 +106,7 @@ public class MCST {
                 throw new IllegalStateException("Unexpected value of the STATE");
         }
 
-        int numIterations = 500;
+        int numIterations = iterationNum;
         long start_time = System.nanoTime();
         long end_time = System.nanoTime();
 
