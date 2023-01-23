@@ -10,9 +10,9 @@ import java.util.Random;
 
 public class Node_MCST {
 
-    protected ArrayList<Hexagon> boardState;
+    public ArrayList<Hexagon> boardState;
     public Node_MCST parent;
-    protected List<Integer> moves;
+    public List<Integer> moves;
     public int move_played;
     public int winCount;
     public int visitCount;
@@ -20,7 +20,11 @@ public class Node_MCST {
     public List<Node_MCST> children;
     public GameScreen.state phase;
 
-    public Node_MCST(ArrayList<Hexagon> field, List<Integer> moves, int move_played, GameScreen.state phase){
+    public double priorProb;
+    public double actionValue;
+
+
+    public Node_MCST(ArrayList<Hexagon> field, List<Integer> moves, int move_played, GameScreen.state phase, double priorProb){
             this.boardState = field;
             this.parent = null;
             this.moves = moves;
@@ -31,6 +35,9 @@ public class Node_MCST {
 
             visitCount = 0;
             children = new ArrayList<>();
+
+            this.priorProb = priorProb;
+            actionValue = 0;
     }
 
     public boolean isLeaf(){

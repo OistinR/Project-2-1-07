@@ -24,9 +24,9 @@ public class ANN {
 
     private final double ACCURACY = 0.001;
 
-    InLayer ILAYER;
-    ArrayList<HidLayer> HLAYERS;
-    OutLayer OLAYER;
+    public InLayer ILAYER;
+    public ArrayList<HidLayer> HLAYERS;
+    public OutLayer OLAYER;
 
 
     
@@ -206,7 +206,21 @@ public class ANN {
                 double weight = outputneurons.get(i).getSynapses().get(j).getWeight();
 
                 double dz = derivReLU(outputneurons.get(i).getZ()); //outputneurons.get(i).getY() * (1-outputneurons.get(i).getY());
-                double dy = -1*(labels.get(i)-outputneurons.get(i).getY());
+                //double dy = -1*(labels.get(i)-outputneurons.get(i).getY());
+                double dy = Math.pow((labels.get(labels.size()-1) - y.get(y.size()-1)),2);
+                //System.out.println(dy);
+                double loss = 0;
+                for (int k = 0; k < labels.size()-1; k++) {
+                    //System.out.println("labels " + labels.get(k));
+                    //System.out.println("system output " + y.get(k));
+                    loss += -labels.get(k)*Math.log(y.get(k));
+                    //System.out.println(loss);
+                }
+                dy += loss;
+
+                //System.out.println(dy);
+
+                // TODO loss function
                 
                 // ! Set the initial delta of the output neurons
                 outputneurons.get(i).setDelta(dz*dy);
@@ -318,14 +332,14 @@ public class ANN {
                 z = z + (outneuronlist.get(j).getSynapses().get(i).getWeight()*hiddenLayers.get(hiddenLayers.size()-1).getNeurons().get(i).getH());
             }
             z = z + outneuronlist.get(j).getBias();
-
             outneuronlist.get(j).setZ(z);
             outneuronlist.get(j).setY(ReLU(z));
-
-            zlist.add(z);
+            if(j!=outneuronlist.size()-1)
+                zlist.add(z);
         }
-        for(int i=0; i<outneuronlist.size(); i++) {
-            //outneuronlist.get(i).setY(SoftMax(zlist, i));
+        for(int i=0; i<outneuronlist.size()-1; i++) {
+            outneuronlist.get(i).setY(SoftMax(zlist, i));
+            //System.out.println(SoftMax(zlist, i));
         }
 
 
@@ -349,17 +363,19 @@ public class ANN {
     }
 
     public double ReLU(double x) {
-        return Math.max(0.0, x);
+        if(x<0){
+            return 0.01*x;
+        } else return x;
     }
 
     public double derivReLU(double x) {
         if(x<0) {
-            return 0;
-        } else if(x>0) {
+            return 0.01;
+        } else {
             return 1;
         }
-        return 0;
     }
+
 
     public double SoftMax(ArrayList<Double> list, int index) {
         double sum=0;

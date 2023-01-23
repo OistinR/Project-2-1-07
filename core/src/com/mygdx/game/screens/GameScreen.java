@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.ann.ANN;
 import com.mygdx.ann.DQN;
+import com.mygdx.ann.RL;
 import com.mygdx.game.Omega;
 
 import com.mygdx.game.bots.Bot;
@@ -84,6 +85,7 @@ public class GameScreen implements Screen {
     private PieButton pieButton;
 
     private DQN dqn;
+    private RL rln;
 
     /**
      *
@@ -142,6 +144,7 @@ public class GameScreen implements Screen {
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         dqn = new DQN();
+        rln = new RL();
     }
 
     @Override
@@ -539,7 +542,8 @@ public class GameScreen implements Screen {
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
     private void bot2move() {
-        dqn.execMove(field);
+        //dqn.execMove(field);
+        rln.execMove(field);
         //bot2.execMove(field);
         //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
