@@ -1,5 +1,6 @@
 package com.mygdx.game.experiment;
 
+import com.mygdx.game.bots.FitnessEngine;
 import com.mygdx.game.coordsystem.Hexagon;
 
 import java.util.ArrayList;
@@ -35,11 +36,11 @@ public class GameState {
         state = new ArrayList<>();
         for (Hexagon h:field) {
             switch (h.getMyState()) {
-                case RED: state.add(1.0);
+                case RED: state.add(1.0+h.getFitness1());
                     break;
-                case BLUE: state.add(-1.0);
+                case BLUE: state.add(-1.0+h.getFitness1());
                     break;
-                default: state.add(0.0);
+                default: state.add(0.0+h.getFitness1());
                     break;
             }
         }
@@ -48,15 +49,19 @@ public class GameState {
 //            state.add(features[i]);
 //        }
     }
+    FitnessEngine fe;
+
     public void update(ArrayList<Hexagon>field){
+        fe = new FitnessEngine(Hexagon.state.BLUE, Hexagon.state.RED,false);
+        fe.update(field);
         state = new ArrayList<>();
         for (Hexagon h:field) {
             switch (h.getMyState()) {
-                case RED: state.add(1.0);
+                case RED: state.add((1.0));
                     break;
-                case BLUE: state.add(-1.0);
+                case BLUE: state.add((-1.0));
                     break;
-                default: state.add(0.0);
+                default: state.add((0.0));
                     break;
             }
         }

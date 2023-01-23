@@ -35,6 +35,7 @@ public class OLABot extends Bot{
         se.calculate(clone1);
         int worstpos=-1;
         int worstscore=se.getRedScore();
+        ArrayList<Double> scoreM = new ArrayList<>();
 
         for(Hexagon h:clone1) {
             if(h.getMyState()==Hexagon.state.BLANK) {

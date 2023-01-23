@@ -106,7 +106,7 @@ public class MCST {
                 throw new IllegalStateException("Unexpected value of the STATE");
         }
 
-        int numIterations = 500;
+        int numIterations = 300;
         long start_time = System.nanoTime();
         long end_time = System.nanoTime();
 

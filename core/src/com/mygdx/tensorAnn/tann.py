@@ -1,26 +1,34 @@
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
+from tensorflow.python.keras.optimizers import adam_v2
 from tensorflow.python.keras import Sequential
-from tensorflow.python.keras.layers import Dense, Flatten
+from tensorflow.python.keras.layers import Dense
 import numpy as np
 from sklearn.metrics import accuracy_score
 import winsound
+import matplotlib.pyplot as plt
+from matplotlib import rcParams
+
+
 
 
 print(tf.__version__)
 import csv
 preMoves = []
 postMoves = []
+preMR = []
+postMR = []
 
 # opening the CSV file
 def read_Data():
-    with open("C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/trainingData2.csv", mode='r') as file:
+    with open("C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/trainingData3.csv", mode='r') as file:
         # reading the CSV file
         csvFile = csv.reader(file)
         # displaying the contents of the CSV file
 
         pregame = []
         postgame = []
+
         flag = False
         print("please wait...")
         for lines in csvFile:
@@ -36,91 +44,105 @@ def read_Data():
                     postgame.clear()
                     flag = True
                 elif flag:
-                    # print(pregame)
                     pregame.insert(pregame.__sizeof__(), float(num))
                 else:
                     postgame.insert(postgame.__sizeof__(), abs(float(num)))
         print("read successful")
+        # preM = [array for array in preMoves if array[-1]==1.0]
+        i = 0
+        k = len(preMoves)
+
+        for array in preMoves:
+            if(i%2 == 0): #red
+                preMR.insert(preMR.__sizeof__(),array)
+            i= i +1#
+        print(preMR[0])
+
+        for array in postMoves:
+            if(i%2 == 0): #red
+                postMR.insert(postMR.__sizeof__(),array)
+            i= i +1
+        print(postMR[0])
+        print("data processing compelet.")
+
+
 
 
 def training():
-    read_Data()
-    #preMoves = []
-    #postMoves = []
 
-    # X_train, X_test, Y_train, Y_test = train_test_split(preMoves, postMoves)
-    #
-    # X_train.head()
-    # # Y_train.head()
-    # print(len(preMoves[0]))
-    # print(len(preMoves[0][0]))
-    X = np.asarray(preMoves.copy())
+    X = np.asarray(preMR.copy())
+    Y = np.asarray(postMR.copy())
 
-    Y = np.asarray(postMoves.copy())
+    model = Sequential()
+    model.add(Dense(units=2000, activation= 'relu', input_dim = 38))
+    model.add(Dense(units=1000, activation= 'relu'))
+    model.add(Dense(37, activation='softmax')) #96.8 tan tan  tan sofmax 0.05? on test data
+    model.compile(loss='binary_crossentropy', optimizer='Adam', metrics='accuracy')
 
-    # X_train, X_test, Y_train, Y_split = train_test_split(X,Y, test_size=0.2)
-    # ? this needed?
+    # model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model5')
 
-    # for list in preMoves:
-    #     print(len(list))
-    #     for list2 in list:
-    #         print(list2)
+    inital_history = model.fit(X,Y, epochs=5, batch_size=32) #batch = 5000 games for 100 epoch and 32 batch is 15min+
 
-    # model = Sequential()
-    # model.add(Dense(units=38, activation= 'relu', input_dim = 38))
-    # model.add(Dense(units=220, activation='relu'))
-    # model.add(Dense(units=120, activation='relu')) # 96% relu relu softmax
-    # model.add(Dense(37, activation='softmax')) #96.8 tan tan  tan sofmax 0.05? on test data
-    #
-    # model.compile(loss='binary_crossentropy', optimizer="Adam", metrics='accuracy')
-    model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
+    rcParams['figure.figsize'] = (18, 8)
+    rcParams['axes.spines.top'] = False
+    rcParams['axes.spines.right'] = False
+    plt.plot(np.arange(1, 6), inital_history.history['loss'], label='Loss', lw=3)
+    plt.plot(np.arange(1, 6), inital_history.history['accuracy'], label='Accuracy', lw=3)
+    plt.title('Evaluation metrics', size=20)
+    plt.xlabel('Epoch', size=5)
+    plt.legend()
+    plt.savefig('lossvsacceval_vs_lr.jpg', dpi=300, bbox_inches='tight');
 
-    model.fit(X,Y, epochs=100, batch_size=32)#batch = 5000 games for 100 epoch and 32 batch is 15min+
+    model.save('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model5')
 
-    model.save('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
     # print(model.evaluate(preMoves,postMoves))
     winsound.Beep(440, 500)
 
-def main():
 
+def main():
     read_Data()
+    winsound.Beep(440, 500)
     # print(len(preMoves))
     # print(len(postMoves))
     # print(len(preMoves[0]))
     # print(len(postMoves[0]))
     # print(preMoves)
-    # # print(postMoves)
+    # print(postMoves)
     # training()
-    # winsound.Beep(440, 500)
-    new_model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model1')
-    print(new_model.evaluate(preMoves, postMoves))
+    # winsound.Beep(440, 200)
 
-    # print(preMoves[0])
-    # X = np.asarray(preMoves.copy())
-    # Y = np.asarray(postMoves.copy())
-    # predict: object = new_model.predict(preMoves)
-    # j = 0
-    #
-    # for array in predict:
-    #     array[array.argmax()] = 1.0
-    #     i = 0
-    #     while i< len(array):
-    #         if array[i] < 1.0:
-    #             data = 0.0
-    #
-    # print(predict[0])
-    # print(predict[0].argmax())
-    # print(predict[0])
+    new_model = tf.keras.models.load_model('C:/Users/Oistín/Documents/Github/Project-2-1-07/core/src/com/mygdx/tensorAnn/model47')
+    print(new_model.output_names)
+
+# config = new_model.get_config();
+    # # config['']
+    # print(config);
+    # new_model.layers[0]._name = "input"
+    # new_model.layers[-1]._name = "output"
+
+
+    # print(new_model.evaluate(preMoves, postMoves))
+
+    # winsound.Beep(440, 500)
+
+    # i = 0
+    # while i<10:
+    #     predict  = new_model.predict([preMoves[i]])
+    #     print(predict[0])
+    #     print(predict[0].argmax())
+    #     print(postMoves[i])
+    #     print(postMoves[i][predict[0].argmax()])
+    #     i+=1
+
     # winsound.Beep(440, 500)
     # print(accuracy_score(postMoves, predict))
-    # # maxindex = np.max(predict)
+    # maxindex = np.max(predict)
 
     # print(predict)
     # print(postMoves[0])
 
     # print("best index red:"+str(maxindex))
     # print("best index red:"+str(postMoves[0][predict.argmax()]))
-    #
 
 
 

@@ -34,6 +34,7 @@ import com.mygdx.game.gametreemc.MonteCarloTree;
 import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
+import com.mygdx.tensorAnn.runner;
 
 public class rundev {
     public enum state{
@@ -74,12 +75,12 @@ public class rundev {
     private StateWrite sw;
 
     public void init() {
-        fileWrite = new File("core\\src\\com\\mygdx\\trainingData.csv");
+        fileWrite = new File("core\\src\\com\\mygdx\\SENDTHIStrainingData.csv");
         // Initiate variables
         ar = new ArrayList<>();
         gameState = new GameState();
         round = 1;
-        totalnumgames = 5000;
+        totalnumgames = 100;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -93,11 +94,12 @@ public class rundev {
         //Create field and initiate bots
 
 
-        botMCST = new MCST();
 
+        botMCST = new MCST();
         // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
-        botpone = new RandomBot();
-        botptwo = new RandomBot();
+//        botpone = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+        botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+//        botptwo = new RandomBot();
 
         createHexagonFieldDefault();
     }
@@ -112,26 +114,24 @@ public class rundev {
         output = new StringBuilder();
         int i = 0;
         while (i < totalnumgames) {
-            ar.clear();
-            if (i>0)
-            output.append("\n");
+//            ar.clear();
+//            if (i>0)
+//            output.append("\n");
 
             while (!gamefinished) {
                 updateState();
                 makeMove();
                 updateState();
-            } 
-//            if(i%10==0) {
-//                System.out.println(i+" games simulated.");
-//            }
-
-
+            }
+            if(i%10==0) {
+                System.out.println(i+" games simulated.");
+            }
 
                 for (Double feature:ar) {
                     output.append(feature.toString()).append(",");
                 }
-            output.setLength(output.length() - 1);
-//            output.replace(output.length()-1,output.length()-1,"");
+//            output.setLength(output.length() - 1);
+//          output.replace(output.length()-1,output.length()-1,"");
             round = 1;
             gamefinished = false;
 
@@ -143,24 +143,24 @@ public class rundev {
         }
 
 
-        try {
-            output.append(",999.0");
-            writer = new FileWriter(fileWrite);
-            writer.write(output.toString());
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("error with IO: ");
-            e.printStackTrace();
-        }
+//        try {
+//            output.append(",999.0");
+//            writer = new FileWriter(fileWrite);
+//            writer.write(output.toString());
+//            writer.close();
+//        } catch (IOException e) {
+//            System.out.println("error with IO: ");
+//            e.printStackTrace();
+//        }
 
 
         winperc1 = ((double) bot1wins.size() / (double) totalnumgames) * 100;
         winperc2 = ((double) bot2wins.size() / (double) totalnumgames) * 100;
         winpercd = ((double) draws.size() / (double) totalnumgames) * 100;
 //
-//        System.out.println("Bot 1 number of wins: " + bot1wins.size() + " Win percentage: " + winperc1 + " %");
-//        System.out.println("Bot 2 number of wins: " + bot2wins.size() + " Win percentage: " + winperc2 + " %");
-//        System.out.println("Number of draws: " + draws.size() + " Draw percentage: " + winpercd + " %");
+        System.out.println("Bot 1 number of wins: " + bot1wins.size() + " Win percentage: " + winperc1 + " %");
+        System.out.println("Bot 2 number of wins: " + bot2wins.size() + " Win percentage: " + winperc2 + " %");
+        System.out.println("Number of draws: " + draws.size() + " Draw percentage: " + winpercd + " %");
 
         this.finalWinRate = winperc1;
     }
@@ -210,40 +210,43 @@ public class rundev {
         }
         return num;
     }
-
+    runner r = new runner();
 
     public void makeMove() {
+        MCSTmove(GameScreen.state.P1P2,true);
+        MCSTmove(GameScreen.state.P1P1,true);
+//        botpone.calculate(field);
+//        botpone.calculate(field);
+        r.calculate(field,1);
+        r.calculate(field,-1);
 
-        //
+//        ar.add(999.0);
+//        gameState.update(field);
+//        ar.addAll(gameState.getState());
+        //add features here
+//        ar.add(1.0);
+//        ar.add(999.0);
 
-        botpone.execMove(field);
 
-        ar.add(999.0);
-        gameState.update(field);
-        ar.addAll(gameState.getState());
-        ar.add(1.0);
-        ar.add(999.0);
 
-        MCSTmove(GameScreen.state.P2P1,false);
+//        gameState.update(field);
+//        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
+//        duplicateRemover(temp,gameState.getState());
+//        ar.addAll(gameState.getState());
 
-        gameState.update(field);
-        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
-        duplicateRemover(temp,gameState.getState());
-        ar.addAll(gameState.getState());
+//        ar.add(999.0);
+//        gameState.update(field);
+//        ar.addAll(gameState.getState());
+        //add features here
+//        ar.add(-1.0);
+//        ar.add(999.0);
 
-        ar.add(999.0);
-        gameState.update(field);
-        ar.addAll(gameState.getState());
-        ar.add(-1.0);
-        ar.add(999.0);
 
-        MCSTmove(GameScreen.state.P2P2,false);
 
-        gameState.update(field);
-        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
-        duplicateRemover(temp,gameState.getState());
-        ar.addAll(gameState.getState());
-
+//        gameState.update(field);
+//        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
+//        duplicateRemover(temp,gameState.getState());
+//        ar.addAll(gameState.getState());
 
     }
     private ArrayList<Double> temp;
@@ -317,12 +320,14 @@ public class rundev {
 
 
     public static void main(String[] args) {
+        rundev dev = new rundev();
+        dev.init();
+        dev.update();
 
-      rundev dev = new rundev();
-      dev.init();
-      dev.update();
+        
+        
+//        Toolkit.getDefaultToolkit().beep();
 
-        Toolkit.getDefaultToolkit().beep();
 //        StateWrite sw = new StateWrite();
 //        sw.readFrom();
     }

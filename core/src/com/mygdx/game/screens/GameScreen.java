@@ -27,6 +27,7 @@ import com.mygdx.game.experiment.GameState;
 
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.mygdx.tensorAnn.runner;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -564,14 +565,16 @@ private ArrayList<Double> data = new ArrayList<>();
         //System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
 
     }
-
+    runner r = new runner();
     /**
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
     private void bot2move() {
-        Sim.execMove(field);
-        //bot2.execMove(field);
-        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
+        r.calculate(field,1.0f);
+        r.calculate(field,-1.0f);
+//        Sim.execMove(field);
+//        //bot2.execMove(field);
+//        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
 
