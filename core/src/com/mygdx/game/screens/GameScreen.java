@@ -141,7 +141,7 @@ public class GameScreen implements Screen {
         bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
-        dqn = new DQN();
+        dqn = new DQN(100);
     }
 
     @Override
