@@ -1,25 +1,17 @@
 package com.mygdx.tensorAnn;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.experiment.GameState;
-import jdk.vm.ci.meta.Assumptions;
 import org.tensorflow.*;
-import org.tensorflow.framework.MetaGraphDef;
-import org.tensorflow.framework.SignatureDef;
-import org.tensorflow.framework.TensorInfo;
 
-import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
-public class runner  extends Bot {
+public class PredictBot extends Bot {
     SavedModelBundle bestBoy;
 
-    public runner(){
+    public PredictBot(){
         bestBoy = SavedModelBundle.load("C:\\Users\\Oistín\\Documents\\Github\\Project-2-1-07\\core\\src\\com\\mygdx\\tensorAnn\\model47", "serve");
     }
 

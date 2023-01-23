@@ -1,28 +1,14 @@
 package com.mygdx.game;
 
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree;
-import com.badlogic.gdx.utils.Array;
-
 import com.mygdx.game.bots.Bot;
-import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MCST.MCST;
 import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
-import com.mygdx.game.bots.OLABot;
-
-import com.mygdx.game.bots.TreeBotMC;
-
-import com.mygdx.game.bots.RandomBot;
-import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.coordsystem.Hexagon;
 
@@ -30,11 +16,9 @@ import com.mygdx.game.experiment.GameState;
 
 import com.mygdx.game.experiment.StateWrite;
 import com.mygdx.game.experiment.experiment;
-import com.mygdx.game.gametreemc.MonteCarloTree;
-import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
-import com.mygdx.tensorAnn.runner;
+import com.mygdx.tensorAnn.PredictBot;
 
 public class rundev {
     public enum state{
@@ -100,6 +84,7 @@ public class rundev {
 //        botpone = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
         botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
 //        botptwo = new RandomBot();
+        botptwo = new PredictBot();
 
         createHexagonFieldDefault();
     }
@@ -210,14 +195,13 @@ public class rundev {
         }
         return num;
     }
-    runner r = new runner();
 
     public void makeMove() {
         MCSTmove(GameScreen.state.P1P2,true);
         MCSTmove(GameScreen.state.P1P1,true);
 //        botpone.calculate(field);
 //        botpone.calculate(field);
-        r.execMove(field);
+        botptwo.calculate(field);
 
 //        ar.add(999.0);
 //        gameState.update(field);

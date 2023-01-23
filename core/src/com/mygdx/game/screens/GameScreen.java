@@ -7,17 +7,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.ann.ANN;
-import com.mygdx.ann.DQN;
 import com.mygdx.game.Omega;
 
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.FitnessEngine;
-import com.mygdx.game.bots.FitnessEngine2;
-import com.mygdx.game.bots.FitnessGroupBot;
-import com.mygdx.game.bots.MaxN_Paranoid_Bot;
-import com.mygdx.game.bots.OLABot;
-import com.mygdx.game.bots.RandomBot;
-import com.mygdx.game.bots.gametree.TreeBot;
 
 import com.mygdx.game.buttons.ConfirmButton;
 import com.mygdx.game.buttons.UndoButton;
@@ -27,9 +20,8 @@ import com.mygdx.game.experiment.GameState;
 
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.mygdx.tensorAnn.runner;
+import com.mygdx.tensorAnn.PredictBot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 //TODO: Bug where the confirm button is not being pressed by the bot, you have to press it yourself (if you press undo for the bot move then the game crashes)
@@ -150,7 +142,8 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot2 = new RandomBot();
+        bot2 = new PredictBot();
+
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         Sim = new ANN(1,1,1,1);
@@ -565,14 +558,14 @@ private ArrayList<Double> data = new ArrayList<>();
         //System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
 
     }
-    runner r = new runner();
+
     /**
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
     private void bot2move() {
-        r.calculate(field);
+
 //        Sim.execMove(field);
-//        //bot2.execMove(field);
+        bot2.execMove(field);
 //        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
