@@ -1,6 +1,5 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -35,7 +34,7 @@ public class PVBSelectionScreen implements Screen {
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         bots1 = new SelectBox<String>(menuSkin);
-        bots1.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
+        bots1.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "Depth Limiting Tree bot","MCTS", "Predict bot (supervised learning)", "BOB (Double DQN)");
         bots1.setPosition(500, 350);
         bots1.setSize(200, 50);
 
@@ -68,7 +67,7 @@ public class PVBSelectionScreen implements Screen {
         confirm.addListener(new ClickListener() {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 index = bots1.getSelectedIndex();
-                game.setScreen(new LoadingScreen(game, ai, ai2, index, 0));
+                game.setScreen(new LoadingScreen(game, ai, ai2, 0, index));
             }
         });
 

@@ -3,25 +3,18 @@ package com.mygdx.ann;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.annotation.Target;
-import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.sql.rowset.RowSetWarning;
-
-import java.util.*;
 import com.mygdx.ann.layers.HidLayer;
 import com.mygdx.ann.layers.OutLayer;
 import com.mygdx.game.bots.Bot;
-import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.MCST.MCST;
 import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
-import com.mygdx.game.screens.GameScreen.state;
 
 
 public class DQN {
@@ -85,13 +78,11 @@ public class DQN {
         inputmove1 = getInputfromState(field, Hexagon.state.RED,round);
         ymove1 = NeuralNet.execFP(inputmove1);
         Qmove1 = getLegalQmax(field,ymove1);
-        System.out.println("Q for red piece"+Qmove1);
         field.get(Qmove1).setMyState(Hexagon.state.RED);
 
         inputmove2 = getInputfromState(field, Hexagon.state.BLUE,round);
         ymove2 = NeuralNet.execFP(inputmove2);
         Qmove2 = getLegalQmax(field,ymove2);
-        System.out.println("Q for blue piece"+Qmove2);
         field.get(Qmove2).setMyState(Hexagon.state.BLUE);
     }
 
@@ -125,8 +116,8 @@ public class DQN {
             while(numHexLeft(state)>=4) {
                 round++;
                 //bot.execMove(state);
-                MCSTmove(GameScreen.state.P1P1, true, state, 100);
-                MCSTmove(GameScreen.state.P1P2, true, state, 100);
+                MCSTmove(GameScreen.state.P1P1, true, state, mcstit);
+                MCSTmove(GameScreen.state.P1P2, true, state, mcstit);
                 tmp = state.size()-numHexLeft(state);
                 Episode(Hexagon.state.RED, round);
                 Episode(Hexagon.state.BLUE, round);
@@ -191,25 +182,25 @@ public class DQN {
                     }
                     if(winperc>topwp) {
                         topwp = winperc;
-                        //System.out.println("Writing to .csv ...");
-                        //writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
+                        System.out.println("Writing to .csv ...");
+                        writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
                     }
-                    // if(winperc>=50.0) {
-                    //     mcstit = mcstit + 10;
-                    //     int temp = mcstit-10;
-                    //     System.out.println("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);
-                    //     try {
-                    //         FileWriter fileWriter = new FileWriter(LL,true);
-                    //         StringBuilder line = new StringBuilder();
-                    //         line.append("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);   
-                    //         line.append("\n");
-                    //         fileWriter.write(line.toString());
-                    //         fileWriter.close();
-                    //     } catch (IOException e) {
-                    //         e.printStackTrace();
-                    //     }
-                    //     topwp=10;
-                    // }
+                    if(winperc>=50.0) {
+                        mcstit = mcstit + 10;
+                        int temp = mcstit-10;
+                        System.out.println("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);
+                        try {
+                            FileWriter fileWriter = new FileWriter(LL,true);
+                            StringBuilder line = new StringBuilder();
+                            line.append("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);   
+                            line.append("\n");
+                            fileWriter.write(line.toString());
+                            fileWriter.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        topwp=10;
+                    }
 
                 }
 
@@ -244,20 +235,20 @@ public class DQN {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //System.out.println("Playing against MCST with "+mcstit+" iterations.");
+                System.out.println("Playing against MCST with "+mcstit+" iterations.");
 
-                // try {
-                //     FileWriter fileWriter = new FileWriter(LL,true);
-                //     StringBuilder line = new StringBuilder();
-                //     line.append("Playing versus MCST running "+mcstit+" iterations");   
-                //     line.append("\n");
-                //     line.append(" ");
-                //     line.append("\n");
-                //     fileWriter.write(line.toString());
-                //     fileWriter.close();
-                // } catch (IOException e) {
-                //     e.printStackTrace();
-                // }
+                try {
+                    FileWriter fileWriter = new FileWriter(LL,true);
+                    StringBuilder line = new StringBuilder();
+                    line.append("Playing versus MCST running "+mcstit+" iterations");   
+                    line.append("\n");
+                    line.append(" ");
+                    line.append("\n");
+                    fileWriter.write(line.toString());
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 annwon=0;
                 mcstwon=0;

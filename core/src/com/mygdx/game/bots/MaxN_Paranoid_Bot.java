@@ -7,9 +7,7 @@ package com.mygdx.game.bots;
 import java.util.ArrayList;
 
 import com.mygdx.game.coordsystem.Hexagon;
-import com.mygdx.game.coordsystem.Hexagon.state;
 import com.mygdx.game.scoringsystem.ScoringEngine;
-import com.mygdx.game.screens.GameScreen;
 
 
 public class MaxN_Paranoid_Bot extends Bot {
@@ -17,11 +15,9 @@ public class MaxN_Paranoid_Bot extends Bot {
     private static boolean DEBUG = false;
 
     private Hexagon.state myColor;
-    private Hexagon.state opponentColor;
 
     public MaxN_Paranoid_Bot(Hexagon.state myColor, Hexagon.state opponentColor){
         this.myColor = myColor;
-        this.opponentColor = opponentColor;
 
         if (DEBUG) System.out.println("MYCOLOR: " + myColor);
     }

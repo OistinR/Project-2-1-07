@@ -5,7 +5,6 @@ import com.mygdx.game.coordsystem.Hexagon;
 import java.util.ArrayList;
 import com.mygdx.game.coordsystem.Hexagon.state;
 import com.mygdx.game.scoringsystem.ScoringEngine;
-import com.mygdx.game.bots.FitnessEngine;
 
 public class FitnessEngine2 {
 
@@ -19,9 +18,6 @@ public class FitnessEngine2 {
 
     private ArrayList<Integer> newBlueList;
     private ArrayList<Integer> newRedList;
-
-    private ArrayList<Integer> blueListWD;
-    private ArrayList<Integer> redListWD;
 
     private int fitnessOld;
     private int fitnessNew;
@@ -55,7 +51,6 @@ public class FitnessEngine2 {
                     fitnessNew = countFitness(newRedList,player,h);
                 }
                 h.setMyFitness((fitnessNew-fitnessOld),1);
-                /////////////////////////////////////////
                 SEngine.calculate(field);
                 oldBlueList = SEngine.getBlueList();
                 h.setMyState(opp); //Simulate if the hex is BLUE

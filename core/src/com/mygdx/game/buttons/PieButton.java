@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 
 public class PieButton {
-    private final int SCREENWIDTH = 1280;
     private final int SCREENHEIGHT = 720;
     private final int Xcoordinate;
     private final int Ycoordinate;

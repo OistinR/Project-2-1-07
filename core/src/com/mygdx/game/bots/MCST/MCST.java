@@ -1,8 +1,6 @@
 package com.mygdx.game.bots.MCST;
 
-import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.coordsystem.Hexagon;
-import com.mygdx.game.rundev;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
 
@@ -11,7 +9,6 @@ import java.util.List;
 import java.util.Random;
 
 public class MCST {
-    private static final boolean DEBUG = true;
     public boolean player1;
 
     // Plays a single game of board game and returns the winner (1 for first player, -1 for second player)
@@ -107,10 +104,10 @@ public class MCST {
         }
 
 
-        int numIterations = 300;
+        int numIterations = iterationNum;
 
         long start_time = System.nanoTime();
-        long end_time = System.nanoTime();
+        long end_time=0;
 
         List<Integer> moves = available_moves(field);
         //here I assume the root node is always P1P1, we can change it when we call the method with different moves
@@ -202,7 +199,6 @@ public class MCST {
         }
         List<Integer> moves = movescopy;
 
-        //System.out.println("different moves " + moves);
         GameScreen.state child_phase;
         switch (currentNode.phase){
             case P1P1: child_phase = GameScreen.state.P1P2;break;
@@ -236,7 +232,6 @@ public class MCST {
             }
             //need to print out all the different moves per child
             child.moves = new ArrayList<Integer>(moves);
-            //System.out.println(child.moves);
             child.moves.remove(move_played);
 
             child.parent = currentNode;
@@ -260,43 +255,6 @@ public class MCST {
             }
         }
         return bestChild;
-    }
-    public static void main(String[] args) {
-
-        MCST mcst = new MCST();
-        ArrayList<Hexagon> field = mcst.createHexagonFieldDefault();
-        Node_MCST currentNode = new Node_MCST(field, new ArrayList<Integer>(),0, GameScreen.state.P1P1);
-        System.out.println(currentNode.visitCount);
-        System.out.println(currentNode.winCount);
-        mcst.calcUCB1(currentNode);
-
-        /** Node_MCST bestMove = mcst.runMCST(field, GameScreen.state.P1P1);
-        System.out.println("the best move " + bestMove.move_played);
-
-        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
-            field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
-        else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
-            field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
-        }
-        else{
-            throw new IllegalStateException("The children phase is not assign correctly: ");
-        }
-         **/
-
-    }
-    public ArrayList<Hexagon> createHexagonFieldDefault() {
-        int s;
-        int fieldsize = 5;
-        ArrayList<Hexagon> field = new ArrayList<>();
-        for (int q = -fieldsize; q <= fieldsize; q++) {
-            for (int r = fieldsize; r >= -fieldsize; r--) {
-                s = -q - r;
-                if (s <= fieldsize && s >= -fieldsize) {
-                    field.add(new Hexagon(q, r, 50,0,0));
-                }
-            }
-        }
-        return field;
     }
 
 }
