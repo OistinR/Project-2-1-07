@@ -5,6 +5,7 @@ import com.mygdx.game.experiment.GameState;
 import org.tensorflow.*;
 
 import java.nio.FloatBuffer;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +14,8 @@ public class PredictBot extends Bot {
     SavedModelBundle bestBoy;
 
     public PredictBot(){
-        bestBoy = SavedModelBundle.load("C:\\Users\\Oistín\\Documents\\Github\\Project-2-1-07\\core\\src\\com\\mygdx\\tensorAnn\\model47", "serve");
+
+        bestBoy = SavedModelBundle.load("core\\src\\com\\mygdx\\tensorAnn\\model47", "serve");
     }
 
     //Whoosplaying = 1 for red -1 for blue
