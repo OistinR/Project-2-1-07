@@ -287,7 +287,7 @@ public class rundev {
         } catch (Exception e) {}
 
         count++;
-        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1);
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1, 0);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
             field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
