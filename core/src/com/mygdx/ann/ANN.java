@@ -10,8 +10,6 @@ import com.mygdx.ann.layers.OutLayer;
 import com.mygdx.ann.neurons.HidNeuron;
 import com.mygdx.ann.neurons.InNeuron;
 import com.mygdx.ann.neurons.OutNeuron;
-import com.mygdx.game.coordsystem.Hexagon;
-import com.mygdx.game.experiment.GameState;
 
 public class ANN {
 
@@ -26,6 +24,13 @@ public class ANN {
     ArrayList<HidLayer> HLAYERS;
     OutLayer OLAYER;
     
+    /**
+     * Constructor for the ANN
+     * @param insize this is the amount of neurons in the input layer
+     * @param outsize this is the amount of neurons in the output layer
+     * @param hidnum this is the number of hidden layers
+     * @param hidsize this is the amount of neurons in the hidden layer(s)
+     */
     public ANN(int insize, int outsize, int hidnum, int hidsize) {
         this.insize = insize;
         this.outsize = outsize;
@@ -33,6 +38,9 @@ public class ANN {
         this.hidsize = hidsize;
     }   
 
+    /**
+     * The init method initializes the Artifical Neural Network and all its layers
+     */
     public void init() {
         // ! Initialize input layer
         ILAYER= new InLayer(insize);
@@ -54,6 +62,11 @@ public class ANN {
         OLAYER.initialize();
     }
 
+    /**
+     * Execure the forward pass method
+     * @param values
+     * @return
+     */
     public ArrayList<Double> execFP(ArrayList<Double> values) {
         // ! Change the input values for the ANN
         changeInput(ILAYER, values);
@@ -62,11 +75,20 @@ public class ANN {
         return forwardProp(ILAYER, HLAYERS, OLAYER, false);
     }
 
+    /**
+     * Execute the backward propagation method
+     * @param y
+     * @param labels
+     */
     public void execBP(ArrayList<Double> y, ArrayList<Double> labels) {
         // ! Run backward propegation
         backwardProp(ILAYER, HLAYERS, OLAYER, y, labels);
     }
 
+    /**
+     * Copy all the weights and biases of an Artifical Neural Network to another Artifical Neural Network
+     * @param ann
+     */
     public void copyWB(ANN ann) {
         // ! The weights and biases from the ANN called 'ann' will be copied into this object
         for(int i=0; i<ann.getHiddenLayers().size(); i++) {
@@ -88,50 +110,23 @@ public class ANN {
         }
     }
     
-
-
-
-    public void execMove(ArrayList<Hexagon> field) {
-        ANN NeuralNet = new ANN(37, 37, 4, 10);
-        NeuralNet.init();
-        NeuralNet.getWBFromCSV();
-
-        ArrayList<Double> inputmove1;
-
-        ArrayList<Double> ymove1;
-
-        GameState gs = new GameState();
-        gs.update(field);
-        inputmove1 = gs.getState();
-        ymove1 = NeuralNet.execFP(inputmove1);
-        double max = -100;
-        double min = 100;
-
-        int bestindexRed = 0;
-        int bestindexBlue = 0;
-        for (int i = 0; i < ymove1.size(); i++) {
-            if (ymove1.get(i)>max){
-                bestindexRed = i;
-                max = ymove1.get(i);
-            }
-            if (ymove1.get(i)<min){
-                bestindexBlue = i;
-                min = ymove1.get(i);
-            }
-        }
-
-        field.get(bestindexRed).setMyState(Hexagon.state.RED);
-        field.get(bestindexBlue).setMyState(Hexagon.state.BLUE);
-
-    }
-
-
+    /**
+     * Change the input values of the input layer 
+     * @param inputLayer
+     * @param values
+     */
     public void changeInput(InLayer inputLayer, ArrayList<Double> values) {
         for(int i=0; i<values.size(); i++) {
             inputLayer.getNeurons().get(i).setVal(values.get(i));
         }
     }
 
+    /**
+     * Compute the error of an output of an ANN and the labels of these outputs
+     * @param y
+     * @param labels
+     * @return
+     */
     public ArrayList<Double> computeError(ArrayList<Double> y, ArrayList<Double> labels) {
         // ! Compute errors for all outputs given the labels (y size and labels size must be equal)
         // ! Last position of the errors list which is returned is the total error
@@ -147,6 +142,14 @@ public class ANN {
         return errors;
     }
 
+    /**
+     * Backward propagation method using all the layers, the output of the forward pass and the labels for each output
+     * @param inputLayer
+     * @param HidLayers
+     * @param outputLayer
+     * @param y
+     * @param labels
+     */
     public void backwardProp(InLayer inputLayer, ArrayList<HidLayer> HidLayers, OutLayer outputLayer, ArrayList<Double> y, ArrayList<Double> labels) {
         ArrayList<InNeuron> inputneurons = inputLayer.getNeurons();
         ArrayList<OutNeuron> outputneurons = outputLayer.getNeurons();
@@ -289,22 +292,43 @@ public class ANN {
         return prob;
     }
 
+    /**
+     * Java represnetation of the sigmoid function
+     * @param x
+     * @return
+     */
     public double sigmoid(double x) {
         return 1/(1+Math.exp(-x));
     }
 
+    /**
+     * Java representation of the ReLU function
+     * @param x
+     * @return
+     */
     public double ReLU(double x) {
         if(x<0) {
             return 0.1*x;
         } else return x;
     }
 
+    /**
+     * Java representation of the derivative of the ReLU function
+     * @param x
+     * @return
+     */
     public double derivReLU(double x) {
         if(x<0) {
             return 0.1;
         } else return 1;
     }
 
+    /**
+     * Java representation of the SoftMax function
+     * @param list
+     * @param index
+     * @return
+     */
     public double SoftMax(ArrayList<Double> list, int index) {
         double sum=0;
         for(int i=0; i<list.size(); i++) {
@@ -313,15 +337,25 @@ public class ANN {
         return list.get(index)/sum;
     }
 
-
+    /**
+     * Return all the hidden layers of this ANN
+     * @return
+     */
     public ArrayList<HidLayer> getHiddenLayers() {
         return HLAYERS;
     }
 
+    /**
+     * Return the output layer of this ANN
+     * @return
+     */
     public OutLayer getOutputLayer() {
         return OLAYER;
     }
 
+    /**
+     * Get form a chosen file all the biases and weights (used for saving an ANN)
+     */
     public void getWBFromCSV() {
         ArrayList<Double> data = new ArrayList<>();
         try {
