@@ -577,8 +577,8 @@ private ArrayList<Double> data = new ArrayList<>();
   } 
   
     private void bot2move(int round) {
-        dqn.execMove(field,round);
-        //bot2.execMove(field);
+//        dqn.execMove(field,round);
+        bot2.execMove(field);
         //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
 
