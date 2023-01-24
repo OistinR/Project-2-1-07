@@ -6,6 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.ann.ANN;
+import com.mygdx.ann.DQN;
 import com.mygdx.game.Omega;
 
 import com.mygdx.game.bots.Bot;
@@ -81,6 +83,8 @@ public class GameScreen implements Screen {
 
     private PieButton pieButton;
 
+    private DQN dqn;
+
     /**
      *
      * @param game communicates with the main class to switch between classes
@@ -134,9 +138,10 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
-        bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
+        bot = new RandomBot();
+        //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
+        dqn = new DQN(100);
     }
 
     @Override
@@ -228,12 +233,12 @@ public class GameScreen implements Screen {
         int numhex = numHex() - 4 * (round - 1);
 
         // check if game is done
-        if (field.size() - (numhex + (4 * (round - 1))) < 4) {
+        if (field.size() - (numhex + (4 * (round - 1))) < 4  && STATE == state.P1P1) {
             gameFinish();
         }
         if (ai2 && ai && (!gamefinished)) {
             botmove();
-            bot2move();
+            bot2move(round);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -271,7 +276,7 @@ public class GameScreen implements Screen {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
-                bot2move();
+                bot2move(round);
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -340,7 +345,7 @@ public class GameScreen implements Screen {
      */
     public void createHexagonFieldDefault() {
         int s;
-        int fieldsize = 2;
+        int fieldsize = 3;
         for (int q = -fieldsize; q <= fieldsize; q++) {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
@@ -525,16 +530,18 @@ public class GameScreen implements Screen {
      */
     private void botmove() {
         bot.execMove(field);
-        System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
+        //dqn.execMove(field);
+        //System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
 
     }
 
     /**
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
-    private void bot2move() {
-        bot2.execMove(field);
-        System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
+    private void bot2move(int round) {
+        dqn.execMove(field,round);
+        //bot2.execMove(field);
+        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 
     }
 

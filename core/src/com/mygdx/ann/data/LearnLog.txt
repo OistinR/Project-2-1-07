@@ -1,0 +1,3680 @@
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 2.0
+Error of ANN: 0.03688632912031848
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06336634696673056
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 33.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06725842949366942
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.08602365791091364
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 23.0%
+Average legal moves played... 2.0
+Error of ANN: 0.1530708441182707
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.2245486925552905
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 37.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3488353351716444
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 39.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4196565222214582
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5472492217038013
+Summary of game... 900 - 1000
+Win percentage BOB (Double DQN): 45.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6083768402940816
+Summary of game... 1000 - 1100
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6075438322272378
+Summary of game... 1100 - 1200
+Win percentage BOB (Double DQN): 39.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7317237844938768
+Summary of game... 1200 - 1300
+Win percentage BOB (Double DQN): 43.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8478921682079343
+Summary of game... 1300 - 1400
+Win percentage BOB (Double DQN): 45.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9080960505154292
+Summary of game... 1400 - 1500
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1176614096487834
+Summary of game... 1500 - 1600
+Win percentage BOB (Double DQN): 65.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1717734069286108
+Summary of game... 1600 - 1700
+Win percentage BOB (Double DQN): 65.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2960597574855008
+Summary of game... 1700 - 1800
+Win percentage BOB (Double DQN): 65.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3878361017893355
+Summary of game... 1800 - 1900
+Win percentage BOB (Double DQN): 73.0%
+Average legal moves played... 2.0
+Error of ANN: 1.5671748234767557
+Summary of game... 1900 - 2000
+Win percentage BOB (Double DQN): 66.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6355975038933586
+Summary of game... 2000 - 2100
+Win percentage BOB (Double DQN): 73.0%
+Average legal moves played... 2.0
+Error of ANN: 1.7928820733000586
+Summary of game... 2100 - 2200
+Win percentage BOB (Double DQN): 73.0%
+Average legal moves played... 2.0
+Error of ANN: 1.7650960741779866
+Summary of game... 2200 - 2300
+Win percentage BOB (Double DQN): 84.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9947937092435704
+Summary of game... 2300 - 2400
+Win percentage BOB (Double DQN): 80.0%
+Average legal moves played... 2.0
+Error of ANN: 2.158569962931468
+Summary of game... 2400 - 2500
+Win percentage BOB (Double DQN): 63.0%
+Average legal moves played... 2.0
+Error of ANN: 2.1881391275475273
+Summary of game... 2500 - 2600
+Win percentage BOB (Double DQN): 92.0%
+Average legal moves played... 2.0
+Error of ANN: 2.2104694229431843
+Summary of game... 2600 - 2700
+Win percentage BOB (Double DQN): 94.0%
+Average legal moves played... 2.0
+Error of ANN: 2.2079715450265933
+Summary of game... 2700 - 2800
+Win percentage BOB (Double DQN): 99.0%
+Average legal moves played... 2.0
+Error of ANN: 2.276631432383697
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 5.0%
+Average legal moves played... 2.0
+Error of ANN: 0.05151808350401604
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 13.0%
+Average legal moves played... 2.0
+Error of ANN: 0.07832930740048653
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 2.0
+Error of ANN: 0.11297947951686269
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.10855133478225439
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 33.0%
+Average legal moves played... 2.0
+Error of ANN: 0.13186276739165145
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.16475633615473315
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.22331307741504852
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2681967201903722
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 39.0%
+Average legal moves played... 2.0
+Error of ANN: 0.35939929704978385
+Summary of game... 900 - 1000
+Win percentage BOB (Double DQN): 55.00000000000001%
+Average legal moves played... 2.0
+Error of ANN: 0.4274905556970202
+Summary of game... 1000 - 1100
+Win percentage BOB (Double DQN): 48.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5175700789478936
+Summary of game... 1100 - 1200
+Win percentage BOB (Double DQN): 57.99999999999999%
+Average legal moves played... 2.0
+Error of ANN: 0.5688356899136127
+Summary of game... 1200 - 1300
+Win percentage BOB (Double DQN): 56.00000000000001%
+Average legal moves played... 2.0
+Error of ANN: 0.6127726897316782
+Summary of game... 1300 - 1400
+Win percentage BOB (Double DQN): 57.99999999999999%
+Average legal moves played... 2.0
+Error of ANN: 0.6126570182034088
+Summary of game... 1400 - 1500
+Win percentage BOB (Double DQN): 43.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6313023196461367
+Summary of game... 1500 - 1600
+Win percentage BOB (Double DQN): 43.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7568925822534184
+Summary of game... 1600 - 1700
+Win percentage BOB (Double DQN): 53.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7135244926791962
+Summary of game... 1700 - 1800
+Win percentage BOB (Double DQN): 39.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7705944818864544
+Summary of game... 1800 - 1900
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8103752534311643
+Summary of game... 1900 - 2000
+Win percentage BOB (Double DQN): 51.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8141679434417605
+Summary of game... 2000 - 2100
+Win percentage BOB (Double DQN): 49.0%
+Average legal moves played... 2.0
+Error of ANN: 0.921798268802287
+Summary of game... 2100 - 2200
+Win percentage BOB (Double DQN): 39.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9417389024150422
+Summary of game... 2200 - 2300
+Win percentage BOB (Double DQN): 60.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8627122587376784
+Summary of game... 2300 - 2400
+Win percentage BOB (Double DQN): 69.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9680292040323624
+Summary of game... 2400 - 2500
+Win percentage BOB (Double DQN): 60.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0251599262865905
+Summary of game... 2500 - 2600
+Win percentage BOB (Double DQN): 56.00000000000001%
+Average legal moves played... 2.0
+Error of ANN: 1.192224139849768
+Summary of game... 2600 - 2700
+Win percentage BOB (Double DQN): 64.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1721795082646558
+Summary of game... 2700 - 2800
+Win percentage BOB (Double DQN): 60.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2119241206306377
+Summary of game... 2800 - 2900
+Win percentage BOB (Double DQN): 67.0%
+Average legal moves played... 2.0
+Error of ANN: 1.220490036190359
+Summary of game... 2900 - 3000
+Win percentage BOB (Double DQN): 68.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3654798634618206
+Summary of game... 3000 - 3100
+Win percentage BOB (Double DQN): 68.0%
+Average legal moves played... 2.0
+Error of ANN: 1.313737972206983
+Summary of game... 3100 - 3200
+Win percentage BOB (Double DQN): 72.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3485520832465845
+Summary of game... 3200 - 3300
+Win percentage BOB (Double DQN): 66.0%
+Average legal moves played... 2.0
+Error of ANN: 1.5215996151327795
+Summary of game... 3300 - 3400
+Win percentage BOB (Double DQN): 53.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6730442977287399
+Summary of game... 3400 - 3500
+Win percentage BOB (Double DQN): 51.0%
+Average legal moves played... 2.0
+Error of ANN: 2.03401983294989
+Summary of game... 3500 - 3600
+Win percentage BOB (Double DQN): 71.0%
+Average legal moves played... 2.0
+Error of ANN: 2.259099653082807
+Summary of game... 3600 - 3700
+Win percentage BOB (Double DQN): 63.0%
+Average legal moves played... 2.0
+Error of ANN: 2.678803820704094
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 2.0
+Error of ANN: 0.03454667406972155
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 16.0%
+Average legal moves played... 2.0
+Error of ANN: 0.053004221079884374
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 16.0%
+Average legal moves played... 2.0
+Error of ANN: 0.08886250822003687
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.14281367881749576
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 27.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2637769265295328
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 31.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4172601723621544
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6659997044708957
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9844605288448
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3613728814138664
+Summary of game... 900 - 1000
+Win percentage BOB (Double DQN): 41.0%
+Average legal moves played... 2.0
+Error of ANN: 1.680934055362771
+Summary of game... 1000 - 1100
+Win percentage BOB (Double DQN): 47.0%
+Average legal moves played... 2.0
+Error of ANN: 1.8458522317153743
+Summary of game... 1100 - 1200
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 2.2385344804889162
+Summary of game... 1200 - 1300
+Win percentage BOB (Double DQN): 54.0%
+Average legal moves played... 2.0
+Error of ANN: 2.7802703679198775
+Summary of game... 1300 - 1400
+Win percentage BOB (Double DQN): 55.00000000000001%
+Average legal moves played... 2.0
+Error of ANN: 3.223170189493688
+Summary of game... 1400 - 1500
+Win percentage BOB (Double DQN): 57.99999999999999%
+Average legal moves played... 2.0
+Error of ANN: 3.5267467504711276
+Summary of game... 1500 - 1600
+Win percentage BOB (Double DQN): 62.0%
+Average legal moves played... 2.0
+Error of ANN: 3.9263493353213734
+Summary of game... 1600 - 1700
+Win percentage BOB (Double DQN): 71.0%
+Average legal moves played... 2.0
+Error of ANN: 4.069526867951978
+Summary of game... 1700 - 1800
+Win percentage BOB (Double DQN): 70.0%
+Average legal moves played... 2.0
+Error of ANN: 4.697245019858394
+Summary of game... 1800 - 1900
+Win percentage BOB (Double DQN): 80.0%
+Average legal moves played... 2.0
+Error of ANN: 4.6001110465494675
+Summary of game... 1900 - 2000
+Win percentage BOB (Double DQN): 100.0%
+Average legal moves played... 2.0
+Error of ANN: 4.495958886231122
+Summary of game... 2000 - 2100
+Win percentage BOB (Double DQN): 100.0%
+Average legal moves played... 2.0
+Error of ANN: 4.631113517297561
+Summary of game... 2100 - 2200
+Win percentage BOB (Double DQN): 100.0%
+Average legal moves played... 2.0
+Error of ANN: 4.835072412308927
+Summary of game... 2200 - 2300
+Win percentage BOB (Double DQN): 100.0%
+Average legal moves played... 2.0
+Error of ANN: 5.014879557099007
+Summary of game... 2300 - 2400
+Win percentage BOB (Double DQN): 92.0%
+Average legal moves played... 2.0
+Error of ANN: 5.511361497670356
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.005593704442655619
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 56.00000000000001%
+Average legal moves played... 2.0
+Error of ANN: 0.0031655670099513733
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 56.00000000000001%
+Average legal moves played... 2.0
+Error of ANN: 0.005710268111218149
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 77.0%
+Average legal moves played... 2.0
+Error of ANN: 0.027460285607451375
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 73.0%
+Average legal moves played... 2.0
+Error of ANN: 0.062408662827492
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 78.0%
+Average legal moves played... 2.0
+Error of ANN: 0.11789081589560736
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 76.0%
+Average legal moves played... 2.0
+Error of ANN: 0.13828673448423415
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 78.0%
+Average legal moves played... 2.0
+Error of ANN: 0.19118618828329284
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 73.0%
+Average legal moves played... 2.0
+Error of ANN: 0.24385190826728265
+Summary of game... 900 - 1000
+Win percentage BOB (Double DQN): 81.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3071575970239271
+Summary of game... 1000 - 1100
+Win percentage BOB (Double DQN): 86.0%
+Average legal moves played... 2.0
+Error of ANN: 0.405278236875331
+Summary of game... 1100 - 1200
+Win percentage BOB (Double DQN): 72.0%
+Average legal moves played... 2.0
+Error of ANN: 0.36634317310428816
+Summary of game... 1200 - 1300
+Win percentage BOB (Double DQN): 87.0%
+Average legal moves played... 2.0
+Error of ANN: 0.43841315364337313
+Summary of game... 1300 - 1400
+Win percentage BOB (Double DQN): 86.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5657794170429263
+Summary of game... 1400 - 1500
+Win percentage BOB (Double DQN): 83.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0680806164220473
+Summary of game... 1500 - 1600
+Win percentage BOB (Double DQN): 89.0%
+Average legal moves played... 2.0
+Error of ANN: 1.07355733497807
+Summary of game... 1600 - 1700
+Win percentage BOB (Double DQN): 93.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2427591836268626
+Summary of game... 1700 - 1800
+Win percentage BOB (Double DQN): 90.0%
+Average legal moves played... 2.0
+Error of ANN: 2.189420012850092
+Summary of game... 1800 - 1900
+Win percentage BOB (Double DQN): 86.0%
+Average legal moves played... 2.0
+Error of ANN: 2.856469233027342
+Summary of game... 1900 - 2000
+Win percentage BOB (Double DQN): 87.0%
+Average legal moves played... 2.0
+Error of ANN: 2.9991244424944528
+Summary of game... 2000 - 2100
+Win percentage BOB (Double DQN): 85.0%
+Average legal moves played... 2.0
+Error of ANN: 4.797800635857752
+Summary of game... 2100 - 2200
+Win percentage BOB (Double DQN): 88.0%
+Average legal moves played... 2.0
+Error of ANN: 9.710562638132389
+Summary of game... 2200 - 2300
+Win percentage BOB (Double DQN): 87.0%
+Average legal moves played... 2.0
+Error of ANN: 12.878761118616417
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 53.0%
+Average legal moves played... 2.0
+Error of ANN: 0.0024119478199874306
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 59.0%
+Average legal moves played... 2.0
+Error of ANN: 0.002355525426420339
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 61.0%
+Average legal moves played... 2.0
+Error of ANN: 0.00411048432822794
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 66.0%
+Average legal moves played... 2.0
+Error of ANN: 0.013065893336292059
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 78.0%
+Average legal moves played... 2.0
+Error of ANN: 0.03635031385662507
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 75.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06985249967153222
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 78.0%
+Average legal moves played... 2.0
+Error of ANN: 0.11608411248293347
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 77.0%
+Average legal moves played... 2.0
+Error of ANN: 0.139067956043329
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 83.0%
+Average legal moves played... 2.0
+Error of ANN: 0.17781934942872113
+Summary of game... 900 - 1000
+Win percentage BOB (Double DQN): 83.0%
+Average legal moves played... 2.0
+Error of ANN: 0.16755590935287504
+Summary of game... 1000 - 1100
+Win percentage BOB (Double DQN): 86.0%
+Average legal moves played... 2.0
+Error of ANN: 0.18418768159366217
+Summary of game... 1100 - 1200
+Win percentage BOB (Double DQN): 88.0%
+Average legal moves played... 2.0
+Error of ANN: 0.22621757392601102
+Summary of game... 1200 - 1300
+Win percentage BOB (Double DQN): 84.0%
+Average legal moves played... 2.0
+Error of ANN: 0.22118370517595745
+Summary of game... 1300 - 1400
+Win percentage BOB (Double DQN): 88.0%
+Average legal moves played... 2.0
+Error of ANN: 0.14170219048842983
+Summary of game... 1400 - 1500
+Win percentage BOB (Double DQN): 89.0%
+Average legal moves played... 2.0
+Error of ANN: 0.16746287336455418
+Summary of game... 1500 - 1600
+Win percentage BOB (Double DQN): 91.0%
+Average legal moves played... 2.0
+Error of ANN: 0.14571128429083768
+Summary of game... 1600 - 1700
+Win percentage BOB (Double DQN): 89.0%
+Average legal moves played... 2.0
+Error of ANN: 0.10000544843965158
+Summary of game... 1700 - 1800
+Win percentage BOB (Double DQN): 82.0%
+Average legal moves played... 2.0
+Error of ANN: 0.10479144991340238
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 3.0%
+Average legal moves played... 2.0
+Error of ANN: 0.0804785023414731
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 1.0%
+Average legal moves played... 2.0
+Error of ANN: 0.22938411536519596
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 9.0%
+Average legal moves played... 2.0
+Error of ANN: 0.39466544026143036
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 2.0
+Error of ANN: 0.47074011067185456
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6393646575038241
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 11.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8070290372790311
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1534028793042366
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 17.0%
+Average legal moves played... 2.0
+Error of ANN: 1.5764322652871037
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 2.0
+Error of ANN: 1.9090762917559154
+Summary of game... 900 - 1000
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 2.0
+Error of ANN: 2.8609043473914175
+Summary of game... 1000 - 1100
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 2.0
+Error of ANN: 4.36996669126367
+Summary of game... 1100 - 1200
+Win percentage BOB (Double DQN): 17.0%
+Average legal moves played... 2.0
+Error of ANN: 9.550083062792693
+Summary of game... -50 - 50
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 1.0
+Error of ANN: 0.015904513664497133
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 1.0
+Error of ANN: 0.03469641880401215
+Summary of game... 50 - 150
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 1.0
+Error of ANN: 0.061269984492829506
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08326863997787318
+Summary of game... 150 - 250
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.10447926614652352
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 6.0%
+Average legal moves played... 1.0
+Error of ANN: 0.12202075954688457
+Summary of game... 250 - 350
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.13488143215106188
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 16.0%
+Average legal moves played... 1.0
+Error of ANN: 0.1335698935056445
+Summary of game... 350 - 450
+Win percentage BOB (Double DQN): 6.0%
+Average legal moves played... 1.0
+Error of ANN: 0.1357448621894483
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 1.0
+Error of ANN: 0.14947464492166113
+Summary of game... 450 - 550
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.16597174446519117
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 1.0
+Error of ANN: 0.1630628280444653
+Summary of game... 550 - 650
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 1.0
+Error of ANN: 0.18070088379976984
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 1.0
+Error of ANN: 0.15977768731461234
+Summary of game... 650 - 750
+Win percentage BOB (Double DQN): 16.0%
+Average legal moves played... 1.0
+Error of ANN: 0.15821054469763235
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 1.0
+Error of ANN: 0.13847281692799904
+Summary of game... 750 - 850
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 1.0
+Error of ANN: 0.15116254319934963
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.17676438546244042
+Summary of game... -50 - 50
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 1.0
+Error of ANN: 0.012487890054117915
+Summary of game... 0 - 100
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.026454920970649
+Summary of game... 50 - 150
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 1.0
+Error of ANN: 0.04441032314595878
+Summary of game... 100 - 200
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 1.0
+Error of ANN: 0.05786612974153578
+Summary of game... 150 - 250
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.07374865473274062
+Summary of game... 200 - 300
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08305535706707602
+Summary of game... 250 - 350
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08698670833384722
+Summary of game... 300 - 400
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08302535264660794
+Summary of game... 350 - 450
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08273893161429631
+Summary of game... 400 - 500
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 1.0
+Error of ANN: 0.10458605382698169
+Summary of game... 450 - 550
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 1.0
+Error of ANN: 0.09606424711225132
+Summary of game... 500 - 600
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08099359999342062
+Summary of game... 550 - 650
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 1.0
+Error of ANN: 0.08651520854340969
+Summary of game... 600 - 700
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 1.0
+Error of ANN: 0.09214052956083975
+Summary of game... 650 - 750
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08255546902656977
+Summary of game... 700 - 800
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 1.0
+Error of ANN: 0.082455572859818
+Summary of game... 750 - 850
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 1.0
+Error of ANN: 0.09820030341030134
+Summary of game... 800 - 900
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08875295598395874
+Summary of game... 850 - 950
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 1.0
+Error of ANN: 0.08577621612715376
+Summary of game... 900 - 1000
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 1.0
+Error of ANN: 0.08728809180989028
+Summary of game... 950 - 1050
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 1.0
+Error of ANN: 0.08752758187359466
+Summary of game... 1000 - 1100
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 1.0
+Error of ANN: 0.11300394331720022
+Summary of game... 1050 - 1150
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 1.0
+Error of ANN: 0.12556168278931018
+Summary of game... 1100 - 1200
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 1.0
+Error of ANN: 0.14439176674015744
+Summary of game... 1150 - 1250
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 1.0
+Error of ANN: 0.12579622368636925
+Summary of game... 1200 - 1300
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 1.0
+Error of ANN: 0.12269663822168415
+Summary of game... 1250 - 1350
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 1.0
+Error of ANN: 0.11831538847240988
+Summary of game... 1300 - 1400
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 1.0
+Error of ANN: 0.11832575034937375
+Summary of game... 1350 - 1450
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 1.0
+Error of ANN: 0.10681366219481356
+Summary of game... 1400 - 1500
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 1.0
+Error of ANN: 0.11529602427103325
+Summary of game... 1450 - 1550
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 1.0
+Error of ANN: 0.1340496705774094
+Summary of game... 1500 - 1600
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 1.0
+Error of ANN: 0.12212473763588012
+Summary of game... 1550 - 1650
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 1.0
+Error of ANN: 0.14136553218424525
+Summary of game... 1600 - 1700
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 1.0
+Error of ANN: 0.1443016363088216
+Summary of game... 1650 - 1750
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 1.0
+Error of ANN: 0.15593437579152009
+Summary of game... 1700 - 1800
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.15144646028731815
+Summary of game... 1750 - 1850
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.14051392712212984
+Summary of game... 1800 - 1900
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.15088004280279316
+Summary of game... 1850 - 1950
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 1.0
+Error of ANN: 0.15323242016462651
+Summary of game... 1900 - 2000
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 1.0
+Error of ANN: 0.16622103929687787
+Summary of game... 1950 - 2050
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.18921638389072185
+Summary of game... 2000 - 2100
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.17817900833041664
+Summary of game... 2050 - 2150
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 1.0
+Error of ANN: 0.18767508468046715
+Summary of game... 2100 - 2200
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 1.0
+Error of ANN: 0.17813453581093172
+Summary of game... 2150 - 2250
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 1.0
+Error of ANN: 0.1972744222545145
+Summary of game... 2200 - 2300
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 1.0
+Error of ANN: 0.20216481657814095
+Summary of game... 2250 - 2350
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 1.0
+Error of ANN: 0.18762563910624697
+Summary of game... 2300 - 2400
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 1.0
+Error of ANN: 0.19126854243565794
+Summary of game... 2350 - 2450
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2180100176236187
+Summary of game... 2400 - 2500
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 1.0
+Error of ANN: 0.22162430889809834
+Summary of game... 2450 - 2550
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 1.0
+Error of ANN: 0.19845039001729797
+Summary of game... 2500 - 2600
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 1.0
+Error of ANN: 0.19726163803006938
+Summary of game... 2550 - 2650
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.19538392756450743
+Summary of game... 2600 - 2700
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 1.0
+Error of ANN: 0.17742699073557064
+Summary of game... 2650 - 2750
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 1.0
+Error of ANN: 0.18727326306887726
+Summary of game... 2700 - 2800
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.20069966747673512
+Summary of game... 2750 - 2850
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.1774960578221968
+Summary of game... 2800 - 2900
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 1.0
+Error of ANN: 0.19267191060342226
+Summary of game... 2850 - 2950
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.19802693377720207
+Summary of game... 2900 - 3000
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 1.0
+Error of ANN: 0.17135878615666253
+Summary of game... 2950 - 3050
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.18417837033700876
+Summary of game... 3000 - 3100
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 1.0
+Error of ANN: 0.21186395908941952
+Summary of game... 3050 - 3150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2175812028186052
+Summary of game... 3100 - 3200
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2414180938168255
+Summary of game... 3150 - 3250
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.23736725921337687
+Summary of game... 3200 - 3300
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2118207616185493
+Summary of game... 3250 - 3350
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2152253045492979
+Summary of game... 3300 - 3400
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.20273783222829644
+Summary of game... 3350 - 3450
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 1.0
+Error of ANN: 0.21368771680920332
+Summary of game... 3400 - 3500
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.23214603687052254
+Summary of game... 3450 - 3550
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 1.0
+Error of ANN: 0.2355553592737198
+Summary of game... 3500 - 3600
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.23723652257142552
+Summary of game... 3550 - 3650
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2591245783914035
+Summary of game... 3600 - 3700
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2815516494791512
+Summary of game... 3650 - 3750
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.27307543251437105
+Summary of game... 3700 - 3800
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3072626906995225
+Summary of game... 3750 - 3850
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3022458637580806
+Summary of game... 3800 - 3900
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2990551328783599
+Summary of game... 3850 - 3950
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3040313194241453
+Summary of game... 3900 - 4000
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 1.0
+Error of ANN: 0.27038931717978837
+Summary of game... 3950 - 4050
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2704965203998237
+Summary of game... 4000 - 4100
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2587706170754414
+Summary of game... 4050 - 4150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3007599086275213
+Summary of game... 4100 - 4200
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 1.0
+Error of ANN: 0.30769814641578586
+Summary of game... 4150 - 4250
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.28578484622008793
+Summary of game... 4200 - 4300
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3127391546406245
+Summary of game... 4250 - 4350
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.30437089067821843
+Summary of game... 4300 - 4400
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.33223311834935443
+Summary of game... 4350 - 4450
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3420824886993727
+Summary of game... 4400 - 4500
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.329817792387393
+Summary of game... 4450 - 4550
+Win percentage BOB (Double DQN): 56.00000000000001%
+Average legal moves played... 1.0
+Error of ANN: 0.31378931677645794
+Summary of game... 4500 - 4600
+Win percentage BOB (Double DQN): 52.0%
+Average legal moves played... 1.0
+Error of ANN: 0.28883156585617725
+Summary of game... 4550 - 4650
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 1.0
+Error of ANN: 0.30822970531119553
+Summary of game... 4600 - 4700
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.313425280172004
+Summary of game... 4650 - 4750
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3459475212393888
+Summary of game... 4700 - 4800
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 1.0
+Error of ANN: 0.31578131771922563
+Summary of game... 4750 - 4850
+Win percentage BOB (Double DQN): 54.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2860283556115681
+Summary of game... 4800 - 4900
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 1.0
+Error of ANN: 0.3050842336263162
+Summary of game... 4850 - 4950
+Win percentage BOB (Double DQN): 52.0%
+Average legal moves played... 1.0
+Error of ANN: 0.26128760500464554
+Summary of game... 4900 - 5000
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2477147876842198
+Summary of game... 4950 - 5050
+Win percentage BOB (Double DQN): 50.0%
+Average legal moves played... 1.0
+Error of ANN: 0.255375344845101
+Summary of game... 5000 - 5100
+Win percentage BOB (Double DQN): 64.0%
+Average legal moves played... 1.0
+Error of ANN: 0.24160443384904604
+Summary of game... 5050 - 5150
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2399752814904618
+Summary of game... 5100 - 5200
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 1.0
+Error of ANN: 0.25621788640078447
+Summary of game... 5150 - 5250
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2518869169905202
+Summary of game... 5200 - 5300
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2605740902316011
+Summary of game... 5250 - 5350
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 1.0
+Error of ANN: 0.2602724979276248
+Summary of game... 0 - 50
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 2.0
+Error of ANN: 0.005419451320941694
+Summary of game... 50 - 100
+Win percentage BOB (Double DQN): 6.0%
+Average legal moves played... 2.0
+Error of ANN: 0.008264753745204122
+Summary of game... 100 - 150
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 2.0
+Error of ANN: 0.01245756172394219
+Summary of game... 150 - 200
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 2.0
+Error of ANN: 0.01702919913463684
+Summary of game... 0 - 50
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 2.0
+Error of ANN: 0.005448221808767473
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 50 - 100
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 2.0
+Error of ANN: 0.011508650977482004
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 100 - 150
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 2.0
+Error of ANN: 0.021440174202375813
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 150 - 200
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 2.0
+Error of ANN: 0.03565068775360154
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 200 - 250
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 2.0
+Error of ANN: 0.04983924590482234
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 250 - 300
+Win percentage BOB (Double DQN): 10.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06402919941560525
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 300 - 350
+Win percentage BOB (Double DQN): 14.000000000000002%
+Average legal moves played... 2.0
+Error of ANN: 0.07605256621640258
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 350 - 400
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.0813098422445178
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 400 - 450
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.08822349870983617
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 450 - 500
+Win percentage BOB (Double DQN): 16.0%
+Average legal moves played... 2.0
+Error of ANN: 0.08613337679222562
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 500 - 550
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 2.0
+Error of ANN: 0.09185131155203075
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 550 - 600
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.0822780210111262
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 600 - 650
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.07404760783544051
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 650 - 700
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.0647293332726893
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 700 - 750
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 2.0
+Error of ANN: 0.07947480184710691
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 750 - 800
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.0759391615943788
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 800 - 850
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.07158389614447697
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 850 - 900
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06330273371382854
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 900 - 950
+Win percentage BOB (Double DQN): 12.0%
+Average legal moves played... 2.0
+Error of ANN: 0.07040592491937397
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 950 - 1000
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.08046824597078209
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 1000 - 1050
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.07041209646237526
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 1050 - 1100
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06836164383534427
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 1100 - 1150
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06993616906361845
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 1150 - 1200
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06822052673466064
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 1200 - 1250
+Win percentage BOB (Double DQN): 48.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06197943335417781
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 1250 - 1300
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.05917447243927432
+Playing versus MCST running 10 iterations
+ 
+Summary of game... 1300 - 1350
+Win percentage BOB (Double DQN): 57.99999999999999%
+MCSTS has been beaten, its iterations has ben increased from... 10 to... 20
+Average legal moves played... 2.0
+Error of ANN: 0.04346737138812009
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1350 - 1400
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.05463489194196314
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1400 - 1450
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 0.05556255478576485
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1450 - 1500
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.06382583341476376
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1500 - 1550
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.08110309169506268
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1550 - 1600
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.08022875389905164
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1600 - 1650
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.078206067746742
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1650 - 1700
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.07228010533094309
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1700 - 1750
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.08263802101100112
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1750 - 1800
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.09315614598074595
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1800 - 1850
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.10646542362269101
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1850 - 1900
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.10816056515790133
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1900 - 1950
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.1313896148330847
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 1950 - 2000
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.16005640006374178
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 2000 - 2050
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.19675072301757576
+Playing versus MCST running 20 iterations
+ 
+Summary of game... 2050 - 2100
+Win percentage BOB (Double DQN): 52.0%
+MCSTS has been beaten, its iterations has ben increased from... 20 to... 30
+Average legal moves played... 2.0
+Error of ANN: 0.1712721668338415
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2100 - 2150
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.20929074880359305
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2150 - 2200
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2326848956299942
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2200 - 2250
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.19924101278221748
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2250 - 2300
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.22633338716776802
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2300 - 2350
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.20092787792488176
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2350 - 2400
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.18561517769013977
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2400 - 2450
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.18523338766816091
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2450 - 2500
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.21276999966505505
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2500 - 2550
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.24119820441997056
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2550 - 2600
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2570538989179475
+Playing versus MCST running 30 iterations
+ 
+Summary of game... 2600 - 2650
+Win percentage BOB (Double DQN): 54.0%
+MCSTS has been beaten, its iterations has ben increased from... 30 to... 40
+Average legal moves played... 2.0
+Error of ANN: 0.23015518580501887
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 2650 - 2700
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.22195142300816953
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 2700 - 2750
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.21208347221844195
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 2750 - 2800
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2125004513937866
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 2800 - 2850
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.2177313612291459
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 2850 - 2900
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2140487836815778
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 2900 - 2950
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2415372048402794
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 2950 - 3000
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.24330701288354692
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3000 - 3050
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.23977945231904846
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3050 - 3100
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.25811458415153005
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3100 - 3150
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2631247623560658
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3150 - 3200
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2739786749719907
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3200 - 3250
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.29744181997028474
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3250 - 3300
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2864732764558403
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3300 - 3350
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.29529253017608564
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3350 - 3400
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3118483277795938
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3400 - 3450
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.33044864240183697
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3450 - 3500
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2980607408273679
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3500 - 3550
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.27670390665017464
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3550 - 3600
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2955431555550013
+Playing versus MCST running 40 iterations
+ 
+Summary of game... 3600 - 3650
+Win percentage BOB (Double DQN): 54.0%
+MCSTS has been beaten, its iterations has ben increased from... 40 to... 50
+Average legal moves played... 2.0
+Error of ANN: 0.2587237220055752
+Playing versus MCST running 50 iterations
+ 
+Summary of game... 3650 - 3700
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.29642503662420355
+Playing versus MCST running 50 iterations
+ 
+Summary of game... 3700 - 3750
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.28564623020581514
+Playing versus MCST running 50 iterations
+ 
+Summary of game... 3750 - 3800
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.29348437546731515
+Playing versus MCST running 50 iterations
+ 
+Summary of game... 3800 - 3850
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.32714351810191933
+Playing versus MCST running 50 iterations
+ 
+Summary of game... 3850 - 3900
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.32599536602854734
+Playing versus MCST running 50 iterations
+ 
+Summary of game... 3900 - 3950
+Win percentage BOB (Double DQN): 50.0%
+MCSTS has been beaten, its iterations has ben increased from... 50 to... 60
+Average legal moves played... 2.0
+Error of ANN: 0.3279306759960968
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 3950 - 4000
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.37405380923135334
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4000 - 4050
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.38303026717754607
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4050 - 4100
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3649902186987418
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4100 - 4150
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3682327122644659
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4150 - 4200
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3637983138679001
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4200 - 4250
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.346230056968369
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4250 - 4300
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.36062732150331744
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4300 - 4350
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.35988176076641276
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4350 - 4400
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.39312724025901225
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4400 - 4450
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.3982556392049301
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4450 - 4500
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3577398333093941
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4500 - 4550
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3696216952809815
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4550 - 4600
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.3750177453809263
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4600 - 4650
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3762571501940183
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4650 - 4700
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4007646881497922
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4700 - 4750
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.40405480310191155
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4750 - 4800
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.42693344763647245
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4800 - 4850
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4296651255847001
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4850 - 4900
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4173381535834404
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4900 - 4950
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4541516310371543
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 4950 - 5000
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4403179007613053
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5000 - 5050
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4274367827127311
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5050 - 5100
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4305097511406191
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5100 - 5150
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.4653502864324025
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5150 - 5200
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4346934203476528
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5200 - 5250
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4721488029138418
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5250 - 5300
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4483888337867105
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5300 - 5350
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.43949968714384274
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5350 - 5400
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4407897550369221
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5400 - 5450
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 0.424453207006833
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5450 - 5500
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4348600628800819
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5500 - 5550
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4612891377535988
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5550 - 5600
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.457301902577226
+Playing versus MCST running 60 iterations
+ 
+Summary of game... 5600 - 5650
+Win percentage BOB (Double DQN): 50.0%
+MCSTS has been beaten, its iterations has ben increased from... 60 to... 70
+Average legal moves played... 2.0
+Error of ANN: 0.4627389300357298
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 5650 - 5700
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.4625895589741781
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 5700 - 5750
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.48509201164589916
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 5750 - 5800
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4804747298961707
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 5800 - 5850
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.4914878636773336
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 5850 - 5900
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5099557925844833
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 5900 - 5950
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.5189831252143483
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 5950 - 6000
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5080404662869659
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6000 - 6050
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.5099461328421745
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6050 - 6100
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5466573815488243
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6100 - 6150
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5392952773756688
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6150 - 6200
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6082706467620446
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6200 - 6250
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5967460693420964
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6250 - 6300
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5985405279352156
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6300 - 6350
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5931960864788398
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6350 - 6400
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6493085806658226
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6400 - 6450
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6852377616437227
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6450 - 6500
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.640002119420705
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6500 - 6550
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7141896424072225
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6550 - 6600
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6933989193335166
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6600 - 6650
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6296294050338792
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6650 - 6700
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6205947008068747
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6700 - 6750
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6626024263226465
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6750 - 6800
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6271113464113369
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6800 - 6850
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.643893408559551
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6850 - 6900
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6483243355009018
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6900 - 6950
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.6168150130932144
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 6950 - 7000
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5925366644026185
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7000 - 7050
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5426660878045697
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7050 - 7100
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5977845952705283
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7100 - 7150
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5788873590644219
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7150 - 7200
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6302425016745751
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7200 - 7250
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6134134555235681
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7250 - 7300
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6097801736736651
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7300 - 7350
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5881957140184262
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7350 - 7400
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6003352777543589
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7400 - 7450
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 0.5884780460891007
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7450 - 7500
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6727567244737523
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7500 - 7550
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6694205376383374
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7550 - 7600
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6110458914630346
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7600 - 7650
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6647360414059558
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7650 - 7700
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6233263389422506
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7700 - 7750
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6535344420353116
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7750 - 7800
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6763232184544966
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7800 - 7850
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.760189563827625
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7850 - 7900
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7487374928717115
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7900 - 7950
+Win percentage BOB (Double DQN): 48.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6681917510692713
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 7950 - 8000
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6241203307036086
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8000 - 8050
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6191996874673233
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8050 - 8100
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6483589745006757
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8100 - 8150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7108210439398686
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8150 - 8200
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7388040713150471
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8200 - 8250
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6986195987617382
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8250 - 8300
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7046018803838986
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8300 - 8350
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6397431003919338
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8350 - 8400
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.6342983379031029
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8400 - 8450
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6707308062734644
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8450 - 8500
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6369365567762094
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8500 - 8550
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6300758261705337
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8550 - 8600
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6378901663963067
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8600 - 8650
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6772463359767619
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8650 - 8700
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7133242031108338
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8700 - 8750
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.701882681452542
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8750 - 8800
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.665389441680681
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8800 - 8850
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6823692152656807
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8850 - 8900
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7106866840911101
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8900 - 8950
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6764820697039483
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 8950 - 9000
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6678424745147604
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9000 - 9050
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7051364918910877
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9050 - 9100
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6778852359120776
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9100 - 9150
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6604851361049805
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9150 - 9200
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.6827074920632032
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9200 - 9250
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6890770951950532
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9250 - 9300
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7438812498627957
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9300 - 9350
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.761536540138956
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9350 - 9400
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7068261473819498
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9400 - 9450
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.703355254085869
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9450 - 9500
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7006209788201964
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9500 - 9550
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.665152641711098
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9550 - 9600
+Win percentage BOB (Double DQN): 48.0%
+Average legal moves played... 2.0
+Error of ANN: 0.6519993980962968
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9600 - 9650
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7154240359239848
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9650 - 9700
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7130060481993159
+Playing versus MCST running 70 iterations
+ 
+Summary of game... 9700 - 9750
+Win percentage BOB (Double DQN): 50.0%
+MCSTS has been beaten, its iterations has ben increased from... 70 to... 80
+Average legal moves played... 2.0
+Error of ANN: 0.648366605444102
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 9750 - 9800
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7406340512715814
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 9800 - 9850
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7921027634719103
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 9850 - 9900
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7887273899198984
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 9900 - 9950
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7738233381382194
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 9950 - 10000
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8101219010812185
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10000 - 10050
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.7624186923758625
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10050 - 10100
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.7990402175216296
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10100 - 10150
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.850630606277557
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10150 - 10200
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8222672237462147
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10200 - 10250
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8224893475894041
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10250 - 10300
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8856641882145692
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10300 - 10350
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.858840139520351
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10350 - 10400
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9602482320728103
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10400 - 10450
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9150999781472804
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10450 - 10500
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8887258187742333
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10500 - 10550
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.881940306583051
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10550 - 10600
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.930069263509616
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10600 - 10650
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.961221759298892
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10650 - 10700
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8617972650979663
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10700 - 10750
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.8853900938917161
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10750 - 10800
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9458347475640275
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10800 - 10850
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9368643729958156
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10850 - 10900
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9006782589541431
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10900 - 10950
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 0.8909441766758164
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 10950 - 11000
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9278341732988948
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11000 - 11050
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 0.9573053656920283
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11050 - 11100
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0339948588119365
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11100 - 11150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0858957779465634
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11150 - 11200
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1484283963219293
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11200 - 11250
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1408253286803043
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11250 - 11300
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1421845900186673
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11300 - 11350
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0422080377687546
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11350 - 11400
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.0816870077740697
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11400 - 11450
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0828002271276453
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11450 - 11500
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 1.062096225479967
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11500 - 11550
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0521394119221987
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11550 - 11600
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0802047041956961
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11600 - 11650
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1125774136254543
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11650 - 11700
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.1269821940416478
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11700 - 11750
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.1409200760128422
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11750 - 11800
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0909142326422048
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11800 - 11850
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0602380123424024
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11850 - 11900
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1528626551232588
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11900 - 11950
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1056437515928137
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 11950 - 12000
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.182200501387198
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12000 - 12050
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.0984223262451371
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12050 - 12100
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 1.1355829472932895
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12100 - 12150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.207795086308748
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12150 - 12200
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3231672337329052
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12200 - 12250
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3915684384631792
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12250 - 12300
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2469409868808916
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12300 - 12350
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3190590224411374
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12350 - 12400
+Win percentage BOB (Double DQN): 16.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3792539847243452
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12400 - 12450
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4891786932058777
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12450 - 12500
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4134577907787809
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12500 - 12550
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.432048242441668
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12550 - 12600
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4326328562715955
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12600 - 12650
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4744147491824058
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12650 - 12700
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 1.382708458464678
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12700 - 12750
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.3858137082881026
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12750 - 12800
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3796829315508794
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12800 - 12850
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3253461118949168
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12850 - 12900
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3477014967516445
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12900 - 12950
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3352188554767175
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 12950 - 13000
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.416325015635172
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13000 - 13050
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.460560617509585
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13050 - 13100
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.5501921216887946
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13100 - 13150
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.4658093334265492
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13150 - 13200
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4742193459758606
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13200 - 13250
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4825839308842033
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13250 - 13300
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4393274636805806
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13300 - 13350
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3490486605026022
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13350 - 13400
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.264702621737471
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13400 - 13450
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2644866549011382
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13450 - 13500
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.167536003107464
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13500 - 13550
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2695953568636449
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13550 - 13600
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2616155768243125
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13600 - 13650
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3406532058932437
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13650 - 13700
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.303872595419411
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13700 - 13750
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3653751189132077
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13750 - 13800
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3370814137093312
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13800 - 13850
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3786802555826512
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13850 - 13900
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.2887438806194702
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13900 - 13950
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3488980941800923
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 13950 - 14000
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.5245054940196474
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14000 - 14050
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.542738583994377
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14050 - 14100
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4734999734587686
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14100 - 14150
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3323116471799608
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14150 - 14200
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3835040654966368
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14200 - 14250
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.4313707560239717
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14250 - 14300
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.432598342264865
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14300 - 14350
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 1.3124761009797936
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14350 - 14400
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.412156497268031
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14400 - 14450
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6074501003866717
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14450 - 14500
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 1.8185705642092693
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14500 - 14550
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.7312022663490885
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14550 - 14600
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.5106212926523515
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14600 - 14650
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6388573386857428
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14650 - 14700
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6122287965173348
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14700 - 14750
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.637426026001032
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14750 - 14800
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.680078764541459
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14800 - 14850
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6453872772805511
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14850 - 14900
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.753948489936354
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14900 - 14950
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.685971760874763
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 14950 - 15000
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6460523905041007
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15000 - 15050
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.6694186042889996
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15050 - 15100
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.6749258403739207
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15100 - 15150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.74977814514522
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15150 - 15200
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.739803625661497
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15200 - 15250
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 1.891983060043171
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15250 - 15300
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.8395339872241936
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15300 - 15350
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 1.8706350895368453
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15350 - 15400
+Win percentage BOB (Double DQN): 48.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9244374594094071
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15400 - 15450
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.9889821877553375
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15450 - 15500
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9457550127197942
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15500 - 15550
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9482533094568253
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15550 - 15600
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9699072329232459
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15600 - 15650
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 1.9902190710582035
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15650 - 15700
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.937950945922859
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15700 - 15750
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 2.0690083152140213
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15750 - 15800
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 2.081830451626139
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15800 - 15850
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 1.991834417593976
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15850 - 15900
+Win percentage BOB (Double DQN): 46.0%
+Average legal moves played... 2.0
+Error of ANN: 1.8638507015912629
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15900 - 15950
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9301982917811156
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 15950 - 16000
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 2.0296047777782036
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16000 - 16050
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9841052834718182
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16050 - 16100
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 2.0740324137348543
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16100 - 16150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 2.1143980161630793
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16150 - 16200
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 2.146973684922059
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16200 - 16250
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 2.0244429894866034
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16250 - 16300
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9345529830139063
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16300 - 16350
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 1.947767239506914
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16350 - 16400
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.9642982902225545
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16400 - 16450
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 2.0755914355986764
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16450 - 16500
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 2.05984428508894
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16500 - 16550
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 1.998246190925613
+Playing versus MCST running 80 iterations
+ 
+Summary of game... 16550 - 16600
+Win percentage BOB (Double DQN): 52.0%
+MCSTS has been beaten, its iterations has ben increased from... 80 to... 90
+Average legal moves played... 2.0
+Error of ANN: 1.9959958672747156
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16600 - 16650
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 2.1580982814148046
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16650 - 16700
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 2.147064011369598
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16700 - 16750
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 2.135876235121937
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16750 - 16800
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 2.2281201208852552
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16800 - 16850
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 2.1637321535403995
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16850 - 16900
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 2.2370673666016136
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16900 - 16950
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 2.2013239077590883
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 16950 - 17000
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 2.1383106494593225
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17000 - 17050
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 2.071502036981795
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17050 - 17100
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 2.242263884911155
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17100 - 17150
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 2.2581046194740653
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17150 - 17200
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 2.3424433042629134
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17200 - 17250
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 2.431110542874126
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17250 - 17300
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 2.495090242528328
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17300 - 17350
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 2.4852861136386135
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17350 - 17400
+Win percentage BOB (Double DQN): 44.0%
+Average legal moves played... 2.0
+Error of ANN: 2.356153333621747
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17400 - 17450
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 2.3792136044143963
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17450 - 17500
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 2.427195966529842
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17500 - 17550
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 2.336795753220684
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17550 - 17600
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 2.3599272770211166
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17600 - 17650
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 2.330830957972289
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17650 - 17700
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 2.3314092648898237
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17700 - 17750
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 2.433712926588079
+Playing versus MCST running 90 iterations
+ 
+Summary of game... 17750 - 17800
+Win percentage BOB (Double DQN): 52.0%
+MCSTS has been beaten, its iterations has ben increased from... 90 to... 100
+Average legal moves played... 2.0
+Error of ANN: 2.298096370006517
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 17800 - 17850
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 2.486247105489683
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 17850 - 17900
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 2.6243236265834153
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 17900 - 17950
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 2.5824598149621205
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 17950 - 18000
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 2.673044738611899
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18000 - 18050
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 2.4519773613692943
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18050 - 18100
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 2.5627207790710016
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18100 - 18150
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 2.599738895072777
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18150 - 18200
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 2.6950529486492534
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18200 - 18250
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 2.848100905222722
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18250 - 18300
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 2.7593816622294534
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18300 - 18350
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 2.919914679508513
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18350 - 18400
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 3.1283171766073754
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18400 - 18450
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 3.291731460511458
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18450 - 18500
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 3.5277549789580194
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18500 - 18550
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 3.0545021586766854
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18550 - 18600
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 3.1729788997453525
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18600 - 18650
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 3.2588853838497966
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18650 - 18700
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 3.1869176942810276
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18700 - 18750
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 3.2086319912964
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18750 - 18800
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 3.2578898155559095
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18800 - 18850
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 3.249187443165176
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18850 - 18900
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 3.4888997489365337
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18900 - 18950
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 3.632897446818011
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 18950 - 19000
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 3.4950529170197635
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 19000 - 19050
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 3.4048941201600496
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 19050 - 19100
+Win percentage BOB (Double DQN): 36.0%
+Average legal moves played... 2.0
+Error of ANN: 3.397516583585657
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 19100 - 19150
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 3.664893420116839
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 19150 - 19200
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 3.6771949188024977
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 19200 - 19250
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 3.580418153119729
+Playing versus MCST running 100 iterations
+ 
+Summary of game... 19250 - 19300
+Win percentage BOB (Double DQN): 50.0%
+MCSTS has been beaten, its iterations has ben increased from... 100 to... 110
+Average legal moves played... 2.0
+Error of ANN: 3.346795876865682
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19300 - 19350
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 3.7178762608623295
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19350 - 19400
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 3.926391411767547
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19400 - 19450
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 4.0814107816151735
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19450 - 19500
+Win percentage BOB (Double DQN): 42.0%
+Average legal moves played... 2.0
+Error of ANN: 3.702872771436846
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19500 - 19550
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 3.9389857917483475
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19550 - 19600
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 3.8617692288022445
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19600 - 19650
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 3.9023774810046192
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19650 - 19700
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 4.067904381823572
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19700 - 19750
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 4.176686600309066
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19750 - 19800
+Win percentage BOB (Double DQN): 18.0%
+Average legal moves played... 2.0
+Error of ANN: 4.432129290119543
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19800 - 19850
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 4.536412224733525
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19850 - 19900
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 4.612709654370347
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19900 - 19950
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 4.468942026199565
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 19950 - 20000
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 4.6005498188074805
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 20000 - 20050
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 4.34612313257819
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 20050 - 20100
+Win percentage BOB (Double DQN): 38.0%
+Average legal moves played... 2.0
+Error of ANN: 4.334204064962642
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 20100 - 20150
+Win percentage BOB (Double DQN): 32.0%
+Average legal moves played... 2.0
+Error of ANN: 4.387151616653664
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 20150 - 20200
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 4.7517858102427875
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 20200 - 20250
+Win percentage BOB (Double DQN): 28.000000000000004%
+Average legal moves played... 2.0
+Error of ANN: 4.865352863424644
+Playing versus MCST running 110 iterations
+ 
+Summary of game... 0 - 50
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.006245242523366931
+Summary of game... 50 - 100
+Win percentage BOB (Double DQN): 20.0%
+Average legal moves played... 2.0
+Error of ANN: 0.006730571716248572
+Summary of game... 100 - 150
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.008750275999845902
+Summary of game... 150 - 200
+Win percentage BOB (Double DQN): 8.0%
+Average legal moves played... 2.0
+Error of ANN: 0.013322118262725894
+Summary of game... 200 - 250
+Win percentage BOB (Double DQN): 22.0%
+Average legal moves played... 2.0
+Error of ANN: 0.016951035859603437
+Summary of game... 250 - 300
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.017657319971902646
+Summary of game... 300 - 350
+Win percentage BOB (Double DQN): 26.0%
+Average legal moves played... 2.0
+Error of ANN: 0.01713385341021144
+Summary of game... 350 - 400
+Win percentage BOB (Double DQN): 24.0%
+Average legal moves played... 2.0
+Error of ANN: 0.018736084166695498
+Summary of game... 400 - 450
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.01835111845987145
+Summary of game... 450 - 500
+Win percentage BOB (Double DQN): 34.0%
+Average legal moves played... 2.0
+Error of ANN: 0.01821853773275724
+Summary of game... 500 - 550
+Win percentage BOB (Double DQN): 40.0%
+Average legal moves played... 2.0
+Error of ANN: 0.016442401211754994
+Summary of game... 550 - 600
+Win percentage BOB (Double DQN): 30.0%
+Average legal moves played... 2.0
+Error of ANN: 0.017219029663679487
+Summary of game... 0 - 50
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.00583641362214371
+Summary of game... 50 - 100
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.00991943169942312
+Summary of game... 100 - 150
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.017622086849652066
+Summary of game... 150 - 200
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 2.0
+Error of ANN: 0.029114807201135195
+Summary of game... 200 - 250
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 2.0
+Error of ANN: 0.048231108139446595
+Summary of game... 0 - 50
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.005686627775654545
+Summary of game... 50 - 100
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.012264273403771802
+Summary of game... 100 - 150
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.02499851431654409
+Summary of game... 150 - 200
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.05014563483212232
+Summary of game... 200 - 250
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.0799178601755283
+Summary of game... 250 - 300
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.11915428516029816
+Summary of game... 300 - 350
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.15178744956231394
+Summary of game... 350 - 400
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 2.0
+Error of ANN: 0.17015366932566478
+Summary of game... 400 - 450
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.18201504072344013
+Summary of game... 450 - 500
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.20161740284704951
+Summary of game... 500 - 550
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.21496318377386972
+Summary of game... 550 - 600
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.23219073394910997
+Summary of game... 600 - 650
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2314478397525075
+Summary of game... 650 - 700
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 2.0
+Error of ANN: 0.24277638611856062
+Summary of game... 700 - 750
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2574179251488363
+Summary of game... 750 - 800
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.24266943054429982
+Summary of game... 800 - 850
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2576770846356255
+Summary of game... 850 - 900
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2683935008324378
+Summary of game... 900 - 950
+Win percentage BOB (Double DQN): 4.0%
+Average legal moves played... 2.0
+Error of ANN: 0.2939729082058991
+Summary of game... 950 - 1000
+Win percentage BOB (Double DQN): 0.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3215783987729745
+Summary of game... 1000 - 1050
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 2.0
+Error of ANN: 0.3759991318742303
+Summary of game... 1050 - 1100
+Win percentage BOB (Double DQN): 2.0%
+Average legal moves played... 2.0
+Error of ANN: 0.40050102118889924
