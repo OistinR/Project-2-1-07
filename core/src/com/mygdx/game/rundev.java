@@ -235,8 +235,6 @@ public class rundev {
         rundev dev = new rundev();
         dev.init();
         dev.update();
-
-        
         
 //        Toolkit.getDefaultToolkit().beep();
 

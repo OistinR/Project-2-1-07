@@ -1,2 +1,0 @@
-model 2 41 acc
-model base 32 but is shit
