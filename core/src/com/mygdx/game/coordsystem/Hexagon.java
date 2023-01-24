@@ -80,7 +80,7 @@ public class Hexagon implements Cloneable {
         this.checked = false;
         fitnessText = new BitmapFont();
         //this enables the fitness score being rendered over the hexagon
-        DEBUG = true;
+        DEBUG = false;
 
         hexSprite = new Sprite(blankTileTexture,50,50);
         hexSprite.setSize(50,50);

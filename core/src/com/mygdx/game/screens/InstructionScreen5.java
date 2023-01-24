@@ -22,31 +22,31 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 /**
  *Class executed when the instruction button is pressed, explains the game
  */
-public class InstructionScreen implements Screen {
+public class InstructionScreen5 implements Screen {
 
     private Omega game;
     private Stage stage;
     public BitmapFont font;
-    private TextButton next, prev;
+    private TextButton next,prev;
     private Skin menuSkin;
-    private Texture tutorialImage;
+    private Texture image;
 
     /**
      *
      * @param game the class that connects all the parts of the game
      */
-    public InstructionScreen(Omega game) {
+    public InstructionScreen5(Omega game) {
         super();
         this.game = game;
         stage = new Stage(new FillViewport(1280, 720));
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        next = new TextButton("Next",menuSkin);
-        next.setPosition(1200, 10);
-        next.setSize(50, 50);
+        next = new TextButton("Back to Main Menu",menuSkin);
+        next.setPosition(1000, 10);
+        next.setSize(100, 50);
         prev = new TextButton("Previous",menuSkin);
         prev.setPosition(20, 10);
         prev.setSize(50, 50);
-        tutorialImage = new Texture("instructions_omega_one.png");
+        image = new Texture("final.png");
         
     }
 
@@ -68,15 +68,21 @@ public class InstructionScreen implements Screen {
         stage.act(delta);
         stage.draw();
         stage.addActor(next);
+        stage.addActor(prev);
 
         next.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 game.getScreen().dispose();
-                game.setScreen(new InstructionScreen2(game));
+                game.setScreen(new MenuScreen(game));
             }
         });
 
-        
+        prev.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                game.getScreen().dispose();
+                game.setScreen(new InstructionScreen4(game));
+            }
+        });
 
         game.sr.begin(ShapeRenderer.ShapeType.Filled);
         game.mainBatch.begin();
@@ -85,16 +91,14 @@ public class InstructionScreen implements Screen {
         game.font.setColor(Color.BLACK);
 
         game.font.getData().setScale(3, 3);
-        game.font.draw(game.mainBatch, "Game Instructions", 450, 675);
+        game.font.draw(game.mainBatch, "Game Instructions 5", 450, 675);
         game.font.getData().setScale(2,2);
 
 
-        game.font.draw(game.mainBatch, "In Omega, players try to create groups of their color by placing hexagonal stones on a field", 60, 600);
-        game.font.draw(game.mainBatch, "in order to score points. The final score is calculated by multiplying the sizes of ", 150, 570);
-        game.font.draw(game.mainBatch, "all of the different groups of a specific color.", 370, 540);
+        game.font.draw(game.mainBatch, "The game ends when there are not enough free spaces left to play a full turn", 200, 620);
+        game.font.draw(game.mainBatch, "Enjoy playing! We hope you have a blast with Omega! HexaGo!", 220, 590);
 
-        game.mainBatch.draw(tutorialImage,300,50,700,400);
-
+        game.mainBatch.draw(image, 180, 40,800,450);
 
         font.draw(game.mainBatch, "Press ESC to return to main menu", 5, 16);
 
