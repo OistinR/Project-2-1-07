@@ -1,31 +1,29 @@
 package com.mygdx.game;
 
-import java.io.IOException;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree;
-import com.badlogic.gdx.utils.Array;
-
 import com.mygdx.game.bots.Bot;
-import com.mygdx.game.bots.FitnessGroupBot;
+import com.mygdx.game.bots.MCST.MCST;
+import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
-import com.mygdx.game.bots.OLABot;
-
-import com.mygdx.game.bots.TreeBotMC;
 
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.gametree.TreeBot;
-
 import com.mygdx.game.coordsystem.Hexagon;
+
+import com.mygdx.game.experiment.GameState;
+
+import com.mygdx.game.experiment.StateWrite;
 import com.mygdx.game.experiment.experiment;
-import com.mygdx.game.gametreemc.MonteCarloTree;
-import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
+import com.mygdx.tensorAnn.PredictBot;
 
 public class rundev {
-    public enum state {
+    public enum state{
         P1P1,
         P1P2,
         P1P3,
@@ -46,6 +44,7 @@ public class rundev {
     private ArrayList<Integer> draws;
     private int totalnumgames;
     private double finalWinRate;
+
     private ArrayList<Float> dataWinPerc = new ArrayList<Float>();
     private ArrayList<Float> dataLossPerc = new ArrayList<Float>();
     private ArrayList<Float> dataDrawPerc = new ArrayList<Float>();
@@ -53,11 +52,21 @@ public class rundev {
     private ArrayList<Float> dataDraws = new ArrayList<Float>();
     private experiment exp = new experiment();
     private double winperc1, winperc2, winpercd;
+    private ArrayList<Double> ar;
+
+    private GameState gameState;
+    private File fileWrite;
+    private FileWriter writer;
+    private  StringBuilder output;
+    private StateWrite sw;
 
     public void init() {
+        fileWrite = new File("core\\src\\com\\mygdx\\SENDTHIStrainingData.csv");
         // Initiate variables
+        ar = new ArrayList<>();
+        gameState = new GameState();
         round = 1;
-        totalnumgames = 5000;
+        totalnumgames = 100;
         gamefinished = false;
         field = new ArrayList<>();
         SEngine = new ScoringEngine();
@@ -65,71 +74,80 @@ public class rundev {
         bot2wins = new ArrayList<>();
         draws = new ArrayList<>();
 
-        // Initiate fieldsize
-        fieldsize = 2;
+        //Initiate fieldsize
+        fieldsize=3;
 
-        // Create field and initiate bots
+        //Create field and initiate bots
 
+
+
+        botMCST = new MCST();
         // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
-        botpone = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-        botptwo = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+//        botpone = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
+        botpone = new RandomBot();
+        botptwo = new PredictBot();
+
         createHexagonFieldDefault();
     }
 
     public void update() {
+
+        double winperc1;
+        double winperc2;
+        double winpercd;
+   
+
+        output = new StringBuilder();
         int i = 0;
-        while (i <= totalnumgames) {
+        while (i < totalnumgames) {
+//            ar.clear();
+//            if (i>0)
+//            output.append("\n");
+
             while (!gamefinished) {
                 updateState();
                 makeMove();
                 updateState();
             }
-            if (i % 10 == 0) {
-                System.out.println(i + " games simulated.");
+            if(i%10==0) {
+                System.out.println(i+" games simulated.");
             }
 
+                for (Double feature:ar) {
+                    output.append(feature.toString()).append(",");
+                }
+//            output.setLength(output.length() - 1);
+//          output.replace(output.length()-1,output.length()-1,"");
             round = 1;
             gamefinished = false;
+
             field = new ArrayList<>();
             SEngine = new ScoringEngine();
             createHexagonFieldDefault();
 
             i++;
         }
-        // TODO issue: the tree cant tell when game is over so its possible that
-        // infinite loops can occur.
-        // Tree tr = new Tree(6,5);
-        // // Storage is a massive issue, larger map sizes means lower depth/widths.
-        // long runtime=0L;
-        // long startTime = System.nanoTime();
-        // tr.generateTree(field, GameScreen.state.P2P1,false);
-        // long endTime = System.nanoTime();
-        // long duration = (endTime - startTime);
-        // runtime += duration/10000000;
-        // System.out.println("\nruntime: "+ ((double)(runtime))/100+" seconds(i
-        // think)");
-        //
-        // System.out.println(tr.displayTree(false));
-        //
-        // System.out.println("bots assessment of board: "+
-        // tr.getNodes().get(0).getCombinedScore());
-        //
-        // double maxScore = 0;
-        // for (Node n0: tr.getNodes().get(0).getChildArray()) {
-        // if(maxScore<n0.getCombinedScore()){
-        // maxScore = n0.getCombinedScore();
-        // }
-        // System.out.println(n0);
-        // }
-        // System.out.println("max score is: "+ maxScore);
+
+
+//        try {
+//            output.append(",999.0");
+//            writer = new FileWriter(fileWrite);
+//            writer.write(output.toString());
+//            writer.close();
+//        } catch (IOException e) {
+//            System.out.println("error with IO: ");
+//            e.printStackTrace();
+//        }
+
 
         winperc1 = ((double) bot1wins.size() / (double) totalnumgames) * 100;
         winperc2 = ((double) bot2wins.size() / (double) totalnumgames) * 100;
         winpercd = ((double) draws.size() / (double) totalnumgames) * 100;
-
+//
         System.out.println("Bot 1 number of wins: " + bot1wins.size() + " Win percentage: " + winperc1 + " %");
         System.out.println("Bot 2 number of wins: " + bot2wins.size() + " Win percentage: " + winperc2 + " %");
         System.out.println("Number of draws: " + draws.size() + " Draw percentage: " + winpercd + " %");
+
         this.finalWinRate = winperc1;
     }
 
@@ -139,24 +157,40 @@ public class rundev {
             for (int r = fieldsize; r >= -fieldsize; r--) {
                 s = -q - r;
                 if (s <= fieldsize && s >= -fieldsize) {
-                    field.add(new Hexagon(q, r, 50, 0, 0));
+                    field.add(new Hexagon(q, r, 50,0,0));
                 }
             }
         }
     }
 
     public void updateState() {
-        int numhex = numHex() - 4 * (round - 1);
+        int numhex = numHex() - 4*(round-1);
 
-        if (field.size() - (numhex + (4 * (round - 1))) < 4) {
+        if(field.size()-(numhex+(4*(round-1)))<4) {
             gameFinish();
         }
     }
 
+    private void duplicateRemover(ArrayList<Double> before, ArrayList<Double> after ){
+        if(before.size()!= after.size()){
+            System.out.println("sizes not equal");
+            System.out.println(before);
+            System.out.println(after);
+            return;
+//            throw new RuntimeException("length of arraylists is not the equal");
+        }
+        for (int i = 0; i < after.size(); i++) {
+            if(after.get(i).equals(before.get(i))){
+                after.set(i, 0.0);
+            }
+        }
+    }
+
+
     public int numHex() {
-        int num = 0;
-        for (Hexagon h : field) {
-            if ((h.getMyState() != Hexagon.state.BLANK)) {
+        int num=0;
+        for(Hexagon h:field) {
+            if((h.getMyState()!=Hexagon.state.BLANK)) {
                 num++;
             }
         }
@@ -164,105 +198,118 @@ public class rundev {
     }
 
     public void makeMove() {
-        botpone.execMove(field);
-        botptwo.execMove(field);
+//        MCSTmove(GameScreen.state.P1P2,true);
+//        MCSTmove(GameScreen.state.P1P1,true);
+        botpone.calculate(field);
+        botptwo.calculate(field);
+
+//        ar.add(999.0);
+//        gameState.update(field);
+//        ar.addAll(gameState.getState());
+//         add features here
+//        ar.add(1.0);
+//        ar.add(999.0);
+
+//        gameState.update(field);
+//        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
+//        duplicateRemover(temp,gameState.getState());
+//        ar.addAll(gameState.getState());
+
+//        ar.add(999.0);
+//        gameState.update(field);
+//        ar.addAll(gameState.getState());
+        //add features here
+//        ar.add(-1.0);
+//        ar.add(999.0);
+
+
+
+//        gameState.update(field);
+//        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
+//        duplicateRemover(temp,gameState.getState());
+//        ar.addAll(gameState.getState());
+
     }
+    private ArrayList<Double> temp;
 
     public void gameFinish() {
         SEngine.calculate(field);
-        int p1score = SEngine.getRedScore();
-        int p2score = SEngine.getBlueScore();
-        // System.out.println("GAME HAS ENDED");
-        // System.out.println("PLAYER 1 (RED) SCORE: "+p1score);
-        // System.out.println("PLAYER 2 (BLUE) SCORE: "+p2score);
-        if (p1score > p2score) {
-            // System.out.println("PLAYER 1 (RED) WON");
+        int p1score=SEngine.getRedScore();
+        int p2score=SEngine.getBlueScore();
+
+//        System.out.println("GAME HAS ENDED");
+//        System.out.println("PLAYER 1 (RED) SCORE: "+p1score);
+//        System.out.println("PLAYER 2 (BLUE) SCORE: "+p2score);
+        if(p1score>p2score) {
+            //System.out.println("PLAYER 1 (RED) WON");
             bot1wins.add(p1score);
-        } else if (p1score < p2score) {
-            // System.out.println("PLAYER 2 (BLUE) WON");
+        } else if(p1score<p2score) {
+            //System.out.println("PLAYER 2 (BLUE) WON");
             bot2wins.add(p2score);
         } else {
-            // System.out.println("THE GAME IS A DRAW");
+            //System.out.println("THE GAME IS A DRAW");
             draws.add(p1score);
         }
-        gamefinished = true;
+        gamefinished=true;
     }
 
-    public ArrayList<Hexagon> getField() {
+    public ArrayList<Hexagon> getField(){
         return this.field;
     }
 
-    public double getWinRate() {
+    public double getWinRate(){
         return this.finalWinRate;
     }
 
-    public void setField(ArrayList<Hexagon> field) {
+    public void setField(ArrayList<Hexagon> field){
         ArrayList<Hexagon> clone = new ArrayList<>();
-        try {
-            for (Hexagon hex : field) {
+        try{
+            for(Hexagon hex:field){
                 clone.add(hex.clone());
             }
-        } catch (Exception e) {
+        }
+        catch(Exception e){
 
         }
         this.field = field;
     }
+    private MCST botMCST;
+    private int count =0;
+
+
+    private void MCSTmove(GameScreen.state STATE,boolean player1){
+
+        ArrayList<Hexagon> copy_field = new ArrayList<>();
+        try {
+            for(Hexagon h : field) {
+                copy_field.add(h.clone());
+            }
+        } catch (Exception e) {}
+
+        count++;
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1, 0);
+
+        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
+            field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
+        else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
+            field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
+        }
+        else{
+            throw new IllegalStateException("The children phase is not assign correctly: ");
+        }
+    }
+
 
     public static void main(String[] args) {
         rundev dev = new rundev();
         dev.init();
         dev.update();
-        String filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/lossesPerc.csv";
 
-        dev.dataLossPerc.add((float) (100 - dev.winperc1));
-        dev.dataLossPerc.add((float) (100 - dev.winperc2));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataLossPerc);
-            System.out.println("Wrote in lossesPerc.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
+        
+//        Toolkit.getDefaultToolkit().beep();
 
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/winsPerc.csv";
-
-        dev.dataWinPerc.add((float) (dev.winperc1));
-        dev.dataWinPerc.add((float) (dev.winperc2));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataWinPerc);
-            System.out.println("Wrote in winsPerc.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/drawsPerc.csv";
-
-        dev.dataDrawPerc.add((float) (dev.winpercd));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataDrawPerc);
-            System.out.println("Wrote in drawsPerc.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfWins.csv";
-
-        dev.dataWins.add((float) (dev.bot1wins.size()));
-        dev.dataWins.add((float) (dev.bot2wins.size()));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataWins);
-            System.out.println("Wrote in numberOfWins.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        filePath = "C:/Users/Fred/Documents/GitHub/Project-2-1-07/core/src/com/mygdx/game/experiment/CSV Files/numberOfDraws.csv";
-
-        dev.dataDraws.add((float) (dev.draws.size()));
-        try {
-            dev.exp.writeDatatoCSV(filePath, dev.dataDraws);
-            System.out.println("Wrote in numberOfDraws.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        StateWrite sw = new StateWrite();
+//        sw.readFrom();
     }
 }

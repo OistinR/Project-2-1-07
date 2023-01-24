@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.15'
-        
+
 
     }
 }
@@ -38,6 +38,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
     }
+
 }
 
 project(":desktop") {
@@ -69,10 +70,16 @@ project(":ios") {
 
 project(":core") {
     apply plugin: "java-library"
+    repositories {
+        mavenCentral()
+    }
+
 
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        implementation 'org.tensorflow:tensorflow:1.15.0'
+        implementation group: 'org.tensorflow', name: 'proto', version: '1.15.0'
+
     }
 }
