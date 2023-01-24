@@ -138,7 +138,7 @@ public class GameScreen implements Screen {
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
         // Choose any bot here that extends Bot abstract class
-        bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
+        bot = new RandomBot();
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         dqn = new DQN(100);
@@ -238,7 +238,7 @@ public class GameScreen implements Screen {
         }
         if (ai2 && ai && (!gamefinished)) {
             botmove();
-            bot2move();
+            bot2move(round);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -276,7 +276,7 @@ public class GameScreen implements Screen {
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
-                bot2move();
+                bot2move(round);
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -538,8 +538,8 @@ public class GameScreen implements Screen {
     /**
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
-    private void bot2move() {
-        dqn.execMove(field);
+    private void bot2move(int round) {
+        dqn.execMove(field,round);
         //bot2.execMove(field);
         //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
 

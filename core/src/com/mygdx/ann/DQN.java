@@ -56,8 +56,8 @@ public class DQN {
         state = createState();
         boardsize = state.size();
 
-        MAINNET = new ANN(boardsize+2, boardsize, 1, 512);
-        TARGETNET = new ANN(boardsize+2, boardsize,1, 512);
+        MAINNET = new ANN(boardsize+2, boardsize, 1, 128);
+        TARGETNET = new ANN(boardsize+2, boardsize,1, 128);
 
         SE = new ScoringEngine();
 
@@ -68,8 +68,8 @@ public class DQN {
 
     }
 
-    public void execMove(ArrayList<Hexagon> field) {
-        ANN NeuralNet = new ANN(boardsize+2, boardsize, 1, 512);
+    public void execMove(ArrayList<Hexagon> field, int round) {
+        ANN NeuralNet = new ANN(boardsize+2, boardsize, 1, 128);
         NeuralNet.init();
         NeuralNet.getWBFromCSV();
 
@@ -82,13 +82,13 @@ public class DQN {
         int Qmove1;
         int Qmove2;
 
-        inputmove1 = getInputfromState(field, Hexagon.state.RED,1);
+        inputmove1 = getInputfromState(field, Hexagon.state.RED,round);
         ymove1 = NeuralNet.execFP(inputmove1);
         Qmove1 = getLegalQmax(field,ymove1);
         System.out.println("Q for red piece"+Qmove1);
         field.get(Qmove1).setMyState(Hexagon.state.RED);
 
-        inputmove2 = getInputfromState(field, Hexagon.state.BLUE,1);
+        inputmove2 = getInputfromState(field, Hexagon.state.BLUE,round);
         ymove2 = NeuralNet.execFP(inputmove2);
         Qmove2 = getLegalQmax(field,ymove2);
         System.out.println("Q for blue piece"+Qmove2);
@@ -125,8 +125,8 @@ public class DQN {
             while(numHexLeft(state)>=4) {
                 round++;
                 //bot.execMove(state);
-                MCSTmove(GameScreen.state.P1P1, true, state, 50);
-                MCSTmove(GameScreen.state.P1P2, true, state, 50);
+                MCSTmove(GameScreen.state.P1P1, true, state, 100);
+                MCSTmove(GameScreen.state.P1P2, true, state, 100);
                 tmp = state.size()-numHexLeft(state);
                 Episode(Hexagon.state.RED, round);
                 Episode(Hexagon.state.BLUE, round);
@@ -191,8 +191,8 @@ public class DQN {
                     }
                     if(winperc>topwp) {
                         topwp = winperc;
-                        System.out.println("Writing to .csv ...");
-                        writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
+                        //System.out.println("Writing to .csv ...");
+                        //writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
                     }
                     // if(winperc>=50.0) {
                     //     mcstit = mcstit + 10;
@@ -209,11 +209,11 @@ public class DQN {
                     //         e.printStackTrace();
                     //     }
                     //     topwp=10;
-                    //}
+                    // }
 
                 }
 
-                double a = summaryaverage/summary;
+                double a = summaryaverage/writeround;
                 System.out.println("Average legal moves played... "+a);
                 try {
                     FileWriter fileWriter = new FileWriter(LL,true);
@@ -244,7 +244,7 @@ public class DQN {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                // System.out.println("Playing against MCST with "+mcstit+" iterations.");
+                //System.out.println("Playing against MCST with "+mcstit+" iterations.");
 
                 // try {
                 //     FileWriter fileWriter = new FileWriter(LL,true);
@@ -328,7 +328,7 @@ public class DQN {
 
             int count=0;
             if(colour==Hexagon.state.RED) {
-                count=2;
+                count=1;
             } else if(colour==Hexagon.state.BLUE) {
                 count=1;
             }
@@ -355,12 +355,12 @@ public class DQN {
                 // * Play bot if in correct state
                 if(numHexLeft(clonestate)>=4 && i!=count-1) {
                     if(colour==Hexagon.state.RED && i%2==0) {
-                        MCSTmove(GameScreen.state.P1P1, true, clonestate,50);
-                        MCSTmove(GameScreen.state.P1P2, true, clonestate,50);     
+                        MCSTmove(GameScreen.state.P1P1, true, clonestate,80);
+                        MCSTmove(GameScreen.state.P1P2, true, clonestate,80);     
                         //bot.execMove(clonestate);               
                     } else if(colour==Hexagon.state.BLUE && i%2!=0) {
-                        MCSTmove(GameScreen.state.P1P1, true, clonestate,50);
-                        MCSTmove(GameScreen.state.P1P2, true, clonestate,50);
+                        MCSTmove(GameScreen.state.P1P1, true, clonestate,80);
+                        MCSTmove(GameScreen.state.P1P2, true, clonestate,80);
                         //bot.execMove(clonestate);
                     }
                 }
