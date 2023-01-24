@@ -11,25 +11,25 @@ import java.util.Random;
 
 public class PredictBot extends Bot {
     SavedModelBundle bestBoy;
-
+    //init model
     public PredictBot(){
-
         bestBoy = SavedModelBundle.load("core\\src\\com\\mygdx\\tensorAnn\\model47", "serve");
     }
 
-    //Whoosplaying = 1 for red -1 for blue
+
     @Override
     public void execMove(ArrayList<Hexagon> field) {
         runtime=0;
         long startTime = System.nanoTime();
         calculate(field);
         long endTime = System.nanoTime();
-        //test test test test test test
         long duration = (endTime - startTime);
         runtime += duration/1000;
     }
+
     @Override
     public void calculate(ArrayList<Hexagon> field) {
+        // gets the current featues from the state and then converts them to a tensor then it gives this tensor to the model
         GameState gs = new GameState();
         gs.update(field);
         Session s = bestBoy.session();
@@ -39,13 +39,16 @@ public class PredictBot extends Bot {
         }
 
         features[37] = 1.0f;
-//        System.out.println(features);
 
         FloatBuffer db = FloatBuffer.wrap(features);
 
         Tensor<Float> input = Tensor.create(new long[]{1,38}, db);
+        //retrieves the outpur from the model
         List<Tensor<?>> result = s.runner().feed("serving_default_dense_input:0",input).fetch("StatefulPartitionedCall:0").run();
-//        System.out.println(Arrays.deepToString(result.get(0).copyTo(new float[1][37])));
+
+        //processes the output to get the 3 best moves, if one is a blank hexagon, place that piece. otherwise, pick a random place
+        //this is to overcome hexagons being overwritten(extremely low likelihood but not 0.)
+
         float[][] output1 = result.get(0).copyTo(new float[1][37]);
         float max = -2;
         int maxindex = 0;
@@ -77,6 +80,7 @@ public class PredictBot extends Bot {
                 i = r.nextInt(field.size());
             }
         }
+        //the above is repeated for blue.
 
         gs = new GameState();
         gs.update(field);
@@ -87,13 +91,12 @@ public class PredictBot extends Bot {
         }
 
         features[37] = -1.0f;
-//        System.out.println(features);
 
         db = FloatBuffer.wrap(features);
 
         input = Tensor.create(new long[]{1,38}, db);
         result = s.runner().feed("serving_default_dense_input:0",input).fetch("StatefulPartitionedCall:0").run();
-//        System.out.println(Arrays.deepToString(result.get(0).copyTo(new float[1][37])));
+
         output1 = result.get(0).copyTo(new float[1][37]);
         max = -2;
         maxindex = 0;
@@ -123,32 +126,4 @@ public class PredictBot extends Bot {
         }
     }
 
-// code used for getting tensor names, not original
-//    public static void main(String[] args) {
-//        /*
-//        final MetaGraphDef metaGraphDef;
-//        try {
-//            metaGraphDef = MetaGraphDef.parseFrom(bestBoy.metaGraphDef());
-//            final SignatureDef signatureDef = metaGraphDef.getSignatureDefMap().get("serving_default");
-//
-//            final TensorInfo inputTensorInfo = signatureDef.getInputsMap()
-//                    .values()
-//                    .stream()
-//                    .filter(Objects::nonNull)
-//                    .findFirst()
-//                    .orElseThrow(ArithmeticException::new);
-//            final TensorInfo outputTensorInfo = signatureDef.getOutputsMap()
-//                    .values()
-//                    .stream()
-//                    .filter(Objects::nonNull)
-//                    .findFirst()
-//                    .orElseThrow(ArithmeticException::new);
-//            System.out.println(inputTensorInfo.getName());
-//            System.out.println(outputTensorInfo.getName());
-//        } catch (InvalidProtocolBufferException e) {
-//            e.printStackTrace();
-//        }
-//
-//         */
-//    }
 }
