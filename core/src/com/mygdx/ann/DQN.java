@@ -42,6 +42,10 @@ public class DQN {
     private int boardsize;
     private int writeround;
 
+    /**
+     * Constructor for the DQN, sets all fields and instantiates the ANNs
+     * @param writeround used for summarizing the progress after summary amount of games
+     */
     public DQN(int writeround) {
 
         this.writeround = writeround;
@@ -61,6 +65,11 @@ public class DQN {
 
     }
 
+    /**
+     * Instantiates everything needed to move and performs a move for both colors
+     * @param field is the board
+     * @param round is the current round
+     */
     public void execMove(ArrayList<Hexagon> field, int round) {
         ANN NeuralNet = new ANN(boardsize+2, boardsize, 1, 128);
         NeuralNet.init();
@@ -86,6 +95,10 @@ public class DQN {
         field.get(Qmove2).setMyState(Hexagon.state.BLUE);
     }
 
+    /**
+     * Makes the ANN run through games, update the weights according to the Bellman-Equation.
+     * It sets all Q values and performs Deep Q-Learning
+     */
     public void learn() {
 
         MAINNET.init();
@@ -273,6 +286,9 @@ public class DQN {
 
     }
 
+    /**
+     * Computes the mean and standard deviation of the rewards, used for testing
+     */
     public void StandardMD() {
         double mean=0;
         for(int i=0; i<data.size(); i++) {
@@ -289,6 +305,11 @@ public class DQN {
         System.out.println("Mean of rewards: ..."+MEAN+" Standard deviation of rewards: ..."+SD);
     }
 
+    /**
+     * Places a colour in the colour passed and calculates the reward for ever Q value
+     * @param colour is the colour that should be played next
+     * @param round is the current round in the game
+     */
     public void Episode(Hexagon.state colour, int round) {
         ArrayList<Double> labels = new ArrayList<>();
 
@@ -392,6 +413,11 @@ public class DQN {
         
     }
 
+    /**
+     * Creates labels for the Episode method
+     * @param field is the board
+     * @return returns all of the labels
+     */
     public ArrayList<Double> createLabels2(ArrayList<Hexagon> field) {
         ArrayList<Double> toreturn = new ArrayList<>();
         for(int i=0; i<field.size(); i++) {
@@ -401,6 +427,12 @@ public class DQN {
     }
 
 
+    /**
+     * Creates labels for computing the error
+     * @param field is the board
+     * @param label
+     * @return returns all of the labels
+     */
     public ArrayList<Double> createLabels(ArrayList<Hexagon> field, ArrayList<Double> label) {
         for(int i=0; i<field.size(); i++) {
             if(field.get(i).getMyState()==Hexagon.state.BLANK){
@@ -410,6 +442,12 @@ public class DQN {
         return label;
     }
 
+    /**
+     * Returns q values that belong to blank hexagons, removing the ones where a tile is already placed
+     * @param field is the board
+     * @param list of all of the hexagons' Q values
+     * @return the Q values of nodes that are still blank
+     */
     public ArrayList<Integer> getLegalQ(ArrayList<Hexagon> field, ArrayList<Double> list) {
         ArrayList<Integer> a = new ArrayList<>();
         for(int i=0; i<list.size(); i++) {
@@ -420,6 +458,12 @@ public class DQN {
         return a;
     }
 
+    /**
+     * Returns the Q value that is blank with the highest Q value, to be colored next
+     * @param field is the board
+     * @param list is the list of all Q values
+     * @return the highest Q value for blank tile
+     */
     public int getLegalQmax(ArrayList<Hexagon> field, ArrayList<Double> list) {
         double max=-999999999;
         int maxi=0;
@@ -432,18 +476,13 @@ public class DQN {
         return maxi;
     }
 
-    public int getQmax(ArrayList<Double> list) {
-        double max=Double.MIN_VALUE;
-        int maxi=0;
-        for(int i=0; i<list.size(); i++) {
-            if(list.get(i)>max) {
-                max=list.get(i);
-                maxi=i;
-            }
-        }
-        return maxi;
-    }
-
+    /**
+     * Returns the inputs for the ANN from the current board state based on the color of each hexagon
+     * @param statefield is the current state of te board
+     * @param col is the color of the hexagon to determine whether it gets 1, 0 or -1
+     * @param round is the current round of the game
+     * @return the board with inputs 1, 0, -1 depending on the state of each tile
+     */
     public ArrayList<Double> getInputfromState(ArrayList<Hexagon> statefield, Hexagon.state col, int round) {
         ArrayList<Double> inutreturn = new ArrayList<>();
         for(int i=0; i<statefield.size(); i++) {
@@ -470,6 +509,10 @@ public class DQN {
         return inutreturn;
     }
 
+    /**
+     * Creates a field with empty states
+     * @return a field with empty states
+     */
     public ArrayList<Hexagon> createState() {
         int s;
         int fieldsize = 3;
@@ -484,8 +527,14 @@ public class DQN {
         }
         return field;
     }
-    
 
+    /**
+     * Performs a move from the MCST
+     * @param STATE is the current state of the game
+     * @param player1 determines wether or not the bot is player 1
+     * @param field is the current board
+     * @param numiteration is the amount of iterations the MCST should perform
+     */
     private void MCSTmove(GameScreen.state STATE, boolean player1, ArrayList<Hexagon> field, int numiteration){
         ArrayList<Hexagon> copy_field = new ArrayList<Hexagon>();
         try {
@@ -506,6 +555,11 @@ public class DQN {
         }
     }
 
+    /**
+     * Calculates how many blank hexagons are left on the field
+     * @param field is the current board
+     * @return the amount of blank hexagons
+     */
     public int numHexLeft(ArrayList<Hexagon> field) {
         int num=0;
         for(Hexagon h:field) {
@@ -516,15 +570,20 @@ public class DQN {
         return num;
     }
 
-    public double Tanh(double x) {
-        return (Math.exp(x)-Math.exp(-x))/(Math.exp(x)+Math.exp(-x));
-    }
-
+    /**
+     * Instantiates the DQN
+     * @param args is for potential user inputs while learning
+     */
     public static void main(String[] args) {
         DQN dqn = new DQN(50);
         dqn.learn();
     }
 
+    /**
+     * Writes all the biases and weights into a CSV for saving an ANN and later use
+     * @param hiddenlayers is the list of hidden layers
+     * @param outputlayer is the list of output layers
+     */
     public void writeBWCSV(ArrayList<HidLayer> hiddenlayers, OutLayer outputlayer) {
 
         ArrayList<String> writeable = new ArrayList<>();
@@ -567,6 +626,11 @@ public class DQN {
         }
     }
 
+    /**
+     * Writes the data used for experiments into a CSV file
+     * @param winrate is the winrate the past numround of games
+     * @param numround is the number of games
+     */
     public void datawriter(double winrate, int numround) {
         File LL = new File("core\\src\\com\\mygdx\\ann\\data\\EXP.csv");
         try {
