@@ -49,7 +49,7 @@ This is what your directory should look like:
 The program's current features are:
 - Player versus player mode
 - Play against AI mode
-- Two different AI bots
+- Two different AI bots battling it out
 - Game instructions page
 - Different map selection
 
@@ -63,28 +63,39 @@ Each turn, the current player must place one stone of each color on any of the f
 ### End condition
 Each player's total score is always shown in the top corners of the screen, next to player number. The game ends when it is impossible for both players to complete a full turn, meaning there are not enough free spaces on the board left. The player who has the highest score then wins!
 
+### Maps
+You can select the map to be played on in the main menu. Click on the desired map's button in the bottom row, then select the desired gamemode in the top row.
+
+## In-game screen
+![](https://cdn.discordapp.com/attachments/1019614026038247436/1030129184967766036/unknown.png)
+
 
 ## Modes
-### Mode 1
+### I: Player vs Player
 The first mode is player versus player. To play the game in this mode, go to the main menu select the map you like, and press the "Play: 2 Player" button. This mode of the game is simple. The game of Omega is able to be played as if it was a normal board game, except its on your computer. Two players looking at the same screen each take a turn to play their hexes untill the game ends. 
 
-### Mode 2
+### II: Player vs AI
 The second mode is player versus AI. To play the game in this mode, go to the main menu select the map you like and click the "Play: AI" button. This is a single player mode. You the player will be placing your hexes, once your turn is over, the bot will choose its locations and play their turn. This will continue untill the game is over. 
 
+### III: Bot vs Bot
+The last mode is bot vs bot. This mode allows the user to battle bots against each other. Select the map you like, then click the "Bot vs Bot" button. Next, select which 2 agents you want to put to the test. Enjoy the battle of the machines!
 
 ## Bots
 The current available bots are:
 - Random bot
 - One Look Ahead (OLA) bot
 - MaxN Paranoid bot
-- Tree Bot
+- Depth Limiting Tree Bot
 - Group Fitness bot
+- Monte Carlo Tree Search bot
+- BOB (Deep Q Learning bot)
+- Predict bot (Supervised Learning bot)
+
+## Enjoy the game & Have Fun! 
  
- Note: changing against which bot you play is currently not available in the main menu. The default bot the player plays against is the OLA bot.
+![](assets/readmePics/final.png)
 
 
-## In-game screen
-![](https://cdn.discordapp.com/attachments/1019614026038247436/1030129184967766036/unknown.png)
 
 
 ## Authors
