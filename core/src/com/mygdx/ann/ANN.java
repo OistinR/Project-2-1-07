@@ -249,7 +249,7 @@ public class ANN {
                 double weight = outputneurons.get(i).getSynapses().get(j).getWeight();
 
                 double dz = 1.0;//outputneurons.get(i).getY() * (1-outputneurons.get(i).getY());
-                double dy = -2*(labels.get(i)-outputneurons.get(i).getY());
+                double dy = -1*(labels.get(i)-outputneurons.get(i).getY());
                 
                 // ! Set the initial delta of the output neurons
                 outputneurons.get(i).setDelta(dz*dy);
@@ -392,16 +392,15 @@ public class ANN {
     }
 
     public double ReLU(double x) {
-        return Math.max(0.0, x);
+        if(x<0) {
+            return 0.1*x;
+        } else return x;
     }
 
     public double derivReLU(double x) {
         if(x<0) {
-            return 0;
-        } else if(x>0) {
-            return 1;
-        }
-        return 0;
+            return 0.1;
+        } else return 1;
     }
 
     public double SoftMax(ArrayList<Double> list, int index) {
@@ -409,7 +408,6 @@ public class ANN {
         for(int i=0; i<list.size(); i++) {
             sum=sum+list.get(i);
         }
-
         return list.get(index)/sum;
     }
 

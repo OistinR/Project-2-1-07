@@ -147,6 +147,11 @@ public class GameScreen implements Screen {
         //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
         //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
         Sim = new ANN(1,1,1,1);
+        //bot = new RandomBot();
+        //bot = new FitnessGroupBot(Hexagon.state.RED,Hexagon.state.BLUE,false);
+        //bot2 = new TreeBot(Hexagon.state.BLUE,Hexagon.state.RED);
+        //dqn = new DQN(100);
+
     }
 
     @Override
@@ -245,7 +250,7 @@ private ArrayList<Double> data = new ArrayList<>();
         }
         if (ai2 && ai && (!gamefinished)) {
             botmove();
-            bot2move();
+            bot2move(round);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -283,24 +288,25 @@ private ArrayList<Double> data = new ArrayList<>();
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2){
-                gState.update(field, new double[]{(double) round});
-                for (Double d:
-                     gState.getState()) {
-                    data.add(d);
-                }
+
+                //gState.update(field, new double[]{(double) round});
+                //for (Double d:
+                //     gState.getState()) {
+                //    data.add(d);
+                //}
                 bot2move();
                 //! testing
 
-                gState.update(field, new double[]{(double) round});
-                for (Double d:
-                        gState.getState()) {
-                    data.add(d);
-                }
-                if(round==3){
+                //gState.update(field, new double[]{(double) round});
+                //for (Double d:
+                    //    gState.getState()) {
+                   // data.add(d);
+                //}
+                //if(round==3){
 
-                    System.out.println("DONE");
-                }
-
+                   // System.out.println("DONE");
+                //}
+                //bot2move(round);
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -553,7 +559,7 @@ private ArrayList<Double> data = new ArrayList<>();
      * check the mouvement of the bot and the time the bot took to place the hexagon
      */
     private void botmove() {
-        //bot.execMove(field);
+        bot.execMove(field);
         //dqn.execMove(field);
         //System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
 
@@ -562,11 +568,19 @@ private ArrayList<Double> data = new ArrayList<>();
     /**
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
+
     private void bot2move() {
 
 //        Sim.execMove(field);
         bot2.execMove(field);
 //        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
+  } 
+  
+    private void bot2move(int round) {
+        dqn.execMove(field,round);
+        //bot2.execMove(field);
+        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
+
 
     }
 
