@@ -1,16 +1,20 @@
 package com.mygdx.game.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -30,9 +34,10 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private Texture omegaSymbol;
     private Skin menuSkin;
-    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton;
+    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton, confirm;
     public static int mapChoice = 0;
     private ArrayList<TextButton> listOfMapButtons;
+    private SelectBox<String> bots1, bots2;
 
     /**
      * @param game the class that connect all the classes between each other
@@ -42,7 +47,6 @@ public class MenuScreen implements Screen {
         this.game = game;
         stage = new Stage(new FillViewport(1280, 720));
         menuSkin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-
 
         omegaSymbol = new Texture(Gdx.files.internal("omegaSymbol.png"));
         PVP = new TextButton("Play: 2 Player", menuSkin);
@@ -120,7 +124,7 @@ public class MenuScreen implements Screen {
 
         if (click) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false, false));
+            game.setScreen(new LoadingScreen(game, false, false, 0, 0));
         }
 
         PVAI.addListener(new ClickListener() {
@@ -131,7 +135,7 @@ public class MenuScreen implements Screen {
 
         if (clickAI) {
             this.dispose();
-            game.setScreen(new LoadingScreen(game, false, true));
+            game.setScreen(new PVBSelectionScreen(game, false, true));
         }
 
         BVB.addListener(new ClickListener() {
@@ -142,7 +146,7 @@ public class MenuScreen implements Screen {
 
         if (clickBVB) { // Bot vs Bot
             this.dispose();
-            game.setScreen(new LoadingScreen(game, true, true));
+            game.setScreen(new BVBSelectionScreen(game, true, true));
         }
 
         mapSnowflake.addListener(new ClickListener() {
@@ -247,7 +251,7 @@ public class MenuScreen implements Screen {
 
     }
 
-    public void updateMapChoice(){
+    public void updateMapChoice() {
         mapChoice = 0;
     }
 
