@@ -10,6 +10,8 @@ import com.mygdx.game.bots.MCST.MCST;
 import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 
+import com.mygdx.game.bots.RandomBot;
+import com.mygdx.game.bots.gametree.TreeBot;
 import com.mygdx.game.coordsystem.Hexagon;
 
 import com.mygdx.game.experiment.GameState;
@@ -82,8 +84,7 @@ public class rundev {
         botMCST = new MCST();
         // botpone = new TreeBot(Hexagon.state.RED,Hexagon.state.BLUE);
 //        botpone = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-        botpone = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-//        botptwo = new RandomBot();
+        botpone = new RandomBot();
         botptwo = new PredictBot();
 
         createHexagonFieldDefault();
@@ -197,10 +198,9 @@ public class rundev {
     }
 
     public void makeMove() {
-        MCSTmove(GameScreen.state.P1P2,true);
-        MCSTmove(GameScreen.state.P1P1,true);
-//        botpone.calculate(field);
-//        botpone.calculate(field);
+//        MCSTmove(GameScreen.state.P1P2,true);
+//        MCSTmove(GameScreen.state.P1P1,true);
+        botpone.calculate(field);
         botptwo.calculate(field);
 
 //        ar.add(999.0);

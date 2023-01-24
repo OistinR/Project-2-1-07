@@ -7,6 +7,7 @@ import org.tensorflow.*;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PredictBot extends Bot {
     SavedModelBundle bestBoy;
@@ -47,14 +48,35 @@ public class PredictBot extends Bot {
         float[][] output1 = result.get(0).copyTo(new float[1][37]);
         float max = -2;
         int maxindex = 0;
+        int secondindex = 1;
+        int thirdindex = 1;
+
         for (int i = 0; i <output1[0].length ; i++) {
             if (output1[0][i]>max){
+                thirdindex = secondindex;
+                secondindex = i;
                 max = output1[0][i];
                 maxindex = i;
             }
         }
+        Random r = new Random();
+        if(field.get(maxindex).getMyState() == Hexagon.state.BLANK){
+            field.get(maxindex).setMyState(Hexagon.state.RED);
+        }
+        else if(field.get(secondindex).getMyState() == Hexagon.state.BLANK){
+            field.get(secondindex).setMyState(Hexagon.state.RED);
+        }
+        else if(field.get(thirdindex).getMyState() == Hexagon.state.BLANK){
+            field.get(thirdindex).setMyState(Hexagon.state.RED);
+        }
+        else {
+            int i = r.nextInt(field.size());
+            while (field.get(i).getMyState() != Hexagon.state.BLANK){
+                field.get(i).setMyState(Hexagon.state.RED);
+                i = r.nextInt(field.size());
+            }
+        }
 
-        field.get(maxindex).setMyState(Hexagon.state.RED);
         gs = new GameState();
         gs.update(field);
         s = bestBoy.session();
@@ -76,12 +98,30 @@ public class PredictBot extends Bot {
         maxindex = 0;
         for (int i = 0; i <output1[0].length ; i++) {
             if (output1[0][i]>max){
+                thirdindex = secondindex;
+                secondindex = i;
                 max = output1[0][i];
                 maxindex = i;
             }
+        };
+        if(field.get(maxindex).getMyState() == Hexagon.state.BLANK){
+            field.get(maxindex).setMyState(Hexagon.state.BLUE);
         }
-        field.get(maxindex).setMyState(Hexagon.state.BLUE);
+        else if(field.get(secondindex).getMyState() == Hexagon.state.BLANK){
+            field.get(secondindex).setMyState(Hexagon.state.BLUE);
+        }
+        else if(field.get(thirdindex).getMyState() == Hexagon.state.BLANK){
+            field.get(thirdindex).setMyState(Hexagon.state.BLUE);
+        }
+        else {
+            int i = r.nextInt(field.size());
+            while (field.get(i).getMyState() != Hexagon.state.BLANK){
+                field.get(i).setMyState(Hexagon.state.BLUE);
+                i = r.nextInt(field.size());
+            }
+        }
     }
+
 // code used for getting tensor names, not original
 //    public static void main(String[] args) {
 //        /*
