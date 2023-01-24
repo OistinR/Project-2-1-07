@@ -1,23 +1,15 @@
 package com.mygdx.game;
 
-
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 import com.mygdx.game.bots.Bot;
 import com.mygdx.game.bots.MCST.MCST;
 import com.mygdx.game.bots.MCST.Node_MCST;
-import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 
 import com.mygdx.game.bots.RandomBot;
-import com.mygdx.game.bots.gametree.TreeBot;
 import com.mygdx.game.coordsystem.Hexagon;
 
-import com.mygdx.game.experiment.GameState;
 
-import com.mygdx.game.experiment.StateWrite;
-import com.mygdx.game.experiment.experiment;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
 import com.mygdx.tensorAnn.PredictBot;
@@ -45,26 +37,15 @@ public class rundev {
     private int totalnumgames;
     private double finalWinRate;
 
-    private ArrayList<Float> dataWinPerc = new ArrayList<Float>();
-    private ArrayList<Float> dataLossPerc = new ArrayList<Float>();
-    private ArrayList<Float> dataDrawPerc = new ArrayList<Float>();
-    private ArrayList<Float> dataWins = new ArrayList<Float>();
-    private ArrayList<Float> dataDraws = new ArrayList<Float>();
-    private experiment exp = new experiment();
-    private double winperc1, winperc2, winpercd;
     private ArrayList<Double> ar;
 
-    private GameState gameState;
-    private File fileWrite;
-    private FileWriter writer;
     private  StringBuilder output;
-    private StateWrite sw;
+
+    private MCST botMCST;
 
     public void init() {
-        fileWrite = new File("core\\src\\com\\mygdx\\SENDTHIStrainingData.csv");
         // Initiate variables
         ar = new ArrayList<>();
-        gameState = new GameState();
         round = 1;
         totalnumgames = 100;
         gamefinished = false;
@@ -171,20 +152,7 @@ public class rundev {
         }
     }
 
-    private void duplicateRemover(ArrayList<Double> before, ArrayList<Double> after ){
-        if(before.size()!= after.size()){
-            System.out.println("sizes not equal");
-            System.out.println(before);
-            System.out.println(after);
-            return;
-//            throw new RuntimeException("length of arraylists is not the equal");
-        }
-        for (int i = 0; i < after.size(); i++) {
-            if(after.get(i).equals(before.get(i))){
-                after.set(i, 0.0);
-            }
-        }
-    }
+
 
 
     public int numHex() {
@@ -198,56 +166,23 @@ public class rundev {
     }
 
     public void makeMove() {
-//        MCSTmove(GameScreen.state.P1P2,true);
-//        MCSTmove(GameScreen.state.P1P1,true);
+        //MCSTmove(GameScreen.state.P1P2,true);
+        //MCSTmove(GameScreen.state.P1P1,true);
+
         botpone.calculate(field);
         botptwo.calculate(field);
-
-//        ar.add(999.0);
-//        gameState.update(field);
-//        ar.addAll(gameState.getState());
-//         add features here
-//        ar.add(1.0);
-//        ar.add(999.0);
-
-//        gameState.update(field);
-//        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
-//        duplicateRemover(temp,gameState.getState());
-//        ar.addAll(gameState.getState());
-
-//        ar.add(999.0);
-//        gameState.update(field);
-//        ar.addAll(gameState.getState());
-        //add features here
-//        ar.add(-1.0);
-//        ar.add(999.0);
-
-
-
-//        gameState.update(field);
-//        temp = new ArrayList<>(ar.subList(ar.size() - gameState.getState().size()-2, ar.size()-2));
-//        duplicateRemover(temp,gameState.getState());
-//        ar.addAll(gameState.getState());
-
     }
-    private ArrayList<Double> temp;
 
     public void gameFinish() {
         SEngine.calculate(field);
         int p1score=SEngine.getRedScore();
         int p2score=SEngine.getBlueScore();
 
-//        System.out.println("GAME HAS ENDED");
-//        System.out.println("PLAYER 1 (RED) SCORE: "+p1score);
-//        System.out.println("PLAYER 2 (BLUE) SCORE: "+p2score);
         if(p1score>p2score) {
-            //System.out.println("PLAYER 1 (RED) WON");
             bot1wins.add(p1score);
         } else if(p1score<p2score) {
-            //System.out.println("PLAYER 2 (BLUE) WON");
             bot2wins.add(p2score);
         } else {
-            //System.out.println("THE GAME IS A DRAW");
             draws.add(p1score);
         }
         gamefinished=true;
@@ -272,10 +207,7 @@ public class rundev {
 
         }
         this.field = field;
-    }
-    private MCST botMCST;
-    private int count =0;
-
+    } 
 
     private void MCSTmove(GameScreen.state STATE,boolean player1){
 
@@ -286,7 +218,6 @@ public class rundev {
             }
         } catch (Exception e) {}
 
-        count++;
         Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1, 0);
 
         if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)

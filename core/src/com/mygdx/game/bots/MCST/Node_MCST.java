@@ -1,12 +1,10 @@
 package com.mygdx.game.bots.MCST;
 
 import com.mygdx.game.coordsystem.Hexagon;
-import com.mygdx.game.gametreemc.Node;
 import com.mygdx.game.screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Node_MCST {
 

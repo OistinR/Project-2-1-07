@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.ann.ANN;
 import com.mygdx.ann.DQN;
 import com.mygdx.game.Omega;
 
@@ -16,6 +15,8 @@ import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.OLABot;
 import com.mygdx.game.bots.RandomBot;
+import com.mygdx.game.bots.MCST.MCST;
+import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.bots.gametree.TreeBot;
 
 
@@ -82,16 +83,16 @@ public class GameScreen implements Screen {
 
     private Bot bot;
     private Bot bot2;
-    private int botSelection, index2;
+    private int boti1, boti2;
 
     private PieButton pieButton;
     private DQN dqn;
-    private PredictBot pbot;
 
     private boolean dqnflag=false;
+    private boolean mctsflagp1=false;
+    private boolean mctsflagp2=false;
 
-
-    private ANN Sim;
+    private MCST botMCST;
 
     //! testing
     GameState gState; 
@@ -104,13 +105,13 @@ public class GameScreen implements Screen {
      */
     public GameScreen(Omega game, boolean ai, boolean ai2, int index, int index2) {
         this.game = game;
-        botSelection = index;
-        this.index2 = index2;
+        boti1 = index;
+        boti2 = index2;
         this.ai = ai;
         this.ai2 = ai2;
         //! testing
         gState = new GameState();
-
+        botMCST = new MCST();
     }
 
     @Override
@@ -121,20 +122,23 @@ public class GameScreen implements Screen {
         round = 1;
         gamefinished = false;
         field = new ArrayList<>();
-
-        switch (MenuScreen.mapChoice) {
-            case (0):
-                createHexagonFieldDefault();
-                break;
-            case (1):
-                createHexagonFieldSnowFlake();
-                break;
-            case (2):
-                createHexagonFieldSimple();
-                break;
-            case (3):
-                createHexagonFieldBug();
-                break;
+        if(boti2>4) {
+            createHexagonFieldDefault();
+        } else {
+            switch (MenuScreen.mapChoice) {
+                case (0):
+                    createHexagonFieldDefault();
+                    break;
+                case (1):
+                    createHexagonFieldSnowFlake();
+                    break;
+                case (2):
+                    createHexagonFieldSimple();
+                    break;
+                case (3):
+                    createHexagonFieldBug();
+                    break;
+            }
         }
 
         SCREENWIDTH = Gdx.graphics.getWidth();
@@ -153,160 +157,69 @@ public class GameScreen implements Screen {
 
         dqn = new DQN(1);
         dqnflag=false;
+        mctsflagp1=false;
+        mctsflagp2=false;
 
 
-        if (!ai && ai2) {
-            switch (botSelection) {
+        if (ai2) {
+            switch (boti2) {
                 case 0: {
                     bot2 = new RandomBot();
+                    break;
                 }
                 case 1: {
                     bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, false);
+                    break;
                 }
                 case 2: {
                     bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                    break;
                 }
                 case 3: {
                     bot2 = new OLABot();
+                    break;
                 }
                 case 4: {
                     bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                    break;
                 }
                 case 5: {
-                    bot2 = new PredictBot();
+                    mctsflagp2=true;
                 }
                 case 6: {
+                    bot2 = new PredictBot();
+                    break;
+                }
+                case 7: {
                     dqnflag = true;
+                    break;
                 }
             }
         }
 
-
-        if (ai && ai2) {
-            switch (botSelection) {
+        if(ai) {
+            switch (boti1) {
                 case 0: {
-                    switch (index2) {
-                        case 0: {
-                            bot = new RandomBot();
-                            bot2 = new RandomBot();
-                        }
-                        case 1: {
-                            bot = new RandomBot();
-                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
-                        }
-                        case 2: {
-                            bot = new RandomBot();
-                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                        case 3: {
-                            bot = new RandomBot();
-                            bot2 = new OLABot();
-                        }
-                        case 4: {
-                            bot = new RandomBot();
-                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                    }
+                    bot = new RandomBot();
+                    break;
                 }
                 case 1: {
-                    switch (index2) {
-                        case 0: {
-                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-                            bot2 = new RandomBot();
-                        }
-                        case 1: {
-                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
-                        }
-                        case 2: {
-                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                        case 3: {
-                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-                            bot2 = new OLABot();
-                        }
-                        case 4: {
-                            bot = new FitnessGroupBot(Hexagon.state.RED, Hexagon.state.BLUE, false);
-                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                    }
+                    bot = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, false);
+                    break;
                 }
                 case 2: {
-                    switch (index2) {
-                        case 0: {
-                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new RandomBot();
-                        }
-                        case 1: {
-                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
-                        }
-                        case 2: {
-                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                        case 3: {
-                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new OLABot();
-                        }
-                        case 4: {
-                            bot = new MaxN_Paranoid_Bot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                    }
+                    bot = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
+                    break;
                 }
                 case 3: {
-                    switch (index2) {
-                        case 0: {
-                            bot = new OLABot();
-                            bot2 = new RandomBot();
-                        }
-                        case 1: {
-                            bot = new OLABot();
-                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
-                        }
-                        case 2: {
-                            bot = new OLABot();
-                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                        case 3: {
-                            bot = new OLABot();
-                            bot2 = new OLABot();
-                        }
-                        case 4: {
-                            bot = new OLABot();
-                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                    }
+                    bot = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
+                    break;
                 }
                 case 4: {
-                    switch (index2) {
-                        case 0: {
-                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new RandomBot();
-                        }
-                        case 1: {
-                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new FitnessGroupBot(Hexagon.state.BLUE, Hexagon.state.RED, ai);
-                        }
-                        case 2: {
-                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new MaxN_Paranoid_Bot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                        case 3: {
-                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new OLABot();
-                        }
-                        case 4: {
-                            bot = new TreeBot(Hexagon.state.RED, Hexagon.state.BLUE);
-                            bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
-                        }
-                    }
+                    mctsflagp1=true;
                 }
             }
         }
-
     }
 
     @Override
@@ -332,7 +245,6 @@ public class GameScreen implements Screen {
         updateScore();
 
         updateState();
-        // System.out.println(STATE);
 
         if (!(ai && ai2)) {
 
@@ -392,7 +304,7 @@ public class GameScreen implements Screen {
 
         game.mainBatch.end();
     }
-private ArrayList<Double> data = new ArrayList<>();
+
     public void updateState() {
         int numhex = numHex() - 4 * (round - 1);
 
@@ -608,7 +520,7 @@ private ArrayList<Double> data = new ArrayList<>();
                 }
 
                 // add the hover sprite to the currently hovered over tile
-                if (h.mouseHover() && STATE != state.P1P3 && STATE != state.P2P3) {
+                if (h.mouseHover() && STATE != state.P1P3 && STATE != state.P2P3 && !ai) {
                     if (h.getMyState() == Hexagon.state.BLANK) {
                         h.setMyState(Hexagon.state.HOVER);
                     }
@@ -696,9 +608,13 @@ private ArrayList<Double> data = new ArrayList<>();
      * check the mouvement of the bot and the time the bot took to place the hexagon
      */
     private void botmove() {
-        bot.execMove(field);
-        //dqn.execMove(field);
-        //System.out.println("Bot move took a runtime of: " + bot.getRuntime() + " micro seconds");
+        if(mctsflagp1) {
+            MCSTmove(GameScreen.state.P1P2,true);
+            MCSTmove(GameScreen.state.P1P1,true);
+        } else {
+            bot.execMove(field);
+
+        }
 
     }
 
@@ -707,12 +623,14 @@ private ArrayList<Double> data = new ArrayList<>();
      */
 
     private void bot2move(int round) {
-        System.out.println(dqnflag);
         if(dqnflag) {
             dqn.execMove(field,round);
+        } else if(mctsflagp2) {
+            MCSTmove(GameScreen.state.P2P1,false);
+            MCSTmove(GameScreen.state.P2P2,false);
         } else if(!dqnflag){
             bot2.execMove(field);
-        }
+        } 
     }
 
     /**
@@ -721,6 +639,27 @@ private ArrayList<Double> data = new ArrayList<>();
     public void gameFinish() {
         gamefinished = true;
         font.draw(game.mainBatch, " Game has ended ", 610, 600);
+    }
+
+    private void MCSTmove(GameScreen.state STATE,boolean player1){
+
+        ArrayList<Hexagon> copy_field = new ArrayList<>();
+        try {
+            for(Hexagon h : field) {
+                copy_field.add(h.clone());
+            }
+        } catch (Exception e) {}
+
+        Node_MCST bestMove = botMCST.runMCST(copy_field,STATE,player1, 2000);
+
+        if(bestMove.phase==GameScreen.state.P1P1 || bestMove.phase==GameScreen.state.P2P1)
+            field.get(bestMove.move_played).setMyState(Hexagon.state.RED);
+        else if(bestMove.phase==GameScreen.state.P1P2 || bestMove.phase==GameScreen.state.P2P2){
+            field.get(bestMove.move_played).setMyState(Hexagon.state.BLUE);
+        }
+        else{
+            throw new IllegalStateException("The children phase is not assign correctly: ");
+        }
     }
 
 }

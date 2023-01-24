@@ -69,7 +69,7 @@ public class LoadingScreen implements Screen {
 
         if (close == 6) {
             this.dispose();
-            game.setScreen(new GameScreen(game, ai, ai2, index, 0));
+            game.setScreen(new GameScreen(game, ai, ai2, index, index2));
         } else {
             close++;
         }

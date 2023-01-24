@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * This is the confirm button sprite.
  */
 public class ConfirmButton {
-    private final int SCREENWIDTH = 1280;
     private final int SCREENHEIGHT = 720;
     private final int Xcoordinate;
     private final int Ycoordinate;

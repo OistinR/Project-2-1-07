@@ -3,25 +3,18 @@ package com.mygdx.ann;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.annotation.Target;
-import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.sql.rowset.RowSetWarning;
-
-import java.util.*;
 import com.mygdx.ann.layers.HidLayer;
 import com.mygdx.ann.layers.OutLayer;
 import com.mygdx.game.bots.Bot;
-import com.mygdx.game.bots.MaxN_Paranoid_Bot;
 import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.bots.MCST.MCST;
 import com.mygdx.game.bots.MCST.Node_MCST;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 import com.mygdx.game.screens.GameScreen;
-import com.mygdx.game.screens.GameScreen.state;
 
 
 public class DQN {
@@ -85,13 +78,11 @@ public class DQN {
         inputmove1 = getInputfromState(field, Hexagon.state.RED,round);
         ymove1 = NeuralNet.execFP(inputmove1);
         Qmove1 = getLegalQmax(field,ymove1);
-        System.out.println("Q for red piece"+Qmove1);
         field.get(Qmove1).setMyState(Hexagon.state.RED);
 
         inputmove2 = getInputfromState(field, Hexagon.state.BLUE,round);
         ymove2 = NeuralNet.execFP(inputmove2);
         Qmove2 = getLegalQmax(field,ymove2);
-        System.out.println("Q for blue piece"+Qmove2);
         field.get(Qmove2).setMyState(Hexagon.state.BLUE);
     }
 

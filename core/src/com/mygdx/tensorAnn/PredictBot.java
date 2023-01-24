@@ -5,7 +5,6 @@ import com.mygdx.game.experiment.GameState;
 import org.tensorflow.*;
 
 import java.nio.FloatBuffer;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

@@ -1,20 +1,15 @@
 package com.mygdx.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -34,10 +29,9 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private Texture omegaSymbol;
     private Skin menuSkin;
-    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton, confirm;
+    private TextButton PVP, PVAI, BVB, mapDefault, mapSnowflake, mapSimple, mapBug, instructionButton;
     public static int mapChoice = 0;
     private ArrayList<TextButton> listOfMapButtons;
-    private SelectBox<String> bots1, bots2;
 
     /**
      * @param game the class that connect all the classes between each other
@@ -185,7 +179,6 @@ public class MenuScreen implements Screen {
         });
 
         if (clickInstruction) {
-            // System.out.println("BUtton clicked");
             this.dispose();
             game.setScreen(new InstructionScreen(game));
         }

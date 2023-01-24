@@ -1,21 +1,16 @@
 package com.mygdx.game.bots.gametree;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Random;
 
 import com.mygdx.game.bots.Bot;
-import com.mygdx.game.bots.FitnessGroupBot;
 import com.mygdx.game.bots.MaxN_Paranoid_Bot;
-import com.mygdx.game.bots.OLABot;
-import com.mygdx.game.bots.RandomBot;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.scoringsystem.ScoringEngine;
 
 public class TreeBot extends Bot {
 
     private Hexagon.state playerstate;
-    private Hexagon.state oppstate;
 
     private ScoringEngine SE;
     private Bot trainingbot;
@@ -37,7 +32,6 @@ public class TreeBot extends Bot {
      */
     public TreeBot(Hexagon.state playerstate, Hexagon.state oppstate){
         this.playerstate = playerstate;
-        this.oppstate = oppstate;
 
         rootsR = new ArrayList<Root>();
         rootsB = new ArrayList<Root>();
@@ -48,7 +42,7 @@ public class TreeBot extends Bot {
 
         //TWO VARIABLES BELOW CAN BE MODIFIED
         trainingbot = new MaxN_Paranoid_Bot(oppstate,playerstate);
-        depthmax = 2;
+        depthmax = 3;
     }
 
     /**
@@ -134,7 +128,6 @@ public class TreeBot extends Bot {
 
 
         for(Root r:rootsR) {
-                //System.out.println(player + " PLAYER STATE PLACING RED ROOTS, no. of score "+r.getScore2());
             if(player==Hexagon.state.RED) {
                 if (r.getScore2()>best) {
                     best=r.getScore2();
@@ -158,10 +151,8 @@ public class TreeBot extends Bot {
             }
         }
 
-        //--
 
         for(Root r:rootsB) {
-            //System.out.println(player + " PLAYER STATE PLACING BLUE ROOTS, no. of score "+r.getScore2());
             if(player==Hexagon.state.BLUE) {
                 if (r.getScore2()>best) {
                     best=r.getScore2();
@@ -266,7 +257,6 @@ public class TreeBot extends Bot {
 
                 if(d==depthlimit) {
                     SE.calculate(recursionfield);
-                    //System.out.println(SE.getRedScore()+ "   " +SE.getBlueScore() + " FOR ROOT Q: "+ root.getRootQ()+ "  R: "+root.getRootR());
                     root.addLeaf2(SE.getRedScore()-SE.getBlueScore());
                 }
 

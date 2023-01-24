@@ -52,8 +52,7 @@ public class ScoringEngine {
                 blueList.add(floodcount);
             }
         }
-        savedBlueList = (ArrayList<Integer>) blueList.clone();
-        savedRedList = (ArrayList<Integer>) redList.clone();
+
         if(redList.isEmpty()==false) {
             redScore=1;
         } else {
@@ -75,8 +74,6 @@ public class ScoringEngine {
         }
         blueList.clear();
         redList.clear();
-        //System.out.println("this is red list " + savedRedList);
-        //System.out.println("this is blue list " + savedBlueList);
         resetChecked(field);
     }
 

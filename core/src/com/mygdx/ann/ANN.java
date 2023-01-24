@@ -1,10 +1,8 @@
 package com.mygdx.ann;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.Scanner;
 import java.io.*;
-import java.lang.management.OperatingSystemMXBean;
 
 import com.mygdx.ann.layers.HidLayer;
 import com.mygdx.ann.layers.InLayer;
@@ -14,7 +12,6 @@ import com.mygdx.ann.neurons.InNeuron;
 import com.mygdx.ann.neurons.OutNeuron;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.experiment.GameState;
-import com.mygdx.game.experiment.StateWrite;
 
 public class ANN {
 
@@ -24,8 +21,6 @@ public class ANN {
     private int hidsize;
 
     private final double LEARNINGRATE = 0.001;
-
-    private final double ACCURACY = 0.001;
 
     InLayer ILAYER;
     ArrayList<HidLayer> HLAYERS;
@@ -92,91 +87,9 @@ public class ANN {
             OLAYER.getNeurons().get(i).setBias(ann.getOutputLayer().getNeurons().get(i).getBias());
         }
     }
-    StateWrite sw = new StateWrite();
-    public void execforandgate() {
-        init();
-        StateWrite sw = new StateWrite();
-        sw.readFrom();
-
-        ArrayList<ArrayList<ArrayList<Double>>> preMoves = sw.getPreMoveStates();
-        ArrayList<ArrayList<ArrayList<Double>>> postMoves = sw.getPostMoveStates();
-
-        // ! Set the inputs and labels
-//        ArrayList<Double> values = new ArrayList<>();
-//        values.add((double)ThreadLocalRandom.current().nextInt(0, 2)); values.add((double)ThreadLocalRandom.current().nextInt(0, 2));
-//        changeInput(ILAYER, values);
-//
-//        ArrayList<Double> labels = new ArrayList<>();
-//        if(values.get(0)+values.get(1)>1.1) {
-//            labels.add(1.0);
-//        } else labels.add(0.0);
-//
-//
-//        // ! Call the forward pass and get output values
-//        ArrayList<Double> forwardPass = forwardProp(ILAYER, HLAYERS, OLAYER, false);
-//
-//        // ! Run backward propegation
-//        backwardProp(ILAYER, HLAYERS, OLAYER, forwardPass, labels);
-
-        ArrayList<Double> forwardPass;
-
-        ArrayList<Double> values = new ArrayList<>();
-        ArrayList<Double> labels = new ArrayList<>();
-        ArrayList<Double> error = new ArrayList<>();
-        double meanError = 0;
-        int loop = 0;
-        for (int i = 0; i < preMoves.size(); i++) {
-            for (int j = 0; j < preMoves.get(i).size(); j++) {
-
-                values.clear();
-                values = preMoves.get(i).get(j);
-
-                changeInput(ILAYER, values);
-
-                labels.clear();
-                labels = postMoves.get(i).get(j);
-
-                forwardPass = forwardProp(ILAYER, HLAYERS, OLAYER, false);
-                backwardProp(ILAYER, HLAYERS, OLAYER, forwardPass, labels);
-
-                error = computeError(forwardPass, labels);
-                meanError = 0.0;
-                for (Double aDouble : error) meanError += aDouble;
-                }
-                meanError = meanError/error.size();
+    
 
 
-                if (loop % 50 == 0) {
-                    System.out.println("ERROR OF ANN ..." + meanError + "... AT ITERATION " + loop);
-                }
-                if (meanError < ACCURACY) {
-                    System.out.println("Solution found at iteration number " + loop);
-                    writeBWCSV(HLAYERS,OLAYER);
-                    test();
-                }
-                loop++;
-            }
-
-
-    }
-
-    public void test(){
-        while(true) {
-            ArrayList<Double> test = new ArrayList<>();
-            Scanner in = new Scanner(System.in);
-            System.out.println("Input of neurons:");
-            for (String t:
-            in.nextLine().split(",")) {
-                test.add(Double.parseDouble(t));
-            };
-
-            System.out.println(test);
-            System.out.println("---");
-
-            changeInput(ILAYER, test);
-            System.out.println(forwardProp(ILAYER, HLAYERS, OLAYER, true));
-        }
-    }
 
     public void execMove(ArrayList<Hexagon> field) {
         ANN NeuralNet = new ANN(37, 37, 4, 10);
@@ -190,10 +103,7 @@ public class ANN {
         GameState gs = new GameState();
         gs.update(field);
         inputmove1 = gs.getState();
-        System.out.println("current state"+inputmove1);
-        System.out.println();
         ymove1 = NeuralNet.execFP(inputmove1);
-        System.out.println(ymove1);
         double max = -100;
         double min = 100;
 
@@ -210,8 +120,6 @@ public class ANN {
             }
         }
 
-        System.out.println(bestindexRed);
-        System.out.println(bestindexBlue);
         field.get(bestindexRed).setMyState(Hexagon.state.RED);
         field.get(bestindexBlue).setMyState(Hexagon.state.BLUE);
 
@@ -258,7 +166,6 @@ public class ANN {
 
                 // ! Change output neurons' weights
                 double derivative = dz*dy*dw;
-                //System.out.println(derivative);
                 outputneurons.get(i).getSynapses().get(j).setWeight(weight-(LEARNINGRATE*derivative));
             }
         }
@@ -375,14 +282,9 @@ public class ANN {
         // * Printing and returning list with final probabilities
         ArrayList<Double> prob = new ArrayList<>();
         for(int i=0; i<outneuronlist.size(); i++) {
-            if(last) {
-                System.out.println("Neuron at index "+ i +" has probability (value) p: "+outneuronlist.get(i).getY());
-            }
             prob.add(outneuronlist.get(i).getY());
         }
-        if (last) {
-            System.out.println(" ");
-        }
+
 
         return prob;
     }
@@ -421,7 +323,6 @@ public class ANN {
     }
 
     public void getWBFromCSV() {
-        System.out.println("Retrieving data from NBW.csv ...");
         ArrayList<Double> data = new ArrayList<>();
         try {
 
@@ -462,7 +363,6 @@ public class ANN {
             OLAYER.getNeurons().get(i).setBias(data.get(ITERATION));
             ITERATION++;
         }
-        System.out.println(ITERATION);
     }
 
     public void writeBWCSV(ArrayList<HidLayer> hiddenlayers, OutLayer outputlayer) {
@@ -505,12 +405,5 @@ public class ANN {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-    public static void main(String[] args) {
-        ANN ann = new ANN(37, 37, 4, 10);
-        ann.execforandgate();
-
     }
 }

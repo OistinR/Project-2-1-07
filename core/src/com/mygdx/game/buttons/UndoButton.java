@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * This is the confirm button sprite.
  */
 public class UndoButton {
-    private final int SCREENWIDTH = 1280;
     private final int SCREENHEIGHT = 720;
     private float Xcoordinate;
     private float Ycoordinate;
@@ -32,7 +31,6 @@ public class UndoButton {
         this.Ycoordinate = Ycoordinate;
         this.spriteBatch = spriteBatch;
         undoSprite.setSize(100,50);
-        //System.out.println(Ycoordinate);
 
     }
     /**

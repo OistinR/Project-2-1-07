@@ -3,10 +3,7 @@ package com.mygdx.game.bots;
 import com.mygdx.game.coordsystem.Hexagon;
 import com.mygdx.game.screens.GameScreen;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
 
 public class FitnessGroupBot extends Bot{
     private Hexagon.state myColor;

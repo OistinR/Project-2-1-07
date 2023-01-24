@@ -13,9 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.Omega;
 
@@ -37,12 +34,12 @@ public class BVBSelectionScreen implements Screen {
         this.ai2 = ai2;
 
         bots1 = new SelectBox<String>(menuSkin);
-        bots1.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
+        bots1.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid","Depth Limiting Tree bot","MCTS");
         bots1.setPosition(400, 350);
         bots1.setSize(200, 50);
 
         bots2 = new SelectBox<String>(menuSkin);
-        bots2.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "MCTree bot");
+        bots2.setItems("Random bot", "FitnessGroup bot", "MaxN Paranoid", "OneLookAhead bot", "Depth Limiting Tree bot","MCTS", "Predict bot (supervised learning)", "BOB (Double DQN)");
         bots2.setPosition(700, 350);
         bots2.setSize(200, 50);
 
