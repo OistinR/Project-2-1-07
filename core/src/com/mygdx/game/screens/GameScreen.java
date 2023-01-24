@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.ann.ANN;
+import com.mygdx.ann.DQN;
 import com.mygdx.game.Omega;
 
 import com.mygdx.game.bots.Bot;
@@ -84,6 +85,10 @@ public class GameScreen implements Screen {
     private int botSelection, index2;
 
     private PieButton pieButton;
+    private DQN dqn;
+    private PredictBot pbot;
+
+    private boolean dqnflag=false;
 
 
     private ANN Sim;
@@ -146,6 +151,10 @@ public class GameScreen implements Screen {
         backToMenu = new ConfirmButton(1000, 600, game.mainBatch);
         pieButton = new PieButton(1000, 120, game.mainBatch);
 
+        dqn = new DQN(1);
+        dqnflag=false;
+
+
         if (!ai && ai2) {
             switch (botSelection) {
                 case 0: {
@@ -163,8 +172,15 @@ public class GameScreen implements Screen {
                 case 4: {
                     bot2 = new TreeBot(Hexagon.state.BLUE, Hexagon.state.RED);
                 }
+                case 5: {
+                    bot2 = new PredictBot();
+                }
+                case 6: {
+                    dqnflag = true;
+                }
             }
         }
+
 
         if (ai && ai2) {
             switch (botSelection) {
@@ -426,24 +442,8 @@ private ArrayList<Double> data = new ArrayList<>();
                 undoHexagonPie = undoHexagon;
                 undoHexagonPie2 = undoHexagon2;
             } else if (ai2) {
-                //gState.update(field, new double[]{(double) round});
-                //for (Double d:
-                //     gState.getState()) {
-                //    data.add(d);
-                //}
-                bot2move();
-                //! testing
-
-                //gState.update(field, new double[]{(double) round});
-                //for (Double d:
-                    //    gState.getState()) {
-                   // data.add(d);
-                //}
-                //if(round==3){
-
-                   // System.out.println("DONE");
-                //}
-                //bot2move(round);
+                bot2move(round);
+                
                 STATE = state.P1P1;
                 arrowPlayerOne = true;
                 round++;
@@ -706,19 +706,13 @@ private ArrayList<Double> data = new ArrayList<>();
      * check the mouvement of the bot and the time of bot2 took to place the hexagon
      */
 
-    private void bot2move() {
-
-//        Sim.execMove(field);
-        bot2.execMove(field);
-//        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
-  } 
-  
     private void bot2move(int round) {
-//        dqn.execMove(field,round);
-        bot2.execMove(field);
-        //System.out.println("Bot2 move took a runtime of: " + bot2.getRuntime() + " micro seconds");
-
-
+        System.out.println(dqnflag);
+        if(dqnflag) {
+            dqn.execMove(field,round);
+        } else if(!dqnflag){
+            bot2.execMove(field);
+        }
     }
 
     /**

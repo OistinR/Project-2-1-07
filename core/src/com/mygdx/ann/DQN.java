@@ -125,8 +125,8 @@ public class DQN {
             while(numHexLeft(state)>=4) {
                 round++;
                 //bot.execMove(state);
-                MCSTmove(GameScreen.state.P1P1, true, state, 100);
-                MCSTmove(GameScreen.state.P1P2, true, state, 100);
+                MCSTmove(GameScreen.state.P1P1, true, state, mcstit);
+                MCSTmove(GameScreen.state.P1P2, true, state, mcstit);
                 tmp = state.size()-numHexLeft(state);
                 Episode(Hexagon.state.RED, round);
                 Episode(Hexagon.state.BLUE, round);
@@ -191,25 +191,25 @@ public class DQN {
                     }
                     if(winperc>topwp) {
                         topwp = winperc;
-                        //System.out.println("Writing to .csv ...");
-                        //writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
+                        System.out.println("Writing to .csv ...");
+                        writeBWCSV(MAINNET.HLAYERS, MAINNET.OLAYER);
                     }
-                    // if(winperc>=50.0) {
-                    //     mcstit = mcstit + 10;
-                    //     int temp = mcstit-10;
-                    //     System.out.println("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);
-                    //     try {
-                    //         FileWriter fileWriter = new FileWriter(LL,true);
-                    //         StringBuilder line = new StringBuilder();
-                    //         line.append("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);   
-                    //         line.append("\n");
-                    //         fileWriter.write(line.toString());
-                    //         fileWriter.close();
-                    //     } catch (IOException e) {
-                    //         e.printStackTrace();
-                    //     }
-                    //     topwp=10;
-                    // }
+                    if(winperc>=50.0) {
+                        mcstit = mcstit + 10;
+                        int temp = mcstit-10;
+                        System.out.println("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);
+                        try {
+                            FileWriter fileWriter = new FileWriter(LL,true);
+                            StringBuilder line = new StringBuilder();
+                            line.append("MCSTS has been beaten, its iterations has ben increased from... "+temp+" to... "+mcstit);   
+                            line.append("\n");
+                            fileWriter.write(line.toString());
+                            fileWriter.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        topwp=10;
+                    }
 
                 }
 
@@ -244,20 +244,20 @@ public class DQN {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //System.out.println("Playing against MCST with "+mcstit+" iterations.");
+                System.out.println("Playing against MCST with "+mcstit+" iterations.");
 
-                // try {
-                //     FileWriter fileWriter = new FileWriter(LL,true);
-                //     StringBuilder line = new StringBuilder();
-                //     line.append("Playing versus MCST running "+mcstit+" iterations");   
-                //     line.append("\n");
-                //     line.append(" ");
-                //     line.append("\n");
-                //     fileWriter.write(line.toString());
-                //     fileWriter.close();
-                // } catch (IOException e) {
-                //     e.printStackTrace();
-                // }
+                try {
+                    FileWriter fileWriter = new FileWriter(LL,true);
+                    StringBuilder line = new StringBuilder();
+                    line.append("Playing versus MCST running "+mcstit+" iterations");   
+                    line.append("\n");
+                    line.append(" ");
+                    line.append("\n");
+                    fileWriter.write(line.toString());
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 annwon=0;
                 mcstwon=0;
