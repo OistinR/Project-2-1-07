@@ -48,7 +48,7 @@ public class TreeBot extends Bot {
 
         //TWO VARIABLES BELOW CAN BE MODIFIED
         trainingbot = new MaxN_Paranoid_Bot(oppstate,playerstate);
-        depthmax = 3;
+        depthmax = 2;
     }
 
     /**

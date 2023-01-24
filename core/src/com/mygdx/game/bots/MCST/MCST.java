@@ -106,7 +106,9 @@ public class MCST {
                 throw new IllegalStateException("Unexpected value of the STATE");
         }
 
-        int numIterations = iterationNum;
+
+        int numIterations = 300;
+
         long start_time = System.nanoTime();
         long end_time = System.nanoTime();
 
@@ -261,7 +263,6 @@ public class MCST {
     }
     public static void main(String[] args) {
 
-
         MCST mcst = new MCST();
         ArrayList<Hexagon> field = mcst.createHexagonFieldDefault();
         Node_MCST currentNode = new Node_MCST(field, new ArrayList<Integer>(),0, GameScreen.state.P1P1);
@@ -282,7 +283,6 @@ public class MCST {
         }
          **/
 
-
     }
     public ArrayList<Hexagon> createHexagonFieldDefault() {
         int s;
@@ -298,7 +298,5 @@ public class MCST {
         }
         return field;
     }
-
-
 
 }
